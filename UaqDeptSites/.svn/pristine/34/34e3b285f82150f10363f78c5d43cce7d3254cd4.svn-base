@@ -1,0 +1,75 @@
+package com.uaq.command;
+
+
+public class WhomItmayConcernCommand {
+
+	private String addressTo;
+	private String other;
+	private String familyBookNo;
+	private String spouseIdNo;
+	private String scanFamilyBook_name;
+	private String sposeEmiratesId_name;
+
+	public String getAddressTo() {
+		return addressTo;
+	}
+
+	public void setAddressTo(String addressTo) {
+		this.addressTo = addressTo;
+	}
+
+	public String getOther() {
+		return other;
+	}
+
+	public void setOther(String other) {
+		this.other = other;
+	}
+
+	public String getFamilyBookNo() {
+		return familyBookNo;
+	}
+
+	public void setFamilyBookNo(String familyBookNo) {
+		this.familyBookNo = familyBookNo;
+	}
+
+	public String getSpouseIdNo() {
+		return spouseIdNo;
+	}
+
+	public void setSpouseIdNo(String spouseIdNo) {
+		this.spouseIdNo = spouseIdNo;
+	}
+
+	/**
+	 * @return the scanFamilyBook_name
+	 */
+	public String getScanFamilyBook_name() {
+		return scanFamilyBook_name;
+	}
+
+	/**
+	 * @param scanFamilyBook_name the scanFamilyBook_name to set
+	 */
+	public void setScanFamilyBook_name(String scanFamilyBook_name) {
+		this.scanFamilyBook_name = scanFamilyBook_name;
+	}
+
+	/**
+	 * @return the sposeEmiratesId_name
+	 */
+	public String getSposeEmiratesId_name() {
+		return sposeEmiratesId_name;
+	}
+
+	/**
+	 * @param sposeEmiratesId_name the sposeEmiratesId_name to set
+	 */
+	public void setSposeEmiratesId_name(String sposeEmiratesId_name) {
+		this.sposeEmiratesId_name = sposeEmiratesId_name;
+	}
+
+	
+
+}

@@ -1,0 +1,336 @@
+package com.uaq.service;
+
+import static com.uaq.common.ApplicationConstants.*;
+import static com.uaq.common.WebServiceConstant.*;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import uaq.db.si.model.common.AppModuleService;
+import uaq.db.si.model.common.AppModuleService_Service;
+import uaq.db.si.model.common.ApplicantRequestViewSDO;
+import uaq.db.si.model.common.ServiceLookupsViewSDO;
+import uaq.db.si.model.common.StatusLookupsViewSDO;
+
+import com.oracle.xmlns.adf.svc.types.Conjunction;
+import com.oracle.xmlns.adf.svc.types.FindControl;
+import com.oracle.xmlns.adf.svc.types.FindCriteria;
+import com.oracle.xmlns.adf.svc.types.SortAttribute;
+import com.oracle.xmlns.adf.svc.types.SortOrder;
+import com.oracle.xmlns.adf.svc.types.ViewCriteria;
+import com.oracle.xmlns.adf.svc.types.ViewCriteriaItem;
+import com.oracle.xmlns.adf.svc.types.ViewCriteriaRow;
+import com.uaq.logger.UAQLogger;
+import com.uaq.vo.MyRequestInputVO;
+import com.uaq.vo.MyRequestOutputVO;
+import com.uaq.vo.StatusLookupsOutputVO;
+
+@Service
+@Qualifier("myRequestService")
+public class MyRequestService {
+
+	protected static UAQLogger logger = new UAQLogger(MyRequestService.class);
+
+	private AppModuleService_Service service = null;
+	private AppModuleService stub = null;
+
+	
+	/**
+	 * Initilaizing The Stub Object 
+	 * 
+	 */
+	
+	private void createStub(){
+		service = new AppModuleService_Service();
+		stub = service.getAppModuleServiceSoapHttpPort();
+	}
+	
+	/**
+	 * This Method will use for get All the Request Based On Request No
+	 * 
+	 * @param inputVO
+	 * @return StatusLookupsOutputVO
+	 */
+	
+	public List<MyRequestOutputVO> getMyRequestData(MyRequestInputVO inputVO) {
+
+		createStub();
+
+		ViewCriteriaRow viewCriteriaRow = new ViewCriteriaRow();
+		viewCriteriaRow.setConjunction(Conjunction.AND);
+
+		ViewCriteriaItem viewCriteriaItem = new ViewCriteriaItem();
+		viewCriteriaItem.setConjunction(Conjunction.AND);
+		viewCriteriaItem.setAttribute(inputVO.getAttributeName());
+		viewCriteriaItem.setUpperCaseCompare(false);
+		viewCriteriaItem.setOperator("=");
+		viewCriteriaItem.getValue().add(inputVO.getAttributeValue());
+		viewCriteriaRow.getItem().add(viewCriteriaItem);
+		com.oracle.xmlns.adf.svc.types.ViewCriteria nexted = new ViewCriteria();
+		nexted.setConjunction(Conjunction.AND);
+
+		com.oracle.xmlns.adf.svc.types.ViewCriteria filter = new ViewCriteria();
+		filter.setConjunction(Conjunction.AND);
+		filter.getNested().add(nexted);
+		filter.getGroup().add(viewCriteriaRow);
+
+		SortAttribute sortAttribute = new SortAttribute();
+		sortAttribute.setName("CreatedDate");
+		sortAttribute.setDescending(true);
+
+		SortOrder sortOrder = new SortOrder();
+		sortOrder.getSortAttribute().add(sortAttribute);
+
+		FindCriteria findCriteria = new FindCriteria();
+		findCriteria.setFilter(filter);
+		findCriteria.setFetchSize(-1);
+		findCriteria.setFetchStart(0);
+		findCriteria.setExcludeAttribute(false);
+		findCriteria.setSortOrder(sortOrder);
+		findCriteria.getFindAttribute().add(SOAP_REQUESTNO_ARGUMENT);
+		findCriteria.getFindAttribute().add(SOAP_SERVICEID_ARGUMENT);
+		findCriteria.getFindAttribute().add(SOAP_CREATEDDATE_ARGUMENT);
+		findCriteria.getFindAttribute().add(SOAP_MODIFIEDDATE_ARGUMENT);
+		findCriteria.getFindAttribute().add(SOAP_STATUSID_ARGUMENT);
+		findCriteria.getFindAttribute().add(SOAP_SORCE_ARGUMENT);
+
+		FindControl findControl = new FindControl();
+		findControl.setRetrieveAllTranslations(true);
+
+		List<ApplicantRequestViewSDO> output = null;
+		List<MyRequestOutputVO> outputVOs = new ArrayList<MyRequestOutputVO>();
+		try {
+			output = stub.findApplicantRequestView1(findCriteria, findControl);
+			logger.info("findApplicantRequestView1  Success  | Row Return + " + output.size());
+			if (output.size() > 0) {
+					for (ApplicantRequestViewSDO temp : output) {
+					MyRequestOutputVO outputVO = new MyRequestOutputVO();
+					outputVO.setRequestNo(temp.getRequestNo().getValue());
+					outputVO.setStatusId(temp.getStatusId().getValue());
+					outputVO.setServiceId(temp.getServiceId().getValue());
+					outputVO.setCreatedDate(temp.getCreatedDate().getValue());
+					outputVO.setModifiedDate(temp.getModifiedDate().getValue());
+					outputVO.setSorceType(temp.getSource().getValue());
+					outputVOs.add(outputVO);
+				}
+			} else {
+				logger.info("Failure   | No data Return");
+			}
+		} catch (uaq.db.si.model.common.ServiceException e) {
+			logger.error("Failure  |" + e.getMessage());
+		}
+		return outputVOs;
+
+	}
+
+	/**
+	 * This Method will use for get The Status Name based on Status Id From Look Up Services
+	 * 
+	 * @param inputVO
+	 * @return StatusLookupsOutputVO
+	 */
+	public Map<BigDecimal,StatusLookupsOutputVO> getStatusLookups(MyRequestInputVO inputVO) {
+		
+		createStub();
+		
+		Map<BigDecimal,StatusLookupsOutputVO> statusLookupsOutputVO = new HashMap<BigDecimal, StatusLookupsOutputVO>();
+		FindCriteria criteria = new FindCriteria();
+
+		criteria.setFetchStart(0);
+		criteria.setFetchSize(-1);
+
+		com.oracle.xmlns.adf.svc.types.ViewCriteria nexted = new ViewCriteria();
+		nexted.setConjunction(Conjunction.AND);
+
+		ViewCriteriaRow viewCriteriaRow = new ViewCriteriaRow();
+		viewCriteriaRow.setConjunction(Conjunction.AND);
+
+		/*ViewCriteriaItem viewCriteriaItem = new ViewCriteriaItem();
+		viewCriteriaItem.setConjunction(Conjunction.AND);
+		viewCriteriaItem.setAttribute(inputVO.getAttributeName()); // "StatusId"
+		viewCriteriaItem.setUpperCaseCompare(false);
+		viewCriteriaItem.setOperator("=");
+		viewCriteriaItem.getValue().add(inputVO.getAttributeValue());// "7"
+
+		viewCriteriaRow.getItem().add(viewCriteriaItem);*/
+
+		com.oracle.xmlns.adf.svc.types.ViewCriteria filter = new ViewCriteria();
+		filter.setConjunction(Conjunction.AND);
+
+		filter.getNested().add(nexted);
+
+		filter.getGroup().add(viewCriteriaRow);
+		criteria.setFilter(filter);
+
+		criteria.getFindAttribute().add(SOAP_STATUS_EN);
+		criteria.getFindAttribute().add(SOAP_STATUS_AR);
+		criteria.getFindAttribute().add("StatusId");
+		criteria.setExcludeAttribute(false);
+
+		FindControl findControl = new FindControl();
+		findControl.setRetrieveAllTranslations(true);
+		List<StatusLookupsViewSDO> output = null;
+		try {
+			output = stub.findStatusLookupsView1(criteria, findControl);
+			logger.info("findStatusLookupsView1  Success  | Row Return = " + output.size());
+			if (output.size() > 0) {
+					for (StatusLookupsViewSDO temp : output) {
+					StatusLookupsOutputVO status=new StatusLookupsOutputVO();
+					status.setStatusAr(temp.getStatusAr().getValue());
+					status.setStatusEn(temp.getStatusEn().getValue());
+					statusLookupsOutputVO.put(temp.getStatusId(), status);
+				}
+			} else {
+				logger.info("Failure   | No data Return");
+			}
+		} catch (uaq.db.si.model.common.ServiceException e) {
+			// TODO Auto-generated catch block
+			logger.error("Failure  |" + e.getMessage());
+		}
+
+		return statusLookupsOutputVO;
+
+	}
+
+	/**
+	 * This Method will use for get The Service Name based on Service Id From Look Up Services
+	 * 
+	 * @param inputVO
+	 * @return StatusLookupsOutputVO
+	 */
+	public Map<BigDecimal,StatusLookupsOutputVO> getServiceLookups(MyRequestInputVO inputVO) {
+		
+		createStub();
+		
+		Map<BigDecimal,StatusLookupsOutputVO> statusLookupsOutputVO = new HashMap<BigDecimal, StatusLookupsOutputVO>();
+		FindCriteria criteria = new FindCriteria();
+
+		criteria.setFetchStart(0);
+		criteria.setFetchSize(-1);
+
+		com.oracle.xmlns.adf.svc.types.ViewCriteria nexted = new ViewCriteria();
+		nexted.setConjunction(Conjunction.AND);
+
+		ViewCriteriaRow viewCriteriaRow = new ViewCriteriaRow();
+		viewCriteriaRow.setConjunction(Conjunction.AND);
+
+		/*ViewCriteriaItem viewCriteriaItem = new ViewCriteriaItem();
+		viewCriteriaItem.setConjunction(Conjunction.AND);
+		viewCriteriaItem.setAttribute(inputVO.getAttributeName()); // "StatusId"
+		viewCriteriaItem.setUpperCaseCompare(false);
+		viewCriteriaItem.setOperator("=");
+		viewCriteriaItem.getValue().add(inputVO.getAttributeValue());// "7"
+
+		viewCriteriaRow.getItem().add(viewCriteriaItem);*/
+
+		com.oracle.xmlns.adf.svc.types.ViewCriteria filter = new ViewCriteria();
+		filter.setConjunction(Conjunction.AND);
+
+		filter.getNested().add(nexted);
+
+		filter.getGroup().add(viewCriteriaRow);
+		criteria.setFilter(filter);
+
+		criteria.getFindAttribute().add(SOAP_SERVICE_EN);
+		criteria.getFindAttribute().add(SOAP_SERVICE_AR);
+		criteria.getFindAttribute().add("ServiceId");
+		criteria.setExcludeAttribute(false);
+
+		FindControl findControl = new FindControl();
+		findControl.setRetrieveAllTranslations(true);
+		List<ServiceLookupsViewSDO> output = null;
+		try {
+			output = stub.findServiceLookupsView1(criteria, findControl);
+
+			if (output.size() > 0) {
+				logger.info("findServiceLookupsView1  Success  | Row Return + " + output.size());
+				for (ServiceLookupsViewSDO temp : output) {
+					StatusLookupsOutputVO statusLookups =new StatusLookupsOutputVO();
+					statusLookups.setServiceNameAr(temp.getServiceNameAr().getValue());
+					statusLookups.setServiceNameEn(temp.getServiceNameEn().getValue());
+					statusLookupsOutputVO.put(temp.getServiceId(), statusLookups);
+				}
+			} else {
+				logger.info("Failure   | No data Return");
+			}
+		} catch (uaq.db.si.model.common.ServiceException e) {
+			// TODO Auto-generated catch block
+			logger.error("Failure  |" + e.getMessage());
+		}
+
+		return statusLookupsOutputVO;
+
+	}
+	
+	public MyRequestOutputVO getUserNameFromRequestNo(String requestNo){
+		
+		createStub();
+
+		ViewCriteriaRow viewCriteriaRow = new ViewCriteriaRow();
+		viewCriteriaRow.setConjunction(Conjunction.AND);
+
+		ViewCriteriaItem viewCriteriaItem = new ViewCriteriaItem();
+		viewCriteriaItem.setConjunction(Conjunction.AND);
+		viewCriteriaItem.setAttribute(SOAP_REQUESTNO_ARGUMENT);
+		viewCriteriaItem.setUpperCaseCompare(false);
+		viewCriteriaItem.setOperator("=");
+		viewCriteriaItem.getValue().add(requestNo);
+		viewCriteriaRow.getItem().add(viewCriteriaItem);
+		com.oracle.xmlns.adf.svc.types.ViewCriteria nexted = new ViewCriteria();
+		nexted.setConjunction(Conjunction.AND);
+
+		com.oracle.xmlns.adf.svc.types.ViewCriteria filter = new ViewCriteria();
+		filter.setConjunction(Conjunction.AND);
+		filter.getNested().add(nexted);
+		filter.getGroup().add(viewCriteriaRow);
+
+		/*SortAttribute sortAttribute = new SortAttribute();
+		sortAttribute.setName("CreatedDate");
+		sortAttribute.setDescending(true);*/
+
+		/*SortOrder sortOrder = new SortOrder();
+		sortOrder.getSortAttribute().add(sortAttribute);*/
+
+		FindCriteria findCriteria = new FindCriteria();
+		findCriteria.setFilter(filter);
+		findCriteria.setFetchSize(-1);
+		findCriteria.setFetchStart(0);
+		findCriteria.setExcludeAttribute(false);
+		//findCriteria.setSortOrder(sortOrder);
+		findCriteria.getFindAttribute().add(SOAP_REQUESTNO_ARGUMENT);
+		findCriteria.getFindAttribute().add(SOAP_USERNAME_ARGUMENT);
+		
+
+		FindControl findControl = new FindControl();
+		findControl.setRetrieveAllTranslations(true);
+
+		List<ApplicantRequestViewSDO> output = null;
+		MyRequestOutputVO outputVO =new MyRequestOutputVO ();
+		try {
+			output = stub.findApplicantRequestView1(findCriteria, findControl);
+			logger.info("findApplicantRequestView1  Success  | Row Return + " + output.size());
+			if (output.size() > 0) {
+					for (ApplicantRequestViewSDO temp : output) {
+					outputVO.setRequestNo(temp.getRequestNo().getValue());
+					outputVO.setUserName(temp.getUserName().getValue());
+					outputVO.setServiceExecution(SERVICE_SUCCESS);
+				}
+			} else {
+				outputVO.setServiceExecution(SERVICE_FAILED);
+				logger.info("Failure   | No data Return");
+			}
+		} catch (uaq.db.si.model.common.ServiceException e) {
+			outputVO.setServiceExecution(SERVICE_FAILED);
+			logger.error("Failure  |" + e.getMessage());
+		}
+		return outputVO;
+		
+	}
+
+}

@@ -1,0 +1,113 @@
+package com.uaq.common;
+
+import static com.uaq.common.ServiceNameConstant.LAND_PROPERTY_VALUTION_REQUEST;
+
+import java.util.Calendar;
+
+import com.uaq.vo.LoginOutputVO;
+
+public class PaymentSessionUtil {
+
+	/**
+	 * This Function will return the Login Info from comma separated String.
+	 * Based on this Url-String returnUrl =
+	 * "returnUrl=testUrl?isMobile=true,acountId=17056,token=28125,typeOfUser=1,status=Active,username=31373632383733333732353630373833"
+	 * ;
+	 * 
+	 * @param String
+	 * @return LoginOutputVO
+	 * @author WINDOS
+	 *
+	 */
+	public static LoginOutputVO getLoginInfoFromComaSeparatedValue(String queryString) {
+
+		LoginOutputVO loginInfo = new LoginOutputVO();
+		loginInfo.setTokenCode(queryString.split(",")[1].split("=")[1]);
+		loginInfo.setUsername(queryString.split(",")[2].split("=")[1]);
+		loginInfo.setAcountId(queryString.split(",")[3].split("=")[1]);
+		loginInfo.setStatus(queryString.split(",")[4].split("=")[1]);
+		loginInfo.setTypeOfUser(queryString.split(",")[5].split("=")[1]);
+		loginInfo.setCreatedDate(Calendar.getInstance());
+		loginInfo.setLastUpdatedDate(Calendar.getInstance());
+		loginInfo.setExecutionStatus("Success");
+
+		return loginInfo;
+
+	}
+
+	/**
+	 * This Function will return the Login Info in a comma separate String.
+	 * 
+	 * @param LoginOutputVO
+	 * @param boolean
+	 * @return String
+	 * @author WINDOS
+	 *
+	 */
+	/*public static String getStringComaSeparatedValueFromLoginInfo(LoginOutputVO logininfo, boolean isMobile) {
+
+		String logininfoString = "?isMobile=" + isMobile + ",token=" + logininfo.getTokenCode() + ",username=" + logininfo.getUsername() + ",acountId=" + logininfo.getAcountId() + ",status="
+				+ logininfo.getStatus() + ",typeOfUser=" + logininfo.getTypeOfUser();
+
+		return logininfoString;
+
+	}
+	
+	public static SessionRequestDetail getPaymentReviewUrl(LoginOutputVO logininfo, AccountDetailTokenOutputVO accountDetailTokenOutputVO,boolean isMobile,String returnUrl,SessionRequestDetail sessionRequestDetail){
+		
+		//String paymentReviewUrl = "&customerId=" +accountDetailForMobile.getAccountId()+"&customerName="+accountDetailForMobile.getFirstName()+"&languageCode="+languageCode+returnUrl+getStringComaSeparatedValueFromLoginInfo(logininfo,isMobile);
+		
+		sessionRequestDetail.setReturnURL(getStringComaSeparatedValueFromLoginInfo(logininfo,isMobile));
+		sessionRequestDetail.setCustomerId(accountDetailTokenOutputVO.getAccountId());
+		sessionRequestDetail.setCustomerName(accountDetailTokenOutputVO.getFirstName());
+		
+		
+		return sessionRequestDetail;
+	}*/
+
+	/**
+	 * This Method will return the page lable name based on Service Id.
+	 * 
+	 * @param String
+	 * @return String
+	 * 
+	 * @author WINDOS
+	 *
+	 */
+	public static String getPageLable(String serviceId) {
+
+		String pgLbl = "purchase.payment.review";
+		if (serviceId != null && !serviceId.isEmpty()) {
+			if (serviceId.equals(ServiceNameConstant.ADD_LAND_REQUEST)) {
+				pgLbl = "label.ps.addlandReq";
+			} else if (serviceId.equals(ServiceNameConstant.GRAND_LAND_REQUEST)) {
+				pgLbl = "label.ps.grantlandreq";
+			} else if (serviceId.equals(ServiceNameConstant.ISSUE_SITE_PLAN_DOCUMENT_REQUEST)) {
+				pgLbl = "label.ps.issueSitePlan";
+			} else if (serviceId.equals(ServiceNameConstant.LAND_DEMACRATION_REQUEST)) {
+				pgLbl = "label.ps.landDemorcation";
+			} else if (serviceId.equals(ServiceNameConstant.GRAND_LAND_REQUEST_EXCEPTION)) {
+				pgLbl = "label.ps.extensiongrantland";
+			}else if (serviceId.equals(ServiceNameConstant.NEW_SUPPLIER_REGISTRATION)) {
+				pgLbl = "label.egd.newSupplier";
+			}else if (serviceId.equals(ServiceNameConstant.RENEW_SUPPLIER_REGISTRATION)) {
+				pgLbl = "label.egd.renewSupplier";
+			}else if (serviceId.equals(ServiceNameConstant.ISSUE_TO_WHOME_IT_MAY_CERTIFICATE)) {
+				pgLbl = "label.lp.toWhomCert";
+			}else if (serviceId.equals(ServiceNameConstant.ISSUE_NEW_PRO_REQUEST)) {
+				pgLbl = "label.lp.newProCard";
+			}else if (serviceId.equals(ServiceNameConstant.EXTENTION_OF_GRANT_LAND_REQUEST)) {
+				pgLbl = "label.ps.extensiongrantland";
+			}else if (serviceId.equals(ServiceNameConstant.LAND_PROPERTY_VALUTION_REQUEST)) {
+				pgLbl = "label.lp.landProperty";
+			}else if (serviceId.equals(ServiceNameConstant.RENEW_PRO_REQUEST)) {
+				pgLbl = "label.lp.renewProCard";
+			}
+			
+			
+		}
+		return pgLbl;
+
+	}
+
+}

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="baseLayout" template="/WEB-INF/jsp/portal/common/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/jsp/portal/common/header.jsp" />
+		<put-attribute name="mobilemenu" value="/WEB-INF/jsp/portal/common/mobileMenu.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/portal/common/footer.jsp" />
+	</definition>
+	
+	<definition name="serviceMobileBaseLayout" template="/WEB-INF/jsp/portal/common/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/jsp/portal/common/mobileheader.jsp" />
+		<put-attribute name="mobilemenu" value="/WEB-INF/jsp/portal/common/mobileMenu.jsp" /> 
+		<put-attribute name="body" value="" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/portal/common/mobilefooter.jsp" />
+	</definition>
+	
+	<definition name="portal.sitemap" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/siteMap/siteMap.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+		<put-attribute name="title" value="SiteMap" />
+	</definition>
+	
+	<definition name="news.detail" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/news/newsBody.jsp" />
+		<put-attribute name="rightcolumn" value="/WEB-INF/jsp/portal/news/newsRightColumn.jsp" />
+		<put-attribute name="title" value="News Detail" />
+	</definition>
+
+	<definition name="news.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/news/newsListBody.jsp" />
+		<put-attribute name="rightcolumn" value="" />
+	</definition>
+
+	<definition name="faq.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/faq/faq.jsp" />
+		<put-attribute name="rightcolumn" value="" />
+	</definition>
+
+	<definition name="image.gallery" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/imageGallery/imageGallery.jsp" />
+	</definition>
+
+	<definition name="video.gallery" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/videoGallery/videoGallery.jsp" />
+	</definition>
+
+	<definition name="global.home" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/home/homeBody.jsp" />
+		<put-attribute name="rightcolumn" value="/WEB-INF/jsp/common/mobileMenu.jsp" />
+		<put-attribute name="title" value="News Detail" />
+	</definition>
+
+	<definition name="landing.page" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/landing/landingBody.jsp" />
+		<put-attribute name="rightcolumn" value="/WEB-INF/jsp/common/mobileMenu.jsp" />
+		<put-attribute name="title" value="News Detail" />
+	</definition>
+
+	<definition name="detail.page" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/detail/detailBody.jsp" />
+		<put-attribute name="rightcolumn" value="/WEB-INF/jsp/common/mobileMenu.jsp" />
+		<put-attribute name="title" value="Detail Page" />
+	</definition>
+
+	<definition name="third.detail.page" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/detail/thirdDetailBody.jsp" />
+		<put-attribute name="rightcolumn" value="/WEB-INF/jsp/common/mobileMenu.jsp" />
+		<put-attribute name="title" value="Detail Page" />
+	</definition>
+
+
+	<definition name="feedback" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/feedback/feedback.jsp" />
+		<put-attribute name="title" value="Feedback" />
+	</definition>
+
+	<definition name="feedbackConfirmation" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/feedback/feedbackConfirmation.jsp" />
+		<put-attribute name="rightcolumn" value="/WEB-INF/jsp/views/news/newsRightColumn.jsp" />
+		<put-attribute name="title" value="Feedback Confirmation" />
+	</definition>
+
+	<definition name="events.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/events/eventBody.jsp" />
+		<put-attribute name="title" value="Events List Page" />
+	</definition>
+
+	<definition name="event.detail" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/events/eventDetails.jsp" />
+		<put-attribute name="title" value="Event Page" />
+	</definition>
+
+	<definition name="departments.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/department/departments.jsp" />
+		<put-attribute name="title" value="Department List Page" />
+	</definition>
+
+	<definition name="department.detail" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/department/departmentDetails.jsp" />
+		<put-attribute name="title" value="Department Page" />
+	</definition>
+
+	<definition name="generic.page" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/genericContent.jsp" />
+		<put-attribute name="title" value="Generic Page" />
+	</definition>
+
+	<!-- Sites Layouts and Definitions -->
+
+	<definition name="events.detail" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/events/eventBody.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="awards.detail" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/awards/awardsBody.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="awards.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/awards/awardsList.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="services.detail" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/services/servicesBody.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="cachecleared" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/cache.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="services.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/services/servicesList.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="careers.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/careers/careersBody.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="career.detail" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/careers/careerDetails.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+	
+	<definition name="registration.account" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/registrationIndividualUAECitizen.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="registration.success" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/registrationsucces.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+
+	<definition name="activate.form" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/Activation_Form_Individual.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="activate.account" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/userAccountActivation.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="activate.success" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/activateSuccess.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="otp.page" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/Submit_Otp.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="forgetUsername.page" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/forgotUsername.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="forgetPassword.page" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/forgotPassword.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="search" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/search.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+	
+	<definition name="common.tahkyou" extends="baseLayout" >
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/thankyou.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+	
+	<definition name="page.not.found" extends="baseLayout">
+		<put-attribute name="sitesrightcolumn" value="" />
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/pagenotfound.jsp" />
+	</definition>
+	
+	<definition name="rss.feeds.page" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/rssFeedsPage.jsp" />
+		<put-attribute name="title" value="RSS Feeds Page" />
+	</definition>
+	
+	<definition name="payment.review" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/payment/payment_review.jsp" />
+		<put-attribute name="title" value="Payment Review Page" />
+	</definition>
+	<definition name="payment.confirmation" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/payment/payment_confirmation.jsp" />
+		<put-attribute name="title" value="Payment Confirmation Page" />
+	</definition>
+	<definition name="error.page" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/payment/error_page.jsp" />
+		<put-attribute name="title" value="Payment Autoupdate Page" />
+	</definition>	
+	<definition name="payment.review.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/payment/payment_review.jsp" />
+		<put-attribute name="title" value="Payment Review Page" />
+	</definition>
+	<definition name="payment.confirmation.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/payment/payment_confirmation.jsp" />
+		<put-attribute name="title" value="Payment Confirmation Page" />
+	</definition>
+	<definition name="error.page.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/payment/error_page.jsp" />
+		<put-attribute name="title" value="Payment Autoupdate Page" />
+	</definition>
+	
+	<definition name="comingsoon" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/comingsoon.jsp" />
+		<put-attribute name="title" value="Coming Soon" />
+	</definition>
+	
+	<definition name="funeral" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/funeral/funeral.jsp" />
+		<put-attribute name="title" value="Funeral" />
+	</definition>
+
+	<definition name="funeralConfirmation" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/funeral/funeralConfirmation.jsp" />
+		<put-attribute name="rightcolumn" value="/WEB-INF/jsp/views/news/newsRightColumn.jsp" />
+		<put-attribute name="title" value="Funeral Confirmation" />
+	</definition>
+	
+	<definition name="funeralLogin" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/funeral/funeralLogin.jsp" />
+		<put-attribute name="title" value="FuneralLogin" />
+	</definition>
+
+</tiles-definitions>

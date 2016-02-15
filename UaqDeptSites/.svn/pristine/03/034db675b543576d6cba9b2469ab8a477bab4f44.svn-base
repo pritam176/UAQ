@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+    
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" >
+
+   <appender
+        name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File"  value="/tomcat/logs/uaq_dept_sites.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param
+                name="ConversionPattern"
+                value="[uaq][%p][%d{dd-MMM-yyyy HH:mm:ss.SSS z}] %c{1}.%M(%L) | %m%n" />
+        </layout>
+    </appender>
+    
+    <appender
+        name="PAYMENTFA" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File"  value="/tomcat/logs/uaq_epay.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param
+                name="ConversionPattern"
+                value="[uaq][%p][%d{dd-MMM-yyyy HH:mm:ss.SSS z}] %c{1}.%M(%L) | %m%n" />
+        </layout>
+    </appender>
+    
+    <logger name="com.uaq">
+        <level value="DEBUG"/>
+        <appender-ref ref="FILE"/>        
+    </logger>
+    <logger name="com.uaq.payment">
+        <level value="DEBUG"/>        
+        <appender-ref ref="PAYMENTFA"/>
+    </logger>
+    
+    <root>
+		<level value="ERROR" />
+		<appender-ref ref="FILE" />
+		<appender-ref ref="PAYMENTFA"/>
+	</root>
+    
+</log4j:configuration>

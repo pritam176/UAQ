@@ -1,0 +1,107 @@
+package com.uaq.service;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import javax.xml.rpc.ServiceException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import uaq.service.myservice.model.MyServiceRequest;
+import uaq.service.myservice.model.MyServiceRequestPortBindingStub;
+import uaq.service.myservice.model.MyServiceRequestService;
+import uaq.service.myservice.model.MyServiceRequestServiceLocator;
+import ValidateAuthenticationTokensequriy.GetRequestDetailstype;
+
+import com.uaq.logger.UAQLogger;
+import com.uaq.vo.MyRequestInputVO;
+import com.uaq.vo.MyRequestOutputVO;
+
+@Service("myRequestServiceNew")
+public class MyRequestServiceNew {
+
+	@Autowired
+	private PortalUtil portalUtil;
+
+	protected static UAQLogger logger = new UAQLogger(MyRequestServiceNew.class);
+
+	private MyServiceRequest port = null;
+	private MyServiceRequestService service = null;
+	private MyServiceRequestPortBindingStub stub = null;
+	uaq.service.myservice.model.UserContext ws_user = null;
+
+	private void createstub() {
+
+		ws_user = new uaq.service.myservice.model.UserContext();
+		ws_user.setUsername("uaqdev");
+		ws_user.setPassword("welcome1");
+
+		try {
+			service = new MyServiceRequestServiceLocator();
+			port = service.getMyServiceRequestPort();
+			stub = (MyServiceRequestPortBindingStub) port;
+
+		} catch (ServiceException e) {
+			logger.error("Failure | " + e.getMessage());
+		}
+	}
+
+	public List<MyRequestOutputVO> getMyRequestData(MyRequestInputVO inputVO) {
+
+		createstub();
+
+		ValidateAuthenticationTokensequriy.InputPayload myRequestInput = new ValidateAuthenticationTokensequriy.InputPayload();
+
+		ValidateAuthenticationTokensequriy.AuthenticationTokenPayload authenticationToken = new ValidateAuthenticationTokensequriy.AuthenticationTokenPayload();
+		authenticationToken.setAcountId("");
+		authenticationToken.setTokenCode("");
+		authenticationToken.setTypeOfUser("");
+		authenticationToken.setUsername("");
+		authenticationToken.setStatus("");
+		authenticationToken.setCreatedDate(Calendar.getInstance());
+		authenticationToken.setLastUpdatedDate(Calendar.getInstance());
+
+		myRequestInput.setAuthenticationToken(authenticationToken);
+		myRequestInput.setLogin_username(inputVO.getAttributeValue());
+
+		List<MyRequestOutputVO> requestList = new ArrayList<MyRequestOutputVO>();
+
+		try {
+			ValidateAuthenticationTokensequriy.OutputPayload outputResponce = stub
+					.getMyRequest(myRequestInput, ws_user);
+			if (outputResponce != null) {
+				int noOfRequest = outputResponce.getGetRequestDetails().length;
+				logger.info("findApplicantRequestView1  Success  | Row Return + "
+						+ noOfRequest);
+				if (noOfRequest > 0) {
+					GetRequestDetailstype[] requestDetail = outputResponce
+							.getGetRequestDetails();
+					for (GetRequestDetailstype temp : requestDetail) {
+						MyRequestOutputVO outputVO = new MyRequestOutputVO();
+						outputVO.setRequestNo(temp.getREQUEST_NO());
+						outputVO.setStatusId(temp.getSTATUS_ID());
+						outputVO.setServiceId(temp.getSERVICE_ID());
+						outputVO.setCreatedDate(portalUtil
+								.toXMLGregorianCalendar(temp.getCREATED_DATE()));
+						outputVO.setModifiedDate(portalUtil
+								.toXMLGregorianCalendar(temp.getMODIFIED_DATE()));
+						outputVO.setServicename_EN(temp.getSERVICE_NAME_EN());
+						outputVO.setServicename_AR(temp.getSERVICE_NAME_AR());
+						outputVO.setStatusName_EN(temp.getSTATUS_EN());
+						outputVO.setStatusName_AR(temp.getSTATUS_AR());
+						requestList.add(outputVO);
+					}
+				}
+			} else {
+				logger.error("Failure | stub.getMyRequest(myRequestInput,ws_user) return Null ");
+			}
+
+		} catch (Exception e) {
+			logger.error("Failure | " + e.getMessage());
+		}
+		return requestList;
+	}
+
+}

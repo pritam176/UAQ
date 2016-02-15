@@ -1,0 +1,364 @@
+package com.uaq.service;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+
+import javax.xml.rpc.ServiceException;
+
+import org.springframework.stereotype.Service;
+
+import uaq.middleware.services.ps.PSServiceMiddleLayerResubmit;
+import uaq.middleware.services.ps.PSServiceMiddleLayerResubmitPortBindingStub;
+import uaq.middleware.services.ps.PSServiceMiddleLayerResubmitService;
+import uaq.middleware.services.ps.PSServiceMiddleLayerResubmitServiceLocator;
+import uaq.middleware.services.ps.UserContext;
+import GetAllRequestDetails.InputPayload;
+import GetAllRequestDetails.OutputPayload;
+import GetExtensionOfGrantLndRequestDetails.ExtensionGrantLandReq;
+
+
+import com.uaq.common.ServiceNameConstant;
+import com.uaq.logger.UAQLogger;
+
+import com.uaq.vo.PSGrandLandRequestVO;
+import com.uaq.vo.PSResubmissonOutputVO;
+import com.uaq.vo.ReSubmiisionInputVO;
+import static com.uaq.common.ApplicationConstants.*;
+
+@Service("pSFindRequestService")
+public class PSFindRequestService {
+
+	protected static UAQLogger logger = new UAQLogger(PSFindRequestService.class);
+
+	private PSServiceMiddleLayerResubmitService service = null;
+	private PSServiceMiddleLayerResubmit port = null;
+	private PSServiceMiddleLayerResubmitPortBindingStub stub = null;
+
+	UserContext userContext = null;
+
+	private void createStub() {
+		userContext = new UserContext();
+		userContext.setUsername(WS_USERNAME);
+		userContext.setPassword(WS_PASSWORD);
+
+		try {
+			service = (PSServiceMiddleLayerResubmitService) new PSServiceMiddleLayerResubmitServiceLocator();
+			port = service.getPSServiceMiddleLayerResubmitPort();
+			stub = (PSServiceMiddleLayerResubmitPortBindingStub) port;
+
+		} catch (ServiceException e) {
+			logger.error("WebService Error  |" + e.getMessage());
+			e.printStackTrace();
+
+		}
+	}
+
+	public PSResubmissonOutputVO findAddLandRequest(ReSubmiisionInputVO inputVO) {
+
+		logger.enter("findAddLandRequest");
+		createStub();
+
+		OutputPayload outputPayload = null;
+		GetAllRequestDetails.InputPayload inputPayLoad = new InputPayload();
+		inputPayLoad.setRequestId(inputVO.getAttributeValue().split("-")[3]);
+		inputPayLoad.setRequestNo(inputVO.getAttributeValue());
+
+		PSResubmissonOutputVO psReSubmissonOuputVO = new PSResubmissonOutputVO();
+		try {
+			outputPayload = stub.getAddlandAllDetails(inputPayLoad, userContext);
+		} catch (RemoteException e) {
+			psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+			logger.error(e.getMessage());
+		}
+
+		if (outputPayload != null) {
+
+			psReSubmissonOuputVO.setNocAttachment(outputPayload.getRequestNOCList());
+			psReSubmissonOuputVO.setServiceAttachments(outputPayload.getAttachemntList());
+			psReSubmissonOuputVO.setOptionalComments(outputPayload.getAddlandRec().getOptionalcomment());
+			psReSubmissonOuputVO.setStatus(outputPayload.getStatus());
+			psReSubmissonOuputVO.setAreaBlock(outputPayload.getAddlandRec().getAreaBlock());
+			psReSubmissonOuputVO.setAreaNo(outputPayload.getAddlandRec().getAreaNo());
+			psReSubmissonOuputVO.setAreaPlotNo(outputPayload.getAddlandRec().getAreaPlotNo());
+			psReSubmissonOuputVO.setAreaSubArea(outputPayload.getAddlandRec().getAreaSubArea());
+			psReSubmissonOuputVO.setAssignedtousername(outputPayload.getAddlandRec().getAssignedtousername());
+			psReSubmissonOuputVO.setCommiteeRemarks(outputPayload.getAddlandRec().getCommiteeRemarks());
+			psReSubmissonOuputVO.setCreatedby(outputPayload.getAddlandRec().getCreatedby());
+			psReSubmissonOuputVO.setCreateddate(outputPayload.getAddlandRec().getCreateddate());
+			psReSubmissonOuputVO.setModifiedby(outputPayload.getAddlandRec().getModifiedby());
+			psReSubmissonOuputVO.setModifieddate(outputPayload.getAddlandRec().getModifieddate());
+			psReSubmissonOuputVO.setId(outputPayload.getAddlandRec().getId());
+			psReSubmissonOuputVO.setLandUsage(outputPayload.getAddlandRec().getLandUsage());
+			psReSubmissonOuputVO.setLandValue(outputPayload.getAddlandRec().getLandValue());
+			psReSubmissonOuputVO.setOwnerId(outputPayload.getAddlandRec().getOwnerId());
+			psReSubmissonOuputVO.setOwnername(outputPayload.getAddlandRec().getOwnername());
+			psReSubmissonOuputVO.setOwnerNationalityid(outputPayload.getAddlandRec().getOwnerNationalityid());
+			psReSubmissonOuputVO.setRequestNo(outputPayload.getAddlandRec().getRequestNo());
+			psReSubmissonOuputVO.setRequestNocLetterid(outputPayload.getAddlandRec().getRequestNocLetterid());
+			psReSubmissonOuputVO.setSecPlotNo(outputPayload.getAddlandRec().getSecPlotNo());
+			psReSubmissonOuputVO.setSecSectorNo(outputPayload.getAddlandRec().getSecSectorNo());
+			psReSubmissonOuputVO.setSectorBlock(outputPayload.getAddlandRec().getSectorBlock());
+			psReSubmissonOuputVO.setServiceId(outputPayload.getAddlandRec().getServiceId());
+			psReSubmissonOuputVO.setSitePlanDate(outputPayload.getAddlandRec().getSitePlanDate());
+			psReSubmissonOuputVO.setSiteplanDocId(outputPayload.getAddlandRec().getSiteplanDocId());
+			psReSubmissonOuputVO.setSitePlanNo(outputPayload.getAddlandRec().getSitePlanNo());
+			psReSubmissonOuputVO.setSourcetype(outputPayload.getAddlandRec().getSourcetype());
+			psReSubmissonOuputVO.setStatusid(outputPayload.getAddlandRec().getStatusid());
+			psReSubmissonOuputVO.setSubmittednocid(outputPayload.getAddlandRec().getSubmittednocid());
+			psReSubmissonOuputVO.setSubSectorNo(outputPayload.getAddlandRec().getSubSectorNo());
+			psReSubmissonOuputVO.setSurveReportDocid(outputPayload.getAddlandRec().getSurveReportDocid());
+			psReSubmissonOuputVO.setSurveyorReport(outputPayload.getAddlandRec().getSurveyorReport());
+			psReSubmissonOuputVO.setTrueSitePlanDocumentid(outputPayload.getAddlandRec().getTrueSitePlanDocumentid());
+		} else {
+			psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+			logger.info("Failure  | stub.findPsAddLandReqView1(findCriteria, findControl); return null");
+		}
+		logger.exit("findAddLandRequest");
+
+		return psReSubmissonOuputVO;
+	}
+
+	public PSResubmissonOutputVO findLandDemacration(ReSubmiisionInputVO inputVO) {
+
+		logger.enter("findLandDemacration");
+
+		createStub();
+
+		GetLandDemarcationReqDetails.OutputPayload outputPayload = null;
+		GetLandDemarcationReqDetails.InputPayload inputPayLoad = new GetLandDemarcationReqDetails.InputPayload();
+		// GetAllRequestDetails.InputPayload inputPayLoad = new InputPayload();
+		inputPayLoad.setRequestId(inputVO.getAttributeValue().split("-")[3]);
+		inputPayLoad.setRequestNo(inputVO.getAttributeValue());
+		inputPayLoad.setServiceId("302");
+
+		PSResubmissonOutputVO psReSubmissonOuputVO = new PSResubmissonOutputVO();
+		try {
+
+			outputPayload = stub.getAllLandDemarcationDetails(inputPayLoad, userContext);
+
+		} catch (RemoteException e) {
+			psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+			logger.error(e.getMessage());
+		}
+
+		if (outputPayload != null) {
+			psReSubmissonOuputVO.setLandDemarcationAttachments(outputPayload.getAttachmentList());
+			psReSubmissonOuputVO.setOptionalComments(outputPayload.getLandDemarcationReC().getOptionalcomment());
+			psReSubmissonOuputVO.setStatus(outputPayload.getLandDemarcationReC().getStatusid().toString());
+			psReSubmissonOuputVO.setAreaBlock(outputPayload.getLandDemarcationReC().getAreaBlock());
+			psReSubmissonOuputVO.setAreaNo(outputPayload.getLandDemarcationReC().getAreaNo());
+			psReSubmissonOuputVO.setAreaPlotNo(outputPayload.getLandDemarcationReC().getAreaPlotNo());
+			psReSubmissonOuputVO.setAreaSubArea(outputPayload.getLandDemarcationReC().getAreaSubArea());
+			psReSubmissonOuputVO.setAssignedtousername(outputPayload.getLandDemarcationReC().getAssignedtousername());
+			psReSubmissonOuputVO.setCreatedby(outputPayload.getLandDemarcationReC().getCreatedby());
+			psReSubmissonOuputVO.setLandDemarcationCreatedDate(outputPayload.getLandDemarcationReC().getCreateddate());
+			psReSubmissonOuputVO.setModifiedby(outputPayload.getLandDemarcationReC().getModifiedby());
+			psReSubmissonOuputVO.setLandDemarcationModifiedDate(outputPayload.getLandDemarcationReC().getModifieddate());
+			psReSubmissonOuputVO.setId(outputPayload.getLandDemarcationReC().getId());
+			psReSubmissonOuputVO.setLandUsage(outputPayload.getLandDemarcationReC().getLandUsage());
+			psReSubmissonOuputVO.setOwnerId(outputPayload.getLandDemarcationReC().getOwnerId());
+			psReSubmissonOuputVO.setOwnername(outputPayload.getLandDemarcationReC().getOwnername());
+			psReSubmissonOuputVO.setOwnerNationalityid(outputPayload.getLandDemarcationReC().getOwnerNationalityid());
+			psReSubmissonOuputVO.setRequestNo(outputPayload.getLandDemarcationReC().getRequestNo());
+			psReSubmissonOuputVO.setSecPlotNo(outputPayload.getLandDemarcationReC().getSecPlotNo());
+			psReSubmissonOuputVO.setSecSectorNo(outputPayload.getLandDemarcationReC().getSecSectorNo());
+			psReSubmissonOuputVO.setSectorBlock(outputPayload.getLandDemarcationReC().getSectorBlock());
+			psReSubmissonOuputVO.setServiceId(outputPayload.getLandDemarcationReC().getServiceId());
+			psReSubmissonOuputVO.setSitePlanDate(outputPayload.getLandDemarcationReC().getSitePlanDate());
+			psReSubmissonOuputVO.setSiteplanDocId(new BigDecimal(00));
+			psReSubmissonOuputVO.setSitePlanNo(outputPayload.getLandDemarcationReC().getSitePlanNo());
+			psReSubmissonOuputVO.setSourcetype(outputPayload.getLandDemarcationReC().getSourcetype());
+			psReSubmissonOuputVO.setStatusid(outputPayload.getLandDemarcationReC().getStatusid());
+			psReSubmissonOuputVO.setSubmittednocid(new BigDecimal(00));
+			psReSubmissonOuputVO.setSubSectorNo(outputPayload.getLandDemarcationReC().getSubSectorNo());
+			psReSubmissonOuputVO.setSurveReportDocid(outputPayload.getLandDemarcationReC().getSurveReportDocid());
+			psReSubmissonOuputVO.setSurveyorReport(outputPayload.getLandDemarcationReC().getSurveyorReport());
+			psReSubmissonOuputVO.setTrueSitePlanDocumentid(new BigDecimal(00));
+		} else {
+			psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+			logger.info("Failure  | stub.getAllLandDemarcationDetails(findCriteria, findControl); return null");
+		}
+		logger.exit("findLandDemacration");
+		return psReSubmissonOuputVO;
+	}
+
+	public PSGrandLandRequestVO getGrandLandRequest(ReSubmiisionInputVO inputVO) {
+		createStub();
+
+		PSGrandLandRequestVO pSGrandLandRequestVO = new PSGrandLandRequestVO();
+		/*
+		 * try { output = stub.findGrantLandReqView1(findCriteria, findControl);
+		 * if (output != null) { if (output.size() > 0) {
+		 * 
+		 * GrantLandReqViewSDO temp = output.get(0);
+		 * pSGrandLandRequestVO.setCreatedby(temp.getCreatedby().getValue());
+		 * pSGrandLandRequestVO
+		 * .setCreateddate(temp.getCreateddate().getValue());
+		 * pSGrandLandRequestVO.setModifiedby(temp.getModifiedby().getValue());
+		 * pSGrandLandRequestVO
+		 * .setModifieddate(temp.getModifieddate().getValue());
+		 * pSGrandLandRequestVO.setId(temp.getId());
+		 * pSGrandLandRequestVO.setFamilyMembersNo
+		 * (temp.getFamilyMembersNo().getValue());
+		 * pSGrandLandRequestVO.setEmployer(temp.getEmployer().getValue());
+		 * pSGrandLandRequestVO
+		 * .setMonthlySalary(temp.getMonthlySalary().getValue());
+		 * pSGrandLandRequestVO
+		 * .setCurrentaddress(temp.getCurrentaddress().getValue());
+		 * pSGrandLandRequestVO
+		 * .setMaritalStatus(temp.getMaritalStatus().getValue());
+		 * pSGrandLandRequestVO
+		 * .setSpousesEmiratesId(temp.getSpousesEmiratesId().getValue());
+		 * pSGrandLandRequestVO.setOwnerId(temp.getOwnerId().getValue());
+		 * pSGrandLandRequestVO.setOwnername(temp.getOwnername().getValue());
+		 * pSGrandLandRequestVO
+		 * .setOwnerNationalityId(temp.getOwnerNationalityId().getValue());
+		 * pSGrandLandRequestVO.setRequestNo(temp.getRequestNo().getValue());
+		 * pSGrandLandRequestVO.setServiceId(temp.getServiceId().getValue());
+		 * pSGrandLandRequestVO.setSourcetype(temp.getSourcetype().getValue());
+		 * pSGrandLandRequestVO.setStatusid(temp.getStatusid().getValue());
+		 * 
+		 * logger.info("Success  |" + output.size()); } else {
+		 * //pSGrandLandRequestVO.setStatus("Failure"); logger.info(
+		 * "Failure  | stub.findIssueSitePlanDocReqView1(findCriteria, findControl); return 0 elemnt"
+		 * ); } } else { //pSGrandLandRequestVO.setStatus("Failure");
+		 * logger.info(
+		 * "Failure  | stub.findIssueSitePlanDocReqView1(findCriteria, findControl); return null"
+		 * ); } } catch (uaq.db.si.model.common.ServiceException e) {
+		 * //psReSubmissonOuputVO.setStatus("Failure");
+		 * logger.error("Failure  | " + e.getMessage()); }
+		 */
+		return pSGrandLandRequestVO;
+	}
+
+	public PSResubmissonOutputVO findIssueSitePlanDocRequest(ReSubmiisionInputVO inputVO) {
+
+		logger.enter("findIssueSitePlanDocRequest");
+		createStub();
+
+		GetIssueSitePlnRequestDetails.OutputPayload outputPayload = null;
+		GetIssueSitePlnRequestDetails.InputPayload inputPayLoad = new GetIssueSitePlnRequestDetails.InputPayload();
+		// GetAllRequestDetails.InputPayload inputPayLoad = new InputPayload();
+		inputPayLoad.setRequestId(inputVO.getAttributeValue().split("-")[3]);
+		inputPayLoad.setRequestNo(inputVO.getAttributeValue());
+
+		PSResubmissonOutputVO psReSubmissonOuputVO = new PSResubmissonOutputVO();
+		try {
+
+			outputPayload = stub.getAllIssueSitePlanDetails(inputPayLoad, userContext);
+
+			if (outputPayload != null) {
+				psReSubmissonOuputVO.setIssueSitePlnAttachments(outputPayload.getAttachmentList());
+				psReSubmissonOuputVO.setOptionalComments(outputPayload.getIssueSitePlanRec().getOptionalcomment());
+				psReSubmissonOuputVO.setStatus("");
+				psReSubmissonOuputVO.setAreaBlock(outputPayload.getIssueSitePlanRec().getAreaBlock());
+				psReSubmissonOuputVO.setAreaNo(outputPayload.getIssueSitePlanRec().getAreaNo());
+				psReSubmissonOuputVO.setAreaPlotNo(outputPayload.getIssueSitePlanRec().getAreaPlotNo());
+				psReSubmissonOuputVO.setAreaSubArea(outputPayload.getIssueSitePlanRec().getAreaSubArea());
+				psReSubmissonOuputVO.setAssignedtousername("");
+				psReSubmissonOuputVO.setCreatedby(outputPayload.getIssueSitePlanRec().getCreatedby());
+				psReSubmissonOuputVO.setModifiedby(outputPayload.getIssueSitePlanRec().getModifiedby());
+				psReSubmissonOuputVO.setId(outputPayload.getIssueSitePlanRec().getId());
+				psReSubmissonOuputVO.setLandUsage(outputPayload.getIssueSitePlanRec().getLandUsage());
+				psReSubmissonOuputVO.setOwnerId(outputPayload.getIssueSitePlanRec().getOwnerid());
+				psReSubmissonOuputVO.setOwnername(outputPayload.getIssueSitePlanRec().getOwnername());
+				psReSubmissonOuputVO.setOwnerNationalityid(outputPayload.getIssueSitePlanRec().getOwnerNationalityId());
+				psReSubmissonOuputVO.setRequestNo(outputPayload.getIssueSitePlanRec().getRequestNo());
+				psReSubmissonOuputVO.setSecPlotNo(outputPayload.getIssueSitePlanRec().getSecPlotNo());
+				psReSubmissonOuputVO.setSecSectorNo(outputPayload.getIssueSitePlanRec().getSecSectorNo());
+				psReSubmissonOuputVO.setSectorBlock(outputPayload.getIssueSitePlanRec().getSectorBlock());
+				psReSubmissonOuputVO.setServiceId(outputPayload.getIssueSitePlanRec().getServiceId());
+				psReSubmissonOuputVO.setSitePlanDate(outputPayload.getIssueSitePlanRec().getSitePlanDate());
+				psReSubmissonOuputVO.setSiteplanDocId(new BigDecimal(00));
+				psReSubmissonOuputVO.setSitePlanNo(outputPayload.getIssueSitePlanRec().getSitePlanNo());
+				psReSubmissonOuputVO.setSourcetype(outputPayload.getIssueSitePlanRec().getSourcetype());
+				psReSubmissonOuputVO.setStatusid(outputPayload.getIssueSitePlanRec().getStatusid());
+				psReSubmissonOuputVO.setSubmittednocid(new BigDecimal(00));
+				psReSubmissonOuputVO.setSubSectorNo(outputPayload.getIssueSitePlanRec().getSubSectorNo());
+				// psReSubmissonOuputVO.setSurveReportDocid(outputPayload.getIssueSitePlanRec().getSupportiveattachdocid()==null?new
+				// BigDecimal("0") :new
+				// BigDecimal(outputPayload.getIssueSitePlanRec().getSupportiveattachdocid()));
+				psReSubmissonOuputVO.setSurveyorReport(outputPayload.getIssueSitePlanRec().getSurveReport());
+				psReSubmissonOuputVO.setTrueSitePlanDocumentid(new BigDecimal(00));
+			} else {
+				psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+				logger.info("getAllIssueSitePlanDetails Service returns null");
+			}
+
+		} catch (RemoteException e) {
+			psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+			logger.info("getAllIssueSitePlanDetails throwns Service Exception :: " + e.getMessage());
+			// e.printStackTrace();
+		}
+
+		logger.exit("findIssueSitePlanDocRequest");
+		return psReSubmissonOuputVO;
+	}
+
+	public PSResubmissonOutputVO findExtentionGrandLandRequest(ReSubmiisionInputVO inputVO) {
+		createStub();
+
+		PSResubmissonOutputVO psReSubmissonOuputVO = new PSResubmissonOutputVO();
+		GetExtensionOfGrantLndRequestDetails.InputPayload inputPayLoad = new GetExtensionOfGrantLndRequestDetails.InputPayload();
+		inputPayLoad.setRequestId(inputVO.getAttributeValue().split("-")[3]);
+		inputPayLoad.setRequestNo(inputVO.getAttributeValue());
+		inputPayLoad.setServiceId(ServiceNameConstant.EXTENTION_OF_GRANT_LAND_REQUEST);
+
+		GetExtensionOfGrantLndRequestDetails.OutputPayload output = null;
+		try {
+			output = stub.getAllGrandLandRequest(inputPayLoad, userContext);
+
+			if (output != null) {
+				ExtensionGrantLandReq extGrandLand = output.getExtensionOfGrantLandRec();
+				if (extGrandLand != null) {
+					psReSubmissonOuputVO.setExtentionAttachmentList(output.getAttachmentList());
+					psReSubmissonOuputVO.setStatus("Success");
+					psReSubmissonOuputVO.setAreaBlock(extGrandLand.getAreaBlock());
+					psReSubmissonOuputVO.setAreaNo(extGrandLand.getAreaName());
+					psReSubmissonOuputVO.setAreaPlotNo(extGrandLand.getAreaPlotNo());
+					psReSubmissonOuputVO.setAreaSubArea(extGrandLand.getAreaSubArea());
+					psReSubmissonOuputVO.setOptionalComments(extGrandLand.getOptionalcomment());
+					// psReSubmissonOuputVO.setCommiteeRemarks(temp.getCommitee);
+					psReSubmissonOuputVO.setCreatedby(extGrandLand.getCreatedby());
+					psReSubmissonOuputVO.setCreateddate(extGrandLand.getCreateddate());
+					psReSubmissonOuputVO.setModifiedby(extGrandLand.getModifiedby());
+					psReSubmissonOuputVO.setModifieddate(extGrandLand.getModifieddate());
+					psReSubmissonOuputVO.setId(extGrandLand.getId());
+					psReSubmissonOuputVO.setLandUsage(extGrandLand.getLandUsage());
+					// psReSubmissonOuputVO.setLandValue(extGrandLand.getLandValue());
+					psReSubmissonOuputVO.setOwnerId(extGrandLand.getOwnerid());
+					psReSubmissonOuputVO.setOwnername(extGrandLand.getOwnername());
+					psReSubmissonOuputVO.setOwnerNationalityid(extGrandLand.getOwnerNationalityId());
+					psReSubmissonOuputVO.setRequestNo(extGrandLand.getRequestNo());
+					// psReSubmissonOuputVO.setRequestNocLetterid(temp.getRequestNocLetterid().getValue());
+					psReSubmissonOuputVO.setSecPlotNo(extGrandLand.getSecPlotNo());
+					psReSubmissonOuputVO.setSecSectorNo(extGrandLand.getSecSectorName());
+					psReSubmissonOuputVO.setSectorBlock(extGrandLand.getSectorBlock());
+					psReSubmissonOuputVO.setServiceId(extGrandLand.getServiceId());
+					psReSubmissonOuputVO.setSitePlanDate(extGrandLand.getSitePlanDate());
+					// psReSubmissonOuputVO.setSiteplanDocId(temp.getSitePlanDocumentid().getValue());
+					psReSubmissonOuputVO.setSitePlanNo(extGrandLand.getSitePlanNo() == null? "":extGrandLand.getSitePlanNo().toString());
+					psReSubmissonOuputVO.setSourcetype(extGrandLand.getSourcetype());
+					psReSubmissonOuputVO.setStatusid(extGrandLand.getStatusid());
+					// psReSubmissonOuputVO.setSubmittednocid(temp.getSubmittednocid().getValue());
+					psReSubmissonOuputVO.setSubSectorNo(extGrandLand.getSubSectorNo());
+					psReSubmissonOuputVO.setGrandExpiryDate(extGrandLand.getGrantExpiryDate());
+					psReSubmissonOuputVO.setGranIssueDate(extGrandLand.getGrantIssuanceDate());
+					
+					logger.info("Success Return Request |" + extGrandLand.getRequestNo());
+				} else {
+					psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+					logger.info("Failure  | output.getExtensionOfGrantLandRec(); return null");
+				}
+			} else {
+				psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+				logger.info("Failure  | stub.getAllGrandLandRequest(inputPayLoad, userContext); return null");
+			}
+		} catch (RemoteException e) {
+			psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+			logger.info("Failed   | "+e.getMessage());
+		}
+		return psReSubmissonOuputVO;
+	}
+
+}

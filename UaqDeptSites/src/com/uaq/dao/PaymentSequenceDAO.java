@@ -1,0 +1,93 @@
+package com.uaq.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.uaq.common.PropertiesUtil;
+import com.uaq.logger.UAQLogger;
+
+public class PaymentSequenceDAO {
+
+	private static transient UAQLogger logger = new UAQLogger(PaymentSequenceDAO.class);
+
+	private static final String DB_DRIVER = PropertiesUtil.getProperty("soa.jdbc.driverClassName");
+	private static final String DB_CONNECTION = PropertiesUtil.getProperty("soa.jdbc.url");
+	private static final String DB_USER = PropertiesUtil.getProperty("soa.jdbc.username");
+	private static final String DB_PASSWORD = PropertiesUtil.getProperty("soa.jdbc.password");
+
+	private Connection con;
+
+	// used to establish connection with SOA database
+	private Connection getConnection() throws ClassNotFoundException, SQLException {
+
+		try {
+			Class.forName(DB_DRIVER);
+		} catch (ClassNotFoundException e) {
+			logger.error(e.getMessage());
+		}
+
+		try {
+			con = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
+		return con;
+	}
+
+	public String getSequenceByDepartment(String sequenceName) {
+
+		logger.enter("getSequenceByDepartment");
+
+		String query = "SELECT " + sequenceName + ".NEXTVAL FROM DUAL";
+		logger.debug("SQL - " + sequenceName);
+
+		String nextValue = "";
+		PreparedStatement ps = null;
+		Connection con = null;
+
+		try {
+
+			con = getConnection();
+			ps = con.prepareStatement(query);
+			ResultSet rs  = ps.executeQuery();
+			while (rs.next()) {
+				nextValue =rs.getInt(1)+"";
+			
+			}
+
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				logger.error(e.getMessage());
+			}
+		} catch (ClassNotFoundException e) {
+			logger.error(e.getMessage());
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					logger.error(e.getMessage());
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					logger.error(e.getMessage());
+				}
+			}
+		}
+
+		logger.exit("getSequenceByDepartment  -" + nextValue);
+
+		return nextValue;
+	}
+
+}

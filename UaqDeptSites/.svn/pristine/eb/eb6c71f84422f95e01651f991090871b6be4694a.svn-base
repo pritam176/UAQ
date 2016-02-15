@@ -1,0 +1,301 @@
+package com.uaq.controller;
+
+import static com.uaq.common.ApplicationConstants.*;
+import static com.uaq.common.ServiceNameConstant.*;
+import static com.uaq.common.StatusNameConstant.*;
+import static com.uaq.common.TilesViewConstant.*;
+import static com.uaq.common.WebServiceConstant.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import uaq.pymt.si.model.common.EserviceFeeMatrixViewSDO;
+
+import com.uaq.common.ApplicationConstants;
+import com.uaq.common.PaymentSessionUtil;
+import com.uaq.common.PropertiesUtil;
+import com.uaq.common.ViewPath;
+import com.uaq.logger.UAQLogger;
+import com.uaq.service.LPFindRequestService;
+import com.uaq.service.MyRequestService;
+import com.uaq.service.PaymentService;
+import com.uaq.service.PortalUtil;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+import com.uaq.vo.LPtoWhomeConcernVO;
+import com.uaq.vo.LoginOutputVO;
+import com.uaq.vo.MyRequestOutputVO;
+import com.uaq.vo.PageMetadataVO;
+import com.uaq.vo.ReSubmiisionInputVO;
+import com.uaq.vo.SessionRequestDetail;
+
+/**
+ * @author WINDOS
+ * 
+ */
+@Controller
+public class PaymentController extends BaseController {
+
+	static final String PAYMENT_ACTION = "paymentReview";
+
+	public static transient UAQLogger logger = new UAQLogger(PaymentController.class);
+
+	@Autowired
+	private PortalUtil portalUtil;
+
+	@Autowired
+	private PaymentService paymentService;
+
+	@Autowired
+	private LPFindRequestService lFindRequestService;
+
+	@Autowired
+	private MyRequestService myRequestService;
+
+	/***
+	 * Handler Method for Proceed To Payment request & call the payment Review
+	 * Controller. URL-/uaq/myrequest.html
+	 **/
+
+	@RequestMapping(value = ViewPath.PROCED_TO_PAYMENT, method = RequestMethod.GET)
+	public String handlePaymentRequest(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		super.handleRequest(request, model);
+		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
+
+		Locale locale = new Locale(languageCode);
+		PageMetadataVO pageMetadataVO = new PageMetadataVO();
+		pageMetadataVO.setPageTitle(messageSource.getMessage("purchase.payment.review", null, locale));
+		pageMetadataVO.setPageDescription(messageSource.getMessage("purchase.payment.review", null, locale));
+		pageMetadataVO.setPageKeywords(messageSource.getMessage("purchase.payment.review", null, locale));
+
+		String viewname = EMPTY_STRING;
+		String id = EMPTY_STRING;
+		String requestNo = portalUtil.decryptParameter(request.getParameter(REQUEST_PARAM_REQUEST_NO));
+		String serviceId = portalUtil.decryptParameter(request.getParameter(REQUEST_PARAM_SERVICE_ID));
+
+		String statusId = portalUtil.decryptParameter(request.getParameter(REQUEST_PARAM_STATUS_ID));
+		String pagelable = portalUtil.decryptParameter(request.getParameter(REQUEST_PARAM_PAGE_LABLE));
+		// String letter =
+		// portalUtil.decryptParameter(request.getParameter(REQUEST_PARAM_LP_LETTER));
+		String typeOfUser = portalUtil.decryptParameter(request.getParameter(REQUEST_PARAM_TYPE_OF_USER));
+
+		MyRequestOutputVO requestOutpur = myRequestService.getUserNameFromRequestNo(requestNo);
+
+		Map<String, String> queryParamsMap = new HashMap<String, String>();
+		queryParamsMap.put(REQUEST_PARAM_REQUEST_NO, requestNo);
+		queryParamsMap.put(REQUEST_PARAM_SERVICE_ID, serviceId);
+		queryParamsMap.put(REQUEST_PARAM_STATUS_ID, statusId);
+		queryParamsMap.put(REQUEST_PARAM_PAGE_LABLE, pagelable);
+		queryParamsMap.put(REQUEST_PARAM_TYPE_OF_USER, typeOfUser);
+		// queryParamsMap.put(REQUEST_PARAM_LP_LETTER, letter);
+		pagelable = PaymentSessionUtil.getPageLable(serviceId);
+
+		logger.info("requestNo-" + requestNo + " serviceId - " + serviceId + " pagelable " + pagelable);
+
+		String paymentURL = SPRING_REDIRECT + PropertiesUtil.getProperty("globalUrl") + URL_SEPARATOR + languageCode + URL_SEPARATOR + PAYMENT_ACTION + URL_HTML_EXTENSION + QUESTION_MARK;
+
+		Map<String, String> paymentSearchCriteriaMap = getSearchCriteriaMap(serviceId, queryParamsMap);
+
+		if (paymentSearchCriteriaMap.isEmpty()) {
+			logger.info("paymentSearchCriteriaMap is empty for the service : " + serviceId);
+		}
+
+		List<EserviceFeeMatrixViewSDO> paymentFeeIdList = paymentService.getPaymentFeeIdList(paymentSearchCriteriaMap);
+		String feeId = null;
+		if (paymentFeeIdList != null) {
+			for (EserviceFeeMatrixViewSDO obj : paymentFeeIdList) {
+				feeId = obj.getFeeId().getValue();
+			}
+
+			if (statusId.equals(PROCEED_TO_APPLICATION_FEE_PAYMENT)) {
+				id = requestNo.split("-")[3] + UNDERSCORE + feeId;
+
+				// feTyp = "&feeType=" + APPLICATION_FEES
+				// +"&userType="+typeOfUser;
+			} else if (statusId.equals(PROCEED_TO_SERVICE_FEE_PAYMENT)) {
+				id = requestNo.split("-")[3] + UNDERSCORE + feeId;
+			}
+		}
+
+		/*
+		 * String returnUrl = "&returnUrl=/" + languageCode + URL_SEPARATOR +
+		 * ApplicationConstants.THANKYOU_PAYMENT_URL;
+		 */
+
+		SessionRequestDetail sessionRequestDetail = new SessionRequestDetail();
+
+		sessionRequestDetail.setPurchaseId(id);
+		sessionRequestDetail.setFeeId(feeId);
+		sessionRequestDetail.setRequestNo(requestNo);
+		sessionRequestDetail.setLanguageCode(languageCode);
+		sessionRequestDetail.setPagelable(pagelable);
+		sessionRequestDetail.setServiceId(serviceId);
+		sessionRequestDetail.setStatusId(statusId);
+		sessionRequestDetail.setTypeOfUser(typeOfUser);
+
+		// Getting the URL paramert for Mobile;
+		// 1-from Normal request submission Flow.
+		// 2-From MYrequest Flow
+		LoginOutputVO logininfo = null;
+		if (portalUtil.isMobile(request, response)) {
+			viewname = MOBILE_LOGIN_AGAIN;
+			logininfo = portalUtil.getLoginDetailFromMobileRequest(request);
+			if (logininfo.getAcountId() == null) {
+				logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+				logger.debug("(From Normal Flow)Mobile User Detail from session- Account Id" + logininfo.getAcountId() + "Token Code-" + logininfo.getTokenCode() + "UserName-"
+						+ logininfo.getUsername());
+			}
+
+			if (logininfo != null) {
+				if (portalUtil.validateToken(logininfo)) {
+					AccountDetailTokenOutputVO accountDetailForMobile = portalUtil.getAccountDetailForMobile(logininfo);
+					if (accountDetailForMobile != null && accountDetailForMobile.getAccountId() != null) {
+						logger.info("Mobile    |    Token Validated  | Redirecting Paynment Page");
+						if (!requestOutpur.getServiceExecution().equals(SERVICE_FAILED)) {
+							if (requestOutpur.getUserName().equals(accountDetailForMobile.getUserName())) {
+								request.getSession().setAttribute(SESSION_LOGIN_INFO_PORTAL, logininfo);
+								viewname = paymentURL;
+								sessionRequestDetail.setMobile(true);
+								sessionRequestDetail.setCustomerId(accountDetailForMobile.getAccountId());
+								sessionRequestDetail.setCustomerName(accountDetailForMobile.getFirstName());
+								logger.info("view Name=" + viewname);
+							}else{
+								model.addAttribute("invalid" ,"true");
+								logger.debug("Invalid User Data");
+							}
+						}
+					}
+				}
+			}if (viewname.equals(MOBILE_LOGIN_AGAIN)) {
+				logger.info("Desktop  |  Failure    |    User Not Loged In ");
+				request.getSession().invalidate();
+			}
+
+		} else {
+			viewname = PORTAL_LOGIN_AGAIN;
+			logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
+			if (logininfo != null) {
+				if (portalUtil.validateToken(logininfo)) {
+					AccountDetailTokenOutputVO accountDetailfromToken = (AccountDetailTokenOutputVO) request.getSession().getAttribute(ApplicationConstants.SESSION_ACCOUNT_DETAIL_FROM_TOKEN);
+					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
+						logger.info("Desktop    |    Token Validated  | Redirecting Paynment Page");
+						if (!requestOutpur.getServiceExecution().equals(SERVICE_FAILED)) {
+							if (requestOutpur.getUserName().equals(accountDetailfromToken.getUserName())) {
+								viewname = paymentURL;
+								sessionRequestDetail.setMobile(false);
+								sessionRequestDetail.setCustomerId(accountDetailfromToken.getAccountId());
+								sessionRequestDetail.setCustomerName(accountDetailfromToken.getFirstName());
+							}else{
+								model.addAttribute("invalid" ,true);
+								logger.debug("Invalid User Data");
+							}
+						}
+					}
+				}
+			}
+			if (viewname.equals(PORTAL_LOGIN_AGAIN)) {
+				logger.info("Desktop  |  Failure    |    User Not Loged In ");
+				request.getSession().invalidate();
+			}
+			model.addAttribute(PAGE_LABEL, pagelable);
+		}
+		request.getSession().setAttribute(SESSION_PAYMENT_DETAIL, sessionRequestDetail);
+		model.addAttribute(PAGE_META_DATA, pageMetadataVO);
+		return viewname;
+
+	}
+
+	private Map<String, String> getSearchCriteriaMap(String serviceId, Map<String, String> queryParamsMap) {
+		Map<String, String> searchCriteriaMap = null;
+
+		switch (serviceId) {
+		case ISSUE_SITE_PLAN_DOCUMENT_REQUEST:
+			searchCriteriaMap = new HashMap<String, String>();
+			String typeOfUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
+			String serviceIdtypeOfUser = serviceId + UNDERSCORE + typeOfUser;
+			String IssueSitePlanSearchCriteria = PropertiesUtil.getProperty(serviceIdtypeOfUser);
+			String[] keywords = IssueSitePlanSearchCriteria.split(COMMA);
+			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, ISSUE_SITE_PLAN_DOCUMENT_REQUEST);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
+			searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
+			break;
+
+		case NEW_SUPPLIER_REGISTRATION:
+			searchCriteriaMap = new HashMap<String, String>();
+			String newSupplierID = queryParamsMap.get(REQUEST_PARAM_SERVICE_ID);
+			String newSupplierSerachCrieteria = PropertiesUtil.getProperty(newSupplierID);
+			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, NEW_SUPPLIER_REGISTRATION);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, newSupplierSerachCrieteria);
+			break;
+
+		case RENEW_SUPPLIER_REGISTRATION:
+			searchCriteriaMap = new HashMap<String, String>();
+			String reNewSupplierId = queryParamsMap.get(REQUEST_PARAM_SERVICE_ID);
+			String reNewSupplierSerachCrieteria = PropertiesUtil.getProperty(reNewSupplierId);
+			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, RENEW_SUPPLIER_REGISTRATION);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, reNewSupplierSerachCrieteria);
+			break;
+		case ADD_LAND_REQUEST:
+			searchCriteriaMap = new HashMap<String, String>();
+			String addLandTypeofUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
+			String addLandRequestSTatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
+			String propertyFileKey = serviceId + UNDERSCORE + addLandRequestSTatus + UNDERSCORE + addLandTypeofUser;
+			String addLandIdSerachCrieteria = PropertiesUtil.getProperty(propertyFileKey);
+			keywords = addLandIdSerachCrieteria.split(COMMA);
+			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, ADD_LAND_REQUEST);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
+			searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
+			break;
+
+		case LAND_DEMACRATION_REQUEST:
+			searchCriteriaMap = new HashMap<String, String>();
+			String landDemacrationTypeofUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
+			String landDemacrationrequestSTatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
+			String landDemacrationrequestpropertyFileKey = serviceId + UNDERSCORE + landDemacrationrequestSTatus + UNDERSCORE + landDemacrationTypeofUser;
+			String landDemacrationSerachCrieteria = PropertiesUtil.getProperty(landDemacrationrequestpropertyFileKey);
+			keywords = landDemacrationSerachCrieteria.split(COMMA);
+			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, LAND_DEMACRATION_REQUEST);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
+			searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
+			break;
+		case ISSUE_TO_WHOME_IT_MAY_CERTIFICATE:
+			// TowhomeEverMayConcern
+			searchCriteriaMap = new HashMap<String, String>();
+			ReSubmiisionInputVO inputVO = new ReSubmiisionInputVO();
+			inputVO.setAttributeName(SOAP_REQUESTNO_ARGUMENT);
+			inputVO.setAttributeValue(queryParamsMap.get(REQUEST_PARAM_REQUEST_NO));
+			LPtoWhomeConcernVO lptoWhomeConcernVO = lFindRequestService.findLpToWhomConcernView1(inputVO, LANG_ENGLISH);
+			String letter = "3";
+			int letterid = lptoWhomeConcernVO.getAddressedtoId().intValue();
+			if (letterid == 4 || letterid == 6 || letterid == 7 || letterid == 0 || letterid == 8 || letterid == 9 || letterid == 12 || letterid == 13 || letterid == 14) {
+				letter = "2";
+			} else if (letterid == 2 || letterid == 5) {
+				letter = "1";
+			}
+
+			String towepropertyFileKey = serviceId + "_" + letter;
+			String toweSerachCrieteria = PropertiesUtil.getProperty(towepropertyFileKey);
+			keywords = toweSerachCrieteria.split(",");
+			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, serviceId);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
+			searchCriteriaMap.put("Letter", keywords[1]);
+			break;
+
+		default:
+			searchCriteriaMap = new HashMap<String, String>();
+
+		}
+
+		return searchCriteriaMap;
+	}
+}

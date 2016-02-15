@@ -1,0 +1,97 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<div class="mainmenu">
+					<div class="col-md-12 hidden-xs hidden-sm">
+						<div class="mainmenu-wrap">
+							<ul class="no-list cf">
+								<li>
+									<a href="/${param.languageCode}/home.html"><img src="/img/home1.png" alt="Home UAQ">
+									</a>
+								</li>
+								<li class=""><a href="/${param.languageCode}/services/servicecatalog.html"><spring:message code="form.header.service" /></a>
+								</li>
+								<li class="active"><a href="#"><spring:message code="${pagelable}" /></a>
+								</li>
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--/mainmenu -->
+					<div class="content">	
+						<!-- right col -->
+						<!-- left col -->
+						<div class="col-xs-12 col-sm-9 col-md-9 main-left-col">
+							<!-- page title -->
+							<div class="page-title-wrap">
+								<div class="row">
+									<div class="col-xs-12 col-sm-9 col-md-10 title-txt">
+										<!-- sub page title 
+										<h4 class="page-title-sub">
+										MUNICIPALITY
+										</h4>-->
+										<!-- /sub page title -->
+										<!-- page title -->
+										<h2 class="page-title">
+											 <spring:message code="${pagelable}" />
+										</h2>
+										<!-- /page title -->
+									</div>
+									<div class="hidden-xs show-sm col-md-2 title-icon">
+										<img src="/img/icons/icon-uaq.png" alt="uaq">
+									</div>
+								</div>
+							</div>
+							<!-- /page title -->
+							<div class="main-content-wrap">
+								<div class="page-content-wrap">
+									  <div class="row">
+											<div class="col-md-12 thankyou-page"> 
+											<%-- <c:if test="${not empty typeOfUser }">
+											  <c:if test="${typeOfUser == '2' }">
+											  		<script type="text/javascript">
+												alert('<spring:message code="plz.login.individual" />');
+												
+												</script>
+											  </c:if>
+											  <c:if test="${typeOfUser == '1' }">
+											  		<script type="text/javascript">
+												alert('<spring:message code="plz.login.establishment" />');
+												
+												</script>
+											  </c:if>
+											</c:if>
+											<c:if test="${ empty typeOfUser}">
+											<script type="text/javascript">
+												alert('<spring:message code="plz.login" />');
+												</script>
+											</c:if> --%>
+												
+												 <div>
+												 <c:if test="${ empty typeOfUser}">
+												 <spring:message code="plz.login" />
+												 </c:if>
+												  <c:if test="${typeOfUser == '1' }">
+												  <spring:message code="plz.login.establishment" />
+												  </c:if>
+												  <c:if test="${typeOfUser == '2' }">
+												  <spring:message code="plz.login.individual" />
+												  </c:if>
+												  <c:if test="${invalid == 'true' }">
+												  <br />
+												  <spring:message code="userdata.invalid" />
+												  </c:if>
+												 </div>
+											</div>
+									  </div>
+								</div>
+							</div>
+						<!-- /left col -->
+					</div>
+			</div>
+		<!-- script -->
+	<!-- 	<script src="/js/dest/app.js"></script> -->
+		
+	

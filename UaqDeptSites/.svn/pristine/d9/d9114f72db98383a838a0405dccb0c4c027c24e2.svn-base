@@ -1,0 +1,749 @@
+package com.uaq.service;
+
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.rpc.ServiceException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import uaq.middleware.services.ps.PSServiceMiddleLayerResubmit;
+import uaq.middleware.services.ps.PSServiceMiddleLayerResubmitPortBindingStub;
+import uaq.middleware.services.ps.PSServiceMiddleLayerResubmitService;
+import uaq.middleware.services.ps.PSServiceMiddleLayerResubmitServiceLocator;
+import uaq.middleware.services.ps.ReSubmitGrandLandRequestArg0;
+
+import uaq.middleware.services.ps.UserContext;
+
+import com.AddLandRequest.Inputpayload;
+import com.AddLandRequest.PaymentDetailsPayload;
+import com.AddLandRequest.UserDetailsPayload;
+import com.ExtensionOfGrantLand.ActionLogRecPayload;
+import com.uaq.common.ApplicationConstants;
+import com.uaq.controller.mapper.PortalDataMapper;
+import com.uaq.logger.UAQLogger;
+import com.uaq.util.StringUtil;
+import com.uaq.vo.FileOutputVO;
+import com.uaq.vo.LandInputVO;
+import com.uaq.vo.LandOutputVO;
+
+import com.uaq.vo.UserDeatilVO;
+import com.uaq.vo.UserFamilyDetailsVO;
+
+import static com.uaq.common.ApplicationConstants.*;
+
+/**
+ * Service class for ReSubmit Land Request on WSDL Calling. methods- 1-Add Land
+ * Request 2-createLandValuationPropertyRequest 3-extensiongrandland
+ * 4-grandlandrequest 5-landDemarcationRequest
+ * 
+ * Note-This Can Also Use For Review.
+ * 
+ * Jar Name-PSDepartmentReSubmit.jar
+ * WSDL-http://94.57.252.234:7001/UAQPSMiddlewareService
+ * /PSServiceMiddleLayerResubmitPort?WSDL
+ * 
+ * @author Pritam
+ * 
+ */
+
+@Service
+@Qualifier("pSReSubmissionRequestService")
+public class PSReSubmissionRequestService {
+
+	protected static UAQLogger logger = new UAQLogger(PSReSubmissionRequestService.class);
+
+	@Autowired
+	private FileUploadService fileUploadService;
+
+	@Autowired
+	private UCMCenterURLService uCMCenterURLService;
+
+	private PSServiceMiddleLayerResubmitService service = null;
+	private PSServiceMiddleLayerResubmit port = null;
+	private PSServiceMiddleLayerResubmitPortBindingStub stub = null;
+
+	UserContext userContext = null;
+
+	private void createStub() {
+		userContext = new UserContext();
+		userContext.setUsername(ApplicationConstants.WS_USERNAME);
+		userContext.setPassword(ApplicationConstants.WS_PASSWORD);
+
+		try {
+			service = (PSServiceMiddleLayerResubmitService) new PSServiceMiddleLayerResubmitServiceLocator();
+			port = service.getPSServiceMiddleLayerResubmitPort();
+			stub = (PSServiceMiddleLayerResubmitPortBindingStub) port;
+
+		} catch (ServiceException e) {
+			logger.error("WebService Error  |" + e.getMessage());
+
+		}
+	}
+
+	public LandOutputVO reSubmitGrantLand(UserFamilyDetailsVO user, LandInputVO landDemacreationVO) {
+
+		createStub();
+		LandOutputVO outputVO = new LandOutputVO();
+		ReSubmitGrandLandRequestArg0 inputpayload = new ReSubmitGrandLandRequestArg0();
+		org.example.www.Inputpayload grantLandRequestInput = new org.example.www.Inputpayload();
+
+		org.example.www.UserFamilyDetails userFamilyDetails = new org.example.www.UserFamilyDetails();
+
+		userFamilyDetails.setFamilyMembers(user.getFamilyMembers());
+		userFamilyDetails.setCurrentAddress(user.getCurrentAddress());
+		userFamilyDetails.setMaritalStatus(user.getMaritalStatus());
+		userFamilyDetails.setEmployer(user.getEmployer());
+		userFamilyDetails.setMonthlySalary(user.getMonthlySalary());
+		userFamilyDetails.setUsername(user.getUserName());
+		userFamilyDetails.setTypeOfUser(user.getTypeOfUser());
+		userFamilyDetails.setNationality(user.getNationality());
+		userFamilyDetails.setMobileNo(user.getMobileNo());
+		userFamilyDetails.setTradeLienceNo(user.getTradeLienceNo());
+
+		grantLandRequestInput.setUserDetails(userFamilyDetails);
+
+		grantLandRequestInput.setSourceType(landDemacreationVO.getServiceType());
+
+		grantLandRequestInput.setSourceType(landDemacreationVO.getSourceType());
+		grantLandRequestInput.setStatus(landDemacreationVO.getStatus());
+		grantLandRequestInput.setServiceid(landDemacreationVO.getServiceid());
+		grantLandRequestInput.setRequestId(Integer.parseInt(landDemacreationVO.getRequestID()));
+		grantLandRequestInput.setRequestNo(landDemacreationVO.getRequestNo());
+		grantLandRequestInput.setCreatedDate(new Date());
+		grantLandRequestInput.setModifiedDate(new Date());
+		grantLandRequestInput.setOwnerName(landDemacreationVO.getOwnerName());
+		grantLandRequestInput.setOwnerID(landDemacreationVO.getOwnerID());
+		grantLandRequestInput.setCreatedBy(landDemacreationVO.getCreatedBy());
+		grantLandRequestInput.setModifiedBy(landDemacreationVO.getModifiedBy());
+		grantLandRequestInput.setStatusId(1);
+		grantLandRequestInput.setFamilyBookId("1");
+		grantLandRequestInput.setSpousesEmiratesId("1");
+		grantLandRequestInput.setPropertyAccountingId("1");
+		grantLandRequestInput.setSalaryCertificateId("1");
+		grantLandRequestInput.setOwnerNationalityId(1);
+		grantLandRequestInput.setFamilyBookDocId(1);
+		grantLandRequestInput.setPropertyAccountingDocId(1);
+		grantLandRequestInput.setSpousesEmiratesDocId(1);
+		grantLandRequestInput.setSalaryCertificateDocId(1);
+		grantLandRequestInput.setGrantLandDocId(1);
+		grantLandRequestInput.setRulersCourtAcceptanceDocId(1);
+		grantLandRequestInput.setRulersCourtAcceptanceRemark("test");
+
+		org.example.www.AttachmentRecPayload[] attachmentRecPayloads = new org.example.www.AttachmentRecPayload[4];
+
+		if (!(landDemacreationVO.getFamilyBook() == null || landDemacreationVO.getFamilyBook().getSize() == 0)) {
+
+			MultipartFile familyBook = landDemacreationVO.getFamilyBook();
+			FileOutputVO fmilyook = fileUploadService.upLoadFile(familyBook);
+			grantLandRequestInput.setFamilyBookDocId(Integer.parseInt(fmilyook.getDid()));
+			attachmentRecPayloads[0] = getURLofFIle(fmilyook.getDid(), "1", familyBook.getContentType(), fmilyook.getFileName());
+
+		}
+
+		if (!(landDemacreationVO.getFamilyBook() == null || landDemacreationVO.getFamilyBook().getSize() == 0)) {
+
+			MultipartFile propertyAccountDoc = landDemacreationVO.getPropertyAccountDoc();
+			FileOutputVO propertyAccountDocId = fileUploadService.upLoadFile(propertyAccountDoc);
+			grantLandRequestInput.setPropertyAccountingDocId(Integer.parseInt(propertyAccountDocId.getDid()));
+			attachmentRecPayloads[1] = getURLofFIle(propertyAccountDocId.getDid(), "2", propertyAccountDoc.getContentType(), propertyAccountDocId.getFileName());
+		}
+
+		if (!(landDemacreationVO.getFamilyBook() == null || landDemacreationVO.getFamilyBook().getSize() == 0)) {
+			MultipartFile spouceEmirateId = landDemacreationVO.getSpouceEmirateId();
+			FileOutputVO spouceEmirateIdDOcId = fileUploadService.upLoadFile(spouceEmirateId);
+			grantLandRequestInput.setSpousesEmiratesDocId(Integer.parseInt(spouceEmirateIdDOcId.getDid()));
+			attachmentRecPayloads[2] = getURLofFIle(spouceEmirateIdDOcId.getDid(), "3", spouceEmirateId.getContentType(), spouceEmirateIdDOcId.getFileName());
+		}
+
+		if (!(landDemacreationVO.getFamilyBook() == null || landDemacreationVO.getFamilyBook().getSize() == 0)) {
+			MultipartFile salaryCertificate = landDemacreationVO.getSalaryCertificateDoc();
+			FileOutputVO salaryCertificateId = fileUploadService.upLoadFile(salaryCertificate);
+			grantLandRequestInput.setSalaryCertificateDocId(Integer.parseInt(salaryCertificateId.getDid()));
+			attachmentRecPayloads[3] = getURLofFIle(salaryCertificateId.getDid(), "4", salaryCertificate.getContentType(), salaryCertificate.getOriginalFilename());
+		}
+		grantLandRequestInput.setAttachmentList(attachmentRecPayloads);
+		inputpayload.setGrantLandRequestInput(grantLandRequestInput);
+
+		/*
+		 * try { ReSubmitGrandLandRequestResponseReturn output =
+		 * stub.reSubmitGrandLandRequest(inputpayload, userContext); if (output
+		 * != null) { OutputPayload op = output.getGrantLandRequestOutput();
+		 * outputVO.setStatus(op.getStausFlag());
+		 * outputVO.setStatus_EN(op.getStatus_EN());
+		 * outputVO.setStatus_AR(op.getStatus_AR());
+		 * outputVO.setSatausId(op.getInputFields().getStatus());
+		 * outputVO.setServiceId(op.getInputFields().getServiceid());
+		 * outputVO.setRequestNo(op.getRequestNo());
+		 * logger.info(op.getStausFlag() + "  | " + op.getStatus_EN()); } else {
+		 * logger.info(
+		 * " Failure | stub.reSubmitGrandLandRequest(inputpayload, uc)  Return Null"
+		 * ); outputVO.setStatus(SERVICE_FAILED); }
+		 * 
+		 * } catch (RemoteException e) { logger.error("Failure  |  " +
+		 * e.getMessage()); outputVO.setStatus(SERVICE_FAILED); }
+		 */
+		return outputVO;
+	}
+
+	public LandOutputVO reSubmitAddLand(UserDeatilVO user, LandInputVO landDemacreationVO) {
+
+		createStub();
+		LandOutputVO outputVO = new LandOutputVO();
+		Inputpayload inputpayload = new Inputpayload();
+
+		UserDetailsPayload userDetail = new UserDetailsPayload();
+
+		userDetail.setUsername(user.getLoginUserName());
+		userDetail.setTypeOfUser(user.getTypeOfUser());
+		userDetail.setNationality(user.getNationality());
+		userDetail.setAccountid(user.getAccountid());
+		userDetail.setMobileNo(user.getMobileNo());
+		userDetail.setEmailID(user.getEmailID());
+		userDetail.setEmiratesId(user.getEmiratesId());
+		userDetail.setTradeLienceNo(user.getTradeLienceNo());
+		userDetail.setFamilyBookNo(user.getFamilyBookNo());
+		userDetail.setEmirate(user.getEmiratesCode());
+		userDetail.setFirstName(user.getFirstName());
+		userDetail.setMiddleName(user.getMiddleName());
+		userDetail.setLastName(user.getLastName());
+		userDetail.setAddress1(user.getAddress1());
+		userDetail.setAddress2(user.getAddress2());
+		userDetail.setAddress3(user.getAddress3());
+		userDetail.setPOBOX(user.getPOBOX());
+		userDetail.setDOB(user.getDOB());
+		//userDetail.setEmiratesId(user.getEmiratesCode());
+
+		if ("1".equals(user.getTypeOfUser())) {
+			userDetail.setApplicanttypeid(user.getApplicantTypeId());
+		} else {
+			userDetail.setApplicanttypeid("0");
+		}
+
+		inputpayload.setServiceType(landDemacreationVO.getServiceType());
+		inputpayload.setUserComment(landDemacreationVO.getUserComment());
+		inputpayload.setSubmittedByUserId(landDemacreationVO.getSubmittedByUserId());
+		inputpayload.setSourceType(landDemacreationVO.getSourceType());
+		inputpayload.setStatus(landDemacreationVO.getStatus());
+		inputpayload.setServiceName(landDemacreationVO.getServiceName());
+		inputpayload.setServiceid(landDemacreationVO.getServiceid());
+		inputpayload.setRequestID(landDemacreationVO.getRequestID());
+		inputpayload.setRequestNo(landDemacreationVO.getRequestNo());
+		inputpayload.setWorkflowId(landDemacreationVO.getWorkflowId());
+		// inputpayload.setLandDemarcationId(landDemacreationVO.getLandDemarcationId());
+		inputpayload.setLanguageId(landDemacreationVO.getLanguageId());
+		inputpayload.setSite_Plan_No(landDemacreationVO.getSite_Plan_No());
+		// inputpayload.setSite_Plan_Date(portalUtil.toCalendar(landDemacreationVO.getSitePlanDate()));
+		inputpayload.setSite_Plan_Date(null);
+		inputpayload.setSec_Plot_No(landDemacreationVO.getSecPlotNo());
+		inputpayload.setSector_block(landDemacreationVO.getSectorBlock());
+		inputpayload.setSec_Sector_Name(landDemacreationVO.getSecSectorName());
+		inputpayload.setSub_Sector_No(landDemacreationVO.getSubSectorNo());
+		inputpayload.setArea_Name(landDemacreationVO.getAreaName());
+		inputpayload.setArea_Block(landDemacreationVO.getAreaBlock());
+		inputpayload.setArea_Plot_No(landDemacreationVO.getAreaPlotNo());
+		inputpayload.setArea_Sub_Area(landDemacreationVO.getAreaSubArea());
+		inputpayload.setArea_Sub_Area(landDemacreationVO.getAreaSubArea());
+		inputpayload.setLand_Usage(landDemacreationVO.getLandUsage());
+		// inputpayload.setGrant_Issuance_Date(portalUtil.toCalendar(landDemacreationVO.getGrantIssuanceDate()));
+		inputpayload.setGrant_Issuance_Date(null);
+		inputpayload.setAssignedToUserName(landDemacreationVO.getAssignedToUserName());
+		inputpayload.setSurveyor_Report(landDemacreationVO.getSurveyo_Report());
+		inputpayload.setOwnerName(landDemacreationVO.getOwnerName());
+		inputpayload.setSurve_Report_DocId(landDemacreationVO.getSurveReportDocId());
+		inputpayload.setOwnerID(landDemacreationVO.getOwnerID());
+		inputpayload.setOwner_Nationality_ID(landDemacreationVO.getOwnerNationalityID());
+		inputpayload.setSupportiveAttachmentid(landDemacreationVO.getSupportiveAttachmentid());
+		// inputpayload.setExtendedDate(portalUtil.toCalendar(landDemacreationVO.getExtendedDate()));
+		inputpayload.setExtendedDate(null);
+		inputpayload.setCommiteeRemarks(landDemacreationVO.getCommiteeRemarks());
+		inputpayload.setLandValue(new BigInteger(landDemacreationVO.getLandValue()));
+		inputpayload.setUserdecision(landDemacreationVO.getUserDecesion());
+		String did = "";
+		String filenme = "";
+		String ucmUrl = "";
+
+		if (!StringUtil.isEmpty(landDemacreationVO.getSitePlanDocument())) {
+			String filenmae = landDemacreationVO.getSitePlanDocument();
+			logger.debug("File Name from Controller   |  " + filenmae);
+			did = filenmae.split("-")[0];
+			filenme = filenmae.split("-")[1];
+			logger.debug("File filenme=" + filenme);
+			logger.debug("File did=" + did);
+
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
+
+			logger.debug("From WebCenter URL=" + ucmUrl);
+		}
+
+		com.AddLandRequest.AttachmentRecPayload[] attachmentList = new com.AddLandRequest.AttachmentRecPayload[1];
+		attachmentList[0] = new com.AddLandRequest.AttachmentRecPayload();
+		attachmentList[0].setContentid(did);
+		attachmentList[0].setFilename(filenme);
+		attachmentList[0].setUrl(ucmUrl);
+		attachmentList[0].setIsMandatory("1");
+
+		inputpayload.setAttachmentList(attachmentList);
+		inputpayload.setUserDetails(userDetail);
+
+		PaymentDetailsPayload paymentDetails = new PaymentDetailsPayload();
+		paymentDetails.setApplicationPaymentDiscount("");
+		paymentDetails.setApplicationPaymentFees(landDemacreationVO.getTransationAmount());
+		paymentDetails.setApplicationPaymentId(landDemacreationVO.getTransactionId());
+		paymentDetails.setApplicationPaymentStatus(landDemacreationVO.getTransationStatus());
+		paymentDetails.setServicePaymentDiscount("");
+		paymentDetails.setServicePaymentFees("");
+		paymentDetails.setServicePaymentId("");
+		paymentDetails.setServicePaymentStatus("");
+		inputpayload.setPaymentDetails(paymentDetails);
+
+		try {
+			com.AddLandRequest.OutputPayload output = stub.reSubmitAddlandRequest(inputpayload, userContext);
+			if (output != null) {
+				outputVO.setStatus(output.getStausFlag());
+				outputVO.setStatus_EN(output.getStatus_EN());
+				outputVO.setStatus_AR(output.getStatus_AR());
+				outputVO.setRequestNo(output.getRequestNo());
+				logger.info(output.getStausFlag() + "  | " + output.getStatus_EN());
+			} else {
+				logger.info(" Failed | stub.reSubmitAddlandRequest(inputpayload, uc)  Return Null");
+				outputVO.setStatus(SERVICE_FAILED);
+			}
+
+		} catch (Exception e) {
+			logger.error("Failed  |  " + e.getMessage());
+			outputVO.setStatus(SERVICE_FAILED);
+		}
+
+		return outputVO;
+	}
+
+	public LandOutputVO reSubmitLandDemarcationPalnDocument(UserDeatilVO user, LandInputVO landDemacreationVO) throws DatatypeConfigurationException, ParseException {
+		createStub();
+
+		LandOutputVO outputVO = new LandOutputVO();
+		com.LandDemarcation.Inputpayload inputpayload = new com.LandDemarcation.Inputpayload();
+
+		com.LandDemarcation.UserDetailsPayload userDetail = new com.LandDemarcation.UserDetailsPayload();
+
+		userDetail.setUsername(user.getLoginUserName());
+		userDetail.setTypeOfUser(user.getTypeOfUser());
+		userDetail.setNationality(user.getNationality());
+		userDetail.setAccountid(user.getAccountid());
+		userDetail.setMobileNo(user.getMobileNo());
+		userDetail.setEmailID(user.getEmailID());
+		userDetail.setEmiratesId(user.getEmiratesId());
+		userDetail.setTradeLienceNo(user.getTradeLienceNo());
+		userDetail.setFamilyBookNo(user.getFamilyBookNo());
+		//userDetail.setEmirate(user.getEmirate());
+		userDetail.setFirstName(user.getFirstName());
+		userDetail.setMiddleName(user.getMiddleName());
+		userDetail.setLastName(user.getLastName());
+		userDetail.setAddress1(user.getAddress1());
+		userDetail.setAddress2(user.getAddress2());
+		userDetail.setAddress3(user.getAddress3());
+		userDetail.setPOBOX(user.getPOBOX());
+		userDetail.setDOB(user.getDOB());
+		userDetail.setEmirate(user.getEmiratesCode());
+
+		if ("1".equals(user.getTypeOfUser())) {
+			userDetail.setApplicantTypeid(user.getApplicantTypeId());
+		} else {
+			userDetail.setApplicantTypeid("0");
+		}
+		inputpayload.setServiceType(landDemacreationVO.getServiceType());
+		inputpayload.setUserComment(landDemacreationVO.getUserComment());
+		inputpayload.setSubmittedByUserId(landDemacreationVO.getSubmittedByUserId());
+		inputpayload.setSourceType(landDemacreationVO.getSourceType());
+		inputpayload.setStatus(landDemacreationVO.getStatus());
+		inputpayload.setServiceName(landDemacreationVO.getServiceName());
+		inputpayload.setServiceid(landDemacreationVO.getServiceid());
+		inputpayload.setRequestID(landDemacreationVO.getRequestID());
+		inputpayload.setRequestNo(landDemacreationVO.getRequestNo());
+		inputpayload.setWorkflowId(landDemacreationVO.getWorkflowId());
+		inputpayload.setLandDemarcationId(landDemacreationVO.getLandDemarcationId());
+		inputpayload.setLanguageId(landDemacreationVO.getLanguageId());
+		inputpayload.setSite_Plan_No(landDemacreationVO.getSite_Plan_No());
+		inputpayload.setSite_Plan_Date(PortalDataMapper.toCalendar(landDemacreationVO.getSitePlanDate()));
+		inputpayload.setSec_Plot_No(landDemacreationVO.getSecPlotNo());
+		inputpayload.setSector_block(landDemacreationVO.getSectorBlock());
+		inputpayload.setSec_Sector_Name(landDemacreationVO.getSecSectorName());
+		inputpayload.setSub_Sector_No(landDemacreationVO.getSubSectorNo());
+		inputpayload.setArea_Name(landDemacreationVO.getAreaName());
+		inputpayload.setArea_Block(landDemacreationVO.getAreaBlock());
+		inputpayload.setArea_Plot_No(landDemacreationVO.getAreaPlotNo());
+		inputpayload.setArea_Sub_Area(landDemacreationVO.getAreaSubArea());
+		inputpayload.setArea_Sub_Area(landDemacreationVO.getAreaSubArea());
+		inputpayload.setLand_Usage(landDemacreationVO.getLandUsage());
+		inputpayload.setGrant_Issuance_Date(PortalDataMapper.toCalendar(landDemacreationVO.getGrantIssuanceDate()));
+		inputpayload.setAssignedToUserName(landDemacreationVO.getAssignedToUserName());
+		inputpayload.setSurveyor_Report(landDemacreationVO.getSurveyo_Report());
+		inputpayload.setOwnerName(landDemacreationVO.getOwnerName());
+		inputpayload.setSurve_Report_DocId(landDemacreationVO.getSurveReportDocId());
+		inputpayload.setOwnerID(landDemacreationVO.getOwnerID());
+		inputpayload.setOwner_Nationality_ID(landDemacreationVO.getOwnerNationalityID());
+		inputpayload.setSupportiveAttachmentid(landDemacreationVO.getSupportiveAttachmentid());
+		inputpayload.setExtendedDate(PortalDataMapper.toCalendar(landDemacreationVO.getExtendedDate()));
+		inputpayload.setDownloadurlIp("");
+		inputpayload.setMarkasDelivered("");
+		inputpayload.setOperatorComment("");
+		inputpayload.setRecieverIDDocument("");
+		inputpayload.setSubmittedDate(Calendar.getInstance());
+		inputpayload.setFrontDeskSubmitDate(new Date());
+		inputpayload.setLandDemarcationId("");
+		inputpayload.setUserdecision(landDemacreationVO.getUserDecesion());
+		String did = "";
+		String fileName = "";
+		String ucmUrl = "";
+		if (!StringUtil.isEmpty(landDemacreationVO.getSitePlanDocument())) {
+			String filenmae = landDemacreationVO.getSitePlanDocument();
+			logger.debug("File Name from Controller   |  " + filenmae);
+			did = filenmae.split("-")[0];
+			fileName = filenmae.split("-")[1];
+			logger.debug("File Did=" + did);
+			logger.debug("File fileName=" + fileName);
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
+			logger.debug("From WebCenter URL=" + ucmUrl);
+		}
+		com.LandDemarcation.AttachmentRecPayload[] attachmentList = new com.LandDemarcation.AttachmentRecPayload[1];
+		attachmentList[0] = new com.LandDemarcation.AttachmentRecPayload();
+		attachmentList[0].setContentid(did);
+		attachmentList[0].setFilename(fileName);
+		attachmentList[0].setUrl(ucmUrl);
+		attachmentList[0].setIsMandatory("1");
+		attachmentList[0].setDownloadUrl("test");
+		inputpayload.setAttachmentList(attachmentList);
+
+		com.LandDemarcation.PaymentDetailsPayload paymentDetails = new com.LandDemarcation.PaymentDetailsPayload();
+		paymentDetails.setApplicationPaymentDiscount("");
+		paymentDetails.setApplicationPaymentFees(landDemacreationVO.getTransationAmount());
+		paymentDetails.setApplicationPaymentId(landDemacreationVO.getTransactionId());
+		paymentDetails.setApplicationPaymentStatus(landDemacreationVO.getTransationStatus());
+		paymentDetails.setServicePaymentDiscount("");
+		paymentDetails.setServicePaymentFees("");
+		paymentDetails.setServicePaymentId("");
+		paymentDetails.setServicePaymentStatus("");
+		inputpayload.setPaymentDetails(paymentDetails);
+
+		inputpayload.setUserDetails(userDetail);
+
+		try {
+			com.LandDemarcation.OutputPayload output = stub.reSubmitLandDemarcationRequest(inputpayload, userContext);
+			if (output != null) {
+				outputVO.setStatus(output.getStausFlag());
+				outputVO.setStatus_EN(output.getStatus_EN());
+				outputVO.setStatus_AR(output.getStatus_AR());
+				outputVO.setStatus(output.getStausFlag());
+				logger.info(output.getStausFlag() + "  | " + output.getRequestNo() + "  | " + output.getStatus_EN());
+			} else {
+				logger.info(" Failed | stub.reSubmitLandDemarcationRequest(inputpayload, uc)  return Null");
+				outputVO.setStatus(SERVICE_FAILED);
+			}
+
+		} catch (Exception e) {
+			logger.error("Failed  |  " + e.getMessage());
+			outputVO.setStatus(SERVICE_FAILED);
+		}
+
+		return outputVO;
+
+	}
+
+	public LandOutputVO reSubmitissueSitePlanDocument(UserDeatilVO user, LandInputVO issueSitePlanVO) throws DatatypeConfigurationException, ParseException {
+		createStub();
+
+		LandOutputVO outputVO = new LandOutputVO();
+		IssueSitePlanDoc.Inputpayload inputpayload = new IssueSitePlanDoc.Inputpayload();
+
+		IssueSitePlanDoc.UserDetailsPayload userDetail = new IssueSitePlanDoc.UserDetailsPayload();
+
+		userDetail.setUsername(user.getLoginUserName());
+		userDetail.setTypeOfUser(user.getTypeOfUser());
+		userDetail.setNationality(user.getNationality());
+		userDetail.setAccountid(user.getAccountid());
+		userDetail.setMobileNo(user.getMobileNo());
+		userDetail.setEmailID(user.getEmailID());
+		userDetail.setEmiratesId(user.getEmiratesId());
+		userDetail.setTradeLienceNo(user.getTradeLienceNo());
+		userDetail.setFamilyBookNo(user.getFamilyBookNo());
+		userDetail.setEmirate(user.getEmirate());
+		userDetail.setFirstName(user.getFirstName());
+		userDetail.setMiddleName(user.getMiddleName());
+		userDetail.setLastName(user.getLastName());
+		userDetail.setAddress1(user.getAddress1());
+		userDetail.setAddress2(user.getAddress2());
+		userDetail.setAddress3(user.getAddress3());
+		userDetail.setPOBOX(user.getPOBOX());
+		userDetail.setDOB(user.getDOB());
+		//userDetail.setEmiratesId(user.getEmiratesCode());
+
+		if ("1".equals(user.getTypeOfUser())) {
+			userDetail.setApplicanttypeid(user.getApplicantTypeId());
+		} else {
+			userDetail.setApplicanttypeid("0");
+		}
+
+		inputpayload.setServiceType(issueSitePlanVO.getServiceType());
+		inputpayload.setUserComment(issueSitePlanVO.getUserComment());
+		inputpayload.setSubmittedByUserId(issueSitePlanVO.getSubmittedByUserId());
+		inputpayload.setSourceType(issueSitePlanVO.getSourceType());
+		inputpayload.setStatus(issueSitePlanVO.getStatus());
+		inputpayload.setServiceName(issueSitePlanVO.getServiceName());
+		inputpayload.setServiceid(issueSitePlanVO.getServiceid());
+		inputpayload.setRequestID(issueSitePlanVO.getRequestID());
+		inputpayload.setRequestNo(issueSitePlanVO.getRequestNo());
+		inputpayload.setWorkflowId(issueSitePlanVO.getWorkflowId());
+		// inputpayload.setLandDemarcationId(landDemacreationVO.getLandDemarcationId());
+		inputpayload.setLanguageId(issueSitePlanVO.getLanguageId());
+		inputpayload.setSite_Plan_No(issueSitePlanVO.getSite_Plan_No());
+		inputpayload.setSite_Plan_Date(PortalDataMapper.toCalendar(issueSitePlanVO.getSitePlanDate()));
+		inputpayload.setSec_Plot_No(issueSitePlanVO.getSecPlotNo());
+		inputpayload.setSector_block(issueSitePlanVO.getSectorBlock());
+		inputpayload.setSec_Sector_Name(issueSitePlanVO.getSecSectorName());
+		inputpayload.setSub_Sector_No(issueSitePlanVO.getSubSectorNo());
+		inputpayload.setArea_Name(issueSitePlanVO.getAreaName());
+		inputpayload.setArea_Block(issueSitePlanVO.getAreaBlock());
+		inputpayload.setArea_Plot_No(issueSitePlanVO.getAreaPlotNo());
+		inputpayload.setArea_Sub_Area(issueSitePlanVO.getAreaSubArea());
+		inputpayload.setArea_Sub_Area(issueSitePlanVO.getAreaSubArea());
+		inputpayload.setLand_Usage(issueSitePlanVO.getLandUsage());
+		inputpayload.setGrant_Issuance_Date(PortalDataMapper.toCalendar(issueSitePlanVO.getGrantIssuanceDate()));
+		inputpayload.setAssignedToUserName(issueSitePlanVO.getAssignedToUserName());
+		inputpayload.setSurveyor_Report(issueSitePlanVO.getSurveyo_Report());
+		inputpayload.setOwnerName(issueSitePlanVO.getOwnerName());
+		inputpayload.setSurve_Report_DocId(issueSitePlanVO.getSurveReportDocId());
+		inputpayload.setOwnerID(issueSitePlanVO.getOwnerID());
+		inputpayload.setOwner_Nationality_ID(issueSitePlanVO.getOwnerNationalityID());
+		inputpayload.setSupportiveAttachmentid(issueSitePlanVO.getSupportiveAttachmentid());
+		inputpayload.setExtendedDate(PortalDataMapper.toCalendar(issueSitePlanVO.getExtendedDate()));
+		inputpayload.setCommiteeRemarks(issueSitePlanVO.getCommiteeRemarks());
+		inputpayload.setLandValue(new BigInteger("0"));
+		inputpayload.setUserdecision(issueSitePlanVO.getUserDecesion());
+
+		IssueSitePlanDoc.PaymentDetailsPayload paymentDetails = new IssueSitePlanDoc.PaymentDetailsPayload();
+		paymentDetails.setApplicationPaymentDiscount("");
+		paymentDetails.setApplicationPaymentFees(issueSitePlanVO.getTransationAmount());
+		paymentDetails.setApplicationPaymentId(issueSitePlanVO.getTransactionId());
+		paymentDetails.setApplicationPaymentStatus(issueSitePlanVO.getTransationStatus());
+		paymentDetails.setServicePaymentDiscount("");
+		paymentDetails.setServicePaymentFees("");
+		paymentDetails.setServicePaymentId("");
+		paymentDetails.setServicePaymentStatus("");
+		inputpayload.setPaymentDetails(paymentDetails);
+
+		String did = "";
+		String filenme = "";
+		String ucmUrl = "";
+		if (!StringUtil.isEmpty(issueSitePlanVO.getSitePlanDocument())) {
+			String filenmae = issueSitePlanVO.getSitePlanDocument();
+			logger.debug("File Name from Controller   |  " + filenmae);
+			did = filenmae.split("-")[0];
+			filenme = filenmae.split("-")[1];
+			logger.debug("File Did=" + did);
+			logger.debug("File filenme=" + filenme);
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
+			logger.debug("From WebCenter URL=" + ucmUrl);
+		}
+
+		IssueSitePlanDoc.AttachmentRecPayload[] attachmentList = new IssueSitePlanDoc.AttachmentRecPayload[1];
+		attachmentList[0] = new IssueSitePlanDoc.AttachmentRecPayload();
+		attachmentList[0].setContentid(did);
+		attachmentList[0].setFilename(filenme);
+		attachmentList[0].setUrl(ucmUrl);
+		attachmentList[0].setIsMandatory("1");
+
+		inputpayload.setAttachmentList(attachmentList);
+		inputpayload.setUserDetails(userDetail);
+
+		try {
+			IssueSitePlanDoc.OutputPayload output = stub.reSubmitIssueSitePlanRequest(inputpayload, userContext);
+			if (output != null) {
+				outputVO.setStatus(output.getStausFlag());
+				outputVO.setStatus_EN(output.getStatus_EN());
+				outputVO.setStatus_AR(output.getStatus_AR());
+				outputVO.setRequestNo(output.getRequestNo());
+				logger.info(output.getStausFlag() + "  | " + output.getStatus_EN());
+			} else {
+				logger.info(" Failed | stub.addLandRequest(inputpayload, uc)  Returns Null");
+				outputVO.setStatus(SERVICE_FAILED);
+			}
+
+		} catch (Exception e) {
+			logger.error("Failed  | reSubmitIssueSitePlanRequest Service throws Service Exception :: " + e.getMessage());
+			outputVO.setStatus(SERVICE_FAILED);
+		}
+		return outputVO;
+
+	}
+
+	public LandOutputVO reSubmitExtentionGrandLand(UserDeatilVO user, LandInputVO landDemacreationVO) throws DatatypeConfigurationException, ParseException {
+		createStub();
+
+		LandOutputVO outputVO = new LandOutputVO();
+	/*	com.ExtensionOfGrantLand.Inputpayload inputpayload = new com.ExtensionOfGrantLand.Inputpayload();
+
+		com.ExtensionOfGrantLand.UserDetailsPayload userDetail = new com.ExtensionOfGrantLand.UserDetailsPayload();
+
+		userDetail.setUsername(user.getUsername());
+		userDetail.setTypeOfUser(user.getTypeOfUser());
+		userDetail.setNationality(user.getNationality());
+		userDetail.setAccountid(user.getAccountid());
+		userDetail.setMobileNo(user.getMobileNo());
+		userDetail.setEmailID(user.getEmailID());
+		userDetail.setEmiratesId(user.getEmiratesId());
+		userDetail.setTradeLienceNo(user.getTradeLienceNo());
+		userDetail.setFamilyBookNo(user.getFamilyBookNo());
+		userDetail.setEmirate(user.getEmiratesCode());
+		userDetail.setFirstName(user.getFirstName());
+		userDetail.setMiddleName(user.getMiddleName());
+		userDetail.setLastName(user.getLastName());
+		userDetail.setAddress1(user.getAddress1());
+		userDetail.setAddress2(user.getAddress2());
+		userDetail.setAddress3(user.getAddress3());
+		userDetail.setPOBOX(user.getPOBOX());
+		userDetail.setDOB(user.getDOB());
+
+		inputpayload.setServiceType(landDemacreationVO.getServiceType());
+		inputpayload.setUserComment(landDemacreationVO.getUserComment());
+		inputpayload.setSubmittedByUserId(landDemacreationVO.getSubmittedByUserId());
+		inputpayload.setSourceType(landDemacreationVO.getSourceType());
+		inputpayload.setStatus(landDemacreationVO.getStatus());
+		inputpayload.setServiceName(landDemacreationVO.getServiceName());
+		inputpayload.setServiceid(landDemacreationVO.getServiceid());
+		inputpayload.setRequestID(landDemacreationVO.getRequestID());
+		inputpayload.setRequestNo(landDemacreationVO.getRequestNo());
+		inputpayload.setWorkflowId(landDemacreationVO.getWorkflowId());
+		// inputpayload.setLandDemarcationId(landDemacreationVO.getLandDemarcationId());
+		inputpayload.setLanguageId(landDemacreationVO.getLanguageId());
+		inputpayload.setSite_Plan_No(landDemacreationVO.getSite_Plan_No());
+		inputpayload.setSite_Plan_Date(Calendar.getInstance());
+		inputpayload.setSec_Plot_No(landDemacreationVO.getSecPlotNo());
+		inputpayload.setSector_block(landDemacreationVO.getSectorBlock());
+		inputpayload.setSec_Sector_Name(landDemacreationVO.getSecSectorName());
+		inputpayload.setSub_Sector_No(landDemacreationVO.getSubSectorNo());
+		inputpayload.setArea_Name(landDemacreationVO.getAreaName());
+		inputpayload.setArea_Block(landDemacreationVO.getAreaBlock());
+		inputpayload.setArea_Plot_No(landDemacreationVO.getAreaPlotNo());
+		inputpayload.setArea_Sub_Area(landDemacreationVO.getAreaSubArea());
+		inputpayload.setArea_Sub_Area(landDemacreationVO.getAreaSubArea());
+		inputpayload.setLand_Usage(landDemacreationVO.getLandUsage());
+		inputpayload.setGrant_Issuance_Date(PortalDataMapper.fromDDMMYYtoCalendar(landDemacreationVO.getGrantIssuanceDate()));
+		inputpayload.setGrantexpirydate(PortalDataMapper.fromDDMMYYtoCalendar(landDemacreationVO.getGrantExpiryDate()));
+
+		inputpayload.setOwnerName(landDemacreationVO.getOwnerName());
+		inputpayload.setUserdecision(landDemacreationVO.getUserDecesion());
+
+		inputpayload.setOwnerID(landDemacreationVO.getOwnerID());
+		inputpayload.setOwner_Nationality_ID(landDemacreationVO.getOwnerNationalityID());
+		inputpayload.setSupportiveAttachmentid(landDemacreationVO.getSupportiveAttachmentid());
+		inputpayload.setExtendedDate(PortalDataMapper.fromDDMMYYtoCalendar(landDemacreationVO.getExtendedDate()));
+		
+		inputpayload.setLandDemarcationId("");
+		inputpayload.setFrontdesksubmitdate(new Date());
+		inputpayload.setOwnernationality_en("");
+		inputpayload.setOwnernationality_ar("");
+		inputpayload.setSource_en("");
+		inputpayload.setSource_ar("");
+		inputpayload.setSectorname_en("");
+		inputpayload.setSectorname_ar("");
+		
+		inputpayload.setExtensionofgrantlandid(landDemacreationVO.getExtensionOfGrantLandId());
+		
+		inputpayload.setSurveyor_Report("");
+		inputpayload.setSurve_Report_DocId("");
+		inputpayload.setMarkasDelivered("");
+		inputpayload.setOperatorComment("");
+		inputpayload.setRecieverIDDocument("");
+		inputpayload.setSubmittedDate(Calendar.getInstance());
+		inputpayload.setAssignedToUserName(user.getUsername());
+
+	
+
+		String did = "";
+		String filenme = "";
+		String ucmUrl = "";
+		if (landDemacreationVO.getSitePlanDocument() != null) {
+			String filenmae = landDemacreationVO.getSitePlanDocument();
+			logger.debug("File Name from Controller   |  " + filenmae);
+			did = filenmae.split("-")[0];
+			filenme = filenmae.split("-")[1];
+			logger.debug("File Did=" + did);
+			logger.debug("File filenme=" + filenme);
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
+			logger.debug("From WebCenter URL=" + ucmUrl);
+		}
+
+		com.ExtensionOfGrantLand.AttachmentRecPayload[] attachmentList = new com.ExtensionOfGrantLand.AttachmentRecPayload[1];
+		attachmentList[0] = new com.ExtensionOfGrantLand.AttachmentRecPayload();
+		attachmentList[0].setContentid(did);
+		attachmentList[0].setFilename(filenme);
+		attachmentList[0].setUrl(ucmUrl);
+		attachmentList[0].setIsMandatory("1");
+		attachmentList[0].setDownloadUrl("");
+		attachmentList[0].setDocType("10");
+		
+		com.ExtensionOfGrantLand.PaymentDetailsPayload paymentDetails=new com.ExtensionOfGrantLand.PaymentDetailsPayload();
+		paymentDetails.setApplicationPaymentDiscount("");
+		paymentDetails.setApplicationPaymentFees("1234");
+		paymentDetails.setApplicationPaymentId("");
+		paymentDetails.setApplicationPaymentStatus("");
+		paymentDetails.setServicePaymentDiscount("");
+		paymentDetails.setServicePaymentFees("");
+		paymentDetails.setServicePaymentId("");
+		paymentDetails.setServicePaymentStatus("");
+		inputpayload.setPaymentDetails(paymentDetails);
+		
+		ActionLogRecPayload  actionLogList[] = new ActionLogRecPayload[1];
+		
+		inputpayload.setActionLogList(actionLogList);
+
+
+
+		inputpayload.setAttachmentList(attachmentList);
+		inputpayload.setUserDetails(userDetail);
+
+		try {
+			com.ExtensionOfGrantLand.OutputPayload output = stub.reSubmitExtensionGrandLandRequest(inputpayload, userContext);
+			if (output != null) {
+				outputVO.setStatus(output.getStausFlag());
+				outputVO.setStatus_EN(output.getStatus_EN());
+				outputVO.setStatus_AR(output.getStatus_AR());
+				outputVO.setSatausId(output.getInputFields().getStatus());
+				outputVO.setServiceId(output.getInputFields().getServiceid());
+				outputVO.setRequestNo(output.getRequestNo());
+				logger.info(output.getStausFlag() + "  | " + output.getStatus_EN());
+			} else {
+				logger.info(" Failure | stub.addLandRequest(inputpayload, uc)  Return Null");
+				outputVO.setStatus(SERVICE_FAILED);
+			}
+
+		} catch (RemoteException e) {
+			logger.error("Failure  |  " + e.getMessage());
+			outputVO.setStatus(SERVICE_FAILED);
+		}*/
+
+		return outputVO;
+
+	}
+
+	private org.example.www.AttachmentRecPayload getURLofFIle(String did, String contentId, String attachmentType, String attachmentName) {
+
+		String ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
+		org.example.www.AttachmentRecPayload fileArray = new org.example.www.AttachmentRecPayload();
+		fileArray.setContentid(contentId);
+		fileArray.setUrl(ucmUrl);
+		fileArray.setContentid(attachmentType);
+		fileArray.setFilename(attachmentName);
+		fileArray.setIsMandatory("1");
+
+		return fileArray;
+	}
+
+}

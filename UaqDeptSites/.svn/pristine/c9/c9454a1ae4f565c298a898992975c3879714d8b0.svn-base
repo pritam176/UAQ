@@ -1,0 +1,274 @@
+package com.uaq.common;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Class for constants across the Application.
+ * 
+ * @author mraheem
+ * 
+ */
+public class ApplicationConstants {
+
+	public static final String ACTIVE_SATUS = "Active";
+
+	public static final String INACTIVE_SATUS = "Inactive";
+
+	public static final String PARAM_LANGUAGE_CODE = "languageCode";
+
+	public static final String URL_SEPARATOR = "/";
+
+	public static final String URL_EXTENSION = ".html";
+
+	public static final String URL_HTML_EXTENSION = ".html";
+
+	public static final String EMPTY_SPACE = " ";
+
+	public static final String EMPTY_STRING = "";
+
+	public static final String FROM_HOME_PAGE = "home";
+
+	public static final String LANG_ENGLISH = "en";
+
+	public static final String LANG_ARABIC = "ar";
+
+	public static final String TYPE = "type";
+
+	public static final String LOCATION = "location";
+
+	public static final String COLON = ":";
+
+	public static final String QUOTE = "\"";
+
+	public static final String AND = "AND";
+
+	public static final String SPACE_HTML = "&nbsp;";
+
+	public static final String OR = "OR";
+
+	public static final String UNDERSCORE = "_";
+
+	public static final String COMMA = ",";
+
+	public static final long CAS_TIME_OUT = 600000;
+
+	public static final String SESSION_TICKET = "ticketid";
+
+	public static final String TICKET_CREATION_TIME = "ticketcreationtime";
+
+	public static final String SELECT_OPTION_ZERO = "0";
+
+	public static final String LANGUAGE_COOKIE_NAME = "uaqLang";
+
+	public static final String GENERIC_ASSET_TYPE = "UAQ_content_C";
+
+	public static final String DEFAULT_SEARCH_FIELD = "defaultSearchField";
+
+	public static final String INDEX_GET_ALL = "*:*";
+
+	public static final String INDEX_LANGUAGE = "lang";
+
+	public static final String INDEX_NEWS_CATEGORIES_ENGLISH = "categories_en";
+
+	public static final String INDEX_NEWS_CATEGORIES_ARABIC = "categories_ar";
+
+	public static final String INDEX_NEWS_LAST_MODIFIED = "last_modified";
+
+	public static final String QUESTION_MARK = "?";
+
+	public static final String REQUEST_PARAM_REQUEST_NO = "requestNo";
+
+	public static final String REQUEST_PARAM_SERVICE_ID = "serviceId";
+	
+	public static final String REQUEST_PARAM_STATUS_ID = "statusId";
+
+	public static final String REQUEST_PARAM_PAGE_LABLE = "pagelable";
+
+	public static final String REQUEST_PARAM_LP_LETTER = "letter";
+
+	public static final String RESPONCE_KEY = "message";
+	
+	public static final String USER_UPDATE_STATUS = "userUpdateStatus";
+
+	public static final String SESSION_LOGIN_INFO_MOBILE = "mobileLoginInfo";
+
+	public static final String SESSION_LOGIN_INFO_PORTAL = "logininfo";
+	
+	public static final String SESSION_PAYMENT_DETAIL = "SessionRequestDetail";
+	
+	public static final String SESSION_REQUEST_ATTACHMENT = "attachmentPayLoad";
+	
+	public static final String SESSION_REVIEWER_COMMENTS = "reviewerComments";
+	
+	public static final String SESSION_REQUEST_STATUS = "status";
+	
+	public static final String SESSION_USER_ATTACHMENT = "userAttachmentsList";
+	
+	public static final String SESSION_LAND_LOCATION = "location";
+
+	// for Login
+	public static final String SESSION_ACCOUNT_DETAIL_FROM_TOKEN = "AccountDetailfromToken";
+
+	// for session
+	public static final String SESSION_ACCOUNT_INFO = "AccountInfo";
+
+	public static final String DATE_FORMAT = "yyyy-MM-dd";
+
+	public static final String DATE_TIME_FORMAT = "dd-MMM-yyyy hh:mm a";
+	
+	
+	public static final String DEFAULT_DATE = "1800-01-01";
+
+	public static final String WS_USERNAME = "uaqdev";
+
+	public static final String WS_PASSWORD = "welcome1";
+
+	public static final String PAGE_LABEL = "pagelable";
+	
+	public static final String PAGE_LABEL_REG = "registrationlable";
+
+	public static final String SESSION_RESUBMIT_PWS = "PWSRequestDetail";
+
+	public static final String SESSION_RESUBMIT_LP = "LPRequestDetail";
+
+	public static final String SESSION_RESUBMIT_PS = "PSRequestDetail";
+
+	public static final String SESSION_RESUBMIT_EGD = "eGDResubmissionVO";
+
+	public static final String SESSION_RESUBMIT_PS_GRANDLAND = "PSGrandLandRequestDetail";
+
+	public static final String APPLICATION_FEES = "ApplicationFees";
+
+	public static final String SERVICE_FEES = "ServiceFees";
+
+	public static final String EQUAL_SIGN = "=";
+
+	public static final String FILE_SERVER_URL = "http://94.57.252.233:16200/cs/idcplg?IdcService=GET_FILE&amp;dID=";
+
+	public static final String PAYMENT_URL_EXPRESSON = "paymentUrl";
+
+	public static final String PRODUCE_JAVASCRIPT = "application/json; charset=UTF-8";
+
+	public static final String LOGIN_USERNAME = "username";
+
+	public static final String LOGIN_PASSWORD = "password";
+
+	public static final String DD_MM_YYYY = "dd/mm/yyyy";
+	
+	public static final String MM_DD_YYYY = "mm/dd/yyyy";
+
+	/** POS Constants **/
+	// Communication characters
+	public static final int STX = 0x02; // start of text
+	public static final int ETX = 0x03; // end of text
+	public static final int ACK = 0x06; // Positive Acknowledgment
+	public static final int NAK = 0x15; // Negative Acknowledgment
+	public static final int FS = 0x01; // Field Separator
+	public static final String Length = "2-bytes"; // Data size in bytes
+													// excluding STX, ETX and
+													// LRC
+
+	public static final int INIT_MESSAGE_LENGTH = 0x0436;
+	public static final int ECR_VERSION_NUMBER = 0x111;
+	public static final int TRANSACTION_TYPE_SALE = 0x01;
+	public static final String ECR_APPLICATION_IDENTIFIER = "";
+	public static final String Terminal_ID = "";
+	public static final int Number_of_Applications = 0x0001;
+	public static final String ECR_PC_ID_NUMBER = "";
+
+	public static final String REQUEST_PARAM_ACCOUNT_ID = "acountId";
+
+	public static final String REQUEST_PARAM_TYPE_OF_USER = "typeOfUser";
+
+	public static final String REQUEST_PARAM_STATUS = "status";
+
+	public static final String REQUEST_PARAM_TOKEN = "token";
+
+	public static final String REQUEST_PARAM_USERNAME = "username";
+
+	
+	
+	
+
+	/* Registration Constant */
+
+	public static final String MODEL_ATTR_ACCOUNTID = "accountId";
+
+	public static final String MODEL_ATTR_REQUESTNO = "requestno";
+
+	public static final String INDIVIDUAL_USER = "1";
+	
+	public static final String ESTABLISMENT_USER = "2";
+	
+	public static final String UAE_CITIZEN = "1";
+
+
+	
+	public static final String PORTAL_USER = "1";
+	
+	public static final String WALKIN_USER = "2";
+	
+	public static final String ACCOUNT_CREATED = "1";
+	
+	public static final String OTP_SENT = "2";
+	
+	public static final String EMAIL_SENT = "3";
+	
+	public static final String ACCOUNT_ACTIVATED = "4";
+	
+	public static final String ACCOUNT_LOCKED = "5";
+	
+	
+	
+	public static final String LANGUAGE_TRANSFORMATION_IGNORE = "ignore";
+
+	public static final String ISMOBILE = "isMobile";
+
+	public static final String UAQ_URL = "uaq.url";
+
+	public static final String PAGE_META_DATA = "pageMetadata";
+
+	public static final String SERVICE_FAILED = "Failed";
+	
+	public static final String SERVICE_SUCCESS = "Success";
+	
+	public static final String SERVICE_ERROR_MESG_KEY = "label.service.erropage";
+
+	public static final String SPRING_REDIRECT = "redirect:";
+	
+	public static final String NOC_OPTIONAL_COMMENT = "optionalComent";
+	
+	public static final String NOC_ATTACHMENT = "nocAttachmentPayLoad";
+	
+	public static final String NOC_NAME = "nocNameComment";
+	
+	public static final String USER_FIRSTNAME= "firstName";
+	
+	public static final String USER_MOBILENO = "mobileNo";
+	
+	public static final String USER_EMAIL = "emailId";
+	
+	
+	
+	public static String getSite(String Site) {
+		Map<String, String> sectorMap = new HashMap<String, String>();
+		sectorMap.put("EGovernment", "egd");
+		sectorMap.put("EconomicDevelopment", "ded");
+		sectorMap.put("LandsProperties", "lap");
+		sectorMap.put("PlanningSurvey", "pas");
+		sectorMap.put("PublicWorksService", "pws");
+		sectorMap.put("ArchaeologyHeritage", "aah");
+		sectorMap.put("FalajMunicipality", "dfm");
+		sectorMap.put("IndustrialCityAuthority", "ica");
+		sectorMap.put("PortsCustomsFreeZone", "pcf");
+		sectorMap.put("ExecutiveCouncil", "dec");
+		sectorMap.put("FinanceAdministration", "faa");
+		sectorMap.put("FinancialAuditing", "dfa");
+		sectorMap.put("UAQInternetPortal", "uaq");
+
+		return sectorMap.get(Site);
+
+	}
+
+}

@@ -1,0 +1,298 @@
+/**
+ * 
+ */
+package com.uaq.service;
+
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.util.Calendar;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.rpc.ServiceException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import uaq.middleware.services.ps.PSServiceMiddleLayerServicePayment;
+import uaq.middleware.services.ps.PSServiceMiddleLayerServicePaymentPortBindingStub;
+import uaq.middleware.services.ps.PSServiceMiddleLayerServicePaymentService;
+import uaq.middleware.services.ps.PSServiceMiddleLayerServicePaymentServiceLocator;
+import uaq.middleware.services.ps.UserContext;
+
+import com.AddLandRequest.PaymentDetailsPayload;
+import com.AddLandRequest.UserDetailsPayload;
+import com.ExtensionOfGrantLand.ActionLogRecPayload;
+import com.ExtensionOfGrantLand.Inputpayload;
+import com.uaq.common.ApplicationConstants;
+import com.uaq.controller.mapper.PortalDataMapper;
+import com.uaq.logger.UAQLogger;
+import com.uaq.vo.LandInputVO;
+import com.uaq.vo.LandOutputVO;
+import com.uaq.vo.UserDeatilVO;
+
+import static com.uaq.common.ApplicationConstants.*;
+
+/**
+ * @author WINDOS
+ *
+ */
+@Service("pSAfterServicePayment")
+public class PSAfterServicePayment {
+	
+	protected static UAQLogger logger = new UAQLogger(PSAfterServicePayment.class);
+	
+	@Autowired
+	private PortalUtil portalUtil;
+	
+		
+	
+	
+	private PSServiceMiddleLayerServicePaymentService service =null;
+	private PSServiceMiddleLayerServicePayment port= null;
+	private PSServiceMiddleLayerServicePaymentPortBindingStub stub=null;
+	
+	UserContext userContext =null;
+	
+	private void createStub(){
+		userContext = new UserContext(); 
+		userContext.setUsername(ApplicationConstants.WS_USERNAME);
+		userContext.setPassword(ApplicationConstants.WS_PASSWORD);
+
+		try {
+			service = (PSServiceMiddleLayerServicePaymentService)new PSServiceMiddleLayerServicePaymentServiceLocator();
+			port = service.getPSServiceMiddleLayerServicePaymentPort();
+			stub = (PSServiceMiddleLayerServicePaymentPortBindingStub)port;
+
+		} catch (ServiceException e) {
+			logger.error("WebService Error  |" + e.getMessage());
+			
+
+		}
+	}
+	
+	public LandOutputVO servicePaymentAddlandRequest(UserDeatilVO user, LandInputVO landDemacreationVO) throws DatatypeConfigurationException, ParseException{
+		createStub();
+		LandOutputVO outputVO = new LandOutputVO();
+		com.AddLandRequest.Inputpayload inputpayload =new com.AddLandRequest.Inputpayload();
+		com.AddLandRequest.UserDetailsPayload  userDetail=new UserDetailsPayload();
+		userDetail.setUsername(user.getLoginUserName());
+		userDetail.setTypeOfUser(user.getTypeOfUser());
+		userDetail.setNationality(user.getNationality());
+		userDetail.setAccountid(user.getAccountid());
+		userDetail.setMobileNo(user.getMobileNo());
+		userDetail.setEmailID(user.getEmailID());
+		userDetail.setEmiratesId(user.getEmiratesId());
+		userDetail.setTradeLienceNo(user.getTradeLienceNo());
+		userDetail.setFamilyBookNo(user.getFamilyBookNo());
+		userDetail.setEmirate(user.getEmirate());
+		userDetail.setFirstName(user.getFirstName());
+		userDetail.setMiddleName(user.getMiddleName());
+		userDetail.setLastName(user.getLastName());
+		userDetail.setAddress1(user.getAddress1());
+		userDetail.setAddress2(user.getAddress2());
+		userDetail.setAddress3(user.getAddress3());
+		userDetail.setPOBOX(user.getPOBOX().equals("0")?"":user.getPOBOX());
+		userDetail.setDOB(user.getDOB());
+		
+		if(user.getTypeOfUser().equals("1")){
+			userDetail.setApplicanttypeid(user.getApplicantTypeId());	
+		}else{
+			userDetail.setApplicanttypeid("0");
+		}
+		
+		inputpayload.setServiceType(landDemacreationVO.getServiceType());
+		inputpayload.setUserComment(landDemacreationVO.getUserComment());
+		inputpayload.setSubmittedByUserId(landDemacreationVO.getSubmittedByUserId());
+		inputpayload.setSourceType(landDemacreationVO.getSourceType());
+		inputpayload.setStatus(/*landDemacreationVO.getStatus()*/"1");
+		inputpayload.setServiceName(landDemacreationVO.getServiceName());
+		inputpayload.setServiceid(landDemacreationVO.getServiceid());
+		inputpayload.setRequestID(landDemacreationVO.getRequestID());
+		inputpayload.setRequestNo(landDemacreationVO.getRequestNo());
+		inputpayload.setWorkflowId(landDemacreationVO.getWorkflowId());
+		//inputpayload.setLandDemarcationId(landDemacreationVO.getLandDemarcationId());
+		inputpayload.setLanguageId(landDemacreationVO.getLanguageId());
+		inputpayload.setSite_Plan_No(landDemacreationVO.getSite_Plan_No());
+		inputpayload.setSite_Plan_Date(PortalDataMapper.toCalendar(landDemacreationVO.getSitePlanDate()));
+		inputpayload.setSec_Plot_No(landDemacreationVO.getSecPlotNo());
+		inputpayload.setSector_block(landDemacreationVO.getSectorBlock());
+		inputpayload.setSec_Sector_Name(landDemacreationVO.getSecSectorName());
+		inputpayload.setSub_Sector_No(landDemacreationVO.getSubSectorNo());
+		inputpayload.setArea_Name(landDemacreationVO.getAreaName());
+		inputpayload.setArea_Block(landDemacreationVO.getAreaBlock());
+		inputpayload.setArea_Plot_No(landDemacreationVO.getAreaPlotNo());
+		inputpayload.setArea_Sub_Area(landDemacreationVO.getAreaSubArea());
+		inputpayload.setArea_Sub_Area(landDemacreationVO.getAreaSubArea());
+		inputpayload.setLand_Usage(landDemacreationVO.getLandUsage());
+		inputpayload.setGrant_Issuance_Date(PortalDataMapper.toCalendar(landDemacreationVO.getGrantIssuanceDate()));
+		inputpayload.setAssignedToUserName(landDemacreationVO.getAssignedToUserName());
+		inputpayload.setSurveyor_Report(landDemacreationVO.getSurveyo_Report());
+		inputpayload.setOwnerName(landDemacreationVO.getOwnerName());
+		inputpayload.setSurve_Report_DocId(landDemacreationVO.getSurveReportDocId());
+		inputpayload.setOwnerID(landDemacreationVO.getOwnerID());
+		inputpayload.setOwner_Nationality_ID(landDemacreationVO.getOwnerNationalityID());
+		inputpayload.setSupportiveAttachmentid(landDemacreationVO.getSupportiveAttachmentid());
+		inputpayload.setExtendedDate(PortalDataMapper.toCalendar(landDemacreationVO.getExtendedDate()));
+		inputpayload.setCommiteeRemarks(landDemacreationVO.getCommiteeRemarks());
+		inputpayload.setLandValue(new BigInteger(landDemacreationVO.getLandValue()));
+		
+		com.AddLandRequest.AttachmentRecPayload[] attachmentList = new com.AddLandRequest.AttachmentRecPayload[1];
+		attachmentList[0] = new com.AddLandRequest.AttachmentRecPayload();
+		attachmentList[0].setContentid("1");
+		attachmentList[0].setFilename("");
+		attachmentList[0].setUrl(ApplicationConstants.FILE_SERVER_URL+ "");
+		attachmentList[0].setIsMandatory("1");
+
+		inputpayload.setAttachmentList(attachmentList);
+		inputpayload.setUserDetails(userDetail);
+		
+		PaymentDetailsPayload paymentDetails=new PaymentDetailsPayload();
+		paymentDetails.setApplicationPaymentDiscount("");
+		paymentDetails.setApplicationPaymentFees("");
+		paymentDetails.setApplicationPaymentId("");
+		paymentDetails.setApplicationPaymentStatus("");
+		paymentDetails.setServicePaymentDiscount("");
+		paymentDetails.setServicePaymentFees(landDemacreationVO.getTransationAmount());
+		paymentDetails.setServicePaymentId(landDemacreationVO.getTransactionId());
+		paymentDetails.setServicePaymentStatus(landDemacreationVO.getTransationStatus());
+		inputpayload.setPaymentDetails(paymentDetails);
+		
+		try {
+			com.AddLandRequest.OutputPayload output=stub.servicePaymentAddlandRequest(inputpayload, userContext);
+			if (output != null) {
+				outputVO.setStatus(output.getStausFlag());
+				outputVO.setStatus_EN(output.getStatus_EN());
+				outputVO.setStatus_AR(output.getStatus_AR());
+				/*outputVO.setSatausId(output.getInputFields().getStatus());
+				outputVO.setServiceId(output.getInputFields().getServiceid());*/
+				outputVO.setRequestNo(output.getRequestNo());
+				logger.info(output.getStausFlag() + "  | " + output.getStatus_EN());
+			} else {
+				logger.info(" Failed | stub.servicePaymentAddlandRequest(inputpayload, uc)  Return Null");
+				outputVO.setStatus(SERVICE_FAILED);
+			}
+		} catch (RemoteException e) {
+			logger.error("Failed  |  "+e.getMessage());
+			outputVO.setStatus(SERVICE_FAILED);
+		}
+		return outputVO;
+	}
+	
+	public LandOutputVO servicePaymentExtensionGrandLandRequest(UserDeatilVO user, LandInputVO landDemacreationVO) throws DatatypeConfigurationException, ParseException{
+		createStub();
+		LandOutputVO outputVO = new LandOutputVO();
+		Inputpayload inputpayload =new com.ExtensionOfGrantLand.Inputpayload();
+		com.ExtensionOfGrantLand.UserDetailsPayload  userDetail=new com.ExtensionOfGrantLand.UserDetailsPayload();
+		userDetail.setUsername(user.getLoginUserName());
+		userDetail.setTypeOfUser(user.getTypeOfUser());
+		userDetail.setNationality(user.getNationality());
+		userDetail.setAccountid(user.getAccountid());
+		userDetail.setMobileNo(user.getMobileNo());
+		userDetail.setEmailID(user.getEmailID());
+		userDetail.setEmiratesId(user.getEmiratesId());
+		userDetail.setTradeLienceNo(user.getTradeLienceNo());
+		userDetail.setFamilyBookNo(user.getFamilyBookNo());
+		userDetail.setEmirate(user.getEmirate());
+		userDetail.setFirstName(user.getFirstName());
+		userDetail.setMiddleName(user.getMiddleName());
+		userDetail.setLastName(user.getLastName());
+		userDetail.setAddress1(user.getAddress1());
+		userDetail.setAddress2(user.getAddress2());
+		userDetail.setAddress3(user.getAddress3());
+		userDetail.setPOBOX(user.getPOBOX());
+		userDetail.setDOB(user.getDOB());
+		
+		inputpayload.setServiceType(landDemacreationVO.getServiceType());
+		inputpayload.setUserComment(landDemacreationVO.getUserComment());
+		inputpayload.setSubmittedByUserId(landDemacreationVO.getSubmittedByUserId());
+		inputpayload.setSourceType(landDemacreationVO.getSourceType());
+		inputpayload.setStatus(landDemacreationVO.getStatus());
+		inputpayload.setServiceName(landDemacreationVO.getServiceName());
+		inputpayload.setServiceid(landDemacreationVO.getServiceid());
+		inputpayload.setRequestID(landDemacreationVO.getRequestID());
+		inputpayload.setRequestNo(landDemacreationVO.getRequestNo());
+		inputpayload.setWorkflowId(landDemacreationVO.getWorkflowId());
+		//inputpayload.setLandDemarcationId(landDemacreationVO.getLandDemarcationId());
+		inputpayload.setLanguageId(landDemacreationVO.getLanguageId());
+		inputpayload.setSite_Plan_No(landDemacreationVO.getSite_Plan_No());
+		inputpayload.setSite_Plan_Date(PortalDataMapper.toCalendar(landDemacreationVO.getSitePlanDate()));
+		inputpayload.setSec_Plot_No(landDemacreationVO.getSecPlotNo());
+		inputpayload.setSector_block(landDemacreationVO.getSectorBlock());
+		inputpayload.setSec_Sector_Name(landDemacreationVO.getSecSectorName());
+		inputpayload.setSub_Sector_No(landDemacreationVO.getSubSectorNo());
+		inputpayload.setArea_Name(landDemacreationVO.getAreaName());
+		inputpayload.setArea_Block(landDemacreationVO.getAreaBlock());
+		inputpayload.setArea_Plot_No(landDemacreationVO.getAreaPlotNo());
+		inputpayload.setArea_Sub_Area(landDemacreationVO.getAreaSubArea());
+		inputpayload.setArea_Sub_Area(landDemacreationVO.getAreaSubArea());
+		inputpayload.setLand_Usage(landDemacreationVO.getLandUsage());
+		inputpayload.setGrant_Issuance_Date(PortalDataMapper.toCalendar(landDemacreationVO.getGrantIssuanceDate()));
+		inputpayload.setAssignedToUserName(landDemacreationVO.getAssignedToUserName());
+		inputpayload.setSurveyor_Report(landDemacreationVO.getSurveyo_Report());
+		inputpayload.setOwnerName(landDemacreationVO.getOwnerName());
+		//inputpayload.setSurve_Report_DocId(landDemacreationVO.getSurveReportDocId());
+		inputpayload.setOwnerID(landDemacreationVO.getOwnerID());
+		inputpayload.setOwner_Nationality_ID(landDemacreationVO.getOwnerNationalityID());
+		inputpayload.setSupportiveAttachmentid(landDemacreationVO.getSupportiveAttachmentid());
+		inputpayload.setExtendedDate(PortalDataMapper.toCalendar(landDemacreationVO.getExtendedDate()));
+		//inputpayload.setCommiteeRemarks(landDemacreationVO.getCommiteeRemarks());
+		inputpayload.setLandDemarcationId(landDemacreationVO.getLandDemarcationId());
+		inputpayload.setSubmittedByUserId(user.getUsername());
+
+		inputpayload.setSurveyor_Report("");
+		inputpayload.setSurve_Report_DocId("");
+		inputpayload.setMarkasDelivered("");
+		inputpayload.setOperatorComment("");
+		inputpayload.setRecieverIDDocument("");
+		inputpayload.setSubmittedDate(Calendar.getInstance());
+		
+
+		
+		com.ExtensionOfGrantLand.PaymentDetailsPayload paymentDetails=new com.ExtensionOfGrantLand.PaymentDetailsPayload();
+		paymentDetails.setApplicationPaymentDiscount("");
+		paymentDetails.setApplicationPaymentFees("");
+		paymentDetails.setApplicationPaymentId("");
+		paymentDetails.setApplicationPaymentStatus("");
+		paymentDetails.setServicePaymentDiscount("");
+		paymentDetails.setServicePaymentFees(landDemacreationVO.getTransationAmount());
+		paymentDetails.setServicePaymentId(landDemacreationVO.getTransactionId());
+		paymentDetails.setServicePaymentStatus(landDemacreationVO.getTransationStatus());
+		inputpayload.setPaymentDetails(paymentDetails);
+		
+		com.ExtensionOfGrantLand.AttachmentRecPayload[] attachmentList = new com.ExtensionOfGrantLand.AttachmentRecPayload[1];
+		attachmentList[0] = new com.ExtensionOfGrantLand.AttachmentRecPayload();
+		attachmentList[0].setContentid("");
+		attachmentList[0].setFilename("");
+		attachmentList[0].setUrl(ApplicationConstants.FILE_SERVER_URL+ "");
+		attachmentList[0].setIsMandatory("1");
+		attachmentList[0].setDownloadUrl("");
+
+		inputpayload.setAttachmentList(attachmentList);
+		inputpayload.setUserDetails(userDetail);
+		
+		ActionLogRecPayload  actionLogList[] = new ActionLogRecPayload[1];
+		
+		inputpayload.setActionLogList(actionLogList);
+		try {
+			com.ExtensionOfGrantLand.OutputPayload output=stub.servicePaymentExtensionGrandLandRequest(inputpayload, userContext);
+			if (output != null) {
+				outputVO.setStatus(output.getStausFlag());
+				outputVO.setStatus_EN(output.getStatus_EN());
+				outputVO.setStatus_AR(output.getStatus_AR());
+				outputVO.setSatausId(output.getInputFields().getStatus());
+				outputVO.setServiceId(output.getInputFields().getServiceid());
+				outputVO.setRequestNo(output.getRequestNo());
+				logger.info(output.getStausFlag() + "  | " + output.getStatus_EN());
+			} else {
+				logger.info(" Failure | stub.servicePaymentExtensionGrandLandRequest(inputpayload, uc)  Return Null");
+				outputVO.setStatus(SERVICE_FAILED);
+			}
+		} catch (RemoteException e) {
+			logger.error("Failure  |  "+e.getMessage());
+			outputVO.setStatus(SERVICE_FAILED);
+		}
+		return outputVO;
+	}
+
+}

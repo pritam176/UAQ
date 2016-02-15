@@ -1,0 +1,337 @@
+package com.uaq.controller;
+
+import static com.uaq.common.ApplicationConstants.PAGE_LABEL;
+import static com.uaq.common.ApplicationConstants.SESSION_LOGIN_INFO_PORTAL;
+import static com.uaq.common.ApplicationConstants.UAQ_URL;
+import static com.uaq.common.ApplicationConstants.URL_SEPARATOR;
+import static com.uaq.common.TilesViewConstant.MOBILE_LOGIN_AGAIN;
+import static com.uaq.common.TilesViewConstant.PORTAL_LOGIN_AGAIN;
+import static com.uaq.common.UAQURLConstant.MY_REQUEST_URL;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.uaq.common.ApplicationConstants;
+import com.uaq.common.PaymentSessionUtil;
+import com.uaq.common.PropertiesUtil;
+import com.uaq.common.ViewPath;
+import com.uaq.exception.UAQException;
+import com.uaq.logger.UAQLogger;
+import com.uaq.payment.PayWebPaymentRequest;
+import com.uaq.payment.PaymentServiceCode;
+import com.uaq.payment.PaymentUtil;
+import com.uaq.service.PaymentSequenceService;
+import com.uaq.service.PaymentServiceManager;
+import com.uaq.service.PortalUtil;
+import com.uaq.service.PurchaseService;
+import com.uaq.util.StringUtil;
+import com.uaq.vo.LoginOutputVO;
+import com.uaq.vo.PageMetadataVO;
+import com.uaq.vo.PurchaseServiceVO;
+import com.uaq.vo.PurchaseVO;
+import com.uaq.vo.SessionRequestDetail;
+
+@Controller
+public class PaymentReviewController extends BaseController {
+	private static transient UAQLogger logger = new UAQLogger(PaymentReviewController.class);
+
+	@Autowired
+	public MessageSource messageSource;
+
+	@Autowired
+	private PortalUtil portalUtil;
+	
+	@Autowired
+	private PaymentSequenceService paymentSequenceService;
+
+	private static final String PURCHASE_STATUS_COMPLETED = "Completed";
+	private static final String PURCHASE_STATUS_FAILED = "Failed";
+	private static final String PURCHASE_STATUS_APPROVED = "Approved";
+
+	static final String ERROR_PAGE = "error.page";
+	static final String ERROR_PAGE_MOBILE = "error.page.mobile";
+	static final String PURCHASE_REVIEW_PAGE = "payment_review.jsp";
+
+	private static final String PAYMENT_STATUS_SUCCESS = "success";
+	private static final String PAYMENT_STATUS_FAILURE = "failure";
+
+	PaymentServiceManager paymentServiceManager = new PaymentServiceManager();
+	PurchaseService purchaseService = new PurchaseService();
+
+	@RequestMapping(value = ViewPath.PAYMENT_REVIEW, method = RequestMethod.GET)
+	public String handleRequest(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		logger.enter("handleRequest Get");
+
+		super.handleRequest(request, model);
+
+		String status = PAYMENT_STATUS_FAILURE;
+		String message = PAYMENT_STATUS_SUCCESS;
+
+		String languageCode = request.getParameter("languageCode");
+		languageCode = languageCode != null ? languageCode : ApplicationConstants.LANG_ENGLISH;
+		request.getSession().setAttribute("languageCode", languageCode);
+
+		boolean isMobile = portalUtil.isMobile(request, response);
+
+		String view = (isMobile == false) ? ERROR_PAGE : ERROR_PAGE_MOBILE;
+		String pageLabel = "purchase.payment.review";
+
+		Locale locale = new Locale(languageCode);
+
+		// Payment Detail from PaymentController
+		SessionRequestDetail sessionRequestDetail = (SessionRequestDetail) request.getSession().getAttribute("SessionRequestDetail");
+		request.getSession().removeAttribute("SessionRequestDetail");
+
+		if (sessionRequestDetail != null) {
+			pageLabel = sessionRequestDetail.getPagelable();
+			String purchaseId = sessionRequestDetail.getPurchaseId();
+			String feeId = sessionRequestDetail.getFeeId();
+			String customerId = sessionRequestDetail.getCustomerId();
+			String customerName = sessionRequestDetail.getCustomerName();
+			String serviceId = sessionRequestDetail.getServiceId();
+
+			logger.debug(" : isMobile = " + isMobile);
+
+			String paymentType = "payweb";
+
+			logger.debug("purchaseId = " + purchaseId + " : feeId = " + feeId + " : customerId = " + customerId + " : customerName = " + customerName);
+
+			boolean result = false;
+			boolean repay = false;
+
+			pageLabel = PaymentSessionUtil.getPageLable(sessionRequestDetail.getServiceId());
+
+			LoginOutputVO logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
+			view = (isMobile == false) ? PORTAL_LOGIN_AGAIN : MOBILE_LOGIN_AGAIN;
+			if (logininfo != null) {
+				PurchaseVO purchaseVo = null;
+				PayWebPaymentRequest webPaymentRequest = null;
+				view = (isMobile == false) ? "payment.review" : "payment.review.mobile";
+				if ((null != purchaseId) && (!purchaseId.isEmpty())) {
+					try {
+						purchaseVo = purchaseService.execute(purchaseId);
+						logger.debug("purchaseVo = " + purchaseVo);
+
+						PaymentServiceCode feeDetail = purchaseService.getFeeDetail(feeId);
+
+						PaymentServiceCode paymentServiceCode = purchaseService.getPaymentServiceCode(feeDetail.getServiceId());
+						// only for testing. comment out on production. it leaks
+						// secret information to file log
+						logger.debug("paymentServiceCode = " + paymentServiceCode);
+						logger.debug("merchant account = " + paymentServiceCode.getMerchantAccount());
+
+						if (purchaseVo == null) {
+							Map<String, String> resultMap = savePurchase(paymentServiceCode, sessionRequestDetail);
+
+							logger.debug("saveServiceCodes result  = " + resultMap.toString());
+
+							result = ((String) resultMap.get("status")).equals(PAYMENT_STATUS_SUCCESS);
+							if (!result) {
+								message = messageSource.getMessage("purchase.payment.trans.fail", null, locale) + ", " + (String) resultMap.get("message");
+							} else {
+								status = PAYMENT_STATUS_SUCCESS;
+							}
+						} else if (purchaseVo.getPurchaseStatus().equals(PURCHASE_STATUS_COMPLETED)) {
+							logger.debug("purchaseVo.getPaymentInProgress() = " + purchaseVo.getPaymentInProgress() + " : purchaseVo.getPurchaseStatus()" + purchaseVo.getPurchaseStatus());
+
+							message = messageSource.getMessage("purchase.status.completed", null, locale);
+							status = PAYMENT_STATUS_FAILURE;
+
+							// redirect to payment detail page
+							view = "redirect:" + PropertiesUtil.getProperty("uaq.url") + "/" + request.getParameter(ApplicationConstants.PARAM_LANGUAGE_CODE) + "/paymentDetail.html" + "?"
+									+ "purchaseId=" + purchaseId;
+
+							return view;
+
+						} else if (purchaseVo.getPaymentInProgress() != null && purchaseVo.getPaymentInProgress()) {
+							logger.debug("purchaseVo.getPaymentInProgress() = " + purchaseVo.getPaymentInProgress() + " : purchaseVo.getPurchaseStatus()" + purchaseVo.getPurchaseStatus());
+
+							message = messageSource.getMessage("purchase.status.payment.inprogress", null, locale);
+							status = PAYMENT_STATUS_FAILURE;
+						} else if (purchaseVo.getPurchaseStatus().equals(PURCHASE_STATUS_FAILED)) {
+							logger.debug("purchaseVo.getPaymentInProgress() = " + purchaseVo.getPaymentInProgress() + " : purchaseVo.getPurchaseStatus()" + purchaseVo.getPurchaseStatus());
+
+							status = PAYMENT_STATUS_SUCCESS;
+							message = messageSource.getMessage("purchase.repay.message", null, locale);
+							repay = true;
+						} else if (purchaseVo.getPurchaseStatus().equals(PURCHASE_STATUS_APPROVED)) {
+							logger.debug("purchaseVo.getPaymentInProgress() = " + purchaseVo.getPaymentInProgress() + " : purchaseVo.getPurchaseStatus()" + purchaseVo.getPurchaseStatus());
+
+							status = PAYMENT_STATUS_SUCCESS;
+						} else {
+							logger.debug("purchaseVo.getPaymentInProgress() = " + purchaseVo.getPaymentInProgress() + " : purchaseVo.getPurchaseStatus()" + purchaseVo.getPurchaseStatus());
+
+							message = messageSource.getMessage("purchase.payment.trans.fail", null, locale);
+						}
+
+						if (status.equals(PAYMENT_STATUS_SUCCESS)) {
+							String description = feeId;
+							// Double amount = feeDetail.getServiceFee() +
+							// purchaseService.getGeneralFee();
+							Double amount = feeDetail.getServiceFee();
+
+							PurchaseServiceVO service = new PurchaseServiceVO();
+							service.setServiceCode(paymentServiceCode.getServiceCode());
+							service.setQuantity("1");
+							service.setPrice(amount.toString());
+							
+							//Get Sequence Name for Service
+							String sequnceName = PropertiesUtil.getProperty("SEQ_"+serviceId);
+							
+							if(StringUtil.isEmpty(sequnceName)){
+								status = PAYMENT_STATUS_FAILURE;
+								logger.error("Null Sequence Name");
+								throw new Exception();
+							}
+							
+							String tranId = PropertiesUtil.getProperty("TRAN_ID");
+							
+							if(StringUtil.isEmpty(tranId)){
+								status = PAYMENT_STATUS_FAILURE;
+								logger.error("Null tran id");
+								throw new Exception();
+							}
+							
+							
+							//Get Department  Name For Service
+							String departMent = "E"+tranId+feeDetail.getDepartmentId();
+							
+							
+							String transactionId =departMent+"0000";
+									
+							String sequenceID	=	paymentSequenceService.getSequnceNextValue(sequnceName);
+							
+							if(StringUtil.isEmpty(sequenceID)){
+								logger.error("sequenceID is Null Null");
+								status = PAYMENT_STATUS_FAILURE;
+								throw new Exception();
+							}
+							
+							transactionId +=sequenceID;
+							
+
+							webPaymentRequest = PaymentUtil.fillWebPaymentRequest(service, description, request.getSession().getId(), purchaseId, languageCode, paymentType,
+									paymentServiceCode.getMerchantAccount(),transactionId);
+
+							logger.debug(webPaymentRequest.toString());
+
+							result = purchaseService.savePaywebRequestTransaction(webPaymentRequest);
+							logger.debug("savePaywebRequestTransaction result : " + result);
+
+							result = purchaseService.purchasePaymentInProgress(purchaseId, true);
+							logger.debug("purchasePaymentInProgress result : " + result);
+
+							// model.addAttribute("generalFee",
+							// purchaseService.getGeneralFee());
+							model.addAttribute("serviceFee", feeDetail.getServiceFee());
+							model.addAttribute("totalAmount", amount);
+						}
+					} catch (Exception e) {
+						logger.error(e.getMessage());
+						message = messageSource.getMessage("purchase.payment.trans.fail", null, locale);
+					}
+				} else {
+					message = messageSource.getMessage("purchase.id.not.found", null, locale);
+				}
+				
+				model.addAttribute("status", status);
+				model.addAttribute("message", message);
+				if (repay) {
+					model.addAttribute("repay", "true");
+				}
+				if (status.equals(PAYMENT_STATUS_SUCCESS)) {
+					model.addAttribute("purchaseId", purchaseId);
+					model.addAttribute("webPaymentRequest", webPaymentRequest);
+				} else {
+					view = (isMobile == false) ? ERROR_PAGE : ERROR_PAGE_MOBILE;
+				}
+
+			}
+		} else {
+			model.addAttribute("message", messageSource.getMessage("payment.invalid.refresh", null, locale));
+			logger.debug("Page Refreshed");
+		}
+
+		model.addAttribute(PAGE_LABEL, pageLabel);
+		PageMetadataVO pageMetadataVO = new PageMetadataVO();
+		pageMetadataVO.setPageTitle(messageSource.getMessage(pageLabel, null, locale));
+		pageMetadataVO.setPageDescription(messageSource.getMessage(pageLabel, null, locale));
+		pageMetadataVO.setPageKeywords(messageSource.getMessage(pageLabel, null, locale));
+		model.addAttribute("myRequestUrl", PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + URL_SEPARATOR + MY_REQUEST_URL);
+		model.addAttribute("pageMetadata", pageMetadataVO);
+		logger.exit("PurchaseReviewServlet doGet()");
+		return view;
+	}
+
+	private Map<String, String> savePurchase(PaymentServiceCode paymentServiceCode, SessionRequestDetail sessionRequestDetail) throws UnsupportedEncodingException, UAQException, SQLException {
+		logger.enter("savePurchase()");
+
+		String purchaseId = sessionRequestDetail.getPurchaseId();
+		String feeId = sessionRequestDetail.getFeeId();
+		// no need to save userType
+		String customerId = sessionRequestDetail.getCustomerId();
+		String customerName = sessionRequestDetail.getCustomerName();
+
+		boolean result = false;
+
+		String languageCode = sessionRequestDetail.getLanguageCode();
+
+		Map<String, String> resultMap = new HashMap<String, String>();
+		resultMap.put("status", PAYMENT_STATUS_FAILURE);
+		resultMap.put("message", messageSource.getMessage("purchase.status.failed", null, new Locale(languageCode)));
+
+		if ((paymentServiceCode.getServiceCode() != null) && (!paymentServiceCode.getServiceCode().isEmpty())) {
+			PurchaseVO purchaseVo = new PurchaseVO();
+			List<PurchaseServiceVO> purchaseServiceCodes = new ArrayList<PurchaseServiceVO>();
+
+			PaymentServiceCode feeDetail = purchaseService.getFeeDetail(feeId);
+			// Double amount = feeDetail.getServiceFee() +
+			// purchaseService.getGeneralFee();
+			Double amount = feeDetail.getServiceFee();
+
+			purchaseVo.setPurchaseId(purchaseId);
+			purchaseVo.setPurchaseStatus(PURCHASE_STATUS_APPROVED);
+			purchaseVo.setFeeId(feeId);
+			purchaseVo.setServiceId(feeDetail.getServiceId());
+			purchaseVo.setCustomerId(customerId);
+			purchaseVo.setCustomerName(customerName);
+			purchaseVo.setDepartmentId(feeDetail.getDepartmentId());
+
+			PurchaseServiceVO service = new PurchaseServiceVO();
+			service.setPurchaseId(purchaseId);
+			service.setServiceCode(paymentServiceCode.getServiceCode());
+			service.setQuantity("1"); // as per business requirement so far
+			service.setPrice(amount.toString());
+			service.setDescription(feeId);
+			service.setIsVariable(true); // as per business requirement so far
+
+			purchaseServiceCodes.add(service);
+			purchaseVo.setPurchaseServiceCodes(purchaseServiceCodes);
+
+			result = purchaseService.savePurchaseTransaction(purchaseVo);
+			if (result) {
+				resultMap.put("status", PAYMENT_STATUS_SUCCESS);
+				resultMap.put("message", messageSource.getMessage("purchase.approve.success", null, new Locale(languageCode)));
+			}
+		}
+
+		logger.exit("savePurchase()");
+
+		return resultMap;
+	}
+}

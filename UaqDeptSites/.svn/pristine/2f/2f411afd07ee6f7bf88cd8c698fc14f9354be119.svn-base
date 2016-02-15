@@ -1,0 +1,275 @@
+/**
+ * 
+ */
+package com.uaq.controller;
+
+import static com.uaq.common.ApplicationConstants.*;
+import static com.uaq.common.TilesViewConstant.*;
+import static com.uaq.common.UAQURLConstant.*;
+import static com.uaq.common.WebServiceConstant.*;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import GetAllRequestDetails.RequestNOCRecPayload;
+
+import com.uaq.command.SubmitNocCommand;
+import com.uaq.common.PropertiesUtil;
+import com.uaq.common.ServiceNameConstant;
+import com.uaq.common.ViewPath;
+import com.uaq.controller.mapper.PortalDataMapper;
+import com.uaq.controller.mapper.SubmitNOCDataMapper;
+import com.uaq.service.PSFindRequestService;
+import com.uaq.service.PortalUtil;
+import com.uaq.service.SubmitNOCRequestService;
+import com.uaq.util.StringUtil;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+import com.uaq.vo.LandInputVO;
+import com.uaq.vo.LandOutputVO;
+import com.uaq.vo.LoginOutputVO;
+import com.uaq.vo.PSResubmissonOutputVO;
+import com.uaq.vo.PageMetadataVO;
+import com.uaq.vo.ReSubmiisionInputVO;
+import com.uaq.vo.UserDeatilVO;
+
+/**
+ * @author TACME
+ * 
+ */
+@Controller
+public class SubmitNOCController extends BaseController {
+
+	@Autowired
+	PortalUtil portalUtil;
+
+	@Autowired
+	PSFindRequestService pSFindRequestService;
+
+	@Autowired
+	SubmitNOCRequestService submitNOCRequestService;
+
+	/***
+	 * Handler Method for Submit NoC ,Based On Service Id for Getting the
+	 * Request Detail
+	 ***/
+
+	@RequestMapping(value = ViewPath.SUBMIT_NOC, method = RequestMethod.GET)
+	public String handleSubmitNOC(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+		super.handleRequest(request, model);
+		String viewname = EMPTY_STRING;
+
+		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
+		// For E-Service RHS
+		String departmentServicesJSON = super.getDepartmentServicesJSON(languageCode);
+		model.addAttribute("departmentServicesJSON", departmentServicesJSON);
+
+		String serviceId = portalUtil.decryptParameter(request.getParameter(REQUEST_PARAM_SERVICE_ID));
+		String requestNo = portalUtil.decryptParameter(request.getParameter(REQUEST_PARAM_REQUEST_NO));
+
+		if (serviceId.equals(ServiceNameConstant.ADD_LAND_REQUEST)) {
+			ReSubmiisionInputVO inputVO = new ReSubmiisionInputVO();
+			inputVO.setAttributeName(SOAP_REQUESTNO_ARGUMENT);
+			inputVO.setAttributeValue(requestNo);
+			PSResubmissonOutputVO resubmitdata = pSFindRequestService.findAddLandRequest(inputVO);
+			logger.info("Add Land Request Retrived  |Req No-" + requestNo);
+			viewname = setSubmitNOCCommand(resubmitdata, request, response, model);
+
+		}
+		model.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
+		return viewname;
+
+	}
+
+	/*** Method for Submit NoC Get Page Data to Render */
+	private String setSubmitNOCCommand(PSResubmissonOutputVO resubmitdata, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		String viewname = EMPTY_STRING;
+		LoginOutputVO logininfo = null;
+		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
+
+		Locale locale = new Locale(languageCode);
+		PageMetadataVO pageMetadataVO = new PageMetadataVO();
+		pageMetadataVO.setPageTitle(messageSource.getMessage("label.ps.subnoc.pagetitle", null, locale));
+		pageMetadataVO.setPageDescription(messageSource.getMessage("label.ps.subnoc.pagedescription", null, locale));
+		pageMetadataVO.setPageKeywords(messageSource.getMessage("label.ps.subnoc.pagekeyword", null, locale));
+
+		SubmitNocCommand submitNocCommand = null;
+		if (resubmitdata != null && resubmitdata.getRequestNo() != null) {
+			model.addAttribute(NOC_ATTACHMENT, resubmitdata.getNocAttachment());
+			submitNocCommand = SubmitNOCDataMapper.setdataToSUbmitNOCCommand(resubmitdata);
+			model.addAttribute(SESSION_LAND_LOCATION, submitNocCommand.getLocations());
+			model.addAttribute(MODEL_ATTR_REQUESTNO, submitNocCommand.getRequestNo());
+			model.addAttribute(NOC_OPTIONAL_COMMENT, resubmitdata.getOptionalComments());
+			portalUtil.lookUpDataDropDownPlanningandSurvey(model, languageCode);
+
+			String nocNameComment = EMPTY_STRING;
+			if (resubmitdata.getNocAttachment() != null) {
+				for (RequestNOCRecPayload attachment : resubmitdata.getNocAttachment()) {
+					nocNameComment += LANG_ENGLISH.equals(languageCode) ? attachment.getRequestNOCType_EN() + COMMA : attachment.getRequestNOCType_Ar() + COMMA;
+				}
+			}
+			if (!StringUtil.isEmpty(nocNameComment)) {
+				int endIndex = nocNameComment.lastIndexOf(COMMA);
+				if (endIndex != -1) {
+					nocNameComment = nocNameComment.substring(0, endIndex);
+				}
+			}
+
+			model.addAttribute(NOC_NAME, nocNameComment);
+
+		}
+		if (portalUtil.isMobile(request, response)) {
+			model.addAttribute(ISMOBILE, "true");
+			viewname = MOBILE_LOGIN_AGAIN;
+			logininfo = portalUtil.getLoginDetailFromMobileRequest(request);
+			//logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+			if (logininfo != null) {
+				if (portalUtil.validateToken(logininfo)) {
+					request.getSession().setAttribute(SESSION_LOGIN_INFO_MOBILE, logininfo);
+					logger.info("Mobile    |    Token Validated  | submit NOC.newreq");
+					AccountDetailTokenOutputVO accountDetailOutputVO = portalUtil.getAccountDetailForMobile(logininfo);
+					if (accountDetailOutputVO != null && accountDetailOutputVO.getAccountId() != null) {
+						viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						if (submitNocCommand != null) {
+							model.addAttribute("submitNocCommand", submitNocCommand);
+							model.addAttribute(USER_FIRSTNAME, accountDetailOutputVO.getFirstName());
+							model.addAttribute(USER_MOBILENO, accountDetailOutputVO.getMobileNo());
+							model.addAttribute(USER_EMAIL, accountDetailOutputVO.getEmailAddress());
+							viewname = MOBILE_SUBMIT_NOC;
+						}
+					}
+				}
+			}
+			if (viewname.equals(MOBILE_LOGIN_AGAIN)) {
+				request.getSession().invalidate();
+				logger.info("Mobile  | Failure    |  User Not Loged In   ");
+			}
+		} else {
+			model.addAttribute(ISMOBILE, "false");
+			logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
+			viewname = PORTAL_LOGIN_AGAIN;
+			if (logininfo != null) {
+				if (portalUtil.validateToken(logininfo)) {
+					logger.info("Desktop    |    Token Validated  | submit NOC.newreq");
+					AccountDetailTokenOutputVO accountDetailfromToken = portalUtil.getAccountDetailForMobile(logininfo);
+					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
+						viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						if (submitNocCommand != null) {
+							model.addAttribute("submitNocCommand", submitNocCommand);
+							model.addAttribute(USER_FIRSTNAME, accountDetailfromToken.getFirstName());
+							model.addAttribute(USER_MOBILENO, accountDetailfromToken.getMobileNo());
+							model.addAttribute(USER_EMAIL, accountDetailfromToken.getEmailAddress());
+							viewname = PORTAL_SUBMIT_NOC;
+						}
+					}
+				}
+			}
+			if (viewname.equals(PORTAL_LOGIN_AGAIN)) {
+				logger.info("Desktop  |  Failure    |    User Not Loged In ");
+				request.getSession().invalidate();
+			}
+		}
+		model.addAttribute(PAGE_LABEL, "label.ps.subNoc");
+		model.addAttribute(PAGE_META_DATA, pageMetadataVO);
+		return viewname;
+
+	}
+
+	@RequestMapping(value = ViewPath.SUBMIT_NOC, method = RequestMethod.POST)
+	public String handleSubmitNoc(@ModelAttribute("submitNocCommand") SubmitNocCommand submitNocCommand, HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		super.handleRequest(request, model);
+		String viewname;
+		LoginOutputVO logininfo = null;
+		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
+
+		Locale locale = new Locale(languageCode);
+		PageMetadataVO pageMetadataVO = new PageMetadataVO();
+		pageMetadataVO.setPageTitle(messageSource.getMessage("label.ps.subnoc.pagetitle", null, locale));
+		pageMetadataVO.setPageDescription(messageSource.getMessage("label.ps.subnoc.pagedescription", null, locale));
+		pageMetadataVO.setPageKeywords(messageSource.getMessage("label.ps.subnoc.pagekeyword", null, locale));
+
+		if (portalUtil.isMobile(request, response)) {
+			logger.info("Mobile app Request");
+			model.addAttribute(ISMOBILE, "true");
+			viewname = MOBILE_LOGIN_AGAIN;
+			logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+			if (logininfo != null) {
+				if (portalUtil.validateToken(logininfo)) {
+					logger.info("Mobile    |    Token Validated  | submit NOC POST");
+					AccountDetailTokenOutputVO accountDetailOutputVO = portalUtil.getAccountDetailForMobile(logininfo);
+					if (accountDetailOutputVO != null && accountDetailOutputVO.getAccountId() != null) {
+						viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						UserDeatilVO user = PortalDataMapper.getUserDetailFrom(accountDetailOutputVO);
+						if (submitNocCommand != null && submitNocCommand.getRequestNo() != null) {
+							LandInputVO inputVo = SubmitNOCDataMapper.setdataToSUbmitNOCService(submitNocCommand);
+							inputVo.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
+							model.addAttribute(RESPONCE_KEY, "request.invalid.data");
+							viewname = "service.duplicate.request";
+							if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), submitNocCommand.getRequestNo(), submitNocCommand.getStausId())) {
+								LandOutputVO output = submitNOCRequestService.submitNOCRequest(user, inputVo);
+								logger.debug("OutPut="+output != null ? output.getStatus() : "null");
+								if (!SERVICE_FAILED.equals(output.getStatus())) {
+									viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+									model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
+								}
+							}
+						}
+					}
+
+				}
+			}
+			if (viewname.equals(MOBILE_LOGIN_AGAIN)) {
+				request.getSession().invalidate();
+				logger.info("Mobile  | Failure    |  User Not Loged In   ");
+			}
+
+		} else {
+			model.addAttribute(ISMOBILE, "false");
+			logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
+			viewname = PORTAL_LOGIN_AGAIN;
+			if (logininfo != null) {
+				if (portalUtil.validateToken(logininfo)) {
+					logger.info("Desktop    |    Token Validated  | submit NOC POST");
+					AccountDetailTokenOutputVO accountDetailOutputVO = portalUtil.getAccountDetailForMobile(logininfo);
+					if (accountDetailOutputVO != null && accountDetailOutputVO.getAccountId() != null) {
+						viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						UserDeatilVO user = PortalDataMapper.getUserDetailFrom(accountDetailOutputVO);
+						if (submitNocCommand != null && submitNocCommand.getRequestNo() != null) {
+							LandInputVO inputVo = SubmitNOCDataMapper.setdataToSUbmitNOCService(submitNocCommand);
+							inputVo.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
+							model.addAttribute(RESPONCE_KEY, "request.invalid.data");
+							viewname = "service.duplicate.request";
+							if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), submitNocCommand.getRequestNo(), submitNocCommand.getStausId())) {
+								LandOutputVO output = submitNOCRequestService.submitNOCRequest(user, inputVo);
+								logger.debug("OutPut="+output != null ? output.getStatus() : "null");
+								if ((!SERVICE_FAILED.equals(output.getStatus()))) {
+									viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+									model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
+								}
+							}
+						}
+					}
+				}
+			}
+			if (viewname.equals(PORTAL_LOGIN_AGAIN)) {
+				logger.info("Desktop  |  Failure    |    User Not Loged In ");
+				request.getSession().invalidate();
+			}
+			
+		}
+		model.addAttribute(PAGE_LABEL, "label.ps.subNoc");
+		model.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
+		model.addAttribute(PAGE_META_DATA, pageMetadataVO);
+		model.addAttribute("myRequestUrl", PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + URL_SEPARATOR + MY_REQUEST_URL);
+		return viewname;
+
+	}
+
+}

@@ -1,0 +1,63 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+<div class="mainmenu">
+					<div class="col-md-12 hidden-xs hidden-sm">
+						<div class="mainmenu-wrap">
+							<ul class="no-list cf">
+								<li>
+									<a href="/${param.languageCode}/home.html"><img src="/img/home1.png" alt="Home UAQ">
+									</a>
+								</li>
+								
+								<li><a href="/${param.languageCode}/registrationlanding.html"><spring:message code="registration"/></a>
+								</li>
+								
+								<li class="active"><a href="#"><spring:message code="termsAndCondition"/></a>
+								</li>
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+
+		<div class="content cf">
+		<!-- right col -->
+		<!-- left col -->
+		<div class="col-xs-12 col-sm-9 col-md-9 main-left-col">
+			<!-- page title -->
+			<div class="page-title-wrap">
+				<div class="row">
+					<div class="col-xs-12 col-sm-9 col-md-10 title-txt">
+						<!-- page title -->
+						<h2 class="page-title"><spring:message code="termsAndCondition"/></h2>
+						<!-- /page title -->
+					</div>
+					<div class="hidden-xs show-sm col-md-2 title-icon">
+						<img src="/img/icons/icon-uaq.png" alt="uaq">
+					</div>
+				</div>
+			</div>
+			<!-- /page title -->
+			<!-- main content -->
+			<div class="main-content-wrap">
+				
+				
+				 	<div class="row">
+				 	
+				 		<h5><spring:message code="termsAndCondition"/></h5>
+				 	
+				 	</div>
+				
+			</div>
+		 </div>
+	 </div>
+
+</body>
+</html>

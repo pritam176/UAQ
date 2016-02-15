@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+    id="WebApp_ID" version="2.5">
+  
+  <!-- Bootstrap Spring configuration to be used by both SSO and MVC -->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>  
+        <!--  <filter>
+    <filter-name>deviceResolverRequestFilter</filter-name>
+    <filter-class>org.springframework.mobile.device.DeviceResolverRequestFilter</filter-class>
+</filter> -->
+   <filter>
+        <filter-name>SetCharacterEncoding</filter-name>
+        <filter-class>com.uaq.common.SetCharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+    </filter>
+     <filter-mapping>
+        <filter-name>SetCharacterEncoding</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>  
+    
+  <!-- Configure Spring MVC -->
+  <servlet>
+    <servlet-name>dispatcher</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>dispatcher</servlet-name>
+    <url-pattern>*.html</url-pattern>
+  </servlet-mapping>
+  <jsp-config>
+  <jsp-property-group>
+    <url-pattern>*.jsp</url-pattern>
+    <trim-directive-whitespaces>true</trim-directive-whitespaces>
+  </jsp-property-group>
+</jsp-config>
+	<error-page>
+	    <error-code>500</error-code>
+	    <location>/WEB-INF/jsp/portal/common/500.jsp</location>
+	</error-page>	
+	<error-page>
+	    <error-code>404</error-code>
+	    <location>/WEB-INF/jsp/portal/common/404.jsp</location>
+	</error-page>
+</web-app>

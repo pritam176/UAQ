@@ -1,0 +1,105 @@
+package com.uaq.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.uaq.common.PropertiesUtil;
+import com.uaq.logger.UAQLogger;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+
+public class UserDetailDAO {
+
+	private static transient UAQLogger logger = new UAQLogger(UserDetailDAO.class);
+
+	private static final String DB_DRIVER = PropertiesUtil.getProperty("soa.jdbc.driverClassName");
+	private static final String DB_CONNECTION = PropertiesUtil.getProperty("soa.jdbc.url");
+	private static final String DB_USER = PropertiesUtil.getProperty("soa.jdbc.username");
+	private static final String DB_PASSWORD = PropertiesUtil.getProperty("soa.jdbc.password");
+
+	private Connection con;
+
+	// used to establish connection with SOA database
+	private Connection getConnection() throws ClassNotFoundException, SQLException {
+
+		try {
+			Class.forName(DB_DRIVER);
+		} catch (ClassNotFoundException e) {
+			logger.error(e.getMessage());
+		}
+
+		try {
+			con = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		}
+
+		return con;
+	}
+
+	public AccountDetailTokenOutputVO getUserdetail(String accountId) {
+		logger.enter("getUserdetail");
+		AccountDetailTokenOutputVO vo = null;
+		String SQL = "SELECT UD.USER_NAME username, AD.ID accountId, AD.EMAIL_ADDRESS emailid, UD.lANGUAGE_ID languageid, UD.LOGINUSERNAME loginusername," +
+				"AD.EMIRATES_ID , AD.TYPE_OF_USER typeofuserid, AD.ADDRESSLINE1 address1, AD.EMIRATES_CODE emirateCode, AD.FIRST_NAME firstname," +
+				"AD.APPLICANTTYPEID applicantid,UD.MOBILE_NO mobileno,AD.PASSPORT_NO passportno,AD.NATIONALITY_ID nationalityid," +
+				"AD.POSTBOX postbox,AD.TRADE_LIENCE_NO tradeLicenno" +
+				" FROM USER_DETAILS UD JOIN ACCOUNT_DETAILS AD   ON AD.ID = UD.ACCOUNT_ID WHERE AD.ID = ? ";
+
+		logger.debug("query-" + SQL);
+
+		PreparedStatement ps = null;
+		try {
+			con = getConnection();
+			ps = con.prepareStatement(SQL);
+			ps.setString(1, accountId);
+
+			ResultSet resultset = ps.executeQuery();
+
+			while (resultset.next()) {
+				vo = new AccountDetailTokenOutputVO();
+				vo.setUserName(resultset.getString("username"));
+				vo.setAccountId(resultset.getString("accountId"));
+				vo.setEmailAddress(resultset.getString("emailid"));
+				vo.setLanguageId(resultset.getString("languageid"));
+				vo.setLoginusername(resultset.getString("loginusername"));
+				vo.setApplicanttypeid(resultset.getString("applicantid"));
+				vo.setMobileNo(resultset.getString("mobileno"));
+				vo.setPassportNo(resultset.getString("passportno"));
+				vo.setNationalityId(resultset.getString("nationalityid"));
+				vo.setPostbox(resultset.getString("postbox"));
+				vo.setTradeLienceNo(resultset.getString("tradeLicenno"));
+				vo.setTypeOfUser(resultset.getString("typeofuserid"));
+				vo.setEmiratesCode(resultset.getString("emirateCode"));
+			}
+
+		} catch (ClassNotFoundException e) {
+			logger.error(e.getMessage());
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		logger.exit("getUserdetail");
+		return vo;
+
+	}
+
+}

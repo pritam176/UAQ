@@ -1,0 +1,134 @@
+globalUrl=https://stg.uaq.ae
+
+egd_csSiteName=EGovernment
+mun_csSiteName=Municipality
+ded_csSiteName=EconomicDevelopment
+lap_csSiteName=LandsProperties
+pas_csSiteName=PlanningSurvey
+pws_csSiteName=PublicWorksService
+aah_csSiteName=ArchaeologyHeritage
+dfm_csSiteName=FalajMunicipality
+ica_csSiteName=IndustrialCityAuthority
+pcf_csSiteName=PortsCustomsFreeZone
+dec_csSiteName=ExecutiveCouncil
+faa_csSiteName=FinanceAdministration
+dfa_csSiteName=FinancialAuditing
+uaq_csSiteName=UAQInternetPortal
+
+csUrl=http://10.100.90.15:8080/cs
+csUsername=fwadmin
+csPassword=UATcmaxceladmin987
+
+uaq.url=https://stg.uaq.ae
+egd.url=http://stgegd.uaq.ae
+lap.url=http://stgld.uaq.ae
+ded.url=http://stgded.uaq.ae
+dec.url=http://stgec.uaq.ae
+aah.url=http://stgah.uaq.ae
+mun.url=http://stgmd.uaq.ae
+pas.url=http://stgdps.uaq.ae
+pws.url=http://stgpws.uaq.ae
+dfm.url=http://stgfmd.uaq.ae
+ica.url=http://stgica.uaq.ae
+pcf.url=http://stgftz.uaq.ae
+faa.url=http://stgfa.uaq.ae
+dfa.url=http://stgfad.uaq.ae
+
+erp.table.name=APPS.XX_UAQ_ESERVICE_INTEG_TBL
+
+501=S001
+502=S001
+
+304_1=A001,1
+304_2=A001,2
+
+#for Add Land Payment feeKey.for Service ,application 
+303_33_1 =A001,1
+303_33_2 =A001,2
+
+303_18_1 =S001,1
+303_18_2 =S001,2
+
+302_33_1 =A001,1
+302_33_2 =A001,2
+
+405_1 = S001,Social Affairs
+405_2 = S001,Charity
+405_3 = S001,Other
+
+
+SEQ_301 = PS_SEQ_TRAN
+SEQ_302 = PS_SEQ_TRAN
+SEQ_303 = PS_SEQ_TRAN
+SEQ_304 = PS_SEQ_TRAN
+SEQ_305 = PS_SEQ_TRAN
+
+
+SEQ_501 = EGD_SEQ_TRAN
+SEQ_502 = EGD_SEQ_TRAN
+
+SEQ_405 = LP_SEQ_TRAN
+SEQ_403 = LP_SEQ_TRAN
+SEQ_404 = LP_SEQ_TRAN
+SEQ_401 = LP_SEQ_TRAN
+
+
+ENV_ID = 3
+
+22=Emirates Id Front
+23=Emirates Id Back
+20=Family Book
+24=Passport Front
+1=Trade License
+2=Signatory Attestation
+
+news.pagesize = 3
+news.paginationsetsize = 5
+news.numberofyear = 2
+
+pagination.pagesize = 3
+pagination.setsize = 3
+
+rss.feeds.pagesize = 10
+
+#Email Configuration
+email.host=webmail.uaqgov.ae
+email.from=eservices.notify@uaqgov.ae
+email.password=Pa$$w0rd123@
+email.port=25
+email.to.uaq=feedback@uaqgov.ae
+email.to.lap=feedback@uaqgov.ae
+email.to.pws=feedback@uaqgov.ae
+email.to.ded=feedback@uaqgov.ae
+email.to.pas=feedback@uaqgov.ae
+email.to.aah=feedback@uaqgov.ae
+email.to.mun=feedback@uaqgov.ae
+email.to.egd=feedback@uaqgov.ae
+email.to.dfm=feedback@uaqgov.ae
+email.to.dfa=feedback@uaqgov.ae
+email.to.dec=feedback@uaqgov.ae
+email.to.ica=feedback@uaqgov.ae
+email.to.pcf=feedback@uaqgov.ae
+email.to.aah=feedback@uaqgov.ae
+
+#email.to.uaq=feedback@uaqgov.ae
+#email.to.lap=uaqlands@uaqld.gov.ae
+#email.to.pws=pwsd@uaqpws.gov.ae
+#email.to.ded=info@uaqded.gov.ae
+#email.to.pas=Uaqdps@uaqdps.gov.ae
+#email.to.aah=uaqah@uaqah.gov.ae
+#email.to.mun=info@uaqmd.gov.ae
+#email.to.egd=info@euaq.gov.ae
+#email.to.dfm=f_ghufli@hotmail.com
+#email.to.dfa=info@uaqfa.gov.ae
+#email.to.dec=info@uaqec.gov.ae
+#email.to.ica=administration@uaqica.gov.ae
+#email.to.pcf=abrpaftz@emirates.net.ae
+#email.to.aah=uaqah@uaqah.gov.ae
+
+email.to.UAQ=ttacme@gamil.com
+
+careers.email=testmail@abc.com
+
+#Webservice Details.
+related.services = http://94.57.252.244:8080/uaqws/service/getServicesByDepartment/egd/en/

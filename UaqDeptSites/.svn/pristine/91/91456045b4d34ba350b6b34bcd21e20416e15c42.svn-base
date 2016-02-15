@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="serviceBaseLayout" template="/WEB-INF/jsp/portal/common/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/jsp/portal/common/header.jsp" />
+		<put-attribute name="mobilemenu" value="/WEB-INF/jsp/portal/common/mobileMenu.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/portal/common/footer.jsp" />
+	</definition>
+	
+	<definition name="serviceMobileBaseLayout" template="/WEB-INF/jsp/portal/common/layout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header" value="/WEB-INF/jsp/portal/common/mobileheader.jsp" />
+		<put-attribute name="mobilemenu" value="/WEB-INF/jsp/portal/common/mobileMenu.jsp" /> 
+		<put-attribute name="body" value="" />
+		<put-attribute name="menu" value="" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/portal/common/mobilefooter.jsp" />
+	</definition>
+	
+	<definition name="LPService" extends="serviceBaseLayout" >
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/LP/selectService.jsp" />
+	</definition>
+	
+	<definition name="LPService.mobile" extends="serviceMobileBaseLayout" >
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/LP/selectService.jsp" />
+	</definition>
+
+	<definition name="uae.citizen.registration" extends="serviceBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/registrationIndividualUAECitizen.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="registration.success" extends="serviceBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/registrationsucces.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+
+	<definition name="activate.form" extends="serviceBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/Activation_Form_Individual.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="activate.account" extends="serviceBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/userAccountActivation.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="activate.success" extends="serviceBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/activateSuccess.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="otp.page" extends="serviceBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/Submit_Otp.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="forgetUsername.page" extends="serviceBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/forgotUsername.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="forgetPassword.page" extends="serviceBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/forgotPassword.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+	
+	<definition name="changePassword.page" extends="serviceBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/changePassword.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+	<definition name="search" extends="serviceBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/search.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+	
+	
+	<!-- Tiles for Department SErvices -->
+	
+	<definition name="dept.tahkyou" extends="serviceBaseLayout" >
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/thankyou.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+	<definition name="service.errorpage.portal" extends="serviceBaseLayout" >
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/service_error_page.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+	<definition name="service.errorpage.mobile" extends="serviceMobileBaseLayout" >
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/service_errorpagemobile.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+	<definition name="dept.tahkyou.mobile" extends="serviceMobileBaseLayout" >
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/thankyoumobile.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+	
+	<definition name="service.duplicate.request" extends="serviceBaseLayout" >
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/error_page.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+	
+	<!-- Tiles for Land and property -->
+			
+	<definition name="land.property" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/LP/land-and-property-valuation.jsp" />
+	</definition>
+	
+	<definition name="land.property.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/mobile/Department/LP/land-and-property-valuation-mobile.jsp" />
+	</definition>
+	
+	<!-- <definition name="submission.success" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/sites/common/thankyou.jsp" />
+	</definition> -->
+	
+	  <definition name="pws.wasteContainer" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PWS/new-waste-container.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="pws.wasteContainer.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PWS/new-waste-container-mobile.jsp" />
+	    <put-attribute name="rightcolumn" value="" /> 
+	  </definition>
+	  
+	  <definition name="resubmit.pws.wasteContainer" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PWS/resubmit/new-waste-container.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	 
+	  <definition name="resubmit.pws.wasteContainer.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PWS/resubmit/new-waste-container.jsp" />
+	    <put-attribute name="rightcolumn" value="" />   
+	  </definition>
+	  
+	  
+	  <definition name="viewdetail.pws.wasteContainer" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PWS/viewdetails/new-waste-container.jsp" />
+	    <put-attribute name="rightcolumn" value="" />   
+	  </definition>
+	  
+	   <definition name="viewdetail.pws.wasteContainer.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PWS/viewdetails/new-waste-container.jsp" />
+	    <put-attribute name="rightcolumn" value="" />   
+	  </definition>
+	
+	  
+	   <definition name="pws.myRequest" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PWS/my-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition> 
+		
+						<!--  Tiles for New Supplier Registration -->
+		<definition name="egd.newSupplier" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/EGD/new-supplier-registration.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  				<!--  Tiles for New Supplier Registration Resubmit-->
+		<definition name="resubmit.egd.newSupplier" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/EGD/resubmit/new-supplier-registration.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  <definition name="viewdetails.egd.newSupplier" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/EGD/viewdetails/new-supplier-registration-viewdetails.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	    
+	  					<!--  Tiles for New Supplier Registration Mobile -->
+	  
+	  <definition name="egd.newSupplier.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/EGD/newSupplierRegistration.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  			<!--  Tiles for New Supplier Registration Mobile Resubmit -->
+	  
+	  <definition name="resubmit.egd.newSupplier.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/EGD/resubmit/newSupplierRegistration.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  <definition name="viewdetails.egd.newSupplier.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/EGD/viewdetails/newSupplierRegistration-viewdetails.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  
+	  
+	 					 <!-- Tiles for Re new Supplier Registration -->
+	  <definition name="egd.reNewSupplier" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/EGD/renew-supplier-registration.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="egd.reNewSupplier.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/EGD/renew-supplier-registration.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  
+	  <!-- Tiles for Resubmit Request -->
+	  
+	  <definition name="resubmit.egd.reNewSupplier" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/EGD/resubmit/renew-supplier-registration.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="resubmit.egd.reNewSupplier.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/EGD/resubmit/renew-supplier-registration.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="viewdetails.egd.reNewSupplier" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/EGD/viewdetails/renew-supplier-registration-viewdetails.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="viewdetails.egd.reNewSupplier.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/EGD/viewdetails/renew-supplier-registration-viewdetails.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	
+	  <!-- Tiles for Land Demarcation Request -->
+	  <definition name="ps.landDemarcation" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/land-demarcation-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  <definition name="ps.landDemarcation.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/land-demarcation-request-mobile.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  
+	   <definition name="resubmit.ps.landDemarcation" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/resubmit/land-demarcation-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	     <definition name="viewdetail.ps.landDemarcation" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/viewdetails/land-demarcation-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="resubmit.ps.landDemarcation.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/resubmit/land-demarcation-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="viewdetail.ps.landDemarcation.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/viewdeatils/land-demarcation-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="viewdetails.ps.landDemarcation" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/viewdetails/land-demarcation-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="viewdetails.ps.landDemarcation.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/viewdetails/land-demarcation-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  				
+	  					<!--Tiles for Add Land Request  -->
+	   <definition name="ps.addLandRequest" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/add-land-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  <definition name="ps.addLandRequest.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/add-land-request-mobile.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  <definition name="resubmit.ps.addLandRequest" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/resubmit/add-land-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="resubmit.ps.addLandRequest.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/resubmit/add-land-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  <definition name="viewdetails.ps.addLandRequest" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/viewdetails/add-land-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  <definition name="viewdetails.ps.addLandRequest.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/viewdeatils/add-land-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  					
+	  					<!--Tiles for Issue site plan Document  -->
+	  <definition name="ps.issueSitePlanDocument" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/Issue-site-plan-document-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="ps.issueSitePlanDocument.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/Issue-site-plan-document-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  <definition name="resubmit.ps.issueSitePlanDocument" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/resubmit/Issue-site-plan-document-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="resubmit.ps.issueSitePlanDocument.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/resubmit/Issue-site-plan-document-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	    <definition name="viewdetails.ps.issueSitePlanDocument.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/viewdeatils/Issue-site-plan-document-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="viewdetails.ps.issueSitePlanDocument" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/viewdetails/Issue-site-plan-document-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  
+	  
+	 
+	  
+	 
+	  
+	  				<!--Tiles for Extension Of Grand Land Document  -->
+	  <definition name="ps.extensionOfGrand" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/extension-of-grant-land-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	    <definition name="ps.extensionOfGrand.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/extension-of-grant-land-request-mobile.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  <definition name="resubmit.ps.extensionOfGrand" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/resubmit/extension-of-grant-land-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	   <definition name="resubmit.ps.extensionOfGrand.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/resubmit/extension-of-grant-land-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  <definition name="viewdetail.ps.extensionOfGrand" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/viewdetails/extension-of-grant-land-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  <definition name="viewdetail.ps.extensionOfGrand.mobile" extends="serviceMobileBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/mobile/Department/PS/viewdeatils/extension-of-grant-land-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	      <definition name="resubmit.ps.grantlandrequest" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/PS/resubmit/grant-land-request.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  	<!--Tiles for Re New Real estate office Document  -->
+	  <definition name="lp.renewRealestate" extends="serviceBaseLayout">
+	    <put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/LP/Renew-Real-Estate-Office.jsp" />
+	    <put-attribute name="rightcolumn" value="" />
+	  </definition>
+	  
+	  <!-- Tiles for new Procard -->
+		<definition name="newprocard.service" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/LP/pro-card-request.jsp" />
+	</definition>
+	
+	<definition name="newprocard.service.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/mobile/Department/LP/pro-card-request-mobile.jsp" />
+	</definition>
+	
+	 <!-- Tiles for Grant Land Req page-->
+	<definition name="grantland.newreq" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/PS/grant-land-request.jsp" />
+	</definition>
+	
+	<definition name="grantland.newreq.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/mobile/Department/PS/grant-land-request-mobile.jsp" />
+	</definition>
+
+	 <!-- Tiles for MyRequest page-->
+	<definition name="user.myrequest" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/portal/common/my-request.jsp" />
+	</definition>
+	
+	<definition name="user.myrequest.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/portal/common/mobile-my-request.jsp" />
+	</definition>
+	
+	<definition name="paymenthistory.list" extends="serviceBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/portal/common/paymentHistory.jsp" />
+	</definition>
+	 <!-- Tiles for re new Procard -->
+		<definition name="renewprocard.service" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/LP/pro-card-renew-request.jsp" />
+	</definition>
+	
+		<definition name="renewprocard.service.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/mobile/Department/LP/pro-card-renew-request-mobile.jsp" />
+	</definition>
+	<!-- tiles for renew real estate -->
+	<definition name="renewrealestate.service" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/LP/renew-real-estate-office-request.jsp" />
+	</definition>
+	
+	<definition name="renewrealestate.service.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/mobile/Department/LP/renew-real-estate-office-request-mobile.jsp" />
+			
+	</definition>
+	
+	<definition name="ps.issuesiteplan" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/PS/Issue-site-plan-document-request.jsp" />
+			
+	</definition>
+	
+		<definition name="ps.issuesiteplan.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/mobile/Department/PS/Issue-site-plan-document-request-mobile.jsp" />
+			
+	</definition>
+	
+	<!-- tiles for new real estate -->
+	<definition name="newrealestate.service" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/LP/new-real-estate-office-request.jsp" />
+	</definition>
+	
+	
+	<definition name="establishment.registration" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/register-new-online-user-account-establishment.jsp" />
+	</definition>
+	
+<definition name="gcc.citizen.registration" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/register-new-online-user-account-individual-gcc-citizen.jsp" />
+	</definition>
+	
+	<definition name="gcc.resident.registration" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/register-new-online-user-account-individual-gcc-resident.jsp" />
+	</definition>
+	
+	<definition name="uae.resident.registration" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/register-new-online-user-account-Individual-uae-resident.jsp" />
+	</definition>
+	<definition name="visitor.registration" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/register-new-online-user-account-individual-visitor.jsp" />
+	</definition>
+	
+	<definition name="registration.landing" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/registrationlanding.jsp" />
+	</definition>
+	
+	
+	<definition name="registration.tearms" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/tearmscondition.jsp" />
+	</definition>
+	
+	<definition name="myprofile.view" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/REGISTRATION/myprofile.jsp" />
+	</definition>
+	
+	<definition name="login.again" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/portal/common/loginrequest.jsp" />
+	</definition>
+	
+	<definition name="login.again.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/portal/common/loginrequestmobile.jsp" />
+	</definition>
+		<!-- Submit NOC  -->
+	<definition name="subnoc.newreq" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/SUBIT_NOC/submit-noc.jsp" />
+	</definition>
+	
+	<definition name="subnoc.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/mobile/Department/SUBIT_NOC/submit-noc_mobile.jsp" />
+	</definition>
+<!-- Submit NOC -->
+	
+	<definition name="lp.whomitmayconcern" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/LP/whom-may-concern.jsp" />
+	</definition>
+	
+	<definition name="lp.whomitmayconcern.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/mobile/Department/LP/whom-may-concern-mobile.jsp" />
+	</definition>
+	
+	<definition name="resubmit.lp.whomitmayconcern" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/LP/resubmit/whom-may-concern.jsp" />
+	</definition>
+		<definition name="viewdetails.lp.whomitmayconcern" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/LP/viewdetails/whom-may-concern.jsp" />
+	</definition>
+	<definition name="resubmit.lp.whomitmayconcern.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/mobile/Department/LP/resubmit/whom-may-concern-mobile.jsp" />
+	</definition>
+	<definition name="viewdetails.lp.whomitmayconcern.mobile" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/mobile/Department/LP/viewdetails/whom-may-concern-mobile.jsp" />
+	</definition>
+	
+
+	
+	
+	
+	<!-- For Dev Testing SHould Remove-->
+	<definition name="test.file" extends="serviceMobileBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/filetest.jsp" />
+	</definition>
+	
+
+</tiles-definitions>

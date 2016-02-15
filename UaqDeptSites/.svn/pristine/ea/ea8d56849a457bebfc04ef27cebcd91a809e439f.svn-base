@@ -1,0 +1,236 @@
+/**
+ * 
+ */
+package com.uaq.service;
+
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.text.ParseException;
+import java.util.Date;
+
+import javax.xml.rpc.ServiceException;
+
+import org.springframework.stereotype.Service;
+
+import uaq.service.egd.model.EGDMiddlewareServicePayment;
+import uaq.service.egd.model.EGDMiddlewareServicePaymentPortBindingStub;
+import uaq.service.egd.model.EGDMiddlewareServicePaymentService;
+import uaq.service.egd.model.EGDMiddlewareServicePaymentServiceLocator;
+import uaq.service.egd.model.UserContext;
+
+import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.AttachmentRecPayload;
+import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.CommonRequestBPMType;
+import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.OutputPayload;
+import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.PaymentRequestType;
+import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.ProcessType;
+import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.RegistrationTypeRecType;
+import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.Supp_RegisterRenewReqType;
+import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.UserDetailsPayload;
+import com.uaq.common.ApplicationConstants;
+import com.uaq.logger.UAQLogger;
+import com.uaq.util.DateUtil;
+import com.uaq.util.StringUtil;
+import com.uaq.vo.LandOutputVO;
+import com.uaq.vo.NewSupplierRegistrationVO;
+import com.uaq.vo.UserDeatilVO;
+
+/**
+ * @author WINDOS EJDServicePayment.jar
+ * 
+ */
+@Service("eGDAfterServicePayment")
+public class EGDAfterServicePayment {
+
+	protected static UAQLogger logger = new UAQLogger(PSAfterServicePayment.class);
+
+	private EGDMiddlewareServicePaymentService service = null;
+	private EGDMiddlewareServicePayment port = null;
+	private EGDMiddlewareServicePaymentPortBindingStub stub = null;
+	private UserContext uc = null;
+
+	public void createStub() {
+		uc = new UserContext();
+		uc.setUsername(ApplicationConstants.WS_USERNAME);
+		uc.setPassword(ApplicationConstants.WS_PASSWORD);
+
+		try {
+			service = (EGDMiddlewareServicePaymentService) new EGDMiddlewareServicePaymentServiceLocator();
+			port = service.getEGDMiddlewareServicePaymentPort();
+			stub = (EGDMiddlewareServicePaymentPortBindingStub) port;
+
+		} catch (ServiceException e) {
+
+			e.printStackTrace();
+
+		}
+
+	}
+
+	public LandOutputVO submitAfterPayment(UserDeatilVO userDeatilVO, NewSupplierRegistrationVO supplierDetails) {
+		createStub();
+
+		LandOutputVO outputVO = new LandOutputVO();
+
+		/*com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.ProcessType arg0 = new ProcessType();*/
+
+		Supp_RegisterRenewReqType suppDetails = new Supp_RegisterRenewReqType();
+
+		suppDetails.setEstablishmentName(supplierDetails.getEstablishmentName());
+		suppDetails.setTradeLicenceNo(supplierDetails.getTradeLicenceNumber());
+		// once abdul did the exception.we need to remove
+
+		suppDetails.setTradeLicenceNo(userDeatilVO.getTradeLienceNo());
+		
+			try {
+				suppDetails.setTradExpDateo(DateUtil.getDateFromString("2015-01-01"));
+			} catch (ParseException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+	
+		suppDetails.setRequestType(supplierDetails.getRequestType());
+		suppDetails.setSourceType(supplierDetails.getSourceType());
+		suppDetails.setUserCommnets("");
+		suppDetails.setServiceId(supplierDetails.getServiceId());
+		suppDetails.setSupp_Reg_Id("1");
+		suppDetails.setSupp_Catg_Id(supplierDetails.getSuppCatgId());
+		suppDetails.setUserCommnets(supplierDetails.getUserCommnets());
+		suppDetails.setOff_tel_num(supplierDetails.getOfficeNumber());
+		suppDetails.setSupplierCategory(supplierDetails.getSupplierCategory());
+		suppDetails.setRegistrationType(supplierDetails.getRegistrationType());
+		suppDetails.setTradExpDateo(new Date());
+		suppDetails.setTradeLicenseAttachmentid("10708");
+		suppDetails.setSignetoryAttestationAttachid("10708");
+		suppDetails.setCOCMemAttachmentid("10708");
+		suppDetails.setCertificateAttachemntid("10708");
+
+		RegistrationTypeRecType regRecType[] = new RegistrationTypeRecType[1];
+		regRecType[0] = new RegistrationTypeRecType();
+		regRecType[0].setRegistrationTypeId("1");
+		regRecType[0].setRegistrationType("1");
+
+		suppDetails.setRegistrationTypeList(regRecType);
+
+		com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.CommonRequestBPMType commonRequestBPM = new CommonRequestBPMType();
+		commonRequestBPM.setRequestId(supplierDetails.getRequestId());
+		commonRequestBPM.setRequestNo(supplierDetails.getRequestNo());
+		commonRequestBPM.setWorkListId(supplierDetails.getWorkListId());
+		commonRequestBPM.setSupprReqId(supplierDetails.getSupprReqId());
+		commonRequestBPM.setStateId(supplierDetails.getStateId());
+		commonRequestBPM.setTemp_SupprReqId(supplierDetails.getTempSupprReqId());
+		commonRequestBPM.setServiceName_En(supplierDetails.getServiceName_En());
+		commonRequestBPM.setServiceName_Ar(supplierDetails.getServiceName_Ar());
+
+		com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.UserDetailsPayload userDetails = new UserDetailsPayload();
+
+		userDetails.setUsername(supplierDetails.getUserName());
+		userDetails.setTypeOfUser(userDeatilVO.getTypeOfUser());
+		userDetails.setAccountid(userDeatilVO.getAccountid());
+		userDetails.setMobileNo(userDeatilVO.getMobileNo());
+		userDetails.setEmailID(userDeatilVO.getEmailID());
+		userDetails.setEmiratesId(userDeatilVO.getEmiratesId());
+		userDetails.setTradeLienceNo(userDeatilVO.getTradeLienceNo());
+		userDetails.setFamilyBookNo(userDeatilVO.getFamilyBookNo());
+		userDetails.setNationality_ID(new BigInteger(userDeatilVO.getNationality()));
+		userDetails.setEmirate(userDeatilVO.getEmirate());
+		userDetails.setFirstName(userDeatilVO.getFirstName());
+		userDetails.setLastName(userDeatilVO.getLastName());
+		userDetails.setAddress1(userDeatilVO.getAddress1());
+		userDetails.setAddress2(userDeatilVO.getAddress2());
+		userDetails.setPOBOX(new BigInteger("0"));
+		userDetails.setDOB(userDeatilVO.getDOB());
+		userDetails.setHome_Phone(userDeatilVO.getHomePhone());
+		userDetails.setLanguage_ID(new BigInteger(userDeatilVO.getLanguageId()));
+		userDetails.setEirates_Code(new BigInteger("0"));
+		userDetails.setNationality("");
+		userDetails.setLanguage(supplierDetails.getLanguageId());
+		userDetails.setEirates_Code(new BigInteger("0"));
+
+		try {
+			userDetails.setDOB(DateUtil.getDateFromString("2015-01-01"));
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		try {
+			userDetails.setEDIA_Expirty_Date(DateUtil.getDateFromString("2015-01-01"));
+		} catch (ParseException e) {
+			logger.error("Failure  |" + e.getMessage());
+		}
+
+		com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.PaymentRequestType paymentDetails = new PaymentRequestType();
+
+		paymentDetails.setPaymentId(supplierDetails.getPaymentId());
+		paymentDetails.setPaymentStatus(supplierDetails.getPaymentStatus());
+		paymentDetails.setServiceFee(supplierDetails.getServiceFee());
+		paymentDetails.setApplicationFee("");
+		paymentDetails.setDeptID(supplierDetails.getDeptID());
+		paymentDetails.setServiceFeeDisc(supplierDetails.getServiceFeeDisc());
+		//Tranasction ID
+		paymentDetails.setEdirhamServCode(supplierDetails.getEdirhamServCode());
+		paymentDetails.setIsPaymentRequired(supplierDetails.getIsPaymentRequired());
+		paymentDetails.setDepartment("");
+
+		com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.AttachmentRecPayload[] attachmentList = new AttachmentRecPayload[4];
+
+		attachmentList[0] = new com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.AttachmentRecPayload();
+		attachmentList[0].setContentid("35325");
+		attachmentList[0].setFilename("1007201584422test.txt");
+		attachmentList[0].setUrl("1007201584422test.txt");
+		attachmentList[0].setIsMandatory("1");
+		attachmentList[0].setDocTypeId("1");
+		attachmentList[0].setFileExpiryDate("01/01/2018");
+
+		attachmentList[1] = new com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.AttachmentRecPayload();
+		attachmentList[1].setContentid("24451");
+		attachmentList[1].setFilename("1007201584422test.txt");
+		attachmentList[1].setUrl("1007201584422test.txt");
+		attachmentList[1].setIsMandatory("1");
+		attachmentList[1].setDocTypeId("1");
+		attachmentList[1].setFileExpiryDate("01/01/2018");
+
+		attachmentList[2] = new com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.AttachmentRecPayload();
+		attachmentList[2].setContentid("4242");
+		attachmentList[2].setFilename("1007201584424Contry list Assending.txt");
+		attachmentList[2].setUrl("1007201584424Contry list Assending.txt");
+		attachmentList[2].setIsMandatory("1");
+		attachmentList[2].setDocTypeId("1");
+		attachmentList[2].setFileExpiryDate("01/01/2018");
+
+		
+
+		attachmentList[3] = new com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.AttachmentRecPayload();
+		attachmentList[3].setContentid("1");
+		attachmentList[3].setFilename("1007201584422test.txt");
+		attachmentList[3].setUrl("1007201584422test.txt");
+		attachmentList[3].setIsMandatory("1");
+		attachmentList[3].setDocTypeId("1");
+		attachmentList[3].setFileExpiryDate("01/01/2018");
+
+		
+		ProcessType process = new ProcessType();
+		process.setSuppDetails(suppDetails);
+		process.setCommonRequestBPM(commonRequestBPM);
+		process.setUserDetails(userDetails);
+		process.setPaymentDetails(paymentDetails);
+		process.setAttachmentList(attachmentList);
+
+		try {
+			OutputPayload outputPayload  =	stub.servicePaymentRequest(process, uc);
+			if(outputPayload!=null){
+				outputVO.setRequestNo(outputPayload.getRequestNo());
+				outputVO.setSatausId(outputPayload.getStatus());
+				outputVO.setStatus_EN(outputPayload.getStatus_EN());
+				outputVO.setStatus_AR(outputPayload.getStatus_AR());
+				outputVO.setStatus(outputPayload.getStatus());
+			}
+			logger.debug("From Service servicePaymentRequest | "+outputPayload.getStatus_EN());
+			} catch (RemoteException e) {
+			logger.debug("Failure  | " + e.getMessage());
+			outputVO.setStatus("Failed");
+		}
+		return outputVO;
+	}
+
+}

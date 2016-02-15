@@ -1,0 +1,454 @@
+package com.uaq.service;
+
+import static com.uaq.payment.PaymentConstants.PAYMENT_RESPONSE_STATUS_CODE_ALREADY_UPDATED;
+import static com.uaq.payment.PaymentConstants.PAYMENT_RESPONSE_STATUS_CODE_PAYMENT_METHOD_SELECTED;
+import static com.uaq.payment.PaymentConstants.PAYMENT_RESPONSE_STATUS_CODE_TXN_NOT_FOUND;
+import static com.uaq.payment.PaymentConstants.PAYMENT_RESPONSE_STATUS_CODE_UPDATED_FAILED;
+import static com.uaq.payment.PaymentConstants.PAYMENT_RESPONSE_STATUS_CODE_UPDATED_SUCCESSFUL;
+import static com.uaq.payment.PaymentConstants.RESPONSE_STATUS_SUCCESS;
+
+import java.sql.SQLException;
+import java.util.List;
+
+import com.uaq.controller.mapper.PaymentDataMapper;
+import com.uaq.dao.PurchaseDAO;
+import com.uaq.exception.UAQException;
+import com.uaq.logger.UAQLogger;
+import com.uaq.payment.AutoUpdatePaymentResponse;
+import com.uaq.payment.InquiryPaymentResponse;
+import com.uaq.payment.MerchantAccount;
+import com.uaq.payment.PayWebPaymentRequest;
+import com.uaq.payment.PayWebPaymentResponse;
+import com.uaq.payment.PaymentConstants;
+import com.uaq.payment.PaymentServiceCode;
+import com.uaq.payment.PaymentStatus;
+import com.uaq.payment.PaymentUtil;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+import com.uaq.vo.LandOutputVO;
+import com.uaq.vo.PaymentReportFilterVO;
+import com.uaq.vo.PaymentReportVO;
+import com.uaq.vo.PaymentTransactionDetailVO;
+import com.uaq.vo.PaymentWorkFlowVO;
+import com.uaq.vo.PurchaseVO;
+
+/**
+ * Service class for Photo Purchase process. It calls the DAO layer for database
+ * access
+ * 
+ * @author mraheem
+ * 
+ */
+
+public class PurchaseService {
+
+	PurchaseDAO purchaseDAO = null;
+
+	private PaymentWorkFlowService paymentWorkFlowService = null;
+
+	private UserDetailService userDetailService = null;
+
+	public PurchaseService() {
+		try {
+			purchaseDAO = new PurchaseDAO();
+			paymentWorkFlowService = new PaymentWorkFlowService();
+			userDetailService = new UserDetailService();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static transient UAQLogger logger = new UAQLogger(PurchaseService.class);
+
+	/**
+	 * This method is used to get full purchase records and perform autoupdate
+	 * if its broken transaction. abstract class method.
+	 * 
+	 * @throws SQLException
+	 */
+
+	public PurchaseVO execute(String purchaseId) throws UAQException, SQLException {
+
+		PurchaseVO purchaseCommand = purchaseDAO.execute(purchaseId);
+
+		if (purchaseCommand != null && purchaseCommand.getPaymentInProgress() != null && purchaseCommand.getPaymentInProgress()) {
+			String lastPaymentTransactionId = getLastPaymentTransactionId(purchaseId);
+			if (lastPaymentTransactionId != null && !lastPaymentTransactionId.isEmpty()) {
+
+				autoUpdatePaymentTransaction(lastPaymentTransactionId);
+
+				// this is to get the fresh purchase record after autoupdate
+				purchaseCommand = purchaseDAO.execute(purchaseId);
+			}
+		}
+
+		return purchaseCommand;
+	}
+
+	/**
+	 * This method is used to get purchase record, without performing
+	 * autoupdate.
+	 * 
+	 * @param purchaseId
+	 * @return
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+
+	public PurchaseVO getPurchase(String purchaseId) throws UAQException, SQLException {
+
+		PurchaseVO purchaseCommand = purchaseDAO.execute(purchaseId);
+
+		return purchaseCommand;
+	}
+
+	public List<PaymentReportVO> execute(PaymentReportFilterVO paymentReportFilterCommand) throws UAQException, SQLException {
+
+		return purchaseDAO.getPaymentBrokenTransactions(paymentReportFilterCommand);
+
+	}
+
+	/**
+	 * This method is used to get the last payment transaction id for the given
+	 * purchase id
+	 * 
+	 * @param purchaseId
+	 * @return transactionId last payment transaction id
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+
+	private String getLastPaymentTransactionId(String purchaseId) throws UAQException, SQLException {
+
+		return purchaseDAO.getLastPaymentTransactionId(purchaseId);
+	}
+
+	/**
+	 * This method is used to fetch Purchase record
+	 * 
+	 * @param purchaseId
+	 * @return
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+
+	public PurchaseVO fetchPurchase(String purchaseId) throws UAQException, SQLException {
+
+		return purchaseDAO.fetchPurchase(purchaseId);
+	}
+
+	/**
+	 * This method is used to update the purchase status to Complete after
+	 * receiving successful payment response from the payment service provider
+	 * 
+	 * @param purchaseCommand
+	 * @return
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+
+	public boolean updatePurchaseStatus(String PurchaseId, String status) throws UAQException, SQLException {
+		return purchaseDAO.updatePurchaseStatus(PurchaseId, status);
+	}
+
+	/**
+	 * This method is used to block a purchase to mark it as payment in progress
+	 * or not in progress
+	 * 
+	 * @param purchaseId
+	 * @param status
+	 * @return success or fail
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+
+	public boolean purchasePaymentInProgress(String purchaseId, boolean status) throws UAQException, SQLException {
+		return purchaseDAO.purchasePaymentInProgress(purchaseId, status);
+	}
+
+	/**
+	 * This method is used to block a purchase to mark the txn as auto updated
+	 * or not
+	 * 
+	 * @param status
+	 * @return success or fail
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+
+	public boolean transactionAutoUpdated(String transactionId, boolean status) throws UAQException, SQLException {
+		return purchaseDAO.transactionAutoUpdated(transactionId, status);
+	}
+
+	/**
+	 * This method is used to find the purchase id against given transaction id
+	 * of the payweb request which was saved before sending payweb payment
+	 * request to service provider
+	 * 
+	 * @param transactionId
+	 * @return
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+
+	public String getPurchaseIdForTransactionId(String transactionId) throws UAQException, SQLException {
+		return purchaseDAO.getPurchaseIdForTransactionId(transactionId);
+	}
+
+	/**
+	 * This method is used to save autoupdate payment transaction
+	 * 
+	 * @param autoUpdatePaymentResponse
+	 * @return
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+	public boolean saveAutoUpdatePaymentTransaction(AutoUpdatePaymentResponse autoUpdatePaymentResponse) {
+		return purchaseDAO.saveAutoUpdatePaymentTransaction(autoUpdatePaymentResponse);
+	}
+
+	/**
+	 * This method is used to save payweb request
+	 * 
+	 * @param paywebPaymentRequest
+	 * @return
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+	public boolean savePaywebRequestTransaction(PayWebPaymentRequest paywebPaymentRequest) throws UAQException, SQLException {
+		return purchaseDAO.savePaywebRequestTransaction(paywebPaymentRequest);
+	}
+
+	/**
+	 * This method is used to save payweb response
+	 * 
+	 * @param payWebPaymentResponse
+	 * @return
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+	public boolean savePaywebPaymentTransaction(PayWebPaymentResponse payWebPaymentResponse) throws UAQException, SQLException {
+		return purchaseDAO.savePaywebPaymentTransaction(payWebPaymentResponse);
+	}
+
+	/**
+	 * This method is used to get payment details for the given transaction with
+	 * confirmationId. All references of this method need to be replaced with
+	 * the getSuccessfulPaymentTransaction which is the latest version of this
+	 * method
+	 * 
+	 * @param confirmationId
+	 * @return
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+	public InquiryPaymentResponse getPaymentDetails(String confirmationId) throws UAQException, SQLException {
+		return purchaseDAO.getPaymentDetails(confirmationId);
+	}
+
+	/**
+	 * This method is used to get the successful transaction information for
+	 * given purchase id
+	 * 
+	 * @param purchaseId
+	 * @return
+	 */
+	public InquiryPaymentResponse getSuccessfulPaymentTransaction(String purchaseId) {
+		return purchaseDAO.getSuccessfulPaymentTransaction(purchaseId);
+	}
+
+	/**
+	 * This method is used to update payment transaction based on the response
+	 * from autoupdate
+	 * 
+	 * @param autoUpdatePaymentResponse
+	 * @return
+	 * @throws UAQException
+	 * @throws SQLException
+	 */
+	public boolean updatePaymentTransaction(AutoUpdatePaymentResponse autoUpdatePaymentResponse) throws UAQException, SQLException {
+		return purchaseDAO.updatePaymentTransaction(autoUpdatePaymentResponse);
+	}
+
+	/**
+	 * This method is used to autoupdate the payment given payment transaction.
+	 * also used for broken transactions
+	 * 
+	 * @param transactionId
+	 * @return result
+	 * @throws UAQException
+	 */
+
+	public boolean autoUpdatePaymentTransaction(String transactionId) throws UAQException {
+
+		logger.enter("autoUpdatePaymentTransaction");
+
+		boolean result = false;
+
+		final String PURCHASE_STATUS_COMPLETED = "Completed";
+		final String PURCHASE_STATUS_FAILED = "Failed";
+
+		try {
+
+			String purchaseId = getPurchaseIdForTransactionId(transactionId);
+			PurchaseVO purchaseVO = getPurchase(purchaseId);
+			MerchantAccount merchantAccount = getPaymentServiceCode(purchaseVO.getServiceId()).getMerchantAccount();
+
+			AutoUpdatePaymentResponse autoUpdatePaymentResponse = PaymentUtil.autoUpdatePaymentTransaction(transactionId, merchantAccount);
+			logger.debug(autoUpdatePaymentResponse.toString());
+
+			if (autoUpdatePaymentResponse != null) {
+
+				autoUpdatePaymentResponse.setReferenceId(purchaseId);
+
+				if (autoUpdatePaymentResponse.getPaywebTransactionId() == null) {
+					autoUpdatePaymentResponse.setPaywebTransactionId(transactionId);
+				}
+
+				result = saveAutoUpdatePaymentTransaction(autoUpdatePaymentResponse);
+				logger.debug("saveAutoUpdatePaymentTransaction : " + result);
+
+				// unblock the purchase
+				result = purchasePaymentInProgress(purchaseId, false);
+				logger.debug("PurchasePaymentInProgress :" + result);
+
+				// updated transactions cases
+				logger.debug("autoUpdatePaymentResponse.getStatus()=" + autoUpdatePaymentResponse.getStatus());
+				logger.debug("autoUpdatePaymentResponse.getStatusMessage()=" + autoUpdatePaymentResponse.getStatusMessage());
+
+				if (autoUpdatePaymentResponse.getStatus().equals(PAYMENT_RESPONSE_STATUS_CODE_ALREADY_UPDATED)
+						|| autoUpdatePaymentResponse.getStatus().equals(PAYMENT_RESPONSE_STATUS_CODE_UPDATED_SUCCESSFUL)
+						|| autoUpdatePaymentResponse.getStatus().equals(PAYMENT_RESPONSE_STATUS_CODE_UPDATED_FAILED)) {
+
+					result = updatePaymentTransaction(autoUpdatePaymentResponse);
+					logger.debug("updatePaymentTransaction : " + result);
+
+					result = transactionAutoUpdated(transactionId, true);
+					logger.debug("transactionAutoUpdated :" + result);
+
+					if (autoUpdatePaymentResponse.getStatus().equals(PAYMENT_RESPONSE_STATUS_CODE_ALREADY_UPDATED)
+							|| autoUpdatePaymentResponse.getStatus().equals(PAYMENT_RESPONSE_STATUS_CODE_UPDATED_SUCCESSFUL)
+							|| autoUpdatePaymentResponse.getStatus().equals(PAYMENT_RESPONSE_STATUS_CODE_UPDATED_FAILED)) {
+						// update according to original tx status
+						// success/failed.
+						logger.debug("autoUpdatePaymentResponse.getOriginalTransactionStatus()=" + autoUpdatePaymentResponse.getOriginalTransactionStatus());
+						logger.debug("autoUpdatePaymentResponse.getOriginalTransactionStatusMessage()=" + autoUpdatePaymentResponse.getOriginalTransactionStatusMessage());
+
+						if (autoUpdatePaymentResponse.getOriginalTransactionStatus().equals(RESPONSE_STATUS_SUCCESS)
+								|| autoUpdatePaymentResponse.getStatus().equals(PAYMENT_RESPONSE_STATUS_CODE_UPDATED_SUCCESSFUL)) {
+							result = updatePurchaseStatus(purchaseId, PURCHASE_STATUS_COMPLETED);
+							logger.debug("updatePhotoPurchaseStatus :" + result);
+							// update SOA table
+							PaymentStatus paymentStatus = updateApplicantRequestTableStatus(purchaseId);
+							logger.debug("updateApplicantRequestTableStatus :" + paymentStatus.toString());
+
+							// update ERP table for eGD super entity fee payment
+							// get eGD super entity fee
+							Double amount = getGeneralFee();
+							result = updateERPtable(amount, PaymentConstants.EGD_DEPT_ID, transactionId, PaymentConstants.GENERAL_FEE_ID, purchaseVO.getCustomerId(), purchaseVO.getCustomerName(),
+									autoUpdatePaymentResponse.getTransactionResponseDate(), autoUpdatePaymentResponse.getRetrievalRefNumber());
+							logger.debug("updateERPtable for general fee :" + result);
+
+							Double edhiramFees = autoUpdatePaymentResponse.getService().getAmountWithFeesDecimal();
+							// update ERP table for department fee payment
+							result = updateERPtable(edhiramFees, purchaseVO.getDepartmentId(), transactionId, purchaseVO.getFeeId(), purchaseVO.getCustomerId(), purchaseVO.getCustomerName(),
+									autoUpdatePaymentResponse.getTransactionResponseDate(), autoUpdatePaymentResponse.getRetrievalRefNumber());
+							logger.debug("updateERPtable for department fee :" + result);
+
+							/*
+							 * Insert In Payment Work FLow Tabel.Call The
+							 * Reviewr Service .If Success Delete That Row Else
+							 * Update Row
+							 */
+							AccountDetailTokenOutputVO accountDetailTokenOutputVO = userDetailService.getUserdetail(purchaseVO.getCustomerId());
+							if (accountDetailTokenOutputVO != null) {
+								PaymentWorkFlowVO paymentWorkFlowVO = PaymentDataMapper.setTranactionWorkFlowVO(paymentStatus, accountDetailTokenOutputVO, purchaseVO);
+								paymentWorkFlowVO.setTransactionId(transactionId);
+								paymentWorkFlowVO.setEdiramFees(String.valueOf(autoUpdatePaymentResponse.getTransactionAmountDecimal()));
+
+								boolean savePaymentWorkflow = paymentWorkFlowService.savePaymentWorkFlow(paymentWorkFlowVO);
+								logger.debug("status of workflowTabel insert =" + savePaymentWorkflow);
+
+								if (savePaymentWorkflow) {
+									PaymentTransactionDetailVO paymentTransactionDetailVO = PaymentDataMapper.setTranactionDetailVo(paymentStatus);
+									paymentTransactionDetailVO.setTransactionId(paymentWorkFlowVO.getTransactionId());
+									paymentTransactionDetailVO.setTransactionAmount(paymentWorkFlowVO.getEdiramFees());
+									ReviewerServiceBrokenTracaction reTracaction = new ReviewerServiceBrokenTracaction();
+									try {
+										LandOutputVO output = reTracaction.invokeRevierIneceator(accountDetailTokenOutputVO, paymentTransactionDetailVO);
+										logger.debug("Reviewer Status-" + output.getStatus());
+										if ("Success".equals(output.getStatus())) {
+											logger.debug("delete workflowTabel for requestId=" + paymentWorkFlowVO.getRequestId());
+											boolean deletePaymentWorkflow = paymentWorkFlowService.deletePaymentWorkFLow(paymentWorkFlowVO);
+											logger.debug("status workflowTabel of Deletion=" + deletePaymentWorkflow);
+										} else {
+											logger.debug("update workflowTabel for requestId=" + paymentWorkFlowVO.getRequestId());
+											boolean updataPaymentWorkflow = paymentWorkFlowService.updatePaymentWorkFLow(paymentWorkFlowVO);
+											logger.debug("status workflowTabel of Updation=" + updataPaymentWorkflow);
+										}
+									} catch (Exception e) {
+										logger.error("SOA Excution Eror");
+									}
+
+								}
+
+							}
+						} else {
+							result = updatePurchaseStatus(purchaseId, PURCHASE_STATUS_FAILED);
+							logger.debug("updatePhotoPurchaseStatus :" + result);
+						}
+					}
+
+					result = true;
+
+				} else { // non updated transactions cases, all other cases
+					if (autoUpdatePaymentResponse.getStatus().equals(PAYMENT_RESPONSE_STATUS_CODE_TXN_NOT_FOUND)
+							|| autoUpdatePaymentResponse.getStatus().equals(PAYMENT_RESPONSE_STATUS_CODE_PAYMENT_METHOD_SELECTED)) {
+						// No need to do anything
+					}
+				}
+			}
+
+		} catch (Exception e) {
+			throw new UAQException(e.getMessage());
+		}
+
+		logger.exit("autoUpdatePaymentTransaction");
+
+		return result;
+	}
+
+	public boolean savePurchaseTransaction(PurchaseVO purchaseCommand) throws UAQException, SQLException {
+		return purchaseDAO.savePurchaseTransaction(purchaseCommand);
+	}
+
+	public boolean updateERPtable(Double amount, String deptCode, String transactionId, String feeId, String custId, String custName, String transactionDate, String edirhamRefNo) throws SQLException {
+
+		return purchaseDAO.updateERPtable(amount, deptCode, transactionId, feeId, custId, custName, transactionDate, edirhamRefNo);
+	}
+
+	public PaymentStatus updateApplicantRequestTableStatus(String purchaseId) throws SQLException {
+
+		return purchaseDAO.updateApplicantRequestTableStatus(purchaseId);
+	}
+
+	public PaymentServiceCode getPaymentServiceCode(String serviceId) throws UAQException, SQLException {
+		return purchaseDAO.getPaymentServiceCode(serviceId);
+	}
+
+	public Double getGeneralFee() throws UAQException, SQLException {
+		return purchaseDAO.getGeneralFee();
+	}
+
+	public PaymentServiceCode getFeeDetail(String feeId) throws UAQException, SQLException {
+		return purchaseDAO.getFeeDetail(feeId);
+	}
+
+	public PaymentStatus getPaymentInfo(String purchaseId) throws SQLException {
+		return purchaseDAO.getPaymentInfo(purchaseId);
+	}
+	
+	public String  getRequestNo(String requestId){
+		return purchaseDAO.getRequestNoForRequestId(requestId);
+	}
+
+}

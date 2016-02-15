@@ -1,0 +1,170 @@
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<div class="page-content-wrap">
+			<div class="content-wrap">
+				<div class="row">
+					<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+					
+					<h5 class="form-title">البيانات الشخصية التي تم جمعها هي</h5>
+
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12">
+							<ul class="terms-list">
+								<li>
+								.الاسم الكامل
+								</li>								
+								<li>
+								.تفاصيل شخصية 	
+								</li>								
+								<li>
+								.البريد الالكتروني
+								</li>
+								<li>
+								 .رقم الهاتف 
+								</li>
+								<li>
+								.معلومات الرخصة التجارية (سجل كمؤسسة )
+								</li>
+								<li>
+								.الموقع الجغرافي
+								</li>
+							</ul>
+						</div>
+
+					<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title"> مالك ومتحكم البيانات </h5>
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12 terms-text-wrap">
+							<p>
+								 يتم تشغيل الخدمات من قبل الحكومة الالكترونية لام القيوين، محكمة الأميري، أم القيوين، الإمارات العربية المتحدة.حكومة أم القيوين هي المتحكمة عن البيانات الشخصية التي يتم جمعها ومعالجتها واستخدامها والمصرح عنها أو نقلها فيما يتعلق بالخدمات. 
+							</p>
+						</div>	
+						
+						
+						
+						
+					<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title">أنواع البيانات التي تم جمعها</h5>
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12 terms-text-wrap">
+							<p>
+								 البيانات الشخصية يمكن تقديم بحرية من قبل المستخدم، ما لم ينص على خلاف ذلك، ويعمل على تحديد المستخدمين وتذكر تفضيلاتهم، لغرض وحيد هو توفير الخدمة المطلوبة من قبل المستخدم. 
+							</p>
+						</div>	
+						
+						
+						<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title">طرق المعالجة </h5>
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12 terms-text-wrap">
+							<p>
+								 مراقب البيانات يعالج البيانات من المستخدمين بطريقة سليمة، وتتخذ التدابير الأمنية المناسبة لمنع الوصول غير المصرح به، والكشف، وتعديل، أو التدمير غير المصرح به للبيانات. 
+							</p>
+						</div>	
+						
+						
+						<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title"> المكان</h5>
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12 terms-text-wrap">
+							<p>
+								تتم معالجة البيانات في مكاتب التشغيل وحدة تحكم البيانات، وفي أي أماكن أخرى حيث توجد الأطراف المعنية مع المعالجة.
+							</p>
+						</div>	
+						
+						
+						<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title">وقت الاحتفاظ</h5>
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12 terms-text-wrap">
+							<p>
+								 يتم الاحتفاظ بيانات عن الوقت اللازم لتقديم الخدمة المطلوبة من قبل المستخدم، أو جاء على لسان أغراض المبينة في هذه الوثيقة. 
+							</p>
+						</div>	
+						
+						<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title"> استخدامات البيانات التي تم جمعها</h5>
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12 terms-text-wrap">
+							<p>
+								 يتم جمع البيانات المتعلقة للعضو للسماح للمالك لتقديم خدماته، وكذلك للأغراض التالية: التفاعلات القائمة على الموقع.
+							</p>
+						</div>	
+						
+						
+						<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title">اجراءات قانونية</h5>
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12 terms-text-wrap">
+							<p>
+								 المستخدم يعلن أن تكون على علم بأن المراقب المالي البيانات قد تكون هناك حاجة لكشف البيانات الشخصية بناء على طلب من السلطات العامة.   	
+							</p>
+						</div>	
+						
+						
+						<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title"> سجلات النظام والصيانة   </h5>
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12 terms-text-wrap">
+							<p>
+								 لأغراض التشغيل والصيانة، وهذا التطبيق وأي خدمات طرف ثالث قد جمع الملفات التي سجل التفاعل مع هذا التطبيق (سجلات النظام). 
+							</p>
+						</div>	
+						
+						
+						
+						<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title"> المعلومات غير واردة في هذه السياسة </h5>
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12 terms-text-wrap">
+							<p>
+								قد يطلب المزيد من التفاصيل بشأن جمع أو معالجة البيانات الشخصية من وحدة تحكم البيانات في أي وقت. يرجى الاطلاع على معلومات الاتصال +9716764100     
+							</p>
+						</div>	
+						
+						
+						<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title">إن دائرة الحكومة الالكترونية لأم القيوين لن تكشف عن المعلومات الشخصية لأطراف ثالثة، باستثناء ما هو منصوص عليه أدناه:</h5>
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12 terms-text-wrap">
+							<ul>
+							<li>
+								عند الطلب منها ذلك بموجب القانون 
+								</li>	
+								
+								<li>
+								في اتصال مع أية إجراءات قانونية.
+								</li>	
+							
+							</ul>
+						</div>	
+						
+						
+						<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title">تغييرات على سياسة الخصوصية  , </h5>
+					</div> <!-- /form-sect-head-->	
+						<div class="col-md-12 terms-text-wrap">
+							
+							<p> تحتفظ تحكم بيانات بالحق في إجراء تغييرات على سياسة الخصوصية هذه في أي وقت عن طريق إعطاء إشعار لمستخدميها. </p>
+						</div>	
+	
+
+ 	
+
+
+
+					<div class="col-md-12 terms-title-wrap">  <!-- form-sect-head-->
+						<h5 class="form-title"> يجب على المستخدم أن لا يوفر أي معلومات كاذبة مضللة أثناء التسجيل. اذا حدث هذا فان حكومة أم القيوين لها الحق في اتخاذ الإجراءات القانونية ضد فرد أو مؤسسة* </h5>
+					</div> <!-- /form-sect-head-->	
+						
+						
+						
+			</div>
+		</div>
+	</div>
+		
+
+	
+ 
+
+
+

@@ -1,0 +1,299 @@
+package com.uaq.controller.mapper;
+
+import static com.uaq.common.ApplicationConstants.DATE_FORMAT;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import com.uaq.command.AddLandRequestCommand;
+import com.uaq.command.ExtensionOfGrandCommand;
+import com.uaq.command.GrantLandRequestCommand;
+import com.uaq.command.IssueSitePlanDocumentCommand;
+import com.uaq.command.LandDemarcationRequestCommand;
+import com.uaq.common.ServiceNameConstant;
+import com.uaq.util.StringUtil;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+import com.uaq.vo.LandInputVO;
+import com.uaq.vo.PSGrandLandRequestVO;
+
+import static com.uaq.common.ServiceNameConstant.*;
+
+public class PSReSubmitDataMapper {
+	
+	
+	private static final SimpleDateFormat currentDate = new SimpleDateFormat(DATE_FORMAT);
+	
+	public static LandInputVO extentionGrandLandToService(ExtensionOfGrandCommand extentionGrandLand, AccountDetailTokenOutputVO accountDetailfromToken) {
+		LandInputVO landInputVO = new LandInputVO();
+		landInputVO.setServiceType("1");
+		landInputVO.setUserComment("");
+		landInputVO.setSourceType(extentionGrandLand.getSorceType());
+		landInputVO.setSubmittedByUserId(accountDetailfromToken.getUserName());
+		landInputVO.setStatus(extentionGrandLand.getStausId());
+		landInputVO.setServiceName(EXTENTION_OF_GRANT_LAND_REQUEST_NAME);
+		landInputVO.setServiceid(extentionGrandLand.getServiceId().toString());
+		landInputVO.setRequestNo(extentionGrandLand.getRequestNo());
+		landInputVO.setRequestID(extentionGrandLand.getRequestNo().split("-")[3]);
+		landInputVO.setWorkflowId("1");
+		landInputVO.setAddLandReqID("1");
+		landInputVO.setLanguageId("1");
+		landInputVO.setSite_Plan_No(extentionGrandLand.getSitePlanNumber());
+		landInputVO.setSitePlanDate("10/10/2015");
+		landInputVO.setSecSectorName(StringUtil.isEmpty(extentionGrandLand.getSector())?"":extentionGrandLand.getSector());
+		landInputVO.setSectorBlock(StringUtil.isEmpty(extentionGrandLand.getBlock())?"":extentionGrandLand.getBlock());
+		landInputVO.setSubSectorNo(StringUtil.isEmpty(extentionGrandLand.getSubsector())?"":extentionGrandLand.getSubsector());
+		landInputVO.setSecPlotNo(StringUtil.isEmpty(extentionGrandLand.getSectorPlotnumber())?"":extentionGrandLand.getSectorPlotnumber());
+		landInputVO.setAreaBlock(StringUtil.isEmpty(extentionGrandLand.getAreaBlock())?"":extentionGrandLand.getAreaBlock());
+		landInputVO.setAreaSubArea(StringUtil.isEmpty(extentionGrandLand.getSubArea())?"":extentionGrandLand.getSubArea());;
+		landInputVO.setAreaPlotNo(StringUtil.isEmpty(extentionGrandLand.getAreaPlotnumber())?"":extentionGrandLand.getAreaPlotnumber());
+		landInputVO.setLandUsage(extentionGrandLand.getLandUsage());
+		landInputVO.setSitePlanDocument(extentionGrandLand.getSitePlanDocument_name());
+		landInputVO.setGrantExpiryDate(extentionGrandLand.getGrandExpDate());
+		landInputVO.setAssignedToUserName(accountDetailfromToken.getUserName());
+		landInputVO.setSurveyo_Report("");
+		landInputVO.setOwnerName(extentionGrandLand.getOwnerName());
+		landInputVO.setOwnerID(extentionGrandLand.getOwnerId());
+		landInputVO.setOwnerNationalityID((accountDetailfromToken.getLanguageId()) == null ? "1" : accountDetailfromToken.getLanguageId().toString());
+		landInputVO.setSurveReportDocId("1");
+		landInputVO.setExtendedDate("10/10/2015");
+		landInputVO.setSupportiveAttachmentid("1");
+		landInputVO.setSubmitedNocID("1");
+		landInputVO.setNocLetterId("1");
+		landInputVO.setSitePlanDocId("");
+		landInputVO.setLandValue("");
+		landInputVO.setCommiteeRemarks("1");
+		landInputVO.setTrueSitePlanDocId("1");
+		landInputVO.setCommiteeRemarks("1");
+		landInputVO.setTrueSitePlanDocId("1");
+		landInputVO.setDocDeliveredFlag("1");
+		landInputVO.setAtelierAttachId("1");
+		landInputVO.setIssueSitePlanDocReqId("1");
+		landInputVO.setApplicantFees("1");
+		landInputVO.setServiceFees("1");
+		landInputVO.setCreatedBy(accountDetailfromToken.getUserName());
+		landInputVO.setModifiedBy(accountDetailfromToken.getUserName());
+		landInputVO.setAreaName(StringUtil.isEmpty(extentionGrandLand.getArea())?"":extentionGrandLand.getArea());
+		landInputVO.setGrantIssuanceDate(extentionGrandLand.getGrandIssueDate());
+		landInputVO.setExtensionOfGrantLandId(extentionGrandLand.getExtGrandLandId());
+		if(StringUtil.isEmpty(extentionGrandLand.getArea())){
+			landInputVO.setUserDecesion("sector");
+		}else{
+			landInputVO.setUserDecesion("area");
+		}
+		return landInputVO;
+	}
+
+	public static LandInputVO landDemarcationDataToService(LandDemarcationRequestCommand landDemarcationRequestCommand, AccountDetailTokenOutputVO accountDetailfromToken) {
+		LandInputVO landInputVO = new LandInputVO();
+		landInputVO.setServiceType("1");
+		landInputVO.setUserComment("");
+		landInputVO.setSourceType(landDemarcationRequestCommand.getSourcetype());
+		landInputVO.setSubmittedByUserId(accountDetailfromToken.getUserName());
+		landInputVO.setStatus(landDemarcationRequestCommand.getStatusid().toString());
+		landInputVO.setServiceName(LAND_DEMACRATION_REQUEST_NAME);
+		landInputVO.setServiceid(landDemarcationRequestCommand.getServiceId().toString());
+		landInputVO.setRequestNo(landDemarcationRequestCommand.getRequestNo());
+		landInputVO.setRequestID(landDemarcationRequestCommand.getRequestNo().split("-")[3]);
+		landInputVO.setWorkflowId("1");
+		landInputVO.setAddLandReqID("1");
+		landInputVO.setLanguageId("1");
+		landInputVO.setSite_Plan_No(landDemarcationRequestCommand.getSitePlanNumber());
+		landInputVO.setSitePlanDate("2015-10-10");
+		landInputVO.setSecSectorName((landDemarcationRequestCommand.getSector()) == null ? "" : landDemarcationRequestCommand.getSector());
+		landInputVO.setSectorBlock(landDemarcationRequestCommand.getBlock());
+		landInputVO.setSubSectorNo(landDemarcationRequestCommand.getSubsector());
+		landInputVO.setSecPlotNo(landDemarcationRequestCommand.getSectorPlotNumber());
+		landInputVO.setAreaBlock(landDemarcationRequestCommand.getAreablock());
+		landInputVO.setAreaSubArea(landDemarcationRequestCommand.getSubarea());
+		landInputVO.setAreaPlotNo(landDemarcationRequestCommand.getAreaPlotNumber());
+		landInputVO.setLandUsage(landDemarcationRequestCommand.getLandUsage());
+		landInputVO.setSitePlanDocument(landDemarcationRequestCommand.getSitePlanDocument_name());
+		landInputVO.setGrantExpiryDate("2015-10-10");
+		landInputVO.setAssignedToUserName(accountDetailfromToken.getUserName());
+		landInputVO.setSurveyo_Report("");
+		landInputVO.setOwnerName(landDemarcationRequestCommand.getOwnername());
+		landInputVO.setOwnerID(landDemarcationRequestCommand.getOwnerId());
+		landInputVO.setOwnerNationalityID((accountDetailfromToken.getLanguageId()) == null ? "" : accountDetailfromToken.getLanguageId().toString());
+		landInputVO.setSurveReportDocId("1");
+		landInputVO.setExtendedDate("2015-10-10");
+		landInputVO.setSupportiveAttachmentid("1");
+		landInputVO.setSubmitedNocID("1");
+		landInputVO.setNocLetterId("1");
+		// landInputVO.setSitePlanDocId(pSResubmissonOutputVO.getSiteplanDocId().toString());
+		landInputVO.setLandValue(landDemarcationRequestCommand.getLandValue());
+		landInputVO.setCommiteeRemarks("1");
+		landInputVO.setTrueSitePlanDocId("1");
+		landInputVO.setCommiteeRemarks("1");
+		//landInputVO.setTrueSitePlanDocId("1");
+		landInputVO.setDocDeliveredFlag("1");
+		landInputVO.setAtelierAttachId("1");
+		landInputVO.setIssueSitePlanDocReqId("1");
+		landInputVO.setApplicantFees("1");
+		landInputVO.setServiceFees("1");
+		landInputVO.setCreatedBy(landDemarcationRequestCommand.getCreatedby());
+		landInputVO.setModifiedBy(accountDetailfromToken.getUserName());
+		landInputVO.setAreaName((landDemarcationRequestCommand.getArea()) == null ? "" : landDemarcationRequestCommand.getArea());
+		landInputVO.setGrantIssuanceDate("2015-10-10");
+		landInputVO.setLandDemarcationId(landDemarcationRequestCommand.getId());
+		if(StringUtil.isEmpty(landDemarcationRequestCommand.getArea())){
+			landInputVO.setUserDecesion("sector");
+		}else{
+			landInputVO.setUserDecesion("area");
+		}
+		return landInputVO;
+	}
+
+	public static LandInputVO issueSitePlanDataToService(IssueSitePlanDocumentCommand issueSitePlanDocumentCommand, AccountDetailTokenOutputVO accountDetailfromToken) {
+		LandInputVO landInputVO = new LandInputVO();
+		landInputVO.setServiceType("");
+		landInputVO.setUserComment("");
+		landInputVO.setSourceType(issueSitePlanDocumentCommand.getSorceType());
+		landInputVO.setSubmittedByUserId(accountDetailfromToken.getUserName());
+		landInputVO.setStatus(issueSitePlanDocumentCommand.getStausId().toString());
+		landInputVO.setServiceName(ISSUE_SITE_PLAN_DOCUMENT_REQUEST_NAME);
+		landInputVO.setServiceid(issueSitePlanDocumentCommand.getServiceId().toString());
+		landInputVO.setRequestNo(issueSitePlanDocumentCommand.getRequestNo());
+		landInputVO.setRequestID(issueSitePlanDocumentCommand.getRequestNo().split("-")[3]);
+		landInputVO.setWorkflowId("");
+		landInputVO.setAddLandReqID("");
+		//landInputVO.setLanguageId("");
+		landInputVO.setSite_Plan_No(issueSitePlanDocumentCommand.getSitePlanNumber());
+		landInputVO.setSitePlanDate("2015-10-10");
+		landInputVO.setSecSectorName(issueSitePlanDocumentCommand.getSector());
+		landInputVO.setSectorBlock(issueSitePlanDocumentCommand.getBlock());
+		landInputVO.setSubSectorNo(issueSitePlanDocumentCommand.getSubsector());
+		landInputVO.setSecPlotNo(issueSitePlanDocumentCommand.getSectorPlotNumber());
+		landInputVO.setAreaBlock(issueSitePlanDocumentCommand.getAreaBlock());
+		landInputVO.setAreaSubArea(issueSitePlanDocumentCommand.getSubArea());
+		landInputVO.setAreaPlotNo(issueSitePlanDocumentCommand.getAreaPlotNumber());
+		landInputVO.setLandUsage(issueSitePlanDocumentCommand.getLandUsage());
+		landInputVO.setSitePlanDocument(issueSitePlanDocumentCommand.getSitePlanDocument_name());
+		landInputVO.setGrantExpiryDate("2015-10-10");
+		landInputVO.setAssignedToUserName(accountDetailfromToken.getUserName());
+		landInputVO.setSurveyo_Report("");
+		landInputVO.setOwnerName(issueSitePlanDocumentCommand.getOwnerName());
+		landInputVO.setOwnerID(issueSitePlanDocumentCommand.getOwnerId());
+		landInputVO.setOwnerNationalityID((accountDetailfromToken.getLanguageId()) == null ? "" : accountDetailfromToken.getLanguageId().toString());
+		landInputVO.setSurveReportDocId("1");
+		landInputVO.setExtendedDate("2015-10-10");
+		landInputVO.setSupportiveAttachmentid("1");
+		landInputVO.setSubmitedNocID("");
+		landInputVO.setNocLetterId("");
+		landInputVO.setSitePlanDocId(issueSitePlanDocumentCommand.getSitePalnDOcId());
+		landInputVO.setLandValue(issueSitePlanDocumentCommand.getLandValue());
+		landInputVO.setCommiteeRemarks("");
+		landInputVO.setTrueSitePlanDocId("");
+		landInputVO.setCommiteeRemarks("");
+		landInputVO.setTrueSitePlanDocId("");
+		landInputVO.setDocDeliveredFlag("");
+		landInputVO.setAtelierAttachId("");
+		landInputVO.setIssueSitePlanDocReqId("");
+		landInputVO.setApplicantFees("");
+		landInputVO.setServiceFees("");
+		landInputVO.setCreatedBy(issueSitePlanDocumentCommand.getCreatedBy());
+		landInputVO.setModifiedBy(accountDetailfromToken.getUserName());
+		landInputVO.setAreaName(issueSitePlanDocumentCommand.getArea());
+		landInputVO.setGrantIssuanceDate("2015-10-10");
+		if(StringUtil.isEmpty(issueSitePlanDocumentCommand.getArea())){
+			landInputVO.setUserDecesion("sector");
+		}else{
+			landInputVO.setUserDecesion("area");
+		}
+		return landInputVO;
+	}
+
+	public static LandInputVO addLandDataToService(AddLandRequestCommand addLandRequestCommand, AccountDetailTokenOutputVO accountDetailfromToken) {
+		LandInputVO landInputVO = new LandInputVO();
+		landInputVO.setServiceType("1");
+		landInputVO.setUserComment("");
+		landInputVO.setSourceType(addLandRequestCommand.getSorceType());
+		landInputVO.setSubmittedByUserId(accountDetailfromToken.getUserName());
+		landInputVO.setStatus(addLandRequestCommand.getStausId());
+		landInputVO.setServiceName(ServiceNameConstant.ADD_LAND_REQUEST_NAME);
+		landInputVO.setServiceid(addLandRequestCommand.getServiceId());
+		landInputVO.setRequestNo(addLandRequestCommand.getRequestNo());
+		landInputVO.setRequestID(addLandRequestCommand.getRequestNo().split("-")[3]);
+		landInputVO.setWorkflowId("1");
+		landInputVO.setAddLandReqID("1");
+		//landInputVO.setLanguageId("1");
+		landInputVO.setSite_Plan_No(addLandRequestCommand.getSiteNumber());
+		landInputVO.setSitePlanDate("");
+		landInputVO.setSecSectorName(addLandRequestCommand.getSector());
+		landInputVO.setSectorBlock(addLandRequestCommand.getBlock());
+		landInputVO.setSubSectorNo(addLandRequestCommand.getSubsector());
+		landInputVO.setSecPlotNo(addLandRequestCommand.getPlotNumber());
+		landInputVO.setAreaBlock(addLandRequestCommand.getAreablock());
+		landInputVO.setAreaSubArea(addLandRequestCommand.getSubarea());
+		landInputVO.setAreaPlotNo(addLandRequestCommand.getAreaPlotNumber());
+		landInputVO.setLandUsage(addLandRequestCommand.getLandUsage());
+		landInputVO.setSitePlanDocument(addLandRequestCommand.getSitePlanDocument_name());
+		landInputVO.setGrantExpiryDate("");
+		landInputVO.setAssignedToUserName(accountDetailfromToken.getUserName());
+		landInputVO.setSurveyo_Report("");
+		landInputVO.setOwnerName(addLandRequestCommand.getOwnerName());
+		landInputVO.setOwnerID(addLandRequestCommand.getOwnerId());
+		landInputVO.setOwnerNationalityID((accountDetailfromToken.getNationalityId()) == null ? "" : accountDetailfromToken.getNationalityId().toString());
+		landInputVO.setSurveReportDocId(addLandRequestCommand.getSubmittednocid());
+		landInputVO.setExtendedDate("");
+		landInputVO.setSupportiveAttachmentid("1");
+		landInputVO.setSubmitedNocID(addLandRequestCommand.getSubmittednocid());
+		landInputVO.setNocLetterId("1");
+		landInputVO.setSitePlanDocId(addLandRequestCommand.getSitePalnDOcId());
+		landInputVO.setLandValue(addLandRequestCommand.getLandValue());
+		landInputVO.setCommiteeRemarks(addLandRequestCommand.getCommeteRemark());
+		landInputVO.setTrueSitePlanDocId(addLandRequestCommand.getTrueSitePlanDocId());
+		landInputVO.setAreaName(addLandRequestCommand.getArea());
+		landInputVO.setGrantIssuanceDate("");
+		landInputVO.setCreatedBy(addLandRequestCommand.getCreatedBy());
+		landInputVO.setModifiedBy(accountDetailfromToken.getUserName());
+		if(StringUtil.isEmpty(addLandRequestCommand.getArea())){
+			landInputVO.setUserDecesion("sector");
+		}else{
+			landInputVO.setUserDecesion("area");
+		}
+		return landInputVO;
+	}
+	
+	public static LandInputVO addGrandLandDateToService(GrantLandRequestCommand grantlandRequestCommand, AccountDetailTokenOutputVO accountDetailfromToken,PSGrandLandRequestVO pSGrandLandRequestVO) {
+		
+		LandInputVO inputVo = new LandInputVO();
+		inputVo.setFamilyBook(grantlandRequestCommand.getFamilyBook());
+		inputVo.setSpouceEmirateId(grantlandRequestCommand.getSpousesEmiratesIdAttch());
+		inputVo.setPropertyAccountDoc(grantlandRequestCommand.getPropertyAccDetailsAttach());
+		inputVo.setSalaryCertificateDoc(grantlandRequestCommand.getSalaryCertificate());
+		if(accountDetailfromToken.getSourceId() == null){
+			inputVo.setSourceType("0");
+		}else{
+			inputVo.setSourceType(accountDetailfromToken.getSourceId().toString());
+		}
+		if(pSGrandLandRequestVO.getStatusid()== null){
+			inputVo.setStatus("0");
+		}else{
+			inputVo.setStatus(pSGrandLandRequestVO.getStatusid().toString());	
+		}
+		
+		inputVo.setRequestNo(pSGrandLandRequestVO.getRequestNo());
+		inputVo.setRequestID(pSGrandLandRequestVO.getRequestNo().split("-")[3]);
+		inputVo.setServiceid(ServiceNameConstant.GRAND_LAND_REQUEST);
+		inputVo.setCreatedDate(currentDate.format(new Date()));
+		inputVo.setModifiedDate(currentDate.format(new Date()));
+		inputVo.setCreatedBy(accountDetailfromToken.getUserName());
+		inputVo.setModifiedBy(accountDetailfromToken.getUserName());
+		if(pSGrandLandRequestVO.getStatusid()== null ){
+			inputVo.setStatusId(0);
+		}else{
+			inputVo.setStatusId(pSGrandLandRequestVO.getStatusid().intValue());
+		}
+		
+
+		// Need To confirm
+		inputVo.setOwnerName(accountDetailfromToken.getUserName());
+		inputVo.setOwnerID(accountDetailfromToken.getAccountId());
+		inputVo.setOwnerNationalityID((accountDetailfromToken.getNationalityId()) == null ? "1" : accountDetailfromToken.getNationalityId().toString());
+		inputVo.setRulersCourtAcceptanceDocId(1);
+		inputVo.setRulersCourtAcceptanceRemark("test");
+		inputVo.setSubmittedByUserId(accountDetailfromToken.getUserName());
+		return inputVo;
+	}
+
+}

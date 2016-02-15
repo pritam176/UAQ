@@ -1,0 +1,1339 @@
+**********************************************************************************************************************************
+														LOGIN Table
+**********************************************************************************************************************************
+
+CREATE TABLE LOGIN 
+(
+  USER_NAME VARCHAR2(20) NOT NULL 
+, PASSWORD VARCHAR2(100) NOT NULL
+, EMAIL_ID VARCHAR2(100) NOT NULL 
+, STATUS VARCHAR2(50) NOT NULL
+, CONSTRAINT LOGIN_PK PRIMARY KEY 
+  (
+    USER_NAME
+  )
+, CONSTRAINT unique_user_email UNIQUE (EMAIL_ID)   
+);
+
+insert into login values ('admin', 'password', 'nsharma@tacme.com', '1');
+
+**********************************************************************************************************************************
+														PAYMENT Tables
+**********************************************************************************************************************************
+CREATE TABLE PAYMENT_SERVICE_CODE
+(  
+  service_id VARCHAR2(200 CHAR) NOT NULL,
+  department_id VARCHAR2(10 CHAR) NOT NULL,
+  service_code VARCHAR2(50) NOT NULL,     
+  isVar CHAR(1),
+  isFixed CHAR(1),
+  merchant_id VARCHAR2(50),
+  terminal_id VARCHAR2(50),
+  bank_id VARCHAR2(50),
+  secure_key VARCHAR2(100),
+  back_to_back_url VARCHAR2(500),
+  redirect_url VARCHAR2(500),
+  other VARCHAR2(200),
+  CONSTRAINT PAYMENT_SERVICE_CODE_PK PRIMARY KEY 
+  (
+    department_id, service_id, service_code
+  )
+);
+
+CREATE TABLE PURCHASE 
+(
+  PURCHASE_ID VARCHAR2(20) PRIMARY KEY 
+, PURCHASE_STATUS VARCHAR2(50) NOT NULL
+, PAYMENT_IN_PROGRESS  CHAR(1)
+, service_id VARCHAR2(10 CHAR)
+, department_id VARCHAR2(10 CHAR)
+, fee_id VARCHAR2(10 CHAR)
+, customer_id VARCHAR2(200)
+, customer_name VARCHAR2(100)
+, created_date TIMESTAMP(6) 
+, last_modified_date TIMESTAMP(6)
+);
+
+CREATE TABLE PURCHASE_SERVICE
+(
+  service_code VARCHAR2(12) NOT NULL
+, units NUMBER(3, 0)
+, unit_price NUMBER(7, 2)
+, purchase_id VARCHAR2(20) NOT NULL
+, CONSTRAINT PURCHASE_SERVICE_PK PRIMARY KEY 
+  (
+    service_code, purchase_id
+  )
+, FOREIGN KEY (purchase_id) REFERENCES PURCHASE(purchase_id)	
+);
+
+
+CREATE TABLE PAYMENT_TRANSACTION
+(
+  transaction_id VARCHAR2(20) PRIMARY KEY -- PUN
+, action VARCHAR2(2) NOT NULL
+, status VARCHAR2(50)
+, status_message VARCHAR2(512)
+, retrieval_ref_number VARCHAR2(15) -- Response.ReceiptID
+, edirham_fees VARCHAR2(12) 
+, collection_centre_fees VARCHAR2(12) 
+, amount VARCHAR2(12) 
+, transaction_amount VARCHAR2(12) 
+, eservices_count Number(3)
+, transaction_date TIMESTAMP NOT NULL
+, confirmation_id VARCHAR2(15)
+, reference_id VARCHAR2(20) NOT NULL
+, payment_method_type VARCHAR2(4)
+, auto_updated CHAR(1) default 0
+, autoupdated_payweb_txn_status VARCHAR2(50)
+, autoupdated_payweb_status_msg VARCHAR2(512)
+, other VARCHAR2(512)
+);
+
+CREATE TABLE PAYMENT_TRANSACTION_CHARGES
+(
+  transaction_id VARCHAR2(20) NOT NULL
+, eservice_main_code_sub_code VARCHAR2(13)
+, price VARCHAR2(12)
+, quantity VARCHAR2(12)
+, owner_fees VARCHAR2(12)
+, amount_without_fees VARCHAR2(12)
+, amount_with_fees VARCHAR2(12)
+, CONSTRAINT PAYMENT_TRANSACTION_CHARGES_PK PRIMARY KEY 
+  (
+    transaction_id, eservice_main_code_sub_code
+  )
+);
+
+**********************************************************************************************************************************
+														FEEDBACK
+**********************************************************************************************************************************
+
+CREATE TABLE FEEDBACK 
+(
+  SESSION_ID VARCHAR2(80) NOT NULL
+, FIRST_NAME VARCHAR2(50) NOT NULL 
+, LAST_NAME VARCHAR2(50) NOT NULL 
+, EMAIL VARCHAR2(100) NOT NULL 
+, PHONE VARCHAR2(50) NOT NULL 
+, COUNTRY VARCHAR2(50) NOT NULL
+, MESSAGE VARCHAR2(1000) NOT NULL
+, SITE VARCHAR2(100) NOT NULL
+, created timestamp(9) default sysdate 
+);
+
+CREATE TABLE Smiley 
+(
+  SESSION_ID VARCHAR2(80) NOT NULL
+, SITE VARCHAR2(100) NOT NULL
+, QUESTION VARCHAR2(1000) NOT NULL 
+, ANSWER VARCHAR2(500) NOT NULL 
+, created timestamp(9) default sysdate
+, CONSTRAINT SMILEY_PK PRIMARY KEY (SESSION_ID, SITE)
+);
+
+CREATE TABLE SURVEY 
+(  
+  SESSION_ID VARCHAR2(80)
+, FORM_ID VARCHAR2(50)       NOT NULL
+, SITE VARCHAR2(100)
+, IS_POLL NUMBER DEFAULT 0
+, CONSTRAINT SURVEY_PK PRIMARY KEY (SESSION_ID, FORM_ID)
+);
+ 
+CREATE TABLE SURVEY_FORM_FIELD_OPTION 
+(  
+  SESSION_ID VARCHAR2(80)    NOT NULL
+, FORM_ID VARCHAR2(50)       NOT NULL
+, FORM_FIELD_ID   VARCHAR2(1000) 
+, ANSWER VARCHAR2(1000)
+, CONSTRAINT SURVEY_FORM_FIELD_OPTION_PK PRIMARY KEY (SESSION_ID, FORM_ID, FORM_FIELD_ID, ANSWER)
+);
+
+
+**********************************************************************************************************************************
+														PUBLICATION_SUMMARY
+**********************************************************************************************************************************
+
+
+CREATE OR REPLACE FORCE VIEW "DEVUAQSITESCS"."PUBLICATION_SUMMARY" ("ID", "NAME", "TITLE", "TEASERTITLE", "BODY", "TEASERTEXT", "CREATEDDATE", "AUTHOR", "EXTERNALLINK", "IMAGE", "CATEGORYENGLISH", "CATEGORYARABIC", "LANG", "WEBREFERENCEURL", "SITE")
+AS
+  SELECT t1.id,
+    t1.name,
+    t1.Title,
+    t2.TeaserTitle,
+    t3.Body,
+    t4.TeaserText,
+    t5.CreatedDate,
+    t6.Author,
+    t7.ExternalLink,
+    t8.Image,
+    t11.CategoryEnglish,
+    t12.CategoryArabic,
+    dim.name AS lang,
+    web.webreferenceurl,
+    pp.name AS site
+  FROM
+    (SELECT cc.id,
+      cc.name,
+      ccm.textvalue     AS Title,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Title'
+      )
+    ) t1
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS TeaserTitle,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TeaserTitle'
+      )
+    ) t2 ON t1.id=t2.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Body,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Body'
+      )
+    ) t3 ON t1.id=t3.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS TeaserText,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TeaserText'
+      )
+    ) t4 ON t1.id=t4.id
+  LEFT OUTER JOIN
+    (SELECT cc.id, CreatedDate      
+    FROM content_c cc    
+    ) t5 ON t1.id=t5.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Author,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Author'
+      )
+    ) t6 ON t1.id=t6.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS ExternalLink,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='ExternalLink'
+      )
+    ) t7 ON t1.id=t7.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.assetvalue    AS Image,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Images'
+      )
+    ) t8 ON t1.id=t8.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue   AS CategoryEnglish,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='CategoryEnglish'
+      )
+    ) t11 ON t1.id=t11.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue   AS CategoryArabic,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='CategoryArabic'
+      )
+    ) t12 ON t1.id=t12.id
+  JOIN assetpublication ap
+  ON t1.id=ap.assetid
+  JOIN Publication pp
+  ON pp.id=pubid
+  JOIN content_cd ccd
+  ON ccd.id=t1.flextemplateid
+  LEFT OUTER JOIN Content_c_dim cdim
+  ON cdim.cs_ownerid=t1.id
+  LEFT OUTER JOIN dimension dim
+  ON cdim.cs_dimensionid=dim.id
+  LEFT OUTER JOIN webreferences web
+  ON web.assetid=t1.id
+  WHERE ccd.name='Publication';
+
+
+**********************************************************************************************************************************
+														NEWS_SUMMARY
+**********************************************************************************************************************************
+
+CREATE OR REPLACE FORCE VIEW "DEVUAQSITESCS"."NEWS_SUMMARY" ("ID", "NAME", "TITLE", "TEASERTITLE", "BODY", "TEASERTEXT", "CREATEDDATE", "AUTHOR", "EXTERNALLINK", "IMAGE", "CATEGORYENGLISH", "CATEGORYARABIC", "LANG", "WEBREFERENCEURL", "SITE")
+AS
+  SELECT t1.id,
+    t1.name,
+    t1.Title,
+    t2.TeaserTitle,
+    t3.Body,
+    t4.TeaserText,
+    t5.CreatedDate,
+    t6.Author,
+    t7.ExternalLink,
+    t8.Image,
+    t11.CategoryEnglish,
+    t12.CategoryArabic,
+    dim.name AS lang,
+    web.webreferenceurl,
+    pp.name AS site
+  FROM
+    (SELECT cc.id,
+      cc.name,
+      ccm.textvalue     AS Title,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Title'
+      )
+    ) t1
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS TeaserTitle,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TeaserTitle'
+      )
+    ) t2 ON t1.id=t2.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Body,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Body'
+      )
+    ) t3 ON t1.id=t3.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS TeaserText,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TeaserText'
+      )
+    ) t4 ON t1.id=t4.id
+	LEFT OUTER JOIN
+		(SELECT cc.id, CreatedDate      
+		FROM content_c cc    
+		) t5 ON t1.id=t5.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Author,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Author'
+      )
+    ) t6 ON t1.id=t6.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS ExternalLink,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='ExternalLink'
+      )
+    ) t7 ON t1.id=t7.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.assetvalue    AS Image,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Images'
+      )
+    ) t8 ON t1.id=t8.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue   AS CategoryEnglish,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='CategoryEnglish'
+      )
+    ) t11 ON t1.id=t11.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue   AS CategoryArabic,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='CategoryArabic'
+      )
+    ) t12 ON t1.id=t12.id
+  JOIN assetpublication ap
+  ON t1.id=ap.assetid
+  JOIN Publication pp
+  ON pp.id=pubid
+  JOIN content_cd ccd
+  ON ccd.id=t1.flextemplateid
+  LEFT OUTER JOIN Content_c_dim cdim
+  ON cdim.cs_ownerid=t1.id
+  LEFT OUTER JOIN dimension dim
+  ON cdim.cs_dimensionid=dim.id
+  LEFT OUTER JOIN webreferences web
+  ON web.assetid=t1.id
+  WHERE ccd.name='News';
+  
+  
+**********************************************************************************************************************************
+														EVENTS_VIEW
+**********************************************************************************************************************************
+
+CREATE OR REPLACE FORCE VIEW "DEVUAQSITESCS"."EVENTS_VIEW" ("ID", "NAME", "EVENTNAME", "ADDRESSLINE1", "ADDRESSLINE2", "ADDRESSLINE3", "LATITUDE", "LONGITUDE", "WEBSITE", "HEADING", "TITLE", "TEASERTITLE", "TEASERIMAGE", "MOBILEIMAGE", "BODY", "TEASERTEXT", "OPENINGDATE", "ENDINGDATE", "PROCEDURES", "EXTERNALLINK", "CATEGORYINENGLISH", "CATEGORYINARABIC", "LANG", "WEBREFERENCEURL", "SITE")
+AS
+  SELECT t1.id,
+    t1.name,
+    t1.EventName,
+    t2.AddressLine1,
+    t3.AddressLine2,
+    t4.AddressLine3,
+    t5.Latitude,
+    t6.Longitude,
+    t7.Website,
+    t8.Heading,
+    t9.Title,
+    t10.TeaserTitle,
+    t12.TeaserImage,
+    t14.MobileImage,
+    t15.Body,
+    t16.TeaserText,
+    t17.OpeningDate,
+    t18.EndingDate,
+    t19.Procedures,
+    t20.ExternalLink,
+    t21.CategoryEnglish AS CategoryInEnglish,
+    t22.CategoryArabic  AS CategoryInArabic,
+    dim.name            AS lang,
+    web.webreferenceurl,
+    pp.name AS site
+  FROM
+    (SELECT cc.id,
+      cc.name,
+      ccm.stringvalue   AS EventName,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='EventName'
+      )
+    ) t1
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS AddressLine1,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='AddressLine1'
+      )
+    ) t2 ON t1.id=t2.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS AddressLine2,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='AddressLine2'
+      )
+    ) t3 ON t1.id=t3.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS AddressLine3,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='AddressLine3'
+      )
+    ) t4 ON t1.id=t4.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.floatvalue    AS Latitude,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Latitude'
+      )
+    ) t5 ON t1.id=t5.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.floatvalue    AS Longitude,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Longitude'
+      )
+    ) t6 ON t1.id=t6.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Website,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Website'
+      )
+    ) t7 ON t1.id=t7.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Heading,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Heading'
+      )
+    ) t8 ON t1.id=t8.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Title,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Title'
+      )
+    ) t9 ON t1.id=t9.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS TeaserTitle,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TeaserTitle'
+      )
+    ) t10 ON t1.id=t10.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.blobvalue     AS TeaserImage,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TeaserImage'
+      )
+    ) t12 ON t1.id=t12.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.blobvalue     AS MobileImage,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='MobileImage'
+      )
+    ) t14 ON t1.id=t14.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Body,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Body'
+      )
+    ) t15 ON t1.id=t15.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS TeaserText,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TeaserText'
+      )
+    ) t16 ON t1.id=t16.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.datevalue     AS OpeningDate,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='OpeningDate'
+      )
+    ) t17 ON t1.id=t17.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.datevalue     AS EndingDate,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='EndingDate'
+      )
+    ) t18 ON t1.id=t18.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Procedures,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Procedures'
+      )
+    ) t19 ON t1.id=t19.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS ExternalLink,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='ExternalLink'
+      )
+    ) t20 ON t1.id=t20.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue   AS CategoryEnglish,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='CategoryEnglish'
+      )
+    ) t21 ON t1.id=t21.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue   AS CategoryArabic,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='CategoryArabic'
+      )
+    ) t22 ON t1.id=t22.id
+  JOIN assetpublication ap
+  ON t1.id=ap.assetid
+  JOIN Publication pp
+  ON pp.id=pubid
+  JOIN content_cd ccd
+  ON ccd.id=t1.flextemplateid
+  LEFT OUTER JOIN Content_c_dim cdim
+  ON cdim.cs_ownerid=t1.id
+  LEFT OUTER JOIN dimension dim
+  ON cdim.cs_dimensionid=dim.id
+  LEFT OUTER JOIN webreferences web
+  ON web.assetid=t1.id
+  WHERE ccd.name='Events';
+  
+***********************************************************************************************************************************
+															GLOBAL_SEARCH
+***********************************************************************************************************************************
+
+CREATE OR REPLACE FORCE VIEW "DEVUAQSITESCS"."GLOBAL_SEARCH" ("ID", "NAME", "TITLE", "TEASERTEXT", "CREATEDDATE", "TEASERIMAGE", "BODY", "LANG", "SITE", "SUBTYPE", "ASSETTYPE")
+AS
+(SELECT t1.id, t1.Name, t1.Title, t2.TeaserText, t3.CreatedDate, t4.TeaserImage, t5.Body, dim.name AS lang,  pp.name  AS site, ccd.name AS subType,'Content_C' as assetType
+  FROM
+    (SELECT cc.id,
+      cc.name,
+      ccm.textvalue     AS Title,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Title'
+      )
+    ) t1
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS TeaserText,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TeaserText'
+      )
+    ) t2 ON t1.id=t2.id
+  LEFT OUTER JOIN
+    (SELECT cc.id, CreatedDate FROM content_c cc
+    ) t3
+  ON t1.id=t3.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.blobvalue     AS TeaserImage,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TeaserImage'
+      )
+    ) t4 ON t1.id=t4.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Body,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Body'
+      )
+    ) t5 ON t1.id=t5.id
+  JOIN assetpublication ap
+  ON t1.id=ap.assetid
+  JOIN Publication pp
+  ON pp.id=pubid
+  JOIN content_cd ccd
+  ON ccd.id=t1.flextemplateid
+  LEFT OUTER JOIN Content_c_dim cdim
+  ON cdim.cs_ownerid=t1.id
+  LEFT OUTER JOIN dimension dim
+  ON cdim.cs_dimensionid=dim.id
+  LEFT OUTER JOIN webreferences web
+ ON web.assetid  =t1.id) 
+
+UNION ALL
+  
+  (SELECT p1.id, p1.Name, p1.Title, p2.TeaserText, p3.CreatedDate, p4.TeaserImage, p5.Body, dim.name AS lang, pp.name  AS site, ccd.name AS subType,'Page' as assetType
+  FROM
+    (SELECT cc.id,
+      cc.name,
+      ccm.textvalue     AS Title,
+      cc.flextemplateid AS flextemplateid
+    FROM page cc
+    JOIN page_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM pageattribute WHERE name='Title'
+      )
+    ) p1
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS TeaserText,
+      cc.flextemplateid AS flextemplateid
+    FROM page cc
+    JOIN page_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM pageattribute WHERE name='TeaserText'
+      )
+    ) p2 ON p1.id=p2.id
+  LEFT OUTER JOIN
+    (SELECT cc.id, CreatedDate FROM page cc
+    ) p3
+  ON p1.id=p3.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.blobvalue     AS TeaserImage,
+      cc.flextemplateid AS flextemplateid
+    FROM page cc
+    JOIN page_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM pageattribute WHERE name='TeaserImage'
+      )
+    ) p4 ON p1.id=p4.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Body,
+      cc.flextemplateid AS flextemplateid
+    FROM page cc
+    JOIN page_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM pageattribute WHERE name='Body'
+      )
+    ) p5 ON p1.id=p5.id
+  JOIN assetpublication ap
+  ON p1.id=ap.assetid
+  JOIN Publication pp
+  ON pp.id=pubid
+  JOIN pagedefinition ccd
+  ON ccd.id=p1.flextemplateid
+  LEFT OUTER JOIN page_dim cdim
+  ON cdim.cs_ownerid=p1.id
+  LEFT OUTER JOIN dimension dim
+  ON cdim.cs_dimensionid=dim.id
+  LEFT OUTER JOIN webreferences web
+  ON web.assetid  =p1.id) 
+ 
+
+********************************************************************************************************************************
+															SERVICES_VIEW
+********************************************************************************************************************************
+
+
+  CREATE OR REPLACE FORCE VIEW "DEVUAQSITESCS"."SERVICES_VIEW" ("ID", "NAME", "SERVICEENABLED", "DEPARTMENTNAMEEN", "SERVICEENDUSER", "TITLE", "TEASERTITLE", "SERVICECODE", "SERVICEDESCRIPTION", "EMAILID", "FAX", "TELEPHONENUMBER", "EXTERNALLINK", "TIMINGS", "BENEFICIARY", "REQUIREDDOCUMENTS", "PROCEDURES", "SERVICEFEES", "DEPARTMENTNAMEAR", "CATEGORYENGLISH", "CATEGORYARABIC", "LANG", "SITE") AS 
+  SELECT t1.id,t1.name,
+    t1.ServiceEnabled,
+    t2.DepartmentNameEN,
+    t3.ServiceEndUser,
+    t4.Title,
+    t5.TeaserTitle,
+    t6.ServiceCode,
+    t7.ServiceDescription,
+    t8.EmailID,
+    t9.Fax,
+    t10.TelephoneNumber, 
+    t12.ExternalLink,
+    t15.Timings,
+    t16.Beneficiary,
+    t17.RequiredDocuments,
+    t18.Procedures,
+    t19.ServiceFees,
+	t20.DepartmentNameAR,
+	t21.CategoryEnglish,
+	t22.CategoryArabic,
+    dim.name            AS lang,
+    pp.name AS site
+  FROM
+    (SELECT cc.id,cc.name,
+      ccm.stringvalue   AS ServiceEnabled,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='ServiceEnabled'
+      )
+    ) t1
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS DepartmentNameEN,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='DepartmentNameEN'
+      )
+    ) t2 ON t1.id=t2.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue     AS ServiceEndUser,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='ServiceEndUser'
+      )
+    ) t3 ON t1.id=t3.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Title,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Title'
+      )
+    ) t4 ON t1.id=t4.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue    AS TeaserTitle,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TeaserTitle'
+      )
+    ) t5 ON t1.id=t5.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.intvalue    AS ServiceCode,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='ServiceCode'
+      )
+    ) t6 ON t1.id=t6.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue     AS ServiceDescription,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='ServiceDescription'
+      )
+    ) t7 ON t1.id=t7.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue     AS EmailID,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='EmailID'
+      )
+    ) t8 ON t1.id=t8.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue     AS Fax,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Fax'
+      )
+    ) t9 ON t1.id=t9.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue     AS TelephoneNumber,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TelephoneNumber'
+      )
+    ) t10 ON t1.id=t10.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS ExternalLink,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='ExternalLink'
+      )
+    ) t12 ON t1.id=t12.id
+ 
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Timings,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Timings'
+      )
+    ) t15 ON t1.id=t15.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Beneficiary,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Beneficiary'
+      )
+    ) t16 ON t1.id=t16.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS RequiredDocuments,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='RequiredDocuments'
+      )
+    ) t17 ON t1.id=t17.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS Procedures,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='Procedures'
+      )
+    ) t18 ON t1.id=t18.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue     AS ServiceFees,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='ServiceFees'
+      )
+    ) t19 ON t1.id=t19.id
+	LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS DepartmentNameAR,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='DepartmentNameAR'
+      )
+    ) t20 ON t1.id=t20.id
+	LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue     AS CategoryEnglish,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='CategoryEnglish'
+      )
+    ) t21 ON t1.id=t21.id
+	LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue     AS CategoryArabic,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='CategoryArabic'
+      )
+    ) t22 ON t1.id=t22.id
+  
+  JOIN assetpublication ap
+  ON t1.id=ap.assetid
+  JOIN Publication pp
+  ON pp.id=pubid
+  JOIN content_cd ccd
+  ON ccd.id=t1.flextemplateid
+  LEFT OUTER JOIN Content_c_dim cdim
+  ON cdim.cs_ownerid=t1.id
+  LEFT OUTER JOIN dimension dim
+  ON cdim.cs_dimensionid=dim.id
+  LEFT OUTER JOIN webreferences web
+  ON web.assetid=t1.id
+  WHERE ccd.name='Service';
+
+
+********************************************************************************************************************************
+															JOB_SUMMARY
+********************************************************************************************************************************
+
+CREATE OR REPLACE FORCE VIEW "DEVUAQSITESCS"."JOB_SUMMARY" ("ID", "NAME", "JOB_TITLE", "JOB_DESCRIPTION", "POSTED_DATE", "JOB_RESPONSIBILITY", "END_DATE", "DEPARTMENTNAME_EN", "DEPARTMENTNAME_AR", "JOB_REFERENCE_NUMBER", "MAIL_TO", "TEASER_TEXT", "LANG", "WEBREFERENCEURL", "SITE")
+AS
+  SELECT t1.id,
+    t1.name,
+    t1.JOB_TITLE,
+    t2.JOB_DESCRIPTION,
+    t3.POSTED_DATE,
+    t4.JOB_RESPONSIBILITY,
+    t5.END_DATE,
+    t6.DEPARTMENTNAME_EN,
+    t7.DEPARTMENTNAME_AR,
+    t8.JOB_REFERENCE_NUMBER,
+    t9.MAIL_TO,
+    t10.TEASER_TEXT,
+    dim.name AS lang,
+    web.webreferenceurl,
+    pp.name AS site
+  FROM
+    (SELECT cc.id,
+      cc.name,
+      ccm.stringvalue   AS JOB_TITLE,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='JobTitle'
+      )
+    ) t1
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS JOB_DESCRIPTION,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='JobDescription'
+      )
+    ) t2 ON t1.id=t2.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.datevalue     AS POSTED_DATE,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='PostedDate'
+      )
+    ) t3 ON t1.id=t3.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS JOB_RESPONSIBILITY,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='JobResponsibility'
+      )
+    ) t4 ON t1.id=t4.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.datevalue     AS END_DATE,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='EndDate'
+      )
+    ) t5 ON t1.id=t5.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS DEPARTMENTNAME_EN,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='DepartmentNameEN'
+      )
+    ) t6 ON t1.id=t6.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS DEPARTMENTNAME_AR,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='DepartmentNameAR'
+      )
+    ) t7 ON t1.id=t7.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue   AS JOB_REFERENCE_NUMBER,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='JobReferenceNumber'
+      )
+    ) t8 ON t1.id=t8.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.stringvalue   AS MAIL_TO,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='MailTo'
+      )
+    ) t9 ON t1.id=t9.id
+  LEFT OUTER JOIN
+    (SELECT cc.id,
+      ccm.textvalue     AS TEASER_TEXT,
+      cc.flextemplateid AS flextemplateid
+    FROM content_c cc
+    JOIN content_c_mungo ccm
+    ON ccm.cs_ownerid  =cc.id
+    AND ccm.cs_attrid IN
+      (SELECT ID FROM content_A WHERE name='TeaserText'
+      )
+    ) t10 ON t1.id=t10.id
+  JOIN assetpublication ap
+  ON t1.id=ap.assetid
+  JOIN Publication pp
+  ON pp.id=pubid
+  JOIN content_cd ccd
+  ON ccd.id=t1.flextemplateid
+  LEFT OUTER JOIN Content_c_dim cdim
+  ON cdim.cs_ownerid=t1.id
+  LEFT OUTER JOIN dimension dim
+  ON cdim.cs_dimensionid=dim.id
+  LEFT OUTER JOIN webreferences web
+  ON web.assetid=t1.id
+  WHERE ccd.name='Job';
+
+  *************************************************** PAYMENT_SERVICE_CODE *******************
+  
+  Insert into PAYMENT_SERVICE_CODE (SERVICE_ID,SERVICE_CODE,department_id,ISVAR,ISFIXED,MERCHANT_ID,TERMINAL_ID,BANK_ID,SECURE_KEY,BACK_TO_BACK_URL,REDIRECT_URL,OTHER) values 
+('301', '000001-0001', '010', 1, 0,'811482000','81148','MOFPGSTGB','4d93e8788197c0773123862949f611fe','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptB2BMessageServlet','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptRedirectRequestServlet',null);
+Insert into PAYMENT_SERVICE_CODE (SERVICE_ID,SERVICE_CODE,department_id,ISVAR,ISFIXED,MERCHANT_ID,TERMINAL_ID,BANK_ID,SECURE_KEY,BACK_TO_BACK_URL,REDIRECT_URL,OTHER) values 
+('302', '000000-0008', '010', 1, 0,'811482000','81148','MOFPGSTGB','4d93e8788197c0773123862949f611fe','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptB2BMessageServlet','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptRedirectRequestServlet',null);
+Insert into PAYMENT_SERVICE_CODE (SERVICE_ID,SERVICE_CODE,department_id,ISVAR,ISFIXED,MERCHANT_ID,TERMINAL_ID,BANK_ID,SECURE_KEY,BACK_TO_BACK_URL,REDIRECT_URL,OTHER) values 
+('303', '000000-0008', '010', 1, 0,'811482000','81148','MOFPGSTGB','4d93e8788197c0773123862949f611fe','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptB2BMessageServlet','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptRedirectRequestServlet',null);
+Insert into PAYMENT_SERVICE_CODE (SERVICE_ID,SERVICE_CODE,department_id,ISVAR,ISFIXED,MERCHANT_ID,TERMINAL_ID,BANK_ID,SECURE_KEY,BACK_TO_BACK_URL,REDIRECT_URL,OTHER) values 
+('304', '000000-0008', '010', 1, 0,'811482000','81148','MOFPGSTGB','4d93e8788197c0773123862949f611fe','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptB2BMessageServlet','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptRedirectRequestServlet',null);
+Insert into PAYMENT_SERVICE_CODE (SERVICE_ID,SERVICE_CODE,department_id,ISVAR,ISFIXED,MERCHANT_ID,TERMINAL_ID,BANK_ID,SECURE_KEY,BACK_TO_BACK_URL,REDIRECT_URL,OTHER) values 
+('501','000000-0008', '002', 1, 0,'811482000','81148','MOFPGSTGB','4d93e8788197c0773123862949f611fe','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptB2BMessageServlet','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptRedirectRequestServlet',null);
+Insert into PAYMENT_SERVICE_CODE (SERVICE_ID,SERVICE_CODE,department_id,ISVAR,ISFIXED,MERCHANT_ID,TERMINAL_ID,BANK_ID,SECURE_KEY,BACK_TO_BACK_URL,REDIRECT_URL,OTHER) values 
+('502','000000-0008', '002', 1, 0,'811482000','81148','MOFPGSTGB','4d93e8788197c0773123862949f611fe','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptB2BMessageServlet','https://g2testi.edirhamg2.ae/PaymentRouter/AcceptRedirectRequestServlet',null);
+
+  
+-- update merchant account for all service codes. put where clause to update individual
+-- read carefully before executing this script
+-- : NOT REQUIRED. DO NOT RUN UNTIL YOU ARE SURE WHAT YOU ARE DOING
+
+update PAYMENT_SERVICE_CODE set merchant_id = '811482000', terminal_id = '81148', bank_id = 'MOFPGSTGB', 
+secure_key = '4d93e8788197c0773123862949f611fe', 
+back_to_back_url = 'https://g2testi.edirhamg2.ae/PaymentRouter/AcceptB2BMessageServlet', 
+redirect_url = 'https://g2testi.edirhamg2.ae/PaymentRouter/AcceptRedirectRequestServlet';
+
+
+***************************************************************************************
+
+CREATE TABLE DEPARTMENT_CODE_LOOKUP
+(
+  DEPARTMENT_CODE VARCHAR2(20) NOT NULL
+, DEPARTMENT_NAME VARCHAR2(500)
+, IS_ACTIVE NUMBER
+, IS_DELETED NUMBER
+, CONSTRAINT DEPARTMENT_CODE_LOOKUP_PK PRIMARY KEY
+  (
+    DEPARTMENT_CODE
+  )
+  ENABLE
+);
+ 
+Insert into DEPARTMENT_CODE_LOOKUP (DEPARTMENT_CODE,DEPARTMENT_NAME,IS_ACTIVE,IS_DELETED) values ('002','e-Government',1,0);
+Insert into DEPARTMENT_CODE_LOOKUP (DEPARTMENT_CODE,DEPARTMENT_NAME,IS_ACTIVE,IS_DELETED) values ('003','Lands & Properties',1,0);
+Insert into DEPARTMENT_CODE_LOOKUP (DEPARTMENT_CODE,DEPARTMENT_NAME,IS_ACTIVE,IS_DELETED) values ('010','Planning & Survey',1,0);
+ 
+CREATE TABLE FEE_TYPE_ID_LOOKUP
+(
+  FEE_TYPE_CODE VARCHAR2(20) NOT NULL
+, FEE_TYPE VARCHAR2(500)
+, IS_ACTIVE VARCHAR2(20)
+, IS_DELETED NUMBER
+, CONSTRAINT FEE_TYPE_ID_LOOKUP_PK PRIMARY KEY
+  (
+    FEE_TYPE_CODE
+  )
+  ENABLE
+);
+ 
+Insert into FEE_TYPE_ID_LOOKUP (FEE_TYPE_CODE,FEE_TYPE,IS_ACTIVE,IS_DELETED) values ('A001','Application Fee','1',0);
+Insert into FEE_TYPE_ID_LOOKUP (FEE_TYPE_CODE,FEE_TYPE,IS_ACTIVE,IS_DELETED) values ('S001','Service Fee','1',0);
+Insert into FEE_TYPE_ID_LOOKUP (FEE_TYPE_CODE,FEE_TYPE,IS_ACTIVE,IS_DELETED) values ('G001','General Fees','1',0);
+ 
+CREATE TABLE ESERVICE_FEE_MATRIX
+(
+  FEE_MATRIX_ID NUMBER NOT NULL
+, DEPARTMENT_CODE VARCHAR2(20)
+, SERVICE_ID VARCHAR2(20)
+, SERVICE_NAME VARCHAR2(500)
+, FEE_ID VARCHAR2(20)
+, FEE_TYPE_CODE VARCHAR2(20)
+, FEE_TYPE VARCHAR2(500)
+, AMOUNT NUMBER
+, APPLICANT VARCHAR2(500)
+, LAND_TYPE VARCHAR2(20)
+, LETTER VARCHAR2(20)
+, USER_TYPE VARCHAR2(20)
+, CONSTRAINT ESERVICE_FEE_MATRIX_PK PRIMARY KEY
+  (
+    FEE_MATRIX_ID
+  )
+  ENABLE
+);
+ 
+ALTER TABLE ESERVICE_FEE_MATRIX
+ADD CONSTRAINT ESERVICE_FEE_MATRIX_DEPAR_FK1 FOREIGN KEY
+(
+  DEPARTMENT_CODE
+)
+REFERENCES DEPARTMENT_CODE_LOOKUP
+(
+  DEPARTMENT_CODE
+)
+ENABLE;
+ 
+ALTER TABLE ESERVICE_FEE_MATRIX
+ADD CONSTRAINT ESERVICE_FEE_MATRIX_FEE_T_FK1 FOREIGN KEY
+(
+  FEE_TYPE_CODE
+)
+REFERENCES FEE_TYPE_ID_LOOKUP
+(
+  FEE_TYPE_CODE
+)
+ENABLE;

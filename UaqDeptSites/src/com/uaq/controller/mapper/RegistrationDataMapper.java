@@ -1,0 +1,415 @@
+package com.uaq.controller.mapper;
+
+import com.uaq.command.ActivateFormCommand;
+import com.uaq.command.RegistrationEstablishmentCommand;
+import com.uaq.command.RegistrationGccCitizenCommand;
+import com.uaq.command.RegistrationGccResidentCommand;
+import com.uaq.command.RegistrationIndividualUAE;
+import com.uaq.command.RegistrationIndividualVisitorCommand;
+import com.uaq.command.RegistrationUaeResidentCommand;
+import com.uaq.util.StringUtil;
+import com.uaq.vo.AccountDetailOutputVO;
+import com.uaq.vo.ActiveAccountInputVO;
+import com.uaq.vo.CreateAccountInputVO;
+
+/**
+ * @author WINDOS
+ *
+ */
+/**
+ * @author WINDOS
+ * 
+ */
+public class RegistrationDataMapper {
+
+	/** For UAE Individual Registration */
+
+	public static CreateAccountInputVO bindingDataTOIndividualUAE(
+			RegistrationIndividualUAE bean) {
+		CreateAccountInputVO input = new CreateAccountInputVO();
+		//Emirates full name
+		input.setFirstName(bean.getFullname());
+		input.setMidleName("");
+		input.setLastName("");
+
+		input.setApplicantTypeId("1");
+
+		// Account Deatil
+		input.setCountryResidency(bean.getCountryResidency());
+		input.setCountryCitizen(bean.getCountryCitizen());
+		input.setEmailAddress(bean.getEmailAddress());
+		input.setMobile1(bean.getMobilecode1() + bean.getMobile1());
+
+		if (!StringUtil.isEmpty(bean.getMobile2())) {
+			input.setMobile2(bean.getMobilecode2() + bean.getMobile2());
+		} else {
+			input.setMobile2("");
+		}
+		if (!StringUtil.isEmpty(bean.getLandLine())) {
+			input.setLandLine(bean.getLandLinecode() + bean.getLandLine());
+		} else {
+			input.setLandLine("");
+		}
+
+		// Account Credential
+		input.setUsername(bean.getUsername());
+		input.setPassword(bean.getPassword());
+
+		// Emirate Id
+		input.setFullname(bean.getFullname());
+		input.setEmirateId(bean.getEmirateId());
+		input.setEmirate(bean.getEmirate());
+		input.setDob(bean.getDob());
+		input.setEmirateIdExpiryDate(bean.getEmirateIdExpiryDate());
+		input.setEmerateIdFront(bean.getEmerateIdFront_name());
+		input.setEmerateIdBack(bean.getEmerateIdBack_name());
+
+		// passport
+		input.setPassportNumber(bean.getPassportNumber());
+		input.setPassportFront(bean.getPassportFront_name());
+
+		// family
+		input.setHasFamilyBook(bean.isHasFamilyBook());
+		input.setFamilybook_emirates(bean.getFamilybook_emirates());
+		input.setFamilybook_fullName(bean.getFamilybook_fullName());
+		input.setEmirate(bean.getEmirate());
+		input.setTownName(bean.getTownName());
+		input.setTownNumber(bean.getTownNumber());
+		input.setFamilyNumber(bean.getFamilyNumber());
+		input.setTribeName(bean.getTribeName());
+		input.setClanNumber(bean.getClanNumber());
+		input.setIssuanceDate(bean.getIssuanceDate());
+		input.setMotherName(bean.getMotherName());
+		input.setMothersFatherName(bean.getMothersFatherName());
+		input.setFamilyBook(bean.getFamily_book_browse_name());
+		input.setNewsLetter(bean.isNewsletter());
+		input.setAddress(bean.getAddress());
+		input.setPostboxNo("");
+		return input;
+	}
+
+	/** For Establishment */
+
+	public static CreateAccountInputVO bindingDataToEstablisment(
+			RegistrationEstablishmentCommand estCommand) {
+		CreateAccountInputVO inputvo = new CreateAccountInputVO();
+		inputvo.setTypeofUser("2");
+		inputvo.setApplicantTypeId("0");
+
+		inputvo.setEstablishmentName(estCommand.getEstablishmentName());
+		inputvo.setMobilecode1(estCommand.getMobileCode());
+		inputvo.setMobile1(estCommand.getMobileCode()
+				+ estCommand.getMobileNumber());
+
+		inputvo.setLandLinecode(estCommand.getOfficeCode());
+		inputvo.setLandLine(estCommand.getOfficeCode()
+				+ estCommand.getOfficePhone());
+
+		inputvo.setEmailAddress(estCommand.getEmailAddress());
+		inputvo.setAddress(estCommand.getAddress());
+		inputvo.setWebsite(estCommand.getWebsite());
+		inputvo.setEmirate(estCommand.getEmirates());
+		inputvo.setTradeLicenseNumber(estCommand.getTradeLicenseNumber());
+		inputvo.setTradeLicenseExpDate(estCommand.getTradeLicenseExpDate());
+		inputvo.setTradeLicenseType(estCommand.getTradeLicenseType());
+		inputvo.setUsername(estCommand.getUserName());
+		inputvo.setPassword(estCommand.getPassword());
+		inputvo.setConfirmPassword(estCommand.getConfirmPassword());
+		inputvo.setTradeLicenseAttach(estCommand.getTradeLicenseAttach_name());
+		inputvo.setSignatoriesAttestation(estCommand
+				.getSignatoriesAttestation_name());
+		inputvo.setAddress(estCommand.getAddress());
+		inputvo.setPostboxNo(estCommand.getPostbox());
+		inputvo.setFirstName(estCommand.getEstablishmentName());
+		inputvo.setEmerateIdFront(estCommand.getEmiratesIdFront_name());
+		inputvo.setEmerateIdBack(estCommand.getEmiratesIdBackSide_name());
+		inputvo.setMidleName("");
+		inputvo.setLastName("");
+		inputvo.setTownName("");
+		inputvo.setTownNumber("");
+		inputvo.setCountryResidency("");
+		inputvo.setCountryCitizen("");
+		inputvo.setFirstName("");
+		inputvo.setLastName("");
+		inputvo.setMidleName("");
+		inputvo.setMobile2("");
+		inputvo.setNewsLetter(estCommand.isNewsletter());
+		inputvo.setEmirateId(estCommand.getEmiratesId());
+		
+		return inputvo;
+
+	}
+
+	/** For gccCitizen */
+
+	public static CreateAccountInputVO BindingDataTogccCitizen(
+			RegistrationGccCitizenCommand gccCitizenCommand) {
+		CreateAccountInputVO inputvo = new CreateAccountInputVO();
+		inputvo.setApplicantTypeId("3");
+		inputvo.setTypeofUser("1");
+		inputvo.setCountryResidency(gccCitizenCommand.getCountryResidence());
+		inputvo.setCountryCitizen(gccCitizenCommand.getCountryCitizenship());
+		inputvo.setMobilecode1(gccCitizenCommand.getMobileCode1());
+		inputvo.setMobile1(gccCitizenCommand.getMobileCode1()
+				+ gccCitizenCommand.getMobileNumber1());
+
+		if (!StringUtil.isEmpty(gccCitizenCommand.getMobileNumber2())) {
+			inputvo.setMobile2(gccCitizenCommand.getMobileCode2()
+					+ gccCitizenCommand.getMobileNumber2());
+		} else {
+			inputvo.setMobile2("");
+		}
+		if (!StringUtil.isEmpty(gccCitizenCommand.getLandLineNumber())) {
+			inputvo.setLandLine(gccCitizenCommand.getLandLineCode()
+					+ gccCitizenCommand.getLandLineNumber());
+		} else {
+			inputvo.setLandLine("");
+		}
+
+		inputvo.setEmailAddress(gccCitizenCommand.getEmail());
+
+		inputvo.setUsername(gccCitizenCommand.getUserName());
+		inputvo.setPassword(gccCitizenCommand.getPassword());
+		inputvo.setConfirmPassword(gccCitizenCommand.getConfirmPassword());
+
+		inputvo.setFullname(gccCitizenCommand.getFullName());
+		inputvo.setEmirateId(gccCitizenCommand.getEmiratesId());
+
+		inputvo.setEmirateIdExpiryDate(gccCitizenCommand.getEmiratesIdExpDate());
+		inputvo.setEmirate(gccCitizenCommand.getEmirates());
+		inputvo.setDob(gccCitizenCommand.getDob());
+		inputvo.setEmerateIdFront(gccCitizenCommand
+				.getEmiratesIdFrontside_name());
+		inputvo.setEmerateIdBack(gccCitizenCommand.getEmiratesIdBackSide_name());
+
+		inputvo.setPassportNumber(gccCitizenCommand.getPassportNumber());
+		inputvo.setPassportFront(gccCitizenCommand.getPassportFrontPage_name());
+		inputvo.setFullname(gccCitizenCommand.getFullName());
+		inputvo.setAddress(gccCitizenCommand.getAddress());
+		inputvo.setFirstName(gccCitizenCommand.getFullName());
+		inputvo.setLastName("");
+		inputvo.setMidleName("");
+		inputvo.setTownName("");
+		inputvo.setTownNumber("");
+		inputvo.setNewsLetter(gccCitizenCommand.isNewsletter());
+		return inputvo;
+	}
+
+	/** For gccResident */
+
+	public static CreateAccountInputVO bindingDataTogccResident(
+			RegistrationGccResidentCommand gccResidentCommand) {
+		CreateAccountInputVO inputvo = new CreateAccountInputVO();
+		inputvo.setApplicantTypeId("4");
+		inputvo.setTypeofUser("1");
+		inputvo.setCountryResidency(gccResidentCommand.getCountryResidence());
+		inputvo.setCountryCitizen(gccResidentCommand.getCountryCitizenship());
+		inputvo.setMobilecode1(gccResidentCommand.getMobileCode1());
+		inputvo.setMobile1(gccResidentCommand.getMobileCode1()
+				+ gccResidentCommand.getMobileNumber1());
+
+		if (!StringUtil.isEmpty(gccResidentCommand.getMobileNumber2())) {
+			inputvo.setMobile2(gccResidentCommand.getMobileCode2()
+					+ gccResidentCommand.getMobileNumber2());
+		} else {
+			inputvo.setMobile2("");
+		}
+		if (!StringUtil.isEmpty(gccResidentCommand.getLandLineNumber())) {
+			inputvo.setLandLine(gccResidentCommand.getLandLineCode()
+					+ gccResidentCommand.getLandLineNumber());
+		} else {
+			inputvo.setLandLine("");
+		}
+		// inputvo.setMobilecode2(gccResidentCommand.getMobileCode2());
+
+		inputvo.setEmailAddress(gccResidentCommand.getEmail());
+		inputvo.setUsername(gccResidentCommand.getUserName());
+		inputvo.setPassword(gccResidentCommand.getPassword());
+		inputvo.setConfirmPassword(gccResidentCommand.getConfirmPassword());
+		inputvo.setFullname(gccResidentCommand.getFullname());
+		inputvo.setPassportNumber(gccResidentCommand.getPassportNumber());
+		inputvo.setPassportFront(gccResidentCommand.getPassportFrontPage_name());
+		inputvo.setPassportResidencyPage(gccResidentCommand
+				.getPassportResidencyPage_name());
+		inputvo.setFirstName(gccResidentCommand.getFullname());
+		inputvo.setLastName("");
+		inputvo.setMidleName("");
+		inputvo.setTownName("");
+		inputvo.setTownNumber("");
+		inputvo.setAddress(gccResidentCommand.getAddress());
+		inputvo.setNewsLetter(gccResidentCommand.isNewsletter());
+		return inputvo;
+
+	}
+
+	/** For uaeResident */
+
+	public static CreateAccountInputVO bindingDataTouaeResident(
+			RegistrationUaeResidentCommand uaeResidentCommand) {
+		CreateAccountInputVO inputvo = new CreateAccountInputVO();
+		inputvo.setApplicantTypeId("2");
+		inputvo.setTypeofUser("1");
+		inputvo.setCountryResidency(uaeResidentCommand.getCountryResidence());
+		inputvo.setCountryCitizen(uaeResidentCommand.getCountryCitizenship());
+		inputvo.setMobilecode1(uaeResidentCommand.getMobilecode1());
+		inputvo.setMobile1(uaeResidentCommand.getMobilecode1()
+				+ uaeResidentCommand.getMobileNumber1());
+
+		if (!StringUtil.isEmpty(uaeResidentCommand.getMobileNumber2())) {
+			inputvo.setMobile2(uaeResidentCommand.getMobileCode2()
+					+ uaeResidentCommand.getMobileNumber2());
+		} else {
+			inputvo.setMobile2("");
+		}
+		if (!StringUtil.isEmpty(uaeResidentCommand.getLandLineNumber())) {
+			inputvo.setLandLine(uaeResidentCommand.getLandLineCode()
+					+ uaeResidentCommand.getLandLineNumber());
+		} else {
+			inputvo.setLandLine("");
+		}
+
+		inputvo.setEmailAddress(uaeResidentCommand.getEmail());
+		inputvo.setUsername(uaeResidentCommand.getUserName());
+		inputvo.setPassword(uaeResidentCommand.getPassword());
+		inputvo.setConfirmPassword(uaeResidentCommand.getConfirmPassword());
+		inputvo.setFullname(uaeResidentCommand.getFullName());
+		inputvo.setEmirateId(uaeResidentCommand.getEmiratesId());
+		inputvo.setEmirateIdExpiryDate(uaeResidentCommand
+				.getEmiratesIdExpDate());
+		inputvo.setEmirate(uaeResidentCommand.getEmirates());
+		inputvo.setDob(uaeResidentCommand.getDob());
+		inputvo.setEmerateIdFront(uaeResidentCommand.getEmiratesIdFront_name());
+		inputvo.setEmerateIdBack(uaeResidentCommand
+				.getEmiratesIdBackSide_name());
+		inputvo.setPassportNumber(uaeResidentCommand.getPassportNumber());
+		inputvo.setPassportFront(uaeResidentCommand.getPassportFrontPage_name());
+		inputvo.setPassportResidencyPage(uaeResidentCommand
+				.getPassportResidencyPage_name());
+		inputvo.setFirstName(uaeResidentCommand.getFullName());
+		inputvo.setLastName("");
+		inputvo.setMidleName("");
+		inputvo.setTownName("");
+		inputvo.setTownNumber("");
+		inputvo.setAddress(uaeResidentCommand.getAddress());
+		inputvo.setNewsLetter(uaeResidentCommand.isNewsletter());
+		return inputvo;
+	}
+
+	public static CreateAccountInputVO bindingTouaeVisitor(
+			RegistrationIndividualVisitorCommand uaeVisitorCommand) {
+		CreateAccountInputVO inputvo = new CreateAccountInputVO();
+		inputvo.setApplicantTypeId("5");
+		inputvo.setTypeofUser("1");
+		inputvo.setCountryCitizen(uaeVisitorCommand.getCountryCitizenship());
+		inputvo.setCountryResidency(uaeVisitorCommand.getCountryResidence());
+		inputvo.setMobilecode1(uaeVisitorCommand.getMobileCode1());
+		inputvo.setMobile1(uaeVisitorCommand.getMobileCode1()
+				+ uaeVisitorCommand.getMobileNumber1());
+		if (!StringUtil.isEmpty(uaeVisitorCommand.getMobileNumber2())) {
+			inputvo.setMobile2(uaeVisitorCommand.getMobileCode2()
+					+ uaeVisitorCommand.getMobileNumber2());
+		} else {
+			inputvo.setMobile2("");
+		}
+		if (!StringUtil.isEmpty(uaeVisitorCommand.getLandLineNumber())) {
+			inputvo.setLandLine(uaeVisitorCommand.getLandLineCode()
+					+ uaeVisitorCommand.getLandLineNumber());
+		} else {
+			inputvo.setLandLine("");
+		}
+		inputvo.setEmailAddress(uaeVisitorCommand.getEmail());
+
+		inputvo.setUsername(uaeVisitorCommand.getUserName());
+		inputvo.setPassword(uaeVisitorCommand.getPassword());
+		inputvo.setConfirmPassword(uaeVisitorCommand.getConfirmPassword());
+
+		inputvo.setFullname(uaeVisitorCommand.getFullName());
+		inputvo.setPassportNumber(uaeVisitorCommand.getPassportNumber());
+		inputvo.setPassportFront(uaeVisitorCommand.getPassportFrontPage_name());
+		inputvo.setVisaPage(uaeVisitorCommand.getVisaPage_name());
+
+		inputvo.setFirstName(uaeVisitorCommand.getFullName());
+		inputvo.setLastName("");
+		inputvo.setMidleName("");
+		inputvo.setTownName("");
+		inputvo.setTownNumber("");
+		inputvo.setAddress(uaeVisitorCommand.getAddress());
+		inputvo.setNewsLetter(uaeVisitorCommand.isNewsletter());
+		return inputvo;
+	}
+
+	/*
+	 * setting Command For Walkin User Activate Form
+	 */
+	public static ActivateFormCommand setAccountInfoToActivateFormCommand(
+			AccountDetailOutputVO accountInfo) {
+		ActivateFormCommand activateFormCommand = new ActivateFormCommand();
+
+		activateFormCommand.setCitizen(accountInfo.getCitizenship());
+		activateFormCommand.setEmail(accountInfo.getEmailAddress());
+		activateFormCommand.setEmirates(accountInfo.getEmirate());
+		activateFormCommand.setFullName(accountInfo.getFullName());
+		activateFormCommand.setResidency(accountInfo.getResidence());
+		//activateFormCommand.setLandLine(accountInfo.getLandLine());
+		
+		if (accountInfo.getMobileNo().length() == 10) {
+			activateFormCommand.setMobilecode1(accountInfo.getMobileNo()
+					.substring(0, 3));
+			activateFormCommand.setMobile1(accountInfo.getMobileNo().substring(
+					3, 10));
+		}
+		if (!StringUtil.isEmpty(accountInfo.getMobileno2())) {
+			if (accountInfo.getMobileno2().length() == 10) {
+				activateFormCommand.setMobilecode2(accountInfo.getMobileno2()
+						.substring(0, 3));
+				activateFormCommand.setMobile2(accountInfo.getMobileno2()
+						.substring(3, 10));
+			}
+		}
+		if (!StringUtil.isEmpty(accountInfo.getLandLine())) {
+			if (accountInfo.getLandLine().length() ==9 ) {
+				activateFormCommand.setLandLinecode(accountInfo.getLandLine()
+						.substring(0, 2));
+				activateFormCommand.setLandLine(accountInfo.getLandLine()
+						.substring(2, 9));
+			}
+		}
+
+		activateFormCommand.setTreadLicence(accountInfo.getTreadLicenceNo());
+		activateFormCommand.setAddress(accountInfo.getAddress());
+		activateFormCommand.setWebsite(accountInfo.getWebsite());
+		activateFormCommand.setTreadLicenceExprDate(accountInfo
+				.getTreadLicenceExprDate().trim().split("T")[0]);
+		activateFormCommand.setPostbox(accountInfo.getPostbox());
+		return activateFormCommand;
+	}
+
+	/*
+	 * setting Input Vo for For Walkin User Activate Service
+	 */
+	public static ActiveAccountInputVO setindDataToActivateAccountService(
+			ActivateFormCommand activateFormCommand,
+			AccountDetailOutputVO accountInfo) {
+		ActiveAccountInputVO inputVO = new ActiveAccountInputVO();
+		inputVO.setAccountId(accountInfo.getAccountId());
+		inputVO.setTypeOfUser(accountInfo.getUserType());
+		inputVO.setMobileno(activateFormCommand.getMobilecode1()
+				+ activateFormCommand.getMobile1());
+		inputVO.setMobileNo2(activateFormCommand.getMobilecode2()
+				+ activateFormCommand.getMobile2());
+		inputVO.setLoginusername(activateFormCommand.getUserName());
+		inputVO.setPassword(activateFormCommand.getPassword());
+		inputVO.setEmail(activateFormCommand.getEmail());
+		inputVO.setLandLine(activateFormCommand.getLandLine());
+		inputVO.setCitizen(activateFormCommand.getCitizen());
+		inputVO.setResidency(activateFormCommand.getResidency());
+
+		inputVO.setAddress(activateFormCommand.getAddress());
+		inputVO.setTraedlicenceNo(activateFormCommand.getTreadLicence());
+		inputVO.setTraedlicenceNo(activateFormCommand.getTreadLicenceExprDate());
+		inputVO.setEmirate(activateFormCommand.getEmirates());
+		inputVO.setPostbox(activateFormCommand.getPostbox());
+		return inputVO;
+	}
+
+}

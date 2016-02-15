@@ -1,0 +1,220 @@
+/**
+ * 
+ */
+package com.uaq.service;
+
+import java.math.BigInteger;
+import java.rmi.RemoteException;
+import java.text.ParseException;
+
+import javax.xml.rpc.ServiceException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+import uaq.service.lp.model.LPMiddlewareResubmitServicePortBindingStub;
+import uaq.service.lp.model.LPMiddlewareResubmitService_PortType;
+import uaq.service.lp.model.LPMiddlewareResubmitService_Service;
+import uaq.service.lp.model.LPMiddlewareResubmitService_ServiceLocator;
+
+import com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.AddressToDetailsType;
+import com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.ProcessResponseType;
+import com.uaq.common.ApplicationConstants;
+import com.uaq.logger.UAQLogger;
+import com.uaq.util.DateUtil;
+import com.uaq.util.StringUtil;
+import com.uaq.vo.LandOutputVO;
+import com.uaq.vo.UserDeatilVO;
+import com.uaq.vo.WhomItmayConcernVO;
+
+import static com.uaq.common.ApplicationConstants.*;
+
+/**
+ * @author TACME
+ * 
+ */
+@Service
+@Qualifier("lpReSubmissionRequestService")
+public class LPReSubmissionRequestService {
+
+	protected static UAQLogger logger = new UAQLogger(LPReSubmissionRequestService.class);
+
+	@Autowired
+	private UCMCenterURLService uCMCenterURLService;
+
+	private LPMiddlewareResubmitService_Service service;
+	private LPMiddlewareResubmitService_PortType port;
+	private LPMiddlewareResubmitServicePortBindingStub stub;
+
+	uaq.service.lp.model.UserContext uc = null;
+
+	private void createStub() {
+
+		uc = new uaq.service.lp.model.UserContext();
+		uc.setUsername(ApplicationConstants.WS_USERNAME);
+		uc.setPassword(ApplicationConstants.WS_PASSWORD);
+
+		service = new LPMiddlewareResubmitService_ServiceLocator();
+		try {
+			port = service.getLPMiddlewareResubmitServicePort();
+			stub = (LPMiddlewareResubmitServicePortBindingStub) port;
+		} catch (ServiceException e) {
+			logger.error("WebService Error  |" + e.getMessage());
+		}
+		
+	}
+
+	public LandOutputVO reSubmitWhomItMayConcern(UserDeatilVO userDeatilVO, WhomItmayConcernVO whomItmayConcern) {
+		createStub();
+		LandOutputVO outputVO = new LandOutputVO();
+		com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.ProcessType processType = new com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.ProcessType();
+
+		ProcessResponseType processResponseType = new ProcessResponseType();
+
+		com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.AttachmentRecPayload[] attachmentList = new com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.AttachmentRecPayload[2];
+
+		com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.AddressToDetailsType address = new AddressToDetailsType();
+		address.setEmiratesId(userDeatilVO.getEmiratesId());
+		address.setAddressTo(whomItmayConcern.getAddressTo());
+		address.setFamilyBookNo(whomItmayConcern.getFamilyBookNo());
+		address.setSpauseId(whomItmayConcern.getSpouseIdNo());
+		address.setSource(whomItmayConcern.getSource() == null ? new BigInteger("0") : new BigInteger(whomItmayConcern.getSource()));
+		address.setServiceId((whomItmayConcern.getServiceId() == null || whomItmayConcern.getServiceId().equalsIgnoreCase("null")) ? new BigInteger("00") : new BigInteger(whomItmayConcern
+				.getServiceId()));
+		address.setUserCommnets(whomItmayConcern.getUserCommnets());
+
+		address.setAttachment1(whomItmayConcern.getScanFamilyBook() == null ? "" : whomItmayConcern.getScanFamilyBook().replace("-", "|"));
+		address.setAttachment2(whomItmayConcern.getSposeEmiratesId() == null ? "" : whomItmayConcern.getSposeEmiratesId().replace("-", "|"));
+		address.setAttachment3("");
+		// address.setAttachment4(whomItmayConcern.getOther());
+		address.setUserCommnets("");
+
+		String did = "";
+		String filenme = "";
+		String ucmUrl = "";
+
+		if (!StringUtil.isEmpty(whomItmayConcern.getScanFamilyBook())) {
+			did = whomItmayConcern.getScanFamilyBook().split("-")[0];
+			filenme = whomItmayConcern.getScanFamilyBook().split("-")[1];
+			logger.debug("File filenme=" + filenme);
+			logger.debug("File did=" + did);
+
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
+			logger.debug("From WebCenter URL=" + ucmUrl);
+
+			attachmentList[0] = new com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.AttachmentRecPayload();
+			attachmentList[0].setContentid(did);
+			attachmentList[0].setFilename(filenme);
+			attachmentList[0].setUrl(ucmUrl);
+			attachmentList[0].setIsMandatory("1");
+			attachmentList[0].setDocTypeId("20");
+		}
+
+		if (!StringUtil.isEmpty(whomItmayConcern.getSposeEmiratesId())) {
+			did = whomItmayConcern.getSposeEmiratesId().split("-")[0];
+			filenme = whomItmayConcern.getSposeEmiratesId().split("-")[1];
+			logger.debug("File filenme=" + filenme);
+			logger.debug("File did=" + did);
+
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
+			logger.debug("From WebCenter URL=" + ucmUrl);
+			attachmentList[1] = new com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.AttachmentRecPayload();
+			attachmentList[1].setContentid(did);
+			attachmentList[1].setFilename(filenme);
+			attachmentList[1].setUrl(ucmUrl);
+			attachmentList[1].setIsMandatory("1");
+			attachmentList[1].setDocTypeId("21");
+		}
+
+		com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.CommonRequestBPMType commonBpm = new com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.CommonRequestBPMType();
+
+		commonBpm.setRequestId(whomItmayConcern.getRequestId() == null ? new BigInteger("0") : new BigInteger(whomItmayConcern.getRequestId().toString()));
+		commonBpm.setRequestNo(whomItmayConcern.getRequestNo());
+		commonBpm.setWorkListId(whomItmayConcern.getWorkListId() == null ? new BigInteger("0") : new BigInteger(whomItmayConcern.getWorkListId().toString()));
+		commonBpm.setStateId(whomItmayConcern.getStateId());
+		commonBpm.setToWhomItmayId(whomItmayConcern.getToWhomItmayId() == null ? new BigInteger("0") : new BigInteger(whomItmayConcern.getToWhomItmayId().toString()));
+		commonBpm.setTemp_ToWhomItmayId(whomItmayConcern.getTempToWhomItmayId() == null ? new BigInteger("0") : new BigInteger(whomItmayConcern.getTempToWhomItmayId().toString()));
+		commonBpm.setServiceName_En(whomItmayConcern.getServiceName_En());
+		commonBpm.setServiceName_Ar(whomItmayConcern.getServiceName_Ar());
+
+		com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.PaymentRequestType paymentDetails = new com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.PaymentRequestType();
+
+		paymentDetails.setPaymentId(whomItmayConcern.getPaymentId());
+		paymentDetails.setPaymentStatus(whomItmayConcern.getPaymentStatus());
+		paymentDetails.setServiceFee(whomItmayConcern.getServiceFee());
+		paymentDetails.setApplicationFee(whomItmayConcern.getApplicationFee());
+		paymentDetails.setDeptID(whomItmayConcern.getDeptID());
+		paymentDetails.setServiceFeeDisc(whomItmayConcern.getServiceFeeDisc());
+		paymentDetails.setAppFeeDisc(whomItmayConcern.getAppFeeDisc());
+		paymentDetails.setEdirhamServCode(whomItmayConcern.getEdirhamServCode());
+		paymentDetails.setIsPaymentRequired(whomItmayConcern.getIsPaymentRequired());
+
+		com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.UserDetailsPayload userDetails = new com.oracle.xmlns.UAQ_LP_Twimc_App.UAQ_LP_Twimc_Prj.UAQ_LP_Twimc_BPEL.UserDetailsPayload();
+
+		userDetails.setUsername(userDeatilVO.getUsername());
+		userDetails.setTypeOfUser(userDeatilVO.getTypeOfUser());
+		userDetails.setAccountid(userDeatilVO.getAccountid());
+		userDetails.setMobileNo(userDeatilVO.getMobileNo());
+		userDetails.setEmailID(userDeatilVO.getEmailID());
+		userDetails.setEmiratesId(userDeatilVO.getEmiratesId());
+		userDetails.setTradeLienceNo(userDeatilVO.getTradeLienceNo());
+		userDetails.setFamilyBookNo(whomItmayConcern.getFamilyBookNo());
+		//BigInteger nationalId=new BigInteger(StringUtil.isEmpty(userDeatilVO.getPOBOX())?"0":userDeatilVO.getPOBOX());
+		userDetails.setNationality_ID(StringUtil.isEmpty(userDeatilVO.getNationality()) ? new BigInteger("0") : new BigInteger(userDeatilVO.getNationality()));
+		userDetails.setEmirate(userDeatilVO.getEmirate());
+		userDetails.setFirstName(userDeatilVO.getFirstName());
+		userDetails.setLastName(userDeatilVO.getLastName());
+		userDetails.setAddress1(userDeatilVO.getAddress1());
+		userDetails.setAddress2(whomItmayConcern.getOther());
+		BigInteger postbox=new BigInteger(StringUtil.isEmpty(userDeatilVO.getPOBOX())?"0":userDeatilVO.getPOBOX());
+		userDetails.setPOBOX(postbox);
+		userDetails.setDOB(userDeatilVO.getDOB());
+		userDetails.setHome_Phone(userDeatilVO.getHomePhone());
+		userDetails.setLanguage_ID(whomItmayConcern.getLanguageId() == null ? new BigInteger("1") : new BigInteger(whomItmayConcern.getLanguageId()));
+		userDetails.setEirates_Code(StringUtil.isEmpty(userDeatilVO.getEmiratesCode())? new BigInteger("0") :  new BigInteger(userDeatilVO.getEmiratesCode()));
+		if (userDeatilVO.getEdiaExpirtyDate() != null) {
+			try {
+				userDetails.setEDIA_Expirty_Date(DateUtil.getDateFromString(userDeatilVO.getEdiaExpirtyDate()));
+			} catch (ParseException e) {
+				logger.error(e.getMessage());
+			}
+		}
+
+		/*
+		 * processTypeHolder.value.setAddressToDetails(address);
+		 * processTypeHolder.value.setCommonRequestBPM(commonBpm);
+		 * processTypeHolder.value.setPaymentDetails(paymentDetails);
+		 * processTypeHolder.value.setUserDetails(userDetails);
+		 */
+		processType.setAddressToDetails(address);
+		processType.setCommonRequestBPM(commonBpm);
+		processType.setPaymentDetails(paymentDetails);
+		processType.setUserDetails(userDetails);
+		processType.setAttachmentList(attachmentList);
+
+		// String status = stub.toWhomeEverResubmitRequest(processTypeHolder,
+		// uc);
+		try {
+			processResponseType = stub.toWhomeEverResubmitRequest(processType, uc);
+		} catch (RemoteException e) {
+			outputVO.setStatus(SERVICE_FAILED);
+			logger.error("Failed :"+e.getMessage());
+		}
+
+		if (processResponseType != null) {
+			outputVO.setStatus_AR(processResponseType.getStatus_AR());
+			outputVO.setStatus_EN(processResponseType.getStatus_EN());
+			logger.debug("LP review Status is :: " + processResponseType.getStatus());
+			logger.debug("LP review Msg is :: " + processResponseType.getStatus_EN());
+			outputVO.setStatus(StringUtil.isEmpty(processResponseType.getStatus())?SERVICE_FAILED:processResponseType.getStatus());
+		} else {
+			outputVO.setStatus(SERVICE_FAILED);
+			logger.error(" Failed  |  stub.toWhomeEverResubmitRequest(processType, uc); return null");
+		}
+
+		return outputVO;
+
+	}
+
+}

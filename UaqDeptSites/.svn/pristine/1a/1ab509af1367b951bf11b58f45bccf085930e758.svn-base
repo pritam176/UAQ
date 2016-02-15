@@ -1,0 +1,156 @@
+package com.uaq.service;
+
+import java.util.Calendar;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+import uaq.db.si.model.common.AccountDetailsViewSDO;
+import uaq.db.si.model.common.AppModuleService;
+import uaq.db.si.model.common.AppModuleService_Service;
+import uaq.db.si.model.common.ServiceException;
+import uaq.db.si.model.common.UserDetailsViewSDO;
+
+import com.oracle.xmlns.adf.svc.types.Conjunction;
+import com.oracle.xmlns.adf.svc.types.FindControl;
+import com.oracle.xmlns.adf.svc.types.FindCriteria;
+import com.oracle.xmlns.adf.svc.types.ViewCriteria;
+import com.oracle.xmlns.adf.svc.types.ViewCriteriaItem;
+import com.oracle.xmlns.adf.svc.types.ViewCriteriaRow;
+import com.uaq.logger.UAQLogger;
+import com.uaq.util.StringUtil;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+
+@Service("findAccountDetailService")
+public class FindAccountDetailService {
+
+	protected static UAQLogger logger = new UAQLogger(FindAccountDetailService.class);
+
+	AppModuleService_Service service;
+	AppModuleService stub;
+
+	public AccountDetailTokenOutputVO getAccountDetail(String accountId) {
+
+		AccountDetailTokenOutputVO accountDetailTokenOutputVO = new AccountDetailTokenOutputVO();
+
+		service = new AppModuleService_Service();
+		stub = service.getAppModuleServiceSoapHttpPort();
+		FindCriteria criteria = new FindCriteria();
+		FindControl ctrl = new FindControl();
+		criteria.setFetchSize(-1);
+		criteria.setFetchStart(0);
+
+		ViewCriteriaItem item = new ViewCriteriaItem();
+		item.setAttribute("Id");
+		item.setOperator("=");
+		item.getValue().add(accountId);
+		item.setUpperCaseCompare(false);
+		item.setConjunction(Conjunction.AND);
+		ViewCriteriaRow group = new ViewCriteriaRow();
+		group.setConjunction(Conjunction.AND);
+		group.setUpperCaseCompare(false);
+		group.getItem().add(item);
+
+		ViewCriteria filter = new ViewCriteria();
+		filter.setConjunction(Conjunction.AND);
+		filter.getGroup().add(group);
+
+		criteria.setFilter(filter);
+
+		List<AccountDetailsViewSDO> accountDetailsViewsdo = null;
+
+		try {
+			accountDetailsViewsdo = stub.findAccountDetailsView1(criteria, ctrl);
+			logger.debug("No of Record Retrive - " + accountDetailsViewsdo.size());
+			for (int i = 0; i < accountDetailsViewsdo.size(); i++) {
+				AccountDetailsViewSDO temp = accountDetailsViewsdo.get(i);
+				List<UserDetailsViewSDO> userDetail = temp.getUserDetailsView();
+				logger.debug("No of User Detail Record Retrive - " + userDetail.size());
+				for (int j = 0; j < userDetail.size(); j++) {
+					UserDetailsViewSDO userTemp = userDetail.get(i);
+					accountDetailTokenOutputVO.setAccountStatusId(userTemp.getAccountStatusId()==null?"":userTemp.getAccountStatusId().toString());
+					accountDetailTokenOutputVO.setEmailNotificationEnabled(userTemp.getEmailNotificationEnabled()==null?"0":userTemp.getEmailNotificationEnabled().toString());
+					accountDetailTokenOutputVO.setLoginusername(userTemp.getLoginusername()==null?"":userTemp.getLoginusername().getValue());
+					accountDetailTokenOutputVO.setProfileImageId(userTemp.getProfileImageId()==null?"0":userTemp.getProfileImageId().toString());
+					accountDetailTokenOutputVO.setPushNotificationEnabled(userTemp.getPushNotificationEnabled()==null?"0":userTemp.getPushNotificationEnabled().toString());
+					accountDetailTokenOutputVO.setPassword(userTemp.getPassword());
+					accountDetailTokenOutputVO.setSmsNotificationEnabled(userTemp.getSmsNotificationEnabled()==null?"0":userTemp.getSmsNotificationEnabled().toString());
+					accountDetailTokenOutputVO.setRetryCount(userTemp.getRetryCount()==null?"0":userTemp.getRetryCount().toString());
+					accountDetailTokenOutputVO.setSourceId(userTemp.getSmsNotificationEnabled()==null?"0":userTemp.getSmsNotificationEnabled().toString());
+					accountDetailTokenOutputVO.setTermsConditionsFlag(userTemp.getTermsConditionsFlag()==null?"0":userTemp.getTermsConditionsFlag().toString());
+					accountDetailTokenOutputVO.setUserName(userTemp.getUserName());
+					
+				}
+				//accountDetailTokenOutputVO.setLoginusername(temp.getLoginusername()==null?"":temp.getLoginusername().toString());
+				accountDetailTokenOutputVO.setAccountId(temp.getId()==null?"0":temp.getId().toString());
+				accountDetailTokenOutputVO.setDob(temp.getDob()==null?Calendar.getInstance():temp.getDob().toGregorianCalendar());
+				//accountDetailTokenOutputVO.setEidaExpiryDate(temp.getEidaExpiryDate().getValue().toGregorianCalendar()));
+				accountDetailTokenOutputVO.setAddressline1(temp.getAddressline1());
+				accountDetailTokenOutputVO.setAddressline2(temp.getAddressline2()==null?"":temp.getAddressline2().toString());
+				// accountDetailTokenOutputVO.setApplicanttype_AR(accountRec.getApplicanttype_AR());
+				// accountDetailTokenOutputVO.setApplicanttype_EN(accountRec.getApplicanttype_EN());
+				accountDetailTokenOutputVO.setApplicanttypeid(temp.getApplicanttypeid()==null?"0":temp.getApplicanttypeid().toString());
+				accountDetailTokenOutputVO.setClannumber(temp.getClannumber()==null?"0":temp.getClannumber().toString());
+				// accountDetailTokenOutputVO.setCountryidofcitizenship_AR(accountRec.getCountryidofcitizenship_AR());
+				// accountDetailTokenOutputVO.setCountryidofcitizenship_EN(accountRec.getCountryidofcitizenship_EN());
+				accountDetailTokenOutputVO.setCountryidofcitizenshipid(temp.getCountryidofcitizenshipid()==null?"1":temp.getCountryidofcitizenshipid().toString());
+				// accountDetailTokenOutputVO.setCountryidofresidency_AR(accountRec.getCountryidofresidency_AR());
+				// accountDetailTokenOutputVO.setCountryidofresidency_EN(accountRec.getCountryidofresidency_EN());
+				accountDetailTokenOutputVO.setCountryidofresidencyid(temp.getCountryidofresidencyid()==null?"1":temp.getCountryidofresidencyid().toString());
+				accountDetailTokenOutputVO.setCreatedby(temp.getCreatedby());
+				// accountDetailTokenOutputVO.setCreatedDate(temp.getCreatedDate().toGregorianCalendar());
+				// accountDetailTokenOutputVO.setDob(temp.getDob().toGregorianCalendar());
+				// accountDetailTokenOutputVO.setEidaexpirydate(PortalUtil.gregorianCaltoDate(temp.getEidaExpiryDate().getValue().toGregorianCalendar()));
+				accountDetailTokenOutputVO.setEmailAddress(temp.getEmailAddress());
+				accountDetailTokenOutputVO.setSubcribetonewsletterflag(temp.getSubcribetonewsletterflag()==null?"0":temp.getSubcribetonewsletterflag().toString());
+				accountDetailTokenOutputVO.setEmirate(StringUtil.isEmpty(temp.getEmirate())?"1":temp.getEmirate());
+				// accountDetailTokenOutputVO.setEmirates_AR(accountRec.getEmirates_AR());
+				// accountDetailTokenOutputVO.setEmirates_EN(accountRec.getEmirates_EN());
+				accountDetailTokenOutputVO.setEmiratesCode(temp.getEmiratesCode()==null?"1":temp.getEmiratesCode().toString());
+				accountDetailTokenOutputVO.setEmiratesId(temp.getEmiratesId()==null?"":temp.getEmiratesCode().toString());
+				accountDetailTokenOutputVO.setFamilyBookNum(temp.getFamilyBookNum()==null?"0":temp.getFamilyBookNum().toString());
+				accountDetailTokenOutputVO.setFamilynumber(temp.getFamilynumber()==null?"0":temp.getFamilynumber().toString());
+				accountDetailTokenOutputVO.setFirstName(temp.getFirstName());
+				accountDetailTokenOutputVO.setHasfamilybookno(temp.getHasfamilybookno()==null?"0":temp.getHasfamilybookno().toString());
+				accountDetailTokenOutputVO.setHomePhone(temp.getHomePhone()==null?"0":temp.getHomePhone().toString());
+				accountDetailTokenOutputVO.setId(temp.getId());
+				// accountDetailTokenOutputVO.setIssuancedate(temp.getIssuancedate().getValue().toGregorianCalendar());
+				accountDetailTokenOutputVO.setLanguageId(temp.getLanguageId()==null?"0":temp.getLanguageId().toString());
+				accountDetailTokenOutputVO.setLastName(temp.getLastName());
+
+				//accountDetailTokenOutputVO.setMiddleName(temp.getMiddleName());
+				accountDetailTokenOutputVO.setMobileNo(temp.getMobileNo());
+				accountDetailTokenOutputVO.setMobileno2(temp.getMobileno2()==null?"0":temp.getMobileno2().toString());
+				accountDetailTokenOutputVO.setModifiedby(temp.getModifiedby());
+				// accountDetailTokenOutputVO.setModifiedDate(temp.getModifiedDate().toGregorianCalendar());
+				//accountDetailTokenOutputVO.setMothername(String.valueOf(temp.getMothername()));
+				//accountDetailTokenOutputVO.setMothersfathername(String.valueOf(temp.getMothersfathername()));
+				// accountDetailTokenOutputVO.setNationality_AR(accountRec.getNationality_AR());
+				// accountDetailTokenOutputVO.setNationality_EN(accountRec.getNationality_EN());
+				accountDetailTokenOutputVO.setNationalityId(temp.getNationalityId()==null?"1":temp.getNationalityId().toString());
+				// accountDetailTokenOutputVO.setPassportExpiryDate(temp.getPassportExpiryDate());
+				accountDetailTokenOutputVO.setPassportNo(temp.getPassportNo()==null?"":temp.getPassportNo().toString());
+				accountDetailTokenOutputVO.setPostbox(temp.getPostbox()==null?"0":temp.getPassportNo().toString());
+				//accountDetailTokenOutputVO.setResidenceNo(String.valueOf(temp.getResidenceNo()));
+				// accountDetailTokenOutputVO.setResidenseExpiryDate(temp.getResidenseExpiryDate());
+				//accountDetailTokenOutputVO.setTownname(String.valueOf(temp.getTownname()));
+				//accountDetailTokenOutputVO.setTownnumber(String.valueOf(temp.getTownnumber()));
+				// accountDetailTokenOutputVO.setTradelicensetype_AR(temp.getTradelicensetype_AR());
+				// accountDetailTokenOutputVO.setTradelicensetype_EN(accountRec.getTradelicensetype_EN());
+				accountDetailTokenOutputVO.setTradelicensetypeid(temp.getTradelicensetypeid()==null?"0":temp.getTradelicensetypeid().toString());
+				// accountDetailTokenOutputVO.setTradeLienceExpiryDate(temp.getTradeLienceExpiryDate().toGregorianCalendar());
+				accountDetailTokenOutputVO.setTradeLienceNo(temp.getTradeLienceNo()==null?"0":temp.getTradeLienceNo().toString());
+				//accountDetailTokenOutputVO.setTribename(String.valueOf(temp.getTribename()));
+				accountDetailTokenOutputVO.setTypeOfUser(temp.getTypeOfUser());
+
+				//accountDetailTokenOutputVO.setWebsite(String.valueOf(temp.getWebsite()));
+
+			}
+		} catch (ServiceException e) {
+			logger.error(e.getMessage());
+		}
+
+		return accountDetailTokenOutputVO;
+
+	}
+}

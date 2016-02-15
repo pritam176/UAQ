@@ -1,0 +1,93 @@
+/**
+ * 
+ */
+package com.uaq.controller;
+
+import static com.uaq.common.ApplicationConstants.ISMOBILE;
+import static com.uaq.common.ApplicationConstants.PAGE_LABEL;
+import static com.uaq.common.ApplicationConstants.PARAM_LANGUAGE_CODE;
+import static com.uaq.common.ApplicationConstants.SESSION_LOGIN_INFO_PORTAL;
+import static com.uaq.common.ApplicationConstants.SPRING_REDIRECT;
+import static com.uaq.common.ApplicationConstants.UAQ_URL;
+import static com.uaq.common.ApplicationConstants.URL_SEPARATOR;
+import static com.uaq.common.TilesViewConstant.PORTAL_LOGIN_AGAIN;
+import static com.uaq.common.UAQURLConstant.SERVICES_ERROR_PAGE;
+
+import java.util.List;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.uaq.common.PropertiesUtil;
+import com.uaq.common.ViewPath;
+import com.uaq.logger.UAQLogger;
+import com.uaq.service.PaymentHistoryService;
+import com.uaq.service.PortalUtil;
+
+import com.uaq.vo.LoginOutputVO;
+import com.uaq.vo.PageMetadataVO;
+import com.uaq.vo.PaymentHistoryVO;
+import com.uaq.common.TilesViewConstant;
+
+/**
+ * @author akhil
+ *
+ */
+
+@Controller
+public class PaymentHistoryController extends BaseController {
+	
+	@Autowired
+	private PortalUtil portalUtil;
+	@Autowired
+	private PaymentHistoryService paymentHistoryService;
+	
+	public static transient UAQLogger logger = new UAQLogger(PaymentHistoryController.class);
+	
+	@RequestMapping(value= ViewPath.PAYMENT_HISTORY,method= RequestMethod.GET)
+	public String handleRequest(HttpServletRequest request,HttpServletResponse response,ModelMap modelMap){
+		
+		super.handleRequest(request, modelMap);
+		String view =TilesViewConstant.PORTAL_LOGIN_AGAIN;
+		
+		LoginOutputVO logininfo = null;
+		logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
+		
+		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
+		Locale locale = new Locale(languageCode);
+		
+		PageMetadataVO pageMetadataVO = new PageMetadataVO();
+		pageMetadataVO.setPageTitle(messageSource.getMessage("label.paymenthistory", null, locale));
+		pageMetadataVO.setPageDescription(messageSource.getMessage("label.paymenthistory", null, locale));
+		pageMetadataVO.setPageKeywords(messageSource.getMessage("label.paymenthistory", null, locale));
+		
+		if(logininfo!=null){
+			if(portalUtil.validateToken(logininfo)){
+				List<PaymentHistoryVO> paymentHistoryList = paymentHistoryService.getPaymentHistoryList(logininfo.getAcountId());
+				if(paymentHistoryList.size()>0){
+					modelMap.addAttribute("paymentHistoryList", paymentHistoryList);
+					view ="paymenthistory.list";
+				}else{
+					view =SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) +  URL_SEPARATOR + languageCode +  SERVICES_ERROR_PAGE;
+				}
+			}
+		}
+		if (view.equals( PORTAL_LOGIN_AGAIN)) {
+				logger.info("Desktop  |  Failure    |    User Not Loged In ");
+				request.getSession().invalidate();
+		}
+		modelMap.addAttribute(ISMOBILE, "false");
+		modelMap.addAttribute(PAGE_LABEL, "label.paymenthistory");
+		modelMap.addAttribute("pageMetadata", pageMetadataVO);
+		return view;
+		
+	}
+
+}

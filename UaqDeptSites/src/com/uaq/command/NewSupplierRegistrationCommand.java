@@ -1,0 +1,223 @@
+package com.uaq.command;
+
+import java.util.List;
+
+import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.AttachmentRecPayload;
+
+public class NewSupplierRegistrationCommand {
+	public String establishmentName;
+	public String tradeLicenceNumber;
+	public String expiryDate;
+	private String mobileNumber;
+	private String email;
+	private String address;
+	private String officeNumber;
+	private String postBox;
+	private String supplierCategory;
+	private String registrationType;
+	private String[] registrationsType;
+	private String emirates;
+	private String emirateId;
+
+	private String requestNo;
+
+	private String statusId;
+
+	/**
+	 * @return the emirates
+	 */
+	public String getEmirates() {
+		return emirates;
+	}
+
+	/**
+	 * @param emirates
+	 *            the emirates to set
+	 */
+	public void setEmirates(String emirates) {
+		this.emirates = emirates;
+	}
+
+	private AttachmentRecPayload[] supplierFiles;
+
+	/**
+	 * @return the registrationType
+	 */
+	public String getRegistrationType() {
+		return registrationType;
+	}
+
+	/**
+	 * @param registrationType
+	 *            the registrationType to set
+	 */
+	public void setRegistrationType(String registrationType) {
+		this.registrationType = registrationType;
+	}
+
+	/**
+	 * @return the registrationsType
+	 */
+	public String[] getRegistrationsType() {
+		return registrationsType;
+	}
+
+	/**
+	 * @param registrationsType
+	 *            the registrationsType to set
+	 */
+	public void setRegistrationsType(String[] registrationsType) {
+		this.registrationsType = registrationsType;
+	}
+
+	/**
+	 * @return the supplierFiles
+	 */
+	public AttachmentRecPayload[] getSupplierFiles() {
+		return supplierFiles;
+	}
+
+	/**
+	 * @param supplierFiles
+	 *            the supplierFiles to set
+	 */
+	public void setSupplierFiles(AttachmentRecPayload[] supplierFiles) {
+		this.supplierFiles = supplierFiles;
+	}
+
+	private String tradingLicence_name;
+	private String signatureAttestation_name;
+	private String chamberOfCommerce_name;
+	// private String certificates_name;
+
+	private List<String> supplier_file_name;
+
+	public String getEstablishmentName() {
+		return establishmentName;
+	}
+
+	public void setEstablishmentName(String establishmentName) {
+		this.establishmentName = establishmentName;
+	}
+
+	public String getTradeLicenceNumber() {
+		return tradeLicenceNumber;
+	}
+
+	public void setTradeLicenceNumber(String tradeLicenceNumber) {
+		this.tradeLicenceNumber = tradeLicenceNumber;
+	}
+
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public String getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(String mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getOfficeNumber() {
+		return officeNumber;
+	}
+
+	public void setOfficeNumber(String officeNumber) {
+		this.officeNumber = officeNumber;
+	}
+
+	public String getPostBox() {
+		return postBox;
+	}
+
+	public void setPostBox(String postBox) {
+		this.postBox = postBox;
+	}
+
+	public String getSupplierCategory() {
+		return supplierCategory;
+	}
+
+	public void setSupplierCategory(String supplierCategory) {
+		this.supplierCategory = supplierCategory;
+	}
+
+	public String getTradingLicence_name() {
+		return tradingLicence_name;
+	}
+
+	public void setTradingLicence_name(String tradingLicence_name) {
+		this.tradingLicence_name = tradingLicence_name;
+	}
+
+	public String getSignatureAttestation_name() {
+		return signatureAttestation_name;
+	}
+
+	public void setSignatureAttestation_name(String signatureAttestation_name) {
+		this.signatureAttestation_name = signatureAttestation_name;
+	}
+
+	public String getChamberOfCommerce_name() {
+		return chamberOfCommerce_name;
+	}
+
+	public void setChamberOfCommerce_name(String chamberOfCommerce_name) {
+		this.chamberOfCommerce_name = chamberOfCommerce_name;
+	}
+
+	public List<String> getSupplier_file_name() {
+		return supplier_file_name;
+	}
+
+	public void setSupplier_file_name(List<String> supplier_file_name) {
+		this.supplier_file_name = supplier_file_name;
+	}
+
+	public String getEmirateId() {
+		return emirateId;
+	}
+
+	public void setEmirateId(String emirateId) {
+		this.emirateId = emirateId;
+	}
+
+	public String getRequestNo() {
+		return requestNo;
+	}
+
+	public void setRequestNo(String requestNo) {
+		this.requestNo = requestNo;
+	}
+
+	public String getStatusId() {
+		return statusId;
+	}
+
+	public void setStatusId(String statusId) {
+		this.statusId = statusId;
+	}
+
+}

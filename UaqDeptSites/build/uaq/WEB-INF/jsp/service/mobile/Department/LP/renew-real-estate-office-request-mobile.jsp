@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>UAQ</title>
+		<!-- <link href="css/app.css" rel="stylesheet"> -->
+		<!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+		<script src="js/libs/jquery.min.js"></script>
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="js/ie.min.js"></script>
+		<![endif]-->
+	</head>
+	<!-- body -->
+	<body>
+		<div class="container-fluid">
+			<div class="wrapper">
+				<!-- content area -->
+				<div class="content">
+					<div class="row">
+						<!-- left col -->
+						<div class="col-xs-12 col-sm-9 col-md-9 main-left-col">
+							<div class="main-content-wrap">
+								
+								<div class="page-content-wrap">
+										<div class="form-content cf">
+										   <form:form commandName="realEstateOfficeCommand" name="feedbak" id="feedbak" enctype="multipart/form-data" method="post" action="#" >
+										    <div class="row"></div>
+										
+												
+									
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5 col-xs-6">
+																<label class="form-lbl">Managing Director Name </label> 
+				                                            </div>
+				                                            <div class="col-md-7 col-xs-6">
+																<label class="form-lbl">Salem </label> <a href="#" class="pull-right"> Edit </a> 
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>							
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5 col-xs-6">
+																<label class="form-lbl">Address </label> 
+				                                            </div>
+				                                            <div class="col-md-7 col-xs-6">
+															<label class="form-lbl">Address </label> <a href="#" class="pull-right"> Edit </a> 
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>	
+											<div class="row" id="collapsMoreInfo" data-parent="#accordion2">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5 col-xs-6">
+																<label class="form-lbl">Phone Number </label> 
+				                                            </div>
+				                                            <div class="col-md-7 col-xs-6">
+																<label class="form-lbl">293848932489 </label> <a href="#" class="pull-right"> Edit </a>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12">  <!-- form-sect-head-->
+													<h5 class="form-title">Request Details</h5>
+												</div> 
+											</div>	<!-- /form-sect-head-->	
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5 col-xs-6">
+																<label class="form-lbl">Request Number </label> 
+				                                            </div>
+				                                            <div class="col-md-7 col-xs-6">
+																<label class="form-lbl">LP948035</label> 
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>							
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5 col-xs-6">
+																<label class="form-lbl">My Details </label> 
+				                                            </div>
+				                                            <div class="col-md-7 col-xs-6">
+																<label class="form-lbl">GF Realsestate</label>  
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>	
+											<div class="row">
+												<div class="col-md-12">  <!-- form-sect-head-->
+													<h5 class="form-title">Attachments</h5>
+												</div> 
+											</div>	<!-- /form-sect-head-->
+
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label  for="police-certificate" class="form-lbl mandatory_lbl">Police Clearance Certificate
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<div class="input-group file-upload">
+																	<input type="text" class="form-control required other-form" name="police-certificate" readonly="readonly"/>
+																	<span class="input-group-btn">
+																		<span class="btn btn-file">
+																			Browse&hellip; 
+																			<form:input path="clearanceCertificate" type="file" accept="image/jpg, image/JPG,image/JPEG, image/jpeg,image/jpeg,image/gif,image/png, application/pdf,image/x-eps, application/msword" />
+																		</span>
+																	</span>
+																</div>
+			                                                </div>
+		                                            	</div>
+													
+		                                        		<!-- /text box -->
+		                                        	</div>	
+												</div>
+	                                        </div>			
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label  for="personal-photo" class="form-lbl mandatory_lbl">Personal Photograph
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<div class="input-group file-upload">
+																	<input type="text" class="form-control required other-form" name="personal-photo" readonly="readonly"/>
+																	<span class="input-group-btn">
+																		<span class="btn btn-file">
+																			Browse&hellip; 
+																			<form:input path="personalPhotograph" type="file" accept="image/jpg, image/JPG,image/JPEG, image/jpeg,image/jpeg,image/gif,image/png, application/pdf,image/x-eps, application/msword"/>
+																		</span>
+																	</span>
+																</div>
+			                                                </div>
+		                                            	</div>
+													
+		                                        		<!-- /text box -->
+		                                        	</div>	
+												</div>
+	                                        </div>
+	                                        <div class="row">
+												<div class="col-md-12 remove-pad">
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- submit button -->
+			                                        	<div class="row">
+				                                            <div class="form-group submission">
+				                                                <div class="col-md-offset-5 col-md-7">
+				                                                    <input type="submit" class="btn" value="Submit" /> 
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                        <!-- /submit button -->
+		                                        	</div>
+												</div>
+	                                        </div>
+										<%-- </form>	 --%>
+										</form:form>
+									</div>
+							</div>
+						</div>
+						<!-- /left col -->
+					</div>
+				</div>
+				<!-- /content area -->
+			</div>
+		</div>
+	</div>
+		<!-- script -->
+		<script src="js/dest/app.js"></script>
+		<script src="js/libs/jquery.validate.js"></script>
+		<script src="js/libs/tooltip.js"></script>
+		<script src="js/libs/popover.js"></script>
+
+	    <script>
+			jQuery(function($) { 
+				$("#feedbak").validate();
+			});
+			
+	    </script>
+		<!-- /script -->
+	</body>
+	<!-- /body -->
+</html>
