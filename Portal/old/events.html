@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Events</title>
+    <link href="css/app.css" rel="stylesheet">
+    <!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+    <script src="js/libs/jquery.min.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="js/ie.min.js"></script>
+    <![endif]-->
+
+
+</head>
+
+<!--body starts from here -->
+
+<body>
+    <main class="wrapper">
+        <div class="container-fluid">
+            <div class="headerPart" style="width:100%;">
+                <div class="row">
+                    <header id="header" class="cf">
+                        <script>
+                            $('#header').load('views/header/header.html');
+                        </script>
+                    </header>
+                </div>
+            </div>
+            <div id="mobileMenu" class="visible-xs">
+                <script>
+                    $('#mobileMenu').load('views/mobilemenu/mobilemenu.html');
+                </script>
+            </div>
+            <div class="mainContent cf">
+
+                <div class="breadCrumb hidden-xs">
+                    <ul class="no-list cf">
+                        <li>
+                            <a href="#"><img src="img/home1.png" alt="Home UAQ">
+                            </a>
+                        </li>
+                        <li class="active"><a href="#">START A BUSINESS</a>
+                        </li>
+                        <li><a href="#">CLOSE A BUSINESS</a>
+                        </li>
+                        <li><a href="#">WORKING WITH GOVERNMENT</a>
+                        </li>
+                        <li class="active"><a href="#">START A BUSINESS</a>
+                        </li>
+                        <li><a href="#">CLOSE A BUSINESS</a>
+                        </li>
+                        <li><a href="#">WORKING WITH GOVERNMENT</a>
+                        </li>
+
+                </div>
+
+                <div class="mobBreadCrumb visible-xs green">
+
+                    Business
+
+                </div>
+                <div class="contentHolder cf">
+                    <div class="col-sm-3  col-xs-12 fr rightContentHolder">
+                        <div class="subServices">
+                            <ul>
+                                <li class="active"><a href="#">Media Room</a>
+                                </li>
+                                <li><a href="#">Press Release</a>
+                                </li>
+                                <li><a href="#">Video Gallery</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- left content area -->
+                    <div class="col-sm-9 col-xs-12 fl leftContentHolder">
+                        <!-- page title here -->
+                        <div class="pageTitleHolder cf">
+                            <div class="titleText col-sm-10">
+                                <span class="umal hidden-xs">
+                                            media room
+                                        </span>
+                                <h2 class="title">
+                                            Events
+                                        </h2>
+                            </div>
+                            <div class="titleImg col-sm-2 text-right hidden-xs">
+                                <img src="img/uaqsublogo.png" alt="uaq">
+
+                            </div>
+                        </div>
+                        <!-- /page title here -->
+                        <!-- page content here -->
+                        <div class="infoTxt cf">
+                            <div class="topContent cf">
+                                <div class="content-area">
+                                    <div class="subtitle">
+                                        <h4 class="redtxt">
+                                            Overview
+                                        </h4>
+                                    </div>
+                                    <!-- content area -->
+                                    <div class="content-edit-wrap">
+                                        <!-- events listing -->
+                                        <div class="events-listing">
+                                            <div class="filter-wrap common-form">
+                                                <div class="form-inline filer-wrap">
+                                                <div class="form-group">
+                                                    <label>Search</label>
+                                                  </div>
+                                                    <div class="form-group filter-search-txt">
+                                                        <input type="search" class="form-control" id="" placeholder="Search Keyword">
+                                                    </div>
+                                                    <div class="form-group datepic">
+                                                        <label class="calendarHolder">
+                                                            <input type="text" name="" id="" class="form-control  datepicker" placeholder="From">
+                                                            <i class="calendar"></i>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-group datepic">
+                                                        <label class="calendarHolder">
+                                                            <input type="text" name="" id="" class="form-control  datepicker" placeholder="To">
+                                                            <i class="calendar"></i>
+                                                        </label>
+                                                    </div>
+
+                                                    <div class="form-group filter-select">
+                                                        <div class="custom-dropdown">
+                                                            <div class="custom-select-box">
+                                                                <select class="required">
+                                                                    <option value="">Select</option>
+                                                                    <option value="1">Some Text</option>
+                                                                    <option value="2">Some More Text2</option>
+                                                                    <option value="3">Some More More More Longer Text</option>
+                                                                </select>
+                                                                <span class="error cf">Please fill Any option</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group btnpos filter-btn">
+                                                        <input type="submit" class="submitBtn btn-style grey-color" value="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <ul class="listing-wrap">
+                                                <li class="listing">
+                                                    <div class="listing-item">
+                                                        
+                                                            <div class="listing-img">
+                                                                <img src="img/events-img.png" alt="" />
+                                                            </div>
+                                                            <div class="listing-content">
+
+                                                                <p class="red-text"><a href="#">Aenean ut mollis lacus. Duis vitae dictum elit, vitae lacinia risus. Curabitur finibus mi sed diam placerat dictum.</a></p>
+                                                                <p>Nunc vulputate ac lectus sit amet finibus. Curabitur in tincidunt mi, sit amet malesuada nibh Aenean ut mollis lacus. Duis vitae dictum elit, vitae lacinia risus. Curabitur finibus mi sed diam placerat dictum. Nunc vulputate ac lectus sit amet finibus...</p>
+                                                                
+                                                                <dl class="venue-txt">
+                                                                    <dt>Duration </dt>
+                                                                    <dd>: January 17 - 24, 2015</dd><br />
+                                                                    <dt>Venue </dt>
+                                                                    <dd>: Umm al Quwain, UAQ</dd>
+                                                                </dl>
+                                                                
+                                                                <a class="red-text listing-txt-link">View Detail</a>
+                                                            </div>
+                                                    </div>
+                                                </li>
+                                                <li class="listing">
+                                                    <div class="listing-item">
+                                                        
+                                                            <div class="listing-img">
+                                                                <img src="img/events-img.png" alt="" />
+                                                            </div>
+                                                            <div class="listing-content">
+
+                                                                <p class="red-text"><a href="#">Aenean ut mollis lacus. Duis vitae dictum elit, vitae lacinia risus. Curabitur finibus mi sed diam placerat dictum.</a></p>
+                                                                <p>Nunc vulputate ac lectus sit amet finibus. Curabitur in tincidunt mi, sit amet malesuada nibh Aenean ut mollis lacus. Duis vitae dictum elit, vitae lacinia risus. Curabitur finibus mi sed diam placerat dictum. Nunc vulputate ac lectus sit amet finibus...</p>
+                                                                
+                                                                <dl class="venue-txt">
+                                                                    <dt>Duration </dt>
+                                                                    <dd>: January 17 - 24, 2015</dd><br />
+                                                                    <dt>Venue </dt>
+                                                                    <dd>: Umm al Quwain, UAQ</dd>
+                                                                </dl>
+                                                                
+                                                                <a class="red-text listing-txt-link">View Detail</a>
+                                                            </div>
+                                                    </div>
+                                                </li>
+                                                <li class="listing">
+                                                    <div class="listing-item">
+                                                        
+                                                            <div class="listing-img">
+                                                                <img src="img/events-img.png" alt="" />
+                                                            </div>
+                                                            <div class="listing-content">
+
+                                                                <p class="red-text"><a href="#">Aenean ut mollis lacus. Duis vitae dictum elit, vitae lacinia risus. Curabitur finibus mi sed diam placerat dictum.</a></p>
+                                                                <p>Nunc vulputate ac lectus sit amet finibus. Curabitur in tincidunt mi, sit amet malesuada nibh Aenean ut mollis lacus. Duis vitae dictum elit, vitae lacinia risus. Curabitur finibus mi sed diam placerat dictum. Nunc vulputate ac lectus sit amet finibus...</p>
+                                                                
+                                                                <dl class="venue-txt">
+                                                                    <dt>Duration </dt>
+                                                                    <dd>: January 17 - 24, 2015</dd><br />
+                                                                    <dt>Venue </dt>
+                                                                    <dd>: Umm al Quwain, UAQ</dd>
+                                                                </dl>
+                                                                
+                                                                <a class="red-text listing-txt-link">View Detail</a>
+                                                            </div>
+                                                    </div>
+                                                </li>
+                                                <li class="listing">
+                                                    <div class="listing-item">
+                                                        
+                                                            <div class="listing-img">
+                                                                <img src="img/events-img.png" alt="" />
+                                                            </div>
+                                                            <div class="listing-content">
+
+                                                                <p class="red-text"><a href="#">Aenean ut mollis lacus. Duis vitae dictum elit, vitae lacinia risus. Curabitur finibus mi sed diam placerat dictum.</a></p>
+                                                                <p>Nunc vulputate ac lectus sit amet finibus. Curabitur in tincidunt mi, sit amet malesuada nibh Aenean ut mollis lacus. Duis vitae dictum elit, vitae lacinia risus. Curabitur finibus mi sed diam placerat dictum. Nunc vulputate ac lectus sit amet finibus...</p>
+                                                                
+                                                                <dl class="venue-txt">
+                                                                    <dt>Duration </dt>
+                                                                    <dd>: January 17 - 24, 2015</dd><br />
+                                                                    <dt>Venue </dt>
+                                                                    <dd>: Umm al Quwain, UAQ</dd>
+                                                                </dl>
+                                                                
+                                                                <a class="red-text listing-txt-link">View Detail</a>
+                                                            </div>
+                                                    </div>
+                                                </li>
+                                                <li class="listing">
+                                                    <div class="listing-item">
+                                                        
+                                                            <div class="listing-img">
+                                                                <img src="img/events-img.png" alt="" />
+                                                            </div>
+                                                            <div class="listing-content">
+
+                                                                <p class="red-text"><a href="#">Aenean ut mollis lacus. Duis vitae dictum elit, vitae lacinia risus. Curabitur finibus mi sed diam placerat dictum.</a></p>
+                                                                <p>Nunc vulputate ac lectus sit amet finibus. Curabitur in tincidunt mi, sit amet malesuada nibh Aenean ut mollis lacus. Duis vitae dictum elit, vitae lacinia risus. Curabitur finibus mi sed diam placerat dictum. Nunc vulputate ac lectus sit amet finibus...</p>
+                                                                
+                                                                <dl class="venue-txt">
+                                                                    <dt>Duration </dt>
+                                                                    <dd>: January 17 - 24, 2015</dd><br />
+                                                                    <dt>Venue </dt>
+                                                                    <dd>: Umm al Quwain, UAQ</dd>
+                                                                </dl>
+                                                                
+                                                                <a class="red-text listing-txt-link">View Detail</a>
+                                                            </div>
+                                                    </div>
+                                                </li>
+                                            </ul>
+
+                                            <div class = "pagination">
+                                            <ul>
+                                                <li>
+                                                    <a href="#">Previous</a>
+                                                </li>
+                                                <li><a href="#">1</a></li>
+                                                <li><a href="#">2</a></li>
+                                                <li><a href="#">3</a></li>
+                                                <li><a href="#">4</a></li>
+                                                <li><a href="#">Next</a></li>
+                                            </ul>
+                                        </div>
+                                        
+                                    </div>
+                                        </div>
+                                        <!-- /events listing -->
+                                    </div>
+                                    <!-- /content area -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /page content here -->
+                    </div>
+                    <!-- /left content area -->
+                    <footer class="stickyBottom cf" id="footer">
+                        <script>
+                            $('#footer').load('views/footer/footer.html');
+                        </script>
+                    </footer>
+                </div>
+                <!-- container fluid ends here -->
+    </main>
+    <script src="js/dest/app.js"></script>
+    <script type="text/javascript">
+    		
+    </script>
+</body>
+<!-- body ends here -->
+
+</html>

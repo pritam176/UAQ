@@ -1,0 +1,26 @@
+//
+// Tables styles
+// --------------------------
+
+.table {
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+}
+
+.td, .th {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 5px;
+	border-top: none;
+	border-right: none;
+
+}
+
+.th {
+	font-weight: bold;
+}
+
+.tr {
+	display: table-row;
+}

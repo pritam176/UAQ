@@ -1,0 +1,19 @@
+{
+  "name": "UAQ",
+  "version": "0.0.0",
+  "description": "Proj Description",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shaik",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "grunt": "",
+    "grunt-contrib-clean": "*",
+    "grunt-contrib-concat": "*",
+    "grunt-contrib-sass": "^0.8.1",
+    "grunt-contrib-uglify": "*",
+    "grunt-contrib-watch": "*"
+  }
+}

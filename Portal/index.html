@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>UAQ</title>
+		<link href="css/app.css" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="img/icon-fav.ico" />
+		<link rel="icon" type="image/png" href="img/icon-fav.png" />
+		<!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+		<script src="js/libs/jquery.min.js"></script>
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="js/ie.min.js"></script>
+		<![endif]-->
+	</head>
+	<!--body starts from here -->
+	<body>
+		<div class="container-fluid home">
+			<div class="wrapper">
+				<!-- header -->
+				<div class="headerPart">
+					<div class="row">
+						<header id="header" class="cf">
+							<script>
+								$('#header').load('views/header/header.html');
+							</script>
+						</header>
+					</div>
+				</div> 
+				<!-- /header -->
+				<!-- mobile menu -->
+				<div id="mobileMenu">
+					<script>
+						$('#mobileMenu').load('views/mobilemenu/mobilemenu.html');
+					</script>
+				</div>  
+				<!-- /mobile menu -->
+				<!-- /home page slider -->
+				
+				 <div class="sliderHolder fill Heroslider">
+					<ul class="no-list _slider slider fill" > 
+					
+						<li id="test" class="item fill" style="background-image:url('img/uaqbg.jpg');" >
+							<video id="vid1"  class="videoContainer hidden-xs "loop style="width:100%; z-index:3;"  muted preload="auto" autoplay="true"  >
+								<source src="img/UmmQaiwain3.mp4" type="video/mp4" />
+							</video>
+							
+						</li>
+					
+						<li class="item fill" style="background-image:url('img/uaqbg.jpg');" > 
+														
+						</li>
+						
+
+					</ul>
+				</div> 
+		
+				<!-- /home page slider -->
+				<!-- /footer -->
+				<footer class="stickyBottom cf" id="footer">
+					<script>
+						$('#footer').load('views/footer/footer.html');
+					</script>
+				</footer> 
+				<!-- /footer -->
+			</div>
+		</div> 
+			<!-- /container fluid -->
+	<script src="js/dest/app.js"></script>
+
+	</body>
+	<!-- /body -->
+</html>

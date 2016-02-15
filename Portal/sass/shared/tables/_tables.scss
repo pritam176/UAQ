@@ -1,0 +1,53 @@
+//
+// Tables styles
+// --------------------------
+
+.table {
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+}
+
+.td, .th {
+	display: table-cell;
+	vertical-align: middle;
+	padding: 5px;
+	border-top: none;
+	border-right: none;
+
+}
+
+.th {
+	font-weight: bold;
+}
+
+.tr {
+	/* display: table-row; */
+}
+
+
+.payment-table .error {
+		color: #D8000C;
+		background-color: #FFBABA;
+		padding: 12px 10px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 16px;
+		margin-bottom: 20px;
+	}
+
+	.payment-table .success {
+		background-color: #DFF2BF;
+		color: #4F8A10;
+		padding: 12px 10px;
+		text-align: center;
+		font-weight: bold;
+		font-size: 16px;
+		margin-bottom: 20px;
+	}
+	.payment-table .heading-intble{
+		font-weight: bold;
+		padding: 15px !important;
+	
+	}
+	

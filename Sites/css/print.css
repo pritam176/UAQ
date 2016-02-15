@@ -1,0 +1,7 @@
+html, body{
+  background: none !important;
+}
+
+.mobile-nav, .mobile-menu, .top-nav-bar-wrapper, footer, .feedback, .back-btn, .back-to-top {
+  display: none !important;
+}

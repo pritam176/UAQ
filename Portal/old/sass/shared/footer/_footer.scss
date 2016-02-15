@@ -1,0 +1,370 @@
+.stickyBottom{
+	width: 100%;
+	height: 245px;
+	position : fixed;
+	bottom: 0px;
+	.submenuItemsHolder{
+
+		height: 150px;
+	}
+	.submenuItem{
+		width: 25%;
+		float: left;
+		height: 100%;
+		a{
+			text-decoration: none;
+			color: $black;
+			font-size: 16px;
+			width: 100%;
+			height: 100%;
+			display: inline-block;
+			text-align: center;
+
+			h3{
+				color: $white;
+				font-size: 20px;
+				margin-top: 70px;
+			}
+		}
+
+
+	}
+
+		.footer-item-1{
+			background: #ccc url("../img/business.jpg") 50% 50%;
+			background-size: cover;
+		}
+		.footer-item-2{
+			background: #ccc url("../img/cittizens.jpg") 50% 50%;
+			background-size: cover;
+		}
+
+		.footer-item-3{
+			background: #ccc url("../img/visitors.jpg") 50% 50%;
+			background-size: cover;
+
+		}
+
+		.footer-item-4{
+			background: #ccc url("../img/residents.jpg") 50% 50%;
+			background-size: cover;
+			.hovercontainer{
+				right:-45px;
+			}
+
+		}
+}
+
+
+.copyrightHolder{
+	background: #d5d6d7;
+	color: $black;
+	p{
+		//line-height: 45px;
+		padding: 5px 0;
+		font-size:13px;
+	}
+}
+
+
+.socilaIcons{
+	float: right;
+	
+	li{
+		list-style: none;
+		float: left;
+		border: 1px solid #9d9d9d;
+		border-bottom: 0px;
+		border-top : 0px;
+		font-size: 14px;
+		
+		a{
+			text-decoration: none;
+			color: $black;
+			display: block;
+			padding: 10px 20px;
+			min-height: 44px;
+			
+			img{
+				vertical-align: middle;
+				margin-right: 10px;
+			}
+		}
+	}
+}
+
+.policyHolder{
+	background: $white;
+	padding: 10px 0px;
+	padding-right : 0px;
+	p{
+		line-height: 15px;
+		font-size: 12px;
+		color: $grayLight;
+	}
+	.redirectLinks{
+		float: right;
+		li{
+			float: left;
+			padding: 0px 10px;
+			border-left : 1px solid $black;
+			line-height: 15px;
+			&:first-child{
+				border-left: 0px;
+			}
+			a{
+				text-decoration: none;
+				color: $black;
+			}
+		}
+	}
+}
+
+
+.hovercontainer {
+	background-color: rgba(0, 0, 0, 0.8);
+    bottom: 245px;
+    padding: 35px;
+    position: absolute;
+    width: 50%;
+	z-index: 9999;
+	display: none;
+	
+	h2 {
+		font-size: 18px;
+		color: $white;
+		border-bottom: 1px solid #666664;
+		padding-bottom: 10px;
+		font-weight: bold;
+	}
+	
+	.textbox {
+		img {
+			float: left;
+			margin-right: 15px;
+		}
+		p {
+			color: #666;
+			font-size: 14px;
+			
+			a {
+				width: auto;
+				color: #b01519 !important;
+				font-size: 13px !important;
+				display: inline-block;
+				margin-top: 5px;
+			}
+		}
+	}
+	
+	ul {
+		li {
+			background: url('../img/arrow1.png') no-repeat 0 5px;
+			padding-left: 25px;
+			margin: 15px 0;
+		
+			a {
+				width: auto !important;
+				color: $white !important;
+				font-size: 15px !important;
+			}
+		}
+	}
+	
+}
+
+
+.submenuItem:hover .hovercontainer{
+	display: block;
+}	
+
+
+
+
+.socialIcons {
+	//bottom: 51px;
+    //position: fixed;
+    width: 100%;
+	text-align: center;
+	display:none;
+	
+	.facebook {
+		background: #1a3f97;
+		padding: 0;
+	}
+	
+	.twitter {
+		background: #32a9e3;
+		padding: 0;
+	}
+	
+	.socialimg {
+		margin: 25px 0;
+	}
+	
+	.follow {
+		background-color: rgba(0,0,0,0.4);
+		padding: 15px;
+		
+		a {
+			color: $white;
+		}
+	}
+}
+
+
+
+
+
+
+@media all and (min-width : 992px) and (max-width:1380px){
+
+	.copyrightHolder p,.socilaIcons li a,.policyHolder p,.policyHolder .redirectLinks li a{
+
+		font-size: 12px;
+	}
+
+}
+
+
+@media all and (max-width : 768px){
+	.stickyBottom {
+		position: inherit;
+		
+		.submenuItem {
+			width: 100%;
+			//height: initial;
+		}
+		
+		.copyrightHolder {
+			.leftHolder  {
+				padding: 0;
+				
+				.socilaIcons{
+					float: none;
+					
+					li {
+						display: none;
+						
+						&.showmob {
+							display: block;
+							border-left: 0;
+							width: 25%;
+
+							&:last-child {
+								border-right: 0;
+							}
+						}
+						
+						a {
+							padding: 6px 0;
+							text-align: center;
+							
+							.footericons {
+								display: inline-block;
+								width: 100%;
+							}
+						}
+					}
+				}
+	
+	
+	
+			}
+		}
+	}
+	
+	
+}
+
+
+@media all and (min-width : 769px) and (max-width: 1024px) {
+
+	.stickyBottom {
+		position: inherit;
+		
+		.submenuItem {
+			width: 50%;
+		}
+	}
+	
+	.copyrightHolder {
+			.leftHolder  {
+				padding: 0;
+				text-align: center;
+				
+				.socilaIcons {
+					display: inline-block;
+					float: none;
+					
+					li {
+						border-right: 0;
+						
+						a {
+							padding: 10px 16%;
+							
+							img {
+								margin-right: 5px;
+							}
+							
+							span {
+								font-size: 11px;
+							}
+						}
+						
+						&:first-child {
+							border-left: 0;
+						}
+					}
+				}
+			
+			}
+		}
+		
+		
+		.hovercontainer {
+			width: 100%;
+			bottom: 0;
+		}
+		
+		.socialIcons {
+			bottom: 35px;
+		}
+	
+	
+}
+
+
+.tabContentHolder{
+	.inner-item{
+		width: 50%;
+		float: left;
+	}
+
+
+}
+
+
+
+@media all and (max-width: 1200px) {
+	.socilaIcons li a {
+		padding: 10px 12px;
+	}
+}
+
+
+@media all and (max-width : 768px){
+	.hovercontainer {
+		width: 100%;
+		bottom: 186px;
+	}
+	
+}
+
+
+@media all and (max-width : 1023px){ // can be replace with bootstrap hidden utility class
+	.hovercontainer {
+		display: none !important;
+	}
+}
+

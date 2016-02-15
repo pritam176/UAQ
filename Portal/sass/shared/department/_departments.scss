@@ -1,0 +1,114 @@
+.department-listing {
+    .venue-txt {
+        display: block;
+        width: 100%;
+        padding-bottom: 10px;
+        dt {
+            display: inline-block;
+            float: left;
+            width: 150px;
+        }
+        dd {
+            display: inline-block;
+            float: left;
+        }
+    }
+	.departmentimgholder {
+		text-align: center;
+		padding:0px 15px 0 0;
+		img{
+			width:100%;
+			max-height:220px;
+		}
+	}
+	.redtxt {
+	     color: #b3161b;
+		.title{
+			font-size: 23px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	
+	} 
+	ul{ 
+		li{ 
+			margin-top: 15px;
+			display: block;
+		
+			a {
+				text-decoration: none;
+				margin-left: $space-10;
+				color: #606060;	
+			}
+			.no-txt {
+				margin-left: $space-10;
+				color: #606060;
+			}
+		}
+	}
+	
+}
+.deparment-deails {
+	.redtxt {
+	     color: #b3161b;
+		.title{
+			margin: 0px 6px;
+			font-size: 23px;
+			font-weight: bold;
+			text-transform: uppercase;
+		}
+	}
+	.imgHolder
+	{
+		text-align: center;
+		padding-left:0;
+	}
+		.itemInfo .whour, .itemInfo .rhour
+	{
+		margin: 20px 0px;
+		margin-bottom: 8px;
+	}
+	.workInfo{
+		ul{
+			li{
+				&:first-child { margin-top:20px;}
+				a{ color: #606060;     text-decoration: none;}
+			
+			}
+		}
+		.redtxt{ color: #b3161b;}
+	
+	}
+	.contactInfo{
+		ul{
+			li {
+				&:first-child { margin-top:20px;}
+				margin-top: 15px;
+				display: block;
+				img {
+					float: left;
+					margin-right:$space-15;
+				}
+				a{
+					text-decoration: none;
+					margin-left: 10px;
+					color: #606060;
+					overflow: hidden;
+					display: block;
+				}
+			}
+		}
+	}
+}
+#event_map {
+	border:1px solid $grayC;
+	height:400px;
+	width:$fluid_width;
+	margin-bottom:$space-15;
+}
+
+@media all and (max-width:767px) {
+	.department-listing .departmentimgholder img {
+		margin-bottom: $space-15;
+	}
+}

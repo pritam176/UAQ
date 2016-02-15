@@ -1,0 +1,88 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'c:\\Program Files (x86)\\nodejs\\node.exe',
+1 verbose cli   'c:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'loadash',
+1 verbose cli   '--save' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.32
+4 warn package.json UAQ@0.0.0 No repository field.
+5 warn package.json UAQ@0.0.0 No README data
+6 verbose readDependencies using package.json deps
+7 verbose cache add [ 'loadash', null ]
+8 verbose cache add name=undefined spec="loadash" args=["loadash",null]
+9 verbose parsed url { protocol: null,
+9 verbose parsed url   slashes: null,
+9 verbose parsed url   auth: null,
+9 verbose parsed url   host: null,
+9 verbose parsed url   port: null,
+9 verbose parsed url   hostname: null,
+9 verbose parsed url   hash: null,
+9 verbose parsed url   search: null,
+9 verbose parsed url   query: null,
+9 verbose parsed url   pathname: 'loadash',
+9 verbose parsed url   path: 'loadash',
+9 verbose parsed url   href: 'loadash' }
+10 silly lockFile e8efc79f-loadash loadash
+11 verbose lock loadash C:\Users\Shaik-tacme\AppData\Roaming\npm-cache\e8efc79f-loadash.lock
+12 silly lockFile e8efc79f-loadash loadash
+13 silly lockFile e8efc79f-loadash loadash
+14 verbose addNamed [ 'loadash', '' ]
+15 verbose addNamed [ null, '*' ]
+16 silly lockFile 49b57bea-loadash loadash@
+17 verbose lock loadash@ C:\Users\Shaik-tacme\AppData\Roaming\npm-cache\49b57bea-loadash.lock
+18 silly addNameRange { name: 'loadash', range: '*', hasData: false }
+19 verbose request where is /loadash
+20 verbose request registry http://registry.npmjs.org/
+21 verbose request id 1c230478c1e84e85
+22 verbose url raw /loadash
+23 verbose url resolving [ 'http://registry.npmjs.org/', './loadash' ]
+24 verbose url resolved http://registry.npmjs.org/loadash
+25 verbose request where is http://registry.npmjs.org/loadash
+26 info trying registry request attempt 1 at 18:36:23
+27 http GET http://registry.npmjs.org/loadash
+28 http 404 http://registry.npmjs.org/loadash
+29 verbose headers { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+29 verbose headers   'content-type': 'application/json',
+29 verbose headers   'cache-control': 'max-age=0',
+29 verbose headers   'content-length': '51',
+29 verbose headers   'accept-ranges': 'bytes',
+29 verbose headers   date: 'Sun, 02 Aug 2015 14:31:38 GMT',
+29 verbose headers   via: '1.1 varnish',
+29 verbose headers   age: '0',
+29 verbose headers   connection: 'keep-alive',
+29 verbose headers   'x-served-by': 'cache-sin6922-SIN',
+29 verbose headers   'x-cache': 'MISS',
+29 verbose headers   'x-cache-hits': '0',
+29 verbose headers   'x-timer': 'S1438525898.564983,VS0,VE212' }
+30 silly registry.get cb [ 404,
+30 silly registry.get   { server: 'CouchDB/1.5.0 (Erlang OTP/R16B03)',
+30 silly registry.get     'content-type': 'application/json',
+30 silly registry.get     'cache-control': 'max-age=0',
+30 silly registry.get     'content-length': '51',
+30 silly registry.get     'accept-ranges': 'bytes',
+30 silly registry.get     date: 'Sun, 02 Aug 2015 14:31:38 GMT',
+30 silly registry.get     via: '1.1 varnish',
+30 silly registry.get     age: '0',
+30 silly registry.get     connection: 'keep-alive',
+30 silly registry.get     'x-served-by': 'cache-sin6922-SIN',
+30 silly registry.get     'x-cache': 'MISS',
+30 silly registry.get     'x-cache-hits': '0',
+30 silly registry.get     'x-timer': 'S1438525898.564983,VS0,VE212' } ]
+31 silly lockFile 49b57bea-loadash loadash@
+32 silly lockFile 49b57bea-loadash loadash@
+33 error 404 404 Not Found: loadash
+33 error 404
+33 error 404 'loadash' is not in the npm registry.
+33 error 404 You should bug the author to publish it
+33 error 404 It was specified as a dependency of 'UAQ'
+33 error 404
+33 error 404 Note that you can also install from a
+33 error 404 tarball, folder, or http url, or git url.
+34 error System Windows_NT 6.2.9200
+35 error command "c:\\Program Files (x86)\\nodejs\\node.exe" "c:\\Program Files (x86)\\nodejs\\node_modules\\npm\\bin\\npm-cli.js" "install" "loadash" "--save"
+36 error cwd d:\projects\Portal
+37 error node -v v0.10.32
+38 error npm -v 1.4.28
+39 error code E404
+40 verbose exit [ 1, true ]

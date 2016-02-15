@@ -1,0 +1,42 @@
+.service-catalogue {
+	.catalogue-section {
+		margin-bottom: $space-30;
+		h4 {
+			color:$lred;
+			text-transform: uppercase;
+		}
+		ol {
+			margin-left:25px;
+			li{
+				list-style:decimal;
+			}
+		}
+		ul.catalogue-contact {
+			li {
+				padding-left:40px;
+				padding-top:10px;
+				padding-bottom:10px;
+				background-position: 0% 50%;
+			
+				a {
+					color:$black;
+				}
+			}
+		}
+		
+	}
+	
+}
+
+
+
+
+
+#serviceModal {
+	.modal-content{
+		border-radius:0px;
+	}
+
+}.close .glyphicon-remove{ color: #b3161b;}
+
+.service-catalogue a.red-btn { width:initial !important;}

@@ -1,0 +1,73 @@
+#videogallery{
+	.listing-item{
+		.listing-img{
+			margin-right:8px;
+			cursor:pointer;
+			img{
+				max-width:100%;
+				display: inline;
+				float: left;
+				margin-right: 8px;
+				margin-bottom: 30px;
+
+			}
+		}
+		.listing-content{
+			p{
+				display:inline;
+			}
+		}
+	}
+}
+
+#myVideoModal {
+	
+	.modal-content{
+		border-radius:0px;
+		    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+		width:inherit;
+		height:inherit;
+		/* To center horizontally */
+		margin: 0 auto;
+		pointer-events:all;
+		.modal-body{
+		    padding:5px 5px 0px;
+			#video-container{
+				width:100%;
+			
+			}
+			.close{
+				float: right;
+				margin-top: -5px;
+				margin-right: -35px;
+				background-color: $white;
+				border: 1px solid $grayC;
+				.glyphicon-remove{
+					color:$lred;
+				}
+			}
+		}
+	}
+}
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.payoverlay{
+	background: url('/img/play.png') center center no-repeat;
+    margin: 16px 68px 0;
+    height: 64px;
+    position: absolute;
+    z-index: 10;
+    background-size: 33px;
+    width: 35px;
+}

@@ -1,0 +1,99 @@
+.event-listing {
+    .venue-txt {
+        display: block;
+        width: 100%;
+        padding-bottom: 10px;
+        dt {
+            display: inline-block;
+            float: left;
+            width: 100px;
+        }
+        dd {
+            display: inline-block;
+            float: left;
+        }
+    }
+}
+.event-img img{ width:100%;  }
+.event-deails {
+	margin-bottom:$space-30;
+	h3 {
+		color:$lred;
+		margin-bottom:$space-15;
+	}
+	.img-left {
+		float:left;
+		margin-right: $space-15;
+		border:1px solid $grayC;
+	}
+	p {
+		margin-bottom: $space-15;
+	}
+	.events-contact-wrap {
+        margin-top: $space-15;
+        li {
+            display: inline-block;
+            min-height: 25px;
+            padding-right: $space-30;
+            margin-bottom: $space-15;
+            float: left;
+			
+			&:last-child{ padding-right:0px; text-align:right;}
+        }
+        .events-contact-addr {
+            background: url(../img/icons/icon-building-small.png) 3px 0% no-repeat;
+            padding-left: $space-40;
+			
+        }
+        .events-contact-date {
+            background: url(../img/icons/icon-calendar-small.png) 3px 0% no-repeat;
+            padding-left: $space-40;
+			padding-bottom: 5px;
+        }
+    }
+}
+
+#event_map {
+	border:1px solid $grayC;
+	height:400px;
+	width:$fluid_width;
+	margin-bottom:$space-15;
+}
+
+.listing-detail-wrap {
+    @extend .box-div;
+}
+
+@media screen and (max-width:900px) {
+.event-listing .venue-txt dt {
+    display: block;
+    float: left;
+    width: 100px;
+}
+.event-listing .venue-txt dd {
+    display: block;
+    float: none;
+    overflow: hidden;
+}
+.link-btn {
+    padding: 10px 15px;
+}
+.page-title-wrap .title-txt { width: 100%;}
+.page-title-wrap .title-icon {
+    text-align: right;
+    display: table-cell;
+    vertical-align: middle;
+    min-width: 73px;
+}
+.page-title-wrap>.row{ display:table;}
+
+
+
+}
+
+
+@media all and (min-width : 768px) and (max-width:900px){
+/* News listing */
+.callout-content .listing-wrap .listing .listing-item .listing-content{ float: left;}
+
+}

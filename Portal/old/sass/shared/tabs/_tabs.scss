@@ -1,0 +1,47 @@
+.tabsHolder{
+	margin-top: 20px;
+}
+.paymentStatus{
+li{
+
+		background: #f5f5f5;
+		border: 1px solid #c7c7c7;
+		color: $black;
+		display: inline-block;
+		padding: 10px 30px;
+		width: 237px;
+		float: left;
+		text-align: center;
+		cursor: pointer;
+
+		&.active{
+			position: relative;
+			background: #8d7249;
+			color: $white;
+			&::after{
+			  content: "";
+			  display: block;
+			  width: 0;
+			  height: 0;
+			  border-left: 8px solid transparent;
+			  border-right: 8px solid transparent;
+			  border-top: 8px solid #8d7249;
+			  position: absolute;
+			  left: 50%;
+			  margin-left: -4px;
+			  top: 100%;
+			z-index: 999;
+			  }
+		}
+	}
+
+}
+.tabsHolder{
+	.tab-content{
+		margin-top: 20px;
+		.table{
+			border: 0px !important;
+		}
+	}
+}
+

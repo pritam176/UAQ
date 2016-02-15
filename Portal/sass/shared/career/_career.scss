@@ -1,0 +1,150 @@
+.career-wrap {
+    @extend .box-div; 
+    .listing {
+        margin: 0 0 $space-15 0;
+        padding-bottom:5px;
+        float: left;
+        width: 100%;
+        border:1px solid $grayC;
+        .listing-content {
+            padding:$space-15;
+            .red-text {
+                a {
+                    color:$lred;
+                    margin-bottom: $space-15;
+                }
+                p {
+                    margin-bottom: $space-30;
+                }
+            }
+        }
+        &:nth-child(odd) {
+            background:$activeNavBg;
+        }
+        .career-ref {
+            margin: $space-15 0 $space-15 0;
+			margin-bottom: 0px;
+            .update-info {
+                margin-right: $space-15;
+                margin-bottom: 0px;
+                display: inline-block;
+            }
+            .apply-now {
+                cursor: pointer;
+                font-weight: bold;
+                margin-right: $space-15;
+                margin-bottom: 0px;
+                display: inline-block;
+                color:$lred;
+                &:hover {
+                    text-decoration: none;
+                }
+                .glyphicon-file {
+                    -ms-transform: rotate(90deg);
+                    -webkit-transform: rotate(90deg);
+                    transform: rotate(90deg);
+                    -webkit-transform: rotateX(150deg);
+                    transform: rotateX(150deg);
+                    margin-right: 5px;
+                }
+            }
+            .link-btn {
+                background: url(../img/icons/icon-upload.png) 15px 50% no-repeat;
+                padding:$space-15 $space-15 $space-15 $space-60;
+                background-color: $lred;
+                color: $white;
+                display: inline-block;
+                &:hover {
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+
+}
+
+.career-details-wrap {
+	.sub-title{
+	    color:$lred;
+		h3.black-txt {
+			color:$black !important;
+			font-size:20px !important;
+		}
+	}
+	
+	.grey-box {
+		h4 {
+			font-weight: bold;
+		}
+		ul {
+			li {
+			    padding: $space-5 0;
+			    margin-left: $space-15;
+                position: relative;
+			    &:before {
+			            color: #a3a2a3;
+                        content: '\2022';
+                        font-weight: bold;
+                        margin-right: $space-15;
+                        position: absolute;
+                        font-size: 36px;
+                        line-height: 21px;
+			    }
+                span {
+                    margin-left:$space-25;
+                }
+			}
+		}
+	}
+	.page-nav {
+		.apply-now {
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: $space-15;
+            margin-bottom: 10px;
+            display: inline-block;
+            color:$black;
+            &:hover {
+                text-decoration: none;
+            }
+            &:before {
+            	content:"";
+            }
+            .glyphicon-file {
+                -ms-transform: rotate(90deg);
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+                -webkit-transform: rotateX(150deg);
+                transform: rotateX(150deg);
+                margin-right: 5px;
+                color:$lred;
+            }
+        }
+	}
+	
+		.career-apply {
+		.apply-now {
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: $space-15;
+            margin-bottom: 10px;
+            display: inline-block;
+            color:$black;
+            &:hover {
+                text-decoration: none;
+            }
+            &:before {
+            	content:"";
+            }
+            .glyphicon-file {
+                -ms-transform: rotate(90deg);
+                -webkit-transform: rotate(90deg);
+                transform: rotate(90deg);
+                -webkit-transform: rotateX(150deg);
+                transform: rotateX(150deg);
+                margin-right: 5px;
+                color:$lred;
+            }
+        }
+	}
+}

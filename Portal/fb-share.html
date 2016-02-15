@@ -1,0 +1,33 @@
+<meta property="og:image" content="http://graphics.myfavnews.com/images/logo-100x100.jpg" />
+
+<a target='_blank' href="https://www.facebook.com/dialog/feed
+?app_id=143103275748075
+&link=http://woobox.com
+&picture=http://woobox.com/img/v2/logo.png
+&name=Woobox%20Name
+&caption=Turn%20your%20Facebook%20Page%20into%20your%20most%20powerful%20
+​business%20tool%20with%20Woobox!
+&description=This%20is%20a%20description.
+&redirect_uri=https://woobox.com/app/143103275748075">Share</a>
+
+<a target='_blank' href="" id="facebookbtn">Share</a>
+<a target='_blank' href="" id="twitterbtn">Share tweet</a>
+<a target='_blank' href="" id="email">email</a>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+<script type= 'text/javascript'>
+	var app_id_txt = '427909230731951';
+	var site_Url = window.location.href;
+	var title_txt = 'Umm Al Quwain';
+	var caption_txt = 'Umm Al Quwain sample text';
+	var descr_txt = 'Umm Al Quwain sample caption';
+	var logo ='www.uaq.ae/img/logo.png';
+	var email_Id = 'sampleemail@uaq.com';
+	var email_Subject= 'test subject';
+	var share_FB_Url = 'https://www.facebook.com/dialog/feed?app_id='+app_id_txt+'&link='+site_Url+'&picture='+logo+'&name='+title_txt+'&caption='+caption_txt+'&description='+descr_txt+'&redirect_uri='+site_Url;
+	var share_twtter_Url = 'https://twitter.com/intent/tweet?url='+site_Url+'&text='+title_txt;
+	var email_share = 'mailto:'+email_Id+'?subject='+email_Subject+'&body='+site_Url;
+$('#facebookbtn').attr('href',share_FB_Url);
+$('#twitterbtn').attr('href',share_twtter_Url);
+$('#email').attr('href',email_share);
+	</script>

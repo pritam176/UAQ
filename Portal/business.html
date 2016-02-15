@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>UAQ</title>
+	<link href="css/app.css" rel="stylesheet">
+  	<!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+ 	<script src="js/libs/jquery.min.js"></script>
+  	 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+ <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="js/ie.min.js"></script>
+    <![endif]-->
+</head>
+
+<!--body starts from here -->
+	<body>
+		<main class="wrapper">
+			<div class="container-fluid">
+					<div class="headerPart" style="width:100%;">
+						<div class="row">
+							<header id="header" class="cf">
+								<script>
+		 						$('#header').load('views/header/header.html');
+								</script>
+							</header>
+						</div>
+					</div>
+					<div id="mobileMenu">
+						<script>
+						 $('#mobileMenu').load('views/mobilemenu/mobilemenu.html');
+						</script>
+					</div>
+					<!--mainmenu -->
+					<div class="mainmenu">
+						<div class="col-md-12 hidden-xs hidden-sm">
+							<div class="mainmenu-wrap">
+								<ul class="no-list cf">
+									<li>
+										<a href="#"><img src="img/home1.png" alt="Home UAQ">
+										</a>
+									</li>
+									<li class="active"><a href="#">START A BUSINESS</a>
+									</li>
+									<li><a href="#">CLOSE A BUSINESS</a>
+									</li>
+									<li><a href="#">WORKING WITH GOVERNMENT</a>
+									</li>
+									<li class="active"><a href="#">START A BUSINESS</a>
+									</li>
+									<li><a href="#">CLOSE A BUSINESS</a>
+									</li>
+									<li><a href="#">WORKING WITH GOVERNMENT</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!--/mainmenu -->
+					<div class="mainContent cf">
+
+						<div class="breadCrumb green">
+								<span class="homeredirect">
+									<a href="#">
+										<img src="img/home.png" alt="Home UAQ">
+									</a>
+								</span>
+								<span class="parent">
+										<a href="#">BUSINESS</a> 
+								</span>
+								<ul class="no-list cf">
+									<li><a href="#">Start a Business</a></li>
+									<li><a href="#">Close a Business</a></li>
+									<li><a href="#">working with the government</a></li>
+									<li><a href="#">invest in uaq</a></li>
+									<li><a href="#">labor law</a></li>
+									<li><a href="#">licenses and permits</a></li>
+								</ul>							
+						</div>
+						<div class="innerBanner">
+								<div class="bgImg"></div>
+							<div class="innerbannerContent cf">
+								<div class="col-sm-10">
+									<h3>Start a Business</h3>
+									<p>Donec pretium urna velit, eget gravida ante efficitur non. Nulla lobortis interdum nulla at molestie. Pellentesque rutrum vitae lorem et aliquam. Nam pretium vel felis ut egestas. Cras a nisi et nulla tempus mattis. Praesent imperdiet est eget condimentum varius.</p>
+								</div>
+								<div class="col-sm-2 text-right">
+									<a href="#" class="readmore">
+										readmore
+									</a>
+								</div>
+							</div>							
+						</div>
+					</div>
+					<footer class="stickyBottom cf" id="footer">
+						<script>
+							 $('#footer').load('views/footer/footer.html');
+						</script>
+					</footer>
+				</div> <!-- container fluid ends here -->
+			</main>
+		<script src="js/dest/app.js"></script>
+ 	</body>
+	<!-- body ends here -->
+</html>

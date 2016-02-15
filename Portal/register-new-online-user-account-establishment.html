@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>UAQ</title>
+		<link href="css/app.css" rel="stylesheet">
+		<!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+		<script src="js/libs/jquery.min.js"></script>
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="js/ie.min.js"></script>
+		<![endif]-->
+	</head>
+	<!-- body -->
+	<body>
+		<div class="container-fluid">
+			<div class="wrapper">
+				<!-- content area -->
+				<div class="content">
+					<div class="row">
+						<!-- left col -->
+						<div class="col-xs-12 col-sm-9 col-md-9 main-left-col">
+							<!-- page title -->
+							<div class="page-title-wrap">
+								<div class="row">
+									<div class="col-xs-12 col-sm-9 col-md-10 title-txt">
+										<!-- sub page title 
+										<h4 class="page-title-sub">
+										MUNICIPALITY
+										</h4>-->
+										<!-- /sub page title -->
+										<!-- page title -->
+										<h2 class="page-title">
+											Establishment Registration 
+										</h2>
+										<!-- /page title -->
+									</div>
+									<div class="hidden-xs show-sm col-md-2 title-icon">
+										<img src="img/icons/icon-uaq.png" alt="uaq">
+									</div>
+								</div>
+							</div>
+							<!-- /page title -->
+							<div class="main-content-wrap">
+								
+								<div class="page-content-wrap">
+										<div class="form-content cf">
+										   <form name="feedbak" id="feedbak" enctype="multipart/form-data" method="get" action="#" >
+										    <div class="row">
+												<div class="row"> 
+													<div class="col-md-12 remove-pad"><div class="form-group cf"><label class="mandatory_lbl pull-right">All fields are mandatory</label> </div></div>
+												</div>
+											</div>	
+											<div class="row">
+												<div class="col-md-12">  <!-- form-sect-head-->
+													<h5 class="form-title">Account Details</h5>
+												</div> <!-- /form-sect-head-->
+											</div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="establisname" class="form-lbl mandatory_lbl">Establishment Name
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7"> 
+			                                                    <input id="establisname" name="establisname" type="text" class="form-control required" />
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+	                                        <div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+														<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="mobile_number1" class="form-lbl mandatory_lbl">MobileNumber
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+															    <div class="col-md-4 col-xs-3 remove-pad">
+																	<div class="custom-select-box">
+																		<select  class="required1" name="countryofcitizen" required>
+																			<option value="">02</option>
+																			<option value="1">002</option>
+																		</select>
+																	</div> 
+																</div>
+																<div class="col-md-8 col-xs-9 remove-pad">
+																	<input id="mobile_number1" name="mobile_number1" type="number"  class="form-control" placeholder="Phone Number"  required/>
+																</div>
+			                                                </div>
+		                                            	</div>
+		                                            	
+		                                        		<!-- /text box -->
+		                                        	</div>
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="mobile_number2" class="form-lbl ">Office Phone
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<div class="col-md-4 col-xs-3 remove-pad">
+																	<div class="custom-select-box">
+																		<select  class="required1" name="countryofcitizen" required>
+																			<option value="">02</option>
+																			<option value="1">002</option>
+																		</select>
+																	</div> 
+																</div>
+																<div class="col-md-8 col-xs-9 remove-pad">
+																	<input id="mobile_number2" name="mobile_number2" type="number"  class="form-control" placeholder="Phone Number"  required/>
+																</div>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+														<div class="form-group cf">
+															<div class="col-md-5">
+																<label  for="email" class="form-lbl mandatory_lbl">Email Address
+																</label>
+															</div>
+															<div class="col-md-7">
+																<input  type="email" id="email" name="email" class="form-control" placeholder="Email Address" required />
+															</div>
+														</div>
+													
+														<!-- /text box -->
+													</div>
+												</div>	
+											</div>	
+
+	                                        <div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="address" class="form-lbl mandatory_lbl">Address
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<input id="address" name="address" type="text" class="form-control" required/>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label  for="website" class="form-lbl mandatory_lbl">Wbsite
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<input  type="link" id="website" name="website" class="form-control" required />
+			                                                </div>
+		                                            	</div>
+													
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="emirates" class="form-lbl mandatory_lbl">Emirates
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+			                                                    <div class="custom-select-box">
+	                                                                <select  class="required1" name="countryofcitizen" required>
+	                                                                    <option value="">Abu Dhabi</option>
+	                                                                    <option value="1">Al Ain</option>
+	                                                                    <option value="Dubai">Dubai</option>
+	                                                                    <option value="1">Sharjah</option>
+	                                                                </select>
+	                                                            </div>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="tradelicenceNumber" class="form-lbl mandatory_lbl">Trade Licence Number
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<input id="tradelicenceNumber" name="tradelicenceNumber" type="text" class="form-control" required/>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label  for="tradelicenceNumberexpdate" class="form-lbl mandatory_lbl">Trade Licence Expiry Date
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<input  type="date" id="tradelicenceNumberexpdate" name="tradelicenceNumberexpdate" class="form-control" required />
+			                                                </div>
+		                                            	</div>
+													
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="tradelicenceType" class="form-lbl mandatory_lbl">Trade Licence Type
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<div class="custom-select-box">
+																	<select  class="required1" name="tradelicenceType" required>
+																		<option value="">Licencetype</option>
+																		<option value="1">Commercial</option>
+																		<option value="Dubai">Trade</option>
+																		<option value="1">Establish</option>
+																	</select>
+																</div>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+											</div>	
+										
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="tradelicenceattachment" class="form-lbl mandatory_lbl">Trade Licence Type
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<div class="input-group file-upload">
+																	<input type="text" class="form-control required" name ="tradelicenceattachment" readonly />
+																	<span class="input-group-btn">
+																		<span class="btn btn-file">
+																			Browse&hellip; 
+																			<input type="file" multiple>
+																		</span>
+																	</span>
+																</div>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="signatoryattastation" class="form-lbl mandatory_lbl">Signatories Attestation
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<div class="input-group file-upload">
+																	<input type="text" class="form-control required" name ="signatoryattastation" readonly />
+																	<span class="input-group-btn">
+																		<span class="btn btn-file">
+																			Browse&hellip; 
+																			<input type="file" multiple>
+																		</span>
+																	</span>
+																</div>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+											</div>	
+											
+											
+											<div class="row">
+												<div class="col-md-12">  <!-- form-sect-head-->
+													<h5 class="form-title">Credentials</h5>
+												</div> <!-- /form-sect-head-->
+											</div>	
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="username" class="form-lbl mandatory_lbl">User Name
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7"> 
+			                                                    <input id="username" name="username" type="text" class="form-control" placeholder="Username" required/>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="password" class="form-lbl mandatory_lbl">Password
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+			                                                    <input id="password" name="password" type="password" class="form-control" placeholder="Password" required/>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label  for="confirm-password" class="form-lbl mandatory_lbl">Confirm Password
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<input  type="password" id="confirm-password" name="confirm-password" class="form-control" placeholder="Confirm Password" required />
+			                                                </div>
+		                                            	</div>
+													
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+	                                        <div class="row">
+												<div class="col-md-12 remove-pad">
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- submit button -->
+			                                        	<div class="row">
+				                                            <div class="form-group submission">
+				                                                <div class="col-md-offset-5 col-md-7">
+				                                                    <input type="submit" class="btn" value="Submit" /> 
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                        <!-- /submit button -->
+		                                        	</div>
+												</div>
+	                                        </div>
+										</form>	
+									</div>
+							</div>
+						</div>
+						<!-- /left col -->
+					</div>
+				</div>
+				<!-- /content area -->
+			</div>
+		</div>
+	</div>
+		<!-- script -->
+		<script src="js/dest/app.js"></script>
+		<script src="js/libs/jquery.validate.js"></script>
+	    <script>
+
+			jQuery(function($) { 
+				$("#feedbak").validate();
+			});
+			
+	    </script>
+		<!-- /script -->
+	</body>
+	<!-- /body -->
+</html>

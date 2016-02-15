@@ -1,0 +1,277 @@
+.panel-group {
+    .panel-style {
+        width:100%;
+        float:left;
+    border:1px solid $grayC;
+    margin-bottom: 10px;
+    .panel-title {
+        padding-left:$space-15;
+        text-transform: uppercase;
+        font-weight: bold;
+        color:$lred;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    .panel-heading {
+        width:100%;
+        float:left;
+        background-color:$activeNavBg;
+        height: 35px;
+        &:hover {
+            cursor: pointer;
+        }
+        &:after {
+        font-family:$icons-font;
+        content:"\e259";
+        float: right;
+        position: relative;
+        bottom: 39px;
+        color:#b3161b;
+        background-color: $activeNavBg;
+        width: 45px;
+        border-left:none;
+        text-align: center;
+        padding-top: 7px;
+        padding-bottom: 7px;
+        }
+    }
+    
+    .collapsed {
+       background-color: inherit; 
+        &:after {
+            border-left:1px solid $grayC;
+            color:$lred;
+            content:"\e258";
+        }
+       h4 {
+        color:$black;
+       }
+    }
+    .in {
+        background-color:$activeNavBg;
+        float: left;
+        width:100%;
+    }
+    .panel-body {
+        width:100%;
+        float:left;
+        padding: $space-5 $space-15 $space-15 $space-15;
+        .service-catalogue-items {
+            list-style: inherit;
+            li {
+                display:block;
+                width: 47%;
+                float: left;
+                margin:$space-10 0 $space-10 $space-20;
+                &:before {
+                    font-family:$icons-font;
+                    content:"\e258";
+                    width:25px;
+                    height: 25px;
+                    padding-right: $space-10;
+                    font-size: 12px;
+                    float: left;
+                }
+                &:hover, &:hover a:hover {
+                    color:$lred;
+                }
+                a {
+                    color:$black;
+                    &:hover {
+                        text-decoration: none;
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+}
+
+
+
+
+
+.panel-groupFaq1 {
+    .panel-style {
+        width:100%;
+        float:left;
+    border:1px solid $grayC;
+    margin-bottom: 10px;
+    .panel-title {
+        padding-left:$space-15;
+        text-transform: uppercase;
+        font-weight: bold;
+        color:$lred;
+		margin-bottom: -18px;
+		margin-top:0px !important;
+		height: inherit;
+		float: left;
+		padding-top: 8px;
+		max-width: 90%;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    .panel-heading  {
+        width:100%;
+        background-color:$activeNavBg;
+        height: 40px;
+		margin-bottom:0px !important;
+		
+        &:hover {
+            cursor: pointer;
+        }
+        &:after {
+        font-family:$icons-font;
+        content:"\e259";
+        float: right;
+        position: relative;
+        bottom: 0px;
+        color:#b3161b;
+        background-color: $activeNavBg;
+        width: 45px;
+        border-left:none;
+        text-align: center;
+        padding-top: 7px;
+        padding-bottom: 0px;
+        }
+    }
+    
+    .collapsed {
+	    height: 35px;
+       background-color: inherit; 
+        &:after {
+            border-left:1px solid $grayC;
+            color:$lred;
+            content:"\e258";
+        }
+       h4 {
+        color:$black;
+       }
+    }
+    .in {
+        background-color:$activeNavBg;
+        float: left;
+        width:100%;
+    }
+    .panel-body {
+        width:100%;
+        float:left;
+        padding: $space-5 $space-15 $space-15 $space-15;
+        .service-catalogue-items {
+            list-style: inherit;
+			margin-left: 15px;
+            li {
+                display:block;
+                width: 47%;
+                float: left;
+                margin:$space-10 0 $space-5 $space-20;
+                min-height:40px;
+                &:before {
+                    font-family:$icons-font;
+                    content:"\e258";
+                    width:25px;
+                    height: 25px;
+                    padding-right: $space-10;
+                    font-size: 12px;
+                    float: left;
+					margin-left: -22px;
+					margin-top: 3px;
+                }
+                &:hover, &:hover a:hover {
+                    color:$lred;
+                }
+                a {
+                    color:$black;
+                    &:hover {
+                        text-decoration: none;
+
+                    }
+                }
+            }
+			
+        }
+		.registration-item{ li{
+		
+		} width:100%;}
+    }
+}
+
+}
+
+.faq-panel{
+.faq-list-items{
+li{ width:95%;}
+
+}
+.panel-title{ text-transform:none !important; font-size: 16px}
+.panel-heading:after { padding-top: 6px; padding-bottom: 8px !important; bottom: 0px !important;}
+}
+.service-panel{
+
+.panel-title{font-size: 16px}
+.panel-heading:after { padding-top: 6px; padding-bottom: 8px !important; bottom: 0px !important;}
+}
+
+@media (min-width:768px) and (max-width:1380px){
+    .panel-groupFaq1 .panel-style .panel-body .service-catalogue-items li {
+        margin-bottom: 0px;
+        min-height:52px;
+    }
+}
+@media (max-width:400px) {
+    .panel-groupFaq1 .panel-style .panel-title {
+        max-width: 82%;
+    }
+   .panel-groupFaq1 .panel-style .collapsed {
+        height: 60px;
+    }
+    .panel-groupFaq1 .panel-style .collapsed:after {
+        padding-top: 15px;
+        height: 60px;
+    }
+}
+@media (min-width:401px) and (max-width:700px) {
+   .panel-groupFaq1 .panel-style .collapsed {
+        height: 45px;
+    }
+    .panel-groupFaq1 .panel-style .collapsed:after {
+        padding-top:16px;
+        height: 48px;
+    }
+    .panel-groupFaq1 .panel-style .panel-title {
+        max-width: 85%;
+    }
+}
+@media (min-width:701px) and (max-width:800px) {
+   .panel-groupFaq1 .panel-style .collapsed {
+        height: 45px;
+    }
+    .panel-groupFaq1 .panel-style .collapsed:after {
+        padding-top:15px;
+        height: 48px;
+    }
+    .panel-groupFaq1 .panel-style .panel-title {
+        max-width: 85%;
+    }
+}
+@media (min-width:801px) and (max-width:1000px) {
+   .panel-groupFaq1 .panel-style .collapsed {
+        height: 45px;
+    }
+    .panel-groupFaq1 .panel-style .collapsed:after {
+        padding-top:15px;
+        height: 48px;
+    }
+    .panel-groupFaq1 .panel-style .panel-title {
+        max-width: 85%;
+    }
+}
+@media (max-width:1026px) {
+    .faq-panel .panel-title {
+        font-size: 14px;
+    }
+}

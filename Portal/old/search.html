@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search</title>
+    <link href="css/app.css" rel="stylesheet">
+    <!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+    <script src="js/libs/jquery.min.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="js/ie.min.js"></script>
+    <![endif]-->
+
+
+</head>
+
+<!--body starts from here -->
+
+<body>
+    <main class="wrapper">
+        <div class="container-fluid">
+            <div class="headerPart" style="width:100%;">
+                <div class="row">
+                    <header id="header" class="cf">
+                        <script>
+                            $('#header').load('views/header/header.html');
+                        </script>
+                    </header>
+                </div>
+            </div>
+            <div id="mobileMenu" class="visible-xs">
+                <script>
+                    $('#mobileMenu').load('views/mobilemenu/mobilemenu.html');
+                </script>
+            </div>
+            <div class="mainContent cf">
+
+                <div class="breadCrumb hidden-xs">
+                    <ul class="no-list cf">
+                        <li>
+                            <a href="#"><img src="img/home1.png" alt="Home UAQ">
+                            </a>
+                        </li>
+                        <li class="active"><a href="#">START A BUSINESS</a>
+                        </li>
+                        <li><a href="#">CLOSE A BUSINESS</a>
+                        </li>
+                        <li><a href="#">WORKING WITH GOVERNMENT</a>
+                        </li>
+                        <li class="active"><a href="#">START A BUSINESS</a>
+                        </li>
+                        <li><a href="#">CLOSE A BUSINESS</a>
+                        </li>
+                        <li><a href="#">WORKING WITH GOVERNMENT</a>
+                        </li>
+
+                </div>
+
+                <div class="mobBreadCrumb visible-xs green">
+
+                    Business
+
+                </div>
+                <div class="contentHolder cf">
+                    <div class="col-sm-3  col-xs-12 fr rightContentHolder">
+
+                        <div class="socialsharingHolder">
+                                    <ul>
+                                        <li class="utilItem"><a href="#"><img src="img/rss.jpg" alt="uaq"></a></li>
+                                        <li class="utilItem"><a href="#"><img src="img/facebook.jpg" alt="uaq"></a></li>
+                                        <li class="utilItem"><a href="#"><img src="img/twitter.jpg" alt="uaq"></a></li>
+                                        <li class="utilItem"><a href="#"><img src="img/print.jpg" alt="uaq"></a></li>
+                                        <li class="utilItem"><a href="#"><img src="img/mail.jpg" alt="uaq"></a></li>
+                                        <li class="utilItem"><a href="#"><img src="" alt="">
+                                        <div class="dropdown">
+                                          <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            A
+                                            <span class="caret"></span>
+                                          </button>
+                                          <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li><a href="#">Separated link</a></li>
+                                          </ul>
+                                        </div>
+                                        </a></li>
+                                    </ul>
+                                </div> <!-- social sharing ends here -->
+
+                                <!-- support callout -->
+                                <div class="callout-wrap">
+                                    <div class="support-callout-wrap">
+                                        <img src="img/icon-support.png" alt="" title="" />
+                                        <div class="support-content">
+                                            <h4>Do you need help?</h4>
+                                            <p>24/7 support for your enquiries</p>
+                                            <p>Call us on 6-765-6145 (UAE) </p>
+                                            <a href="#" class="red-text">Support Centre</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /support callout -->
+                    </div>
+
+                    <!-- left content area -->
+                    <div class="col-sm-9 col-xs-12 fl leftContentHolder">
+                        <!-- page title here -->
+                        <div class="pageTitleHolder cf">
+                            <div class="titleText col-sm-10">
+                                <h2 class="title">
+                                            Search Result
+                                        </h2>
+                            </div>
+                            <div class="titleImg col-sm-2 text-right hidden-xs">
+                                <img src="img/icon-search.png" alt="uaq">
+
+                            </div>
+                        </div>
+                        <!-- /page title here -->
+                        <!-- page content here -->
+                        <div class="infoTxt cf">
+                            <div class="topContent cf">
+                                <div class="content-area">
+                                    <!-- content area -->
+                                    <div class="faq-listing">
+                                    <div class="content-edit-wrap">
+                                        <div class="filter-wrap common-form">
+                                                <div class="form-inline filer-wrap pull-right">
+                                                <div class="form-group">
+                                                    <label>Search Here</label>
+                                                  </div>
+                                                    <div class="input-group">
+                                                      <input id="search" type="textbox" placeholder="Search keyword" class="form-control form-txt">
+                                                      <span class="input-group-btn">
+                                                        <button class="btn search-btn" type="button" id="search-btn"></button>
+                                                      </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <!-- faq listing -->
+                                        <div class="search-wrap">
+                                            <div class="listing-count">
+                                                <spanclass="listing-count-lbl">
+                                                    Showing  
+                                                </span>
+                                                <span class="listing-count-count">1 to 3 of 56</span>
+                                            </div>
+                                        </div>
+                                        <div class="search-listing">
+                                            <ul class="listing-wrap">
+                                                    <li class="listing">
+                                                        <div class="listing-item">
+                                                                <div class="listing-content">
+                                                                    <a href="#"><strong>Get an eGate Card for Dubai &amp; Abu Dhabi</strong></a>
+                                                                    <p>for sustainable development.' The initiative was announced just one day before the start of the World Future Energy Summit in Abu Dhabi on 16th ...</p>
+                                                                    <p><i>http://www.dubai.ae/en/Lists/HowToGuide/DispForm.aspx?ID=40</i></p>
+                                                                </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="listing">
+                                                        <div class="listing-item">
+                                                                <div class="listing-content">
+                                                                    <a href="#"><strong>Get an eGate Card for Dubai &amp; Abu Dhabi</strong></a>
+                                                                    <p>for sustainable development.' The initiative was announced just one day before the start of the World Future Energy Summit in Abu Dhabi on 16th ...</p>
+                                                                    <p><i>http://www.dubai.ae/en/Lists/HowToGuide/DispForm.aspx?ID=40</i></p>
+                                                                </div>
+                                                        </div>
+                                                    </li>
+                                                    <li class="listing">
+                                                        <div class="listing-item">
+                                                                <div class="listing-content">
+                                                                    <a href="#"><strong>Get an eGate Card for Dubai &amp; Abu Dhabi</strong></a>
+                                                                    <p>for sustainable development.' The initiative was announced just one day before the start of the World Future Energy Summit in Abu Dhabi on 16th ...</p>
+                                                                    <p><i>http://www.dubai.ae/en/Lists/HowToGuide/DispForm.aspx?ID=40</i></p>
+                                                                </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div class = "pagination">
+                                            <ul>
+                                                <li>
+                                                    <a href="#">Previous</a>
+                                                </li>
+                                                <li><a href="#">1</a></li>
+                                                <li><a href="#">2</a></li>
+                                                <li><a href="#">3</a></li>
+                                                <li><a href="#">4</a></li>
+                                                <li><a href="#">Next</a></li>
+                                            </ul>
+                                        </div>
+
+                                        </div>
+                                        </div>
+                                        <!-- /faq listing -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /page content here -->
+                    </div>
+                    <!-- /left content area -->
+                    <footer class="stickyBottom cf" id="footer">
+                        <script>
+                            $('#footer').load('views/footer/footer.html');
+                        </script>
+                    </footer>
+                </div>
+                <!-- container fluid ends here -->
+    </main>
+    <script src="js/dest/app.js"></script>
+    <script type="text/javascript">
+    		
+    </script>
+</body>
+<!-- body ends here -->
+
+</html>

@@ -1,0 +1,93 @@
+.sidebar{
+	width:25%;
+	float:right;
+	position: relative;
+	top: 115px;
+	padding:5px;
+	
+	a {
+		color:$red;
+	}
+	.font-sizer{
+		color: $red;
+		cursor: pointer;
+		display: inline-block;
+		margin-left: 5px;
+		position: absolute;
+		width: 58px;
+		
+		button{
+		background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+		border: 1px solid $red;
+		padding: 0 1px;
+		}
+		
+		.dropdown-menu{
+					background: #fff;
+					left: -100%;
+
+				li{
+					width:33.33%;
+					float:left;
+					
+					a{
+						color:$red;
+			
+					}
+				&:hover{
+						background: transparent none repeat scroll 0 0;
+					}
+
+				}
+		}
+	}
+
+.share-bar{
+
+		  
+		.options{
+
+			display: none;
+			width: 140px;
+			padding: 5px 10px;
+			border: 1px solid $red;
+			position: relative;
+			left: 56px;
+			z-index: 10;
+			background: #fff;
+			
+			a{
+			margin-left:5px;
+			color: $red;
+			}
+		}
+		.show{
+		display:inline;
+		}
+
+
+		}
+	
+	}
+	
+@media all and(max-width : 768px){
+.share-bar{
+		  margin: 0 auto;
+		  width: 174px;
+		  }
+
+.sidebar{
+	float: right;
+	padding: 5px;
+	position: inherit;
+	width: 100%;
+
+
+
+		.fa-2x {
+			font-size: 1.8em;
+			}
+	}
+	
+
+}

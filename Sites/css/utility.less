@@ -1,0 +1,279 @@
+/* ==========================================================================
+   Utility Classes 
+========================================================================== */
+
+@base-value: 10px;
+/** Base value should not be changed **/
+
+.list-unstyled{
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+
+
+/* ==========================================================================
+   Alignment Classes 
+========================================================================== */
+
+@media (max-width:767px){
+    .xs-center {
+        text-align: center;
+    }
+    .xs-left {
+        float: left;
+    }
+    .xs-right {
+        float: right;
+    }
+    .width-100{
+    	width:100%;
+    }
+}
+
+@media (min-width:768px) and (max-width: 1199px){
+    .sm-center {
+        text-align: center;
+    }
+    .sm-left {
+        float: left;
+    }
+    .sm-right {
+        float: right;
+    }
+    .width-100{
+    	width:100%;
+    }
+}
+
+@media (min-width:1200px){
+    .md-center {
+        text-align: center;
+    }
+    .md-left {
+        float: left;
+    }
+    .md-right {
+        float: right;
+    }
+}
+
+/* ==========================================================================
+   Block level Utility Classes
+========================================================================== */
+.display-block{
+	display:block;
+}
+.display-inline{
+	display:inline;
+}
+.display-inline-block{
+	display:inline-block;
+}
+
+
+/* ==========================================================================
+   Text Alignement Utility Classes
+========================================================================== */
+.text-left {
+	text-align: left;
+}
+.text-right {
+	text-align: right;
+}
+.text-center {
+	text-align: center;
+}
+.underline{
+	text-decoration:underline;
+}
+.underline:hover{
+	text-decoration:underline;
+}
+/* ==========================================================================
+   Float Utility Classes
+========================================================================== */
+.pull-right {
+	float: right !important;
+}
+.pull-left {
+	float: left !important;
+}
+.flush-left{
+	padding-left:0 !important;
+}
+.flush-right{
+	padding-right:0 !important;
+}
+/* ==========================================================================
+   Visibility Utility Classes
+========================================================================== */
+.hide {
+	display: none !important;
+}
+.show {
+	display: block !important;
+}
+.invisible {
+	visibility: hidden;
+}
+.visible {
+	visibility: visible;
+}
+
+@media (max-width:767px){
+	.hide-on-mobile{
+		display: none !important;	
+	}
+}
+.show-on-mobile{
+	display:none !important;
+}
+@media (max-width:767px){
+	.show-on-mobile{
+		display: block !important;	
+	}
+}
+
+/* ==========================================================================
+   Margin Utility Classes
+========================================================================== */
+.x1{ 
+	margin-bottom: @base-value;
+}
+.x1-top{
+	margin-top: @base-value;
+}
+.x1-right{
+	margin-right: @base-value;
+}
+.x1-left{
+	margin-left: @base-value;
+}
+
+.x2{ 
+	margin-bottom: @base-value*2;
+}
+.x2-top{
+	margin-top: @base-value*2;
+}
+.x2-right{
+	margin-right: @base-value*2;
+}
+.x2-left{
+	margin-left: @base-value*2;
+}
+
+.x3{ 
+	margin-bottom: @base-value*3;
+}
+.x3-top{
+	margin-top: @base-value*3;
+}
+.x3-right{
+	margin-right: @base-value*3;
+}
+.x3-left{
+	margin-left: @base-value*3;
+}
+
+.x4{ 
+	margin-bottom: @base-value*4;
+}
+.x4-top{
+	margin-top: @base-value*4;
+}
+.x4-right{
+	margin-right: @base-value*4;
+}
+.x4-left{
+	margin-left: @base-value*4;
+}
+
+.x5{ 
+	margin-bottom: @base-value*5;
+}
+.x5-top{
+	margin-top: @base-value*5;
+}
+.x5-right{
+	margin-right: @base-value*5;
+}
+.x5-left{
+	margin-left: @base-value*5;
+}
+
+.margin-none{
+	margin:0 !important;
+}
+/* ==========================================================================
+   Padding Utility Class 
+========================================================================== */
+.y1{ 
+	padding-bottom: @base-value;
+}
+.y1-top{
+	padding-top: @base-value;
+}
+.y1-right{
+	padding-right: @base-value;
+}
+.y1-left{
+	padding-left: @base-value;
+}
+
+.y2{ 
+	padding-bottom: @base-value*2;
+}
+.y2-top{
+	padding-top: @base-value*2;
+}
+.y2-right{
+	padding-right: @base-value*2;
+}
+.y2-left{
+	padding-left: @base-value*2;
+}
+
+.y3{ 
+	padding-bottom: @base-value*3;
+}
+.y3-top{
+	padding-top: @base-value*3;
+}
+.y3-right{
+	padding-right: @base-value*3;
+}
+.y3-left{
+	padding-left: @base-value*3;
+}
+
+.y4{ 
+	padding-bottom: @base-value*4;
+}
+.y4-top{
+	padding-top: @base-value*4;
+}
+.y4-right{
+	padding-right: @base-value*4;
+}
+.y4-left{
+	padding-left: @base-value*4;
+}
+
+.y5{ 
+	padding-bottom: @base-value*5;
+}
+.y5-top{
+	padding-top: @base-value*5;
+}
+.y5-right{
+	padding-right: @base-value*5;
+}
+.y5-left{
+	padding-left: @base-value*5;
+}
+
+.padding-none{
+	padding: 0 !important;
+}

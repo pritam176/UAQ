@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>UAQ</title>
+	<link href="css/app.css" rel="stylesheet">
+  	<!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+ 	<script src="js/libs/jquery.min.js"></script>
+  	 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+ <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="js/ie.min.js"></script>
+    <![endif]-->
+</head>
+
+<!--body starts from here -->
+	<body>
+		<main class="wrapper">
+			<div class="container-fluid home">
+					<div class="headerPart" style="width:100%;">
+						<div class="row">
+							<header id="header" class="cf">
+								<script>
+									$('#header').load('views/header/header.html');
+								</script>
+							</header>
+						</div>
+					</div> <!-- header html ends here -->
+					<div id="mobileMenu">
+						<script>
+							$('#mobileMenu').load('views/mobilemenu/mobilemenu.html');
+						</script>
+					</div>  <!-- mobile menu html ends here -->
+					<div class="sliderHolder">
+						<ul class="no-list _slider slider">
+							<li class="item">
+								<div class="slideItem  slider-item-1"></div>
+							</li>
+							<li class="item">
+								<div class="slideItem  slider-item-2"></div>
+							</li>
+							<li class="item">
+								<div class="slideItem  slider-item-3"></div>
+							</li>
+						</ul>
+					</div> <!-- home page slider ends here -->
+					<footer class="stickyBottom cf" id="footer">
+						<script>
+							$('#footer').load('views/footer/footer.html');
+						</script>
+					</footer> <!-- footer ends here -->
+				</div> <!-- container fluid ends here -->
+			</main>
+			
+			
+			<!--
+			<div class="overlay">
+				<img src="img/close.png" alt="" class="close" />
+				<div class="smileys">
+					<h2>How would you rate our service?</h2>
+					<a href="#"><img src="img/smiley.png" alt="" class="faceIcons" /></a>
+					<a href="#"><img src="img/sad.png" alt="" class="faceIcons" /></a>
+					<a href="#"><img src="img/sad1.png" alt="" class="faceIcons" /></a>
+				</div>
+			</div>
+			
+			
+			
+			<div class="overlay">
+				<img src="img/close.png" alt="" class="close" />
+				<div class="login">
+					<h2>Login</h2>
+					<form class="form-inline">
+						<div class="form-group">
+							<label class="sr-only" for="">Username</label>
+							<input type="email" class="form-control" id="exampleInputEmail3" placeholder="Email">
+						</div>
+						
+						<div class="form-group">
+							<label class="sr-only" for="">Password</label>
+							<input type="password" class="form-control" id="exampleInputPassword3" placeholder="Password">
+						</div>
+						
+						<button type="submit" class="btn btn-default">LOGIN</button>
+						
+						<div class="links"><a href="#">Forgot username</a> <a href="#">Forgot password</a> <a href="#">Register</a></div>
+						
+					</form>
+					
+				</div>
+			</div>
+			-->
+			
+			
+			
+		<script src="js/dest/app.js"></script>
+ 	</body>
+	<!-- body ends here -->
+</html>

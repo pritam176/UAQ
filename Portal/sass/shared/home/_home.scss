@@ -1,0 +1,130 @@
+.wrapper{
+	.sliderHolder{
+		>ul{
+		height : 80%;
+		width : 100%;
+
+		}
+		height : 100%;
+		width : 100%;
+		li{
+		
+			height: 100%;
+			width: 100%;
+			.fixed-banner {
+				img {
+					max-height:830px;
+					width:100%;
+				}
+			}
+			
+		}
+	}
+}
+
+	
+	.fill{
+		width:100%;
+		height:100%;
+		background-position:center;
+		background-size:cover; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+	}
+
+.home{
+	background: #ccc;
+	.bx-wrapper{
+		margin-bottom : 0px;
+	}
+	.bx-wrapper,.bx-viewport,.slider{
+		width: 100%;
+		height: 100%;
+		left : 0px !important; 
+		float:left !important;
+	}
+	.bx-viewport{
+		box-shadow : none !important;
+		border : 0px !important;
+		height: 100% !important; 
+	}
+	.bx-wrapper .bx-pager{
+		bottom : 10% !important;
+	}
+
+	.bx-wrapper .bx-pager.bx-default-pager a{
+		background: $white;
+	}
+
+	.bx-wrapper .bx-pager.bx-default-pager a:hover, .bx-wrapper .bx-pager.bx-default-pager a.active{
+		background: $black;
+	}
+
+	.bx-wrapper .bx-prev{
+		background : url(../img/sliderleft.png) no-repeat 7px 0px;
+		  width: 82px;
+	 	 height: 70px;
+		 z-index:9;
+
+	 	 &:hover{
+		background : url(../img/sliderleft.png) no-repeat 7px 0px;
+
+	 	 }
+	}
+	.bx-wrapper .bx-next{
+		background : url(../img/sliderright.png) no-repeat 7px 0px;
+		  width: 82px;
+	 	 height: 70px;
+		 z-index:9;
+
+	 	 &:hover{
+
+	 	 		background : url(../img/sliderright.png) no-repeat 7px 0px;
+	 	 }
+	}
+}
+.btn-ply {position: absolute;     width: 82px; height: 70px; top: 49%; left: 46%; background: url('../img/homeplay.png')no-repeat !important;}
+
+.home video {
+	display:block;
+}
+@media all and (max-width : 992px){
+.wrapper .sliderHolder{
+	height:80%;
+}
+}
+
+@media all and (max-width : 1291px){
+	.wrapper .sliderHolder .videoContainer{
+		height:auto;
+		width:100% !important;
+	}
+ 
+}
+@media (max-width : 900px){
+	.wrapper .sliderHolder .videoContainer{
+		height:120%;
+		width:initial !important;
+	}
+ 
+}
+
+@media all and (max-width : 768px){
+
+	.bx-wrapper .bx-prev,.bx-wrapper .bx-next{
+
+		display: none;
+	}
+
+.wrapper .sliderHolder{
+	height:470px;
+}
+.home .bx-wrapper .bx-pager {
+	bottom:25px !important;
+}
+.btn-ply{ display:none !important;}
+
+}
+

@@ -1,0 +1,15 @@
+@media print {
+   .navbar { display: none; }
+   .main-right-col { display: none; }
+   .page-title-wrap .page-title-sub { width:200px; }
+   .page-title-wrap .page-title {font-size:30px; text-decoration:underline;}
+   .page-nav {display: none;}
+   .page-nav a{display: none;}
+   .stickyBottom {display: none;}
+   .grey-box { padding-top:0px; }
+   .grey-box p{ font-size:12px; }
+   .pagination{ display: none; }
+   .red-btn{ display: none; }
+   .content-filter-wrap{ display: none; }
+  
+}

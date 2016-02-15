@@ -1,0 +1,93 @@
+.panel-group {
+    .panel-style {
+    border:1px solid #c0c0c0;
+    float: left;
+    width:100%;
+    margin-bottom: 10px;
+    .panel-title {
+        padding-left:15px;
+        font-size: 16px;
+        text-transform: uppercase;
+        font-weight: bold;
+        color:#b3161b;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+    .panel-heading  {
+        background-color:#f9f9f9;
+        height: 35px;
+        float: left;
+        width:100%;
+        &:hover {
+            cursor: pointer;
+        }
+        &:after {
+        font-family:'Glyphicons Halflings';
+        content:"\e259";
+        float: right;
+        position: relative;
+        bottom: 37px;
+        font-size: 15pt;
+        color:#b3161b;
+        background-color: #f9f9f9;
+        width: 45px;
+        border-left:none;
+        text-align: center;
+        padding-top: 3px;
+        padding-bottom: 4px;
+        }
+    }
+    
+    .collapsed {
+       background-color: inherit; 
+        &:after {
+            border-left:1px solid #c0c0c0;
+            color:#b3161b;
+            content:"\e258";
+        }
+       h4 {
+        color:#333;
+       }
+    }
+    .in {
+        background-color:#f9f9f9;
+        float: left;
+        width:100%;
+    }
+    .panel-body {
+        padding: 5px 15px 15px 15px;
+        float: left;
+        width:100%;
+        .service-catalogue-items {
+            list-style: inherit;
+            li {
+                display:block;
+                width: 47%;
+                float: left;
+                margin:10px 0 10px 20px;
+                &:before {
+                    font-family:'Glyphicons Halflings';
+                    content:"\e258";
+                    width:25px;
+                    height: 25px;
+                    padding-right: 10px;
+                    font-size: 12px;
+                    float: left;
+                }
+                &:hover, &:hover a:hover {
+                    color:#b3161b;
+                }
+                a {
+                    color:#333;
+                    &:hover {
+                        text-decoration: none;
+
+                    }
+                }
+            }
+        }
+    }
+}
+
+}

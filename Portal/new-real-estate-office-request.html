@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>UAQ</title>
+		<link href="css/app.css" rel="stylesheet">
+		<!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+		<script src="js/libs/jquery.min.js"></script>
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="js/ie.min.js"></script>
+		<![endif]-->
+	</head>
+	<!-- body -->
+	<body>
+		<div class="container-fluid">
+			<div class="wrapper">
+				<div class="content">
+					<div class="row">
+						<!-- left col -->
+						<div class="col-xs-12 col-sm-9 col-md-9 main-left-col">
+							<!-- page title -->
+							<div class="page-title-wrap">
+								<div class="row">
+									<div class="col-xs-12 col-sm-9 col-md-10 title-txt">
+										<!-- sub page title 
+										<h4 class="page-title-sub">
+										MUNICIPALITY
+										</h4>-->
+										<!-- /sub page title -->
+										<!-- page title -->
+										<h2 class="page-title"> New Real Estate Office Request   <!--- BPM03.1.01: pgno 27 -->
+										</h2>
+										<!-- /page title -->
+									</div>
+									<div class="hidden-xs show-sm col-md-2 title-icon">
+										<img src="img/icons/icon-uaq.png" alt="uaq">
+									</div>
+								</div>
+							</div>
+							<!-- /page title -->
+							<div class="main-content-wrap">
+								
+								<div class="page-content-wrap">
+										<div class="form-content cf">
+										   <form name="feedbak" id="feedbak" enctype="multipart/form-data" method="get" action="#" >
+										    <div class="row"></div>
+										
+												
+									
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="director-name" class="form-lbl ">Managing Director Name
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<input id="director-name" name="director-name" type="text" class="form-control required other-form"  />
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>						
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="address" class="form-lbl ">Address 
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<input id="address" name="address" type="text" class="form-control required other-form"  />
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>		
+
+											<div class="row">
+												<div class="col-md-12">  <!-- form-sect-head-->
+													<h5 class="form-title">Attachment</h5>
+												</div> 
+											</div>	<!-- /form-sect-head-->
+
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="police-report" class="form-lbl mandatory_lbl">Scan of Family Book <span class=""> (If Addressed to Sheik Zahid Program) </span>
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+			                                                    <div class="input-group file-upload">
+																	<input type="text" class="form-control required other-form" name ="police-report"  />
+																	<span class="input-group-btn">
+																		<span class="btn btn-file">
+																			Browse&hellip; 
+																			<input type="file" multiple>
+																		</span>
+																	</span>
+																</div>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+		                                   
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label  for="emiratesid-back" class="form-lbl mandatory_lbl">Spouse's Emirates Id (If the letter is directed to Sheik Zahid program)
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<div class="input-group file-upload">
+																	<input type="text" class="form-control required other-form" name="emiratesid-back"  />
+																	<span class="input-group-btn">
+																		<span class="btn btn-file">
+																			Browse&hellip; 
+																			<input type="file" multiple>
+																		</span>
+																	</span>
+																</div>
+			                                                </div>
+		                                            	</div>
+													
+		                                        		<!-- /text box -->
+		                                        	</div>	
+												</div>
+	                                        </div>
+	                                        <div class="row">
+												<div class="col-md-12 remove-pad">
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- submit button -->
+			                                        	<div class="row">
+				                                            <div class="form-group submission">
+				                                                <div class="col-md-offset-5 col-md-7">
+				                                                    <input type="submit" class="btn" value="Submit" /> 
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                        <!-- /submit button -->
+		                                        	</div>
+												</div>
+	                                        </div>
+										</form>	
+									</div>
+							</div>
+						</div>
+						<!-- /left col -->
+					</div>
+				</div>
+				<!-- /content area -->
+			</div>
+		</div>
+	</div>
+		<!-- script -->
+		<script src="js/dest/app.js"></script>
+		<script src="js/libs/jquery.validate.js"></script>
+		<script src="js/libs/tooltip.js"></script>
+				<script src="js/libs/popover.js"></script>
+
+	    <script>
+
+			jQuery(function($) { 
+
+			$("#feedbak").validate();
+			/// $('#feedbak :input').attr('readonly','');
+			});
+			
+	    </script>
+		<!-- /script -->
+	</body>
+	<!-- /body -->
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>UAQ</title>
+		<link href="css/app.css" rel="stylesheet">
+		<!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+		<script src="js/libs/jquery.min.js"></script>
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="js/ie.min.js"></script>
+		<![endif]-->
+	</head>
+	<!-- body -->
+	<body>
+		<div class="container-fluid">
+			<div class="wrapper">
+				<!-- content area -->
+				<div class="content">
+					<div class="row">
+						<!-- left col -->
+						<div class="col-xs-12 col-sm-9 col-md-9 main-left-col">
+							<!-- page title -->
+							<div class="page-title-wrap">
+								<div class="row">
+									<div class="col-xs-12 col-sm-9 col-md-10 title-txt">
+										<!-- sub page title 
+										<h4 class="page-title-sub">
+										MUNICIPALITY
+										</h4>-->
+										<!-- /sub page title -->
+										<!-- page title -->
+										<h2 class="page-title">
+											Register new online user account (Individual – GCC Citizen)
+										</h2>
+										<!-- /page title -->
+									</div>
+									<div class="hidden-xs show-sm col-md-2 title-icon">
+										<img src="img/icons/icon-uaq.png" alt="uaq">
+									</div>
+								</div>
+							</div>
+							<!-- /page title -->
+							<div class="main-content-wrap">
+								
+								<div class="page-content-wrap">
+										<div class="form-content cf">
+										   <form name="feedbak" id="feedbak" enctype="multipart/form-data" method="get" action="#" >
+										    <div class="row">
+												<div class="row"> 
+													<div class="col-md-12 remove-pad"><div class="form-group cf"><label class="mandatory_lbl pull-right">All fields are mandatory</label> </div></div>
+												</div>
+											</div>	
+											<div class="row">
+												<div class="col-md-12">  <!-- form-sect-head-->
+													<h5 class="form-title">Account Details</h5>
+												</div> <!-- /form-sect-head-->
+											</div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="first_name"  class="form-lbl mandatory_lbl">Country of Residence</label>
+				                                            </div>
+				                                            <div class="col-md-7 form-grp-help">
+			                                                    <div class="custom-select-box">
+	                                                                <select  class="required1" name="country" required>
+	                                                                    <option value="">Select</option>
+	                                                                    <option value="1">Algeria</option>
+	                                                                    <option value="2">United Arab Emirates</option>
+	                                                                    <option value="3">United States</option>
+	                                                                </select>
+	                                                            </div><span class="form-help" id="popoverCountryofResidence">?</span>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="countryofcitizen" class="form-lbl mandatory_lbl">Country of Citizenship</label>
+				                                            </div>
+				                                            <div class="col-md-7">
+			                                                   <div class="custom-select-box">
+	                                                                <select  class="required1" name="countryofcitizen" required>
+	                                                                    <option value="">Select</option>
+	                                                                    <option value="1">Algeria</option>
+	                                                                    <option value="2">United Arab Emirates</option>
+	                                                                    <option value="3">United States</option>
+	                                                                </select>
+	                                                            </div> 
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+
+	                                        <div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+														<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="mobile_number1" class="form-lbl mandatory_lbl">Mobile 1
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+															    <div class="col-md-4 col-xs-3 remove-pad">
+																	<div class="custom-select-box">
+																		<select  class="required1" name="countryofcitizen" required>
+																			<option value="">02</option>
+																			<option value="1">002</option>
+																		</select>
+																	</div> 
+																</div>
+																<div class="col-md-8 col-xs-9 remove-pad">
+																	<input id="mobile_number1" name="mobile_number1" type="text"  class="form-control"  
+																	data-rule-maxlength="7" data-rule-minlength="7" 
+																	data-msg-maxlength="Enter 7 digit number" 
+																	data-msg-minlength="Enter 7 digit number" />
+																</div>
+			                                                </div>
+		                                            	</div>
+		                                            	
+		                                        		<!-- /text box -->
+		                                        	</div>
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="mobile_number2" class="form-lbl ">Mobile 2
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<div class="col-md-4 col-xs-3 remove-pad">
+																	<div class="custom-select-box">
+																		<select  class="required1" name="countryofcitizen" required>
+																			<option value="">02</option>
+																			<option value="1">002</option>
+																		</select>
+																	</div> 
+																</div>
+																<div class="col-md-8 col-xs-9 remove-pad">
+																	<input id="mobile_number2" name="mobile_number2" type="number"  class="form-control" placeholder="Phone Number"
+																	data-rule-maxlength="7" data-rule-minlength="7"
+																	data-msg-maxlength="Enter 7 digit number" 
+																	data-msg-minlength="Enter 7 digit number" />
+																</div>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+
+	                                        <div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="landline" class="form-lbl ">Land Line
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																 <div class="col-md-4 col-xs-3 remove-pad">
+																	<div class="custom-select-box">
+																		<select  class="required1" name="countryofcitizen" required>
+																			<option value="">02</option>
+																			<option value="1">002</option>
+																		</select>
+																	</div> 
+																</div>
+																<div class="col-md-8 col-xs-9 remove-pad">
+																	<input id="landline" name="landline" type="text" class="form-control" placeholder="Land Line Number"
+																		data-rule-maxlength="7" data-rule-minlength="7" 
+																	data-msg-maxlength="Enter 7 digit number" 
+																	data-msg-minlength="Enter 7 digit number" />
+																</div>	
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label  for="email" class="form-lbl mandatory_lbl">Email
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<input  type="email" id="email required" name="email" class="form-control" placeholder="Email Address" data-rule-required="Please enter valid email" />
+			                                                </div>
+		                                            	</div>
+													
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12">  <!-- form-sect-head-->
+													<h5 class="form-title">Credentials</h5>
+												</div> <!-- /form-sect-head-->
+											</div>	
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="username" class="form-lbl mandatory_lbl">User Name
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7"> 
+			                                                    <input id="username" name="username" type="text" class="form-control required"  data-msg-required="Please enter valid username"/>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="password" class="form-lbl mandatory_lbl">Password
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+			                                                    <input id="password" name="password" type="password" class="form-control required"  data-msg-required="Please enter valid username"/>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label  for="confirm-password" class="form-lbl mandatory_lbl">Confirm Password
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<input  type="password" id="confirm-password" equalto="#password" name="confirm-password" class="form-control required"   data-msg-required="Please enter valid password" />
+			                                                </div>
+		                                            	</div>
+													
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12">  <!-- form-sect-head-->
+													<h5 class="form-title">ID Information</h5>
+												</div> 
+											</div>	<!-- /form-sect-head-->
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="fullname" class="form-lbl mandatory_lbl">Full Name
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7 form-grp-help">
+																<div class="custom-input">	 <!-- added for help poover  -->
+																	<input id="fullname" name="fullname" type="text" class="form-control col-md-11 required"   data-msg-required="Please enter valid field"/> <!-- <span class="form-help" id="popover2">?</span>-->
+																</div><span class="form-help" id="popoverFullName">?</span> <!-- added for help poover  -->
+														   </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="emiratesid" class="form-lbl mandatory_lbl">Emirates ID
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7 form-grp-help">
+																<div class="custom-input">	 <!-- added for help poover  -->
+																	<input id="emaritesid" name="Emaritesid" type="text" class="form-control" placeholder="" required/>
+																</div><span class="form-help" id="popoverEmiratesId">?</span>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label  for="emiratesidexp" class="form-lbl mandatory_lbl">Emirates ID Exp date
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7 form-grp-help">
+																<div class="custom-input">	 <!-- added for help poover  -->
+																<input  type="date" id="emiratesidexp-password" name="emiratesidexp-password" class="form-control required"   data-msg-required="Please enter valid field"  />
+																</div><span class="form-help" id="popoverEmiratesIdExp">?</span>
+			                                                </div>
+		                                            	</div>
+													
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="emirates" class="form-lbl mandatory_lbl">Emirates
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+			                                                    <div class="custom-select-box">
+	                                                                <select  class="required1" name="countryofcitizen" required>
+	                                                                    <option value="">Abu Dhabi</option>
+	                                                                    <option value="1">Al Ain</option>
+	                                                                    <option value="Dubai">Dubai</option>
+	                                                                    <option value="1">Sharjah</option>
+	                                                                </select>
+	                                                            </div>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="dob" class="form-lbl mandatory_lbl">DOB
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7 form-grp-help">
+																<div class="custom-input">	 <!-- added for help poover  -->
+																	<input id="dob" name="dob" type="date" class="form-control required"   data-msg-required="Please enter valid field" />
+																</div><span class="form-help" id="popoverdob">?</span>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="emiratesid-front" class="form-lbl mandatory_lbl">Emirates ID Front
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+			                                                    <div class="input-group file-upload">
+																	<input type="text" class="form-control" name ="emiratesid-front" readonly />
+																	<span class="input-group-btn">
+																		<span class="btn btn-file">
+																			Browse&hellip; 
+																			<input type="file" multiple>
+																		</span>
+																	</span>
+																</div>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label  for="emiratesid-back" class="form-lbl mandatory_lbl">Emirates ID Back side
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<div class="input-group file-upload">
+																	<input type="text" class="form-control" name="emiratesid-back" readonly />
+																	<span class="input-group-btn">
+																		<span class="btn btn-file">
+																			Browse&hellip; 
+																			<input type="file" multiple>
+																		</span>
+																	</span>
+																</div>
+			                                                </div>
+		                                            	</div>
+													
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12"> <!-- form-sect-head-->
+													<h5 class="form-title">Passport Information</h5>
+												</div>
+											</div><!-- /form-sect-head-->
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="passportnum" class="form-lbl mandatory_lbl">Passport Number
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+			                                                    <input id="passportnum" name="passportnum" type="text" class="form-control" placeholder="" required/>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="passportfrontpage" class="form-lbl mandatory_lbl">Passport front page
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<div class="input-group file-upload">
+																	<input type="text" class="form-control" name ="emiratesid-front" readonly />
+																	<span class="input-group-btn">
+																		<span class="btn btn-file">
+																			Browse&hellip; 
+																			<input type="file" multiple>
+																		</span>
+																	</span>
+																</div>
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											
+	                                        <div class="row">
+												<div class="col-md-12 remove-pad">
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- submit button -->
+			                                        	<div class="row">
+				                                            <div class="form-group submission">
+				                                                <div class="col-md-offset-5 col-md-7">
+				                                                    <input type="submit" class="btn" value="Submit" /> 
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                        <!-- /submit button -->
+		                                        	</div>
+												</div>
+	                                        </div>
+										</form>	
+									</div>
+							</div>
+						</div>
+						<!-- /left col -->
+					</div>
+				</div>
+				<!-- /content area -->
+				
+			</div>
+		</div>
+	</div>
+		<!-- script -->
+		<script src="js/dest/app.js"></script>
+		<script src="js/libs/jquery.validate.js"></script>
+		<script src="js/libs/tooltip.js"></script>
+				<script src="js/libs/popover.js"></script>
+				<style>
+					.in { display:table !important;}
+				</style>
+	    <script>
+				
+			jQuery(function($) { 
+
+			$("#feedbak").validate();
+			
+			var imageContryofResidence = '<img src="img/help/help1.jpg">';
+			$('#popoverCountryofResidence').popover({placement: 'right', content: imageContryofResidence, html: true});
+			
+			var imageFullName = '<img src="img/help/help1.jpg">';
+			$('#popoverFullName').popover({placement: 'right', content: imageFullName, html: true});
+			
+			});
+			
+	    </script>
+		<!-- /script -->
+	</body>
+	<!-- /body -->
+</html>

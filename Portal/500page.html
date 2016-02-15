@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>UAQ</title>
+		<link href="css/app.css" rel="stylesheet">
+		<!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+		<script src="js/libs/jquery.min.js"></script>
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="js/ie.min.js"></script>
+		<![endif]-->
+	</head>
+	<!-- body -->
+	<body>
+		<div class="container-fluid">
+			<div class="wrapper">
+				<!-- header -->
+				<header id="header" class="cf">
+					<script>
+					$('#header').load('views/header/header.html');
+					</script>
+				</header>
+				<!-- /header -->
+				
+				<!-- content area -->
+				<div class="content">
+					<div class="row">
+				
+						<!-- left col -->
+						<div class="col-xs-12 col-sm-12 col-md-12 main-left-col">
+							<div class="main-content-wrap">
+								<div class="page-content-wrap">
+									  <div class="row">
+											<div class="col-md-12 error-page"> 
+											    
+												 <h1> 500</h1>
+												 <h2> Unexpected error</h2>
+												
+												  <p>An unexpected error occured your request could not be completed. Please try again </p>
+												  <a href="#" class="link-btn"> BACK TO HOME PAGE</a>
+											</div>
+									  </div>
+								</div>
+							</div>
+						<!-- /left col -->
+					</div>
+				</div>
+			</div>
+				<!-- /content area -->
+				<!-- footer -->
+				<footer class="stickyBottom cf" id="footer">
+					<script>
+						$('#footer').load('views/footer/footer.html');  
+					</script>
+				</footer>
+				<!-- /footer -->
+			</div>
+		</div>
+		<!-- script -->
+		<script src="js/dest/app.js"></script>
+		<script src="js/libs/jquery.validate.js"></script>
+	    <script>
+	       
+			jQuery(function($) {  $("#feedbak").validate(); });
+			
+	    </script>
+		<!-- /script -->
+	</body>
+	<!-- /body -->
+</html>

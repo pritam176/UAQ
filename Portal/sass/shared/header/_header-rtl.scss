@@ -1,0 +1,62 @@
+
+.headerContainer{
+	padding:15px 20px;
+	width: 100%;
+	background:$brown;
+	header{
+		.currentProfile{
+				.profilePic{
+					width: 55px;
+					height: 55px;
+					//@include radius(50%); 
+					margin-left: 10px;
+					img{
+						width: 100%;
+						height: 100%;
+						@include radius(50%); 
+					}
+				}
+				span.profilePic,span.nameHolder{
+					display: inline-block;
+					color:#d9bc90;
+					vertical-align: middle;
+					label{
+						color:#fff;
+					}
+				}
+
+		}
+		.currentProfile{
+			padding: 10px 0px;
+			border-left : 1px solid #a88a5b;
+			border-right : 0px;
+			padding-left: 15px;
+		}
+		.logoutandedit{
+			margin-right: 20px;
+			margin-top: 25px;
+			margin-left	: 0px;
+			span{
+				width: 35px;
+				height: 35px;
+				cursor: pointer;
+				margin-right: 15px;
+				display: inline-block;
+				float: right;
+				&:first-child{
+					margin-right: 0px;
+				}
+				img{
+				}
+			}
+			.log-out{
+				margin-top: 5px;
+				margin-left: 0px;
+			
+			}
+		}
+
+	}
+
+}
+

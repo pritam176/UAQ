@@ -1,0 +1,308 @@
+.callout-wrap {
+	@extend .box-div;
+	margin-bottom:$space-30;
+	float:left;
+	.callout-head {
+		.right-nav-title{
+			border:1px solid $grayC;
+			padding:15px 8px;
+			color:$lred;
+			font-size: 16px;
+			font-weight: 600;
+			margin-top: 0;
+			margin-bottom: 0;
+			text-transform: uppercase;
+		}
+		.right-nav-gray-title{
+			border: 0 none;
+			color: $black !important;
+			text-transform:none;
+			padding-left:0px;
+			
+		}
+	}
+	.callout-content {
+		@extend .box-div;
+		margin-bottom: 0;
+		float:left;
+		.right-nav {
+			ul {
+				li {
+					a {
+						background-color: $gray3;
+						border-bottom:1px solid $grayC;
+						border-right:1px solid $grayC;
+						border-left:1px solid $grayC;
+						color:$textcolor;
+						display: block;
+						position: relative;
+						padding:10px 10px 10px 25px;
+						&:hover {
+							@extend .text-underline-none;
+						}
+						&::before {
+							color: $grayC;
+							position:absolute;
+							content:">";
+							left:10px;
+							top:10px;
+						}
+						&:visited {
+							@extend .text-underline-none;
+						}
+					}
+				}
+				.active {
+					a {
+						background-color:$activeNavBg;
+						color:$lred;
+					}
+				}
+			}
+		}
+		.social-share-wrap {
+			ul {
+				li {
+					display: inline-block;
+					margin-right:5px;
+				}
+			}
+		}
+		.gallery-callout-wrap {
+			border-bottom:1px solid $grayC;
+			border-right:1px solid $grayC;
+			border-left:1px solid $grayC;
+			padding:15px 0 10px 5px;
+			text-align: center;
+			ul 
+			{
+				li {
+					height: 150px;
+					float:left;
+					padding-right:5px;
+					padding-bottom:5px;
+					max-height:150px;
+					img {
+						width: 100%;
+						height:100%;
+					}
+				}
+			}
+			a.link-btn {
+				margin-top: $space-15;
+			}
+		}
+		
+		.welcome-user{
+			@extend .box-div;
+				p { margin-bottom: $space-15; font-size: $font-size-title-sub;  }
+				h3{margin-bottom: $space-15;}
+				.link_text{ color:$lred; font-size: $font-size-title-sub; text-decoration:underline; }
+		}
+		.department-lists {border:1px solid $grayC;  background-color: $gray3;   padding-bottom: 20px; padding: 0 30px 20px 10px;}
+		.right-related-news {
+			@extend .box-div;
+			float:left;
+			.news-listing{
+			    @extend .box-div;
+				float:left;
+				background-color: $gray3;
+				padding:15px;
+				border-bottom:1px solid $grayC;
+				border-right:1px solid $grayC;
+				border-left:1px solid $grayC;
+				
+				.listing{
+					img{ max-height:90px; max-width:90px;}
+					&:first-child{ margin-top: $space-15;}
+					&:last-child{ margin-bottom: 0; border: 0px none;}
+					.listing-content{
+						.listing-date { margin: 0; }
+						p{ padding:0; margin:0; font-size:$font-14;}
+					}
+				}
+				
+				
+			}
+		
+		
+		}
+	}
+	.support-callout-wrap {
+		background-color: #f1f1f1;
+		border: 1px solid #c0c0c0;
+		padding: 15px; 
+		.support-content {
+			h4 {
+				font-weight: bold;
+				text-decoration: underline;
+			}
+			.device-tel {
+				text-decoration:underline;
+				color:$black;
+			}
+		}
+		img {
+			float: left;
+			margin-right: 20px;
+		}
+		.support-content {
+			overflow: hidden;
+			text-decoration: underline;
+			.red-text {
+				display: inline-block;
+				margin-top: 10px;
+				color: #b3161b;
+				text-decoration: underline; 
+			}
+			
+			.helpTel{
+				color: inherit !important;
+			}
+	
+		}
+	}
+	
+}
+	.right-filter ul>li input{ display:inline-block !important;}
+			 input[type=checkbox] {
+        display: none;
+    }
+    input[type=radio]:checked + label:before {
+        content: "\2022";
+        color: #ddcdcd;
+        font-size: 39px;
+        text-align: center;
+        line-height: 18px;
+        text-shadow: #670c11 -1px 0px 10px;
+    }
+    input[type=checkbox]:checked + label:before {
+        content: "\2713";
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, .2);
+        font-size: 15px;
+        color: #f3f3f3;
+        text-align: center;
+        line-height: 15px;
+    }
+    label.custom:before {
+        content: "";
+        display: inline-block;
+        margin-right: 10px;
+        position: absolute;
+        left: 0;
+        top: 2px;
+        width: 20px;
+        height: 20px;
+        box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    }
+	.inline-custom {
+        float: left;
+        margin-top: 0 !important;
+        margin-left: 20px;
+        &:first-child {
+            margin-left: 0;
+        }
+		 
+		
+    }
+	.dropdown-menu{ background-color:#fff; margin:0px;}
+	.dropdown-menu li{ display:block!important; background-color:#fff !important; }
+	.dropdown-menu li a:hover { background-color:#ccc !important; }
+	
+	.checkbox input[type="checkbox"]{ margin-left:0px;}
+	.right-filter{ padding:15px 0px; background-color:#f1f1f1; border-right:1px solid #ccc; border-left:1px solid #ccc; border-bottom:1px solid #ccc; width:100%;}
+	.right-filter .callout-filter-btn { text-align:center; margin-left: auto; margin-right: auto;}
+	.share-fontsize .btn, .share-fontsize .open>.btn-default.dropdown-toggle {
+	    border-radius: inherit;
+	    border: 1px solid $lred;
+	    color: $lred;
+	    padding: 2px 8px;
+	    &:hover {
+	    	background-color:transparent;
+	    }
+	}
+	.share-fontsize .open>.btn-default.dropdown-toggle {
+		background-color:transparent;
+	}
+	.share-fontsize .dropdown-menu {
+		border:1px solid $lred;
+		border-radius:0;
+	}
+	.share-fontsize .dropdown-menu li:hover a {
+		background-color:$lred;
+		color:$white;
+	}
+.callout-wrap .callout-content {
+		#departmentmaps {
+		border-right: 1px solid $grayC;
+		border-bottom: 1px solid $grayC;
+		border-left: 1px solid $grayC;
+		height:250px !important;
+	}
+}
+@media (min-width: $screen-sm-max) and  (max-width:1402px) {
+	.gallery-callout-wrap {
+
+			ul 
+			{
+				li {
+					height: 96px !important;
+					max-height:100px !important;
+					img {
+						width: 100%;
+						height:100%;
+					}
+				}
+			}
+			a.link-btn {
+				margin-top: $space-15;
+			}
+		}
+	
+	
+}
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+	.social-share-wrap {
+			ul {
+				li {
+					margin-bottom: 10px;
+				}
+			}
+		}
+		.gallery-callout-wrap {
+
+			ul 
+			{
+				li {
+					height: 66px !important;
+					max-height:100px !important;
+					img {
+						width: 100%;
+						height:100%;
+					}
+				}
+			}
+			a.link-btn {
+				margin-top: $space-15;
+			}
+		}
+}
+@media (max-width:1024px) {
+	a.device-tel {
+		display: inline-block;
+	}
+	label.device-tel {
+		display: none;
+	}
+	
+	
+}
+@media (min-width:1025px) {
+	a.device-tel {
+		display: none;
+	}
+	label.device-tel {
+		display: inline-block;
+	}
+
+}

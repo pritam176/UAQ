@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>UAQ</title>
+		<link href="css/app.css" rel="stylesheet">
+		<!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+		<script src="js/libs/jquery.min.js"></script>
+		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+		<script src="js/ie.min.js"></script>
+		<![endif]-->
+	</head>
+	<!-- body -->
+	<body>
+		<div class="container-fluid">
+			<div class="wrapper">
+				<!-- header -->
+				<header id="header" class="cf">
+				</header>
+				<!-- /header -->
+						<!--breadcrumbs -->
+				
+				
+				<!--/breadcrumbs -->
+				<!-- content area -->
+				<div class="content">
+					<div class="row">
+						<!-- right col -->
+	
+						<!-- right col -->
+						<!-- left col -->
+						<div class="col-xs-12 col-sm-9 col-md-9 main-left-col">
+							<!-- page title -->
+							<!-- /page title -->
+							<div class="main-content-wrap">
+								 <div class="row">
+									<div class="col-xs-12">
+									  <div class="table-responsive payment-table">
+										 <div class="success">Successfull messge comes here !!</div>
+										 <div class="error">Error messge comes here !!</div>
+										 
+										<table class="table table-bordered table-hover">
+										  <tbody>
+											<tr>
+
+											  <td>Receipt Number</td>
+											  
+											  <td><a href="tel:150000270175">150000270175</a></td>
+											</tr>
+											<tr>
+											  <td>Date</td>
+											  <td>03/11/2015 04:56:58</td>
+											
+											</tr>
+											<tr>
+											  <td>Transaction ID</td>
+											  <td><a href="tel:1446555358117">1446555358117</a></td>
+											</tr>
+											<tr>
+											  <td>ID</td>
+											  <td>68926_A</td>
+											</tr>
+											<tr>
+											  <td colspan="2" class="heading-intble">Requested Service</td>
+											  
+											 
+											</tr>
+											<tr>
+											  <td>Quantity</td>
+											  <td>1</td>
+											</tr>
+											
+											<tr>
+											  <td>Owner Fees</td>
+											  <td>1 (AED)</td>
+											</tr>
+											
+											<tr>
+											  <td>Type of Payment Card</td>
+											  <td>e-Dirham G2 Red Al Haslah Prepaid Card</td>
+											</tr>
+											<tr>
+											  <td colspan="2"></td>
+											</tr>
+											<tr>
+											  <td>Type of Payment Card</td>
+											  <td>e-Dirham G2 Red Al Haslah Prepaid Card</td>
+											</tr>
+											
+											<tr>
+											<td style="border-right: 0px;">
+											</td>
+											<td>
+													<a href="#" class="link-btn hidden-sm hidden-xs pull-center">Colse dsk</a> 
+													<a href="#" class="link-btn hidden-lg hidden-md  pull-center"  onclick="redirect();">Close mob </a>
+											</td>
+											</tr>
+											
+											
+										  </tbody>
+									
+										</table>
+									  </div><!--end of .table-responsive-->
+									</div>
+								  </div>
+								
+							</div>
+						<!-- /left col -->
+						</div>
+				</div>
+				<!-- /content area -->
+				<!-- footer -->
+				<footer class="stickyBottom cf" id="footer">
+					<script>
+						$('#footer').load('views/footer/footer.html');  
+					</script>
+				</footer>
+				<!-- /footer -->
+			</div>
+		</div>
+	</div>
+		<!-- script -->
+		<script src="js/dest/app.js"></script>
+		<script src="js/libs/jquery.validate.js"></script>
+		<script src="js/libs/tooltip.js"></script>
+				<script src="js/libs/popover.js"></script>
+
+	    <script>
+
+			jQuery(function($) { 
+
+			$("#feedbak").validate();
+			
+			$(".radiobtn").click(function(){
+				val= document.querySelector('input[name="locations"]:checked').value; 
+				if(val == "sector"){
+					//$("label.error").hide();
+					$(".areaform").removeClass("required");
+					$(".areaform").attr("readonly", true);
+					$(".sectorform").attr("readonly", false);
+					$(".sectorform").addClass("required");
+					$("#sector-select").attr("disabled", false);
+					$("#area-select").attr("disabled", true);
+					//document.getElementById("forgot-btn").disabled = false;
+					
+				
+				}else{
+					
+					//$("label.error").hide();
+					$(".sectorform").removeClass("required");
+					$(".areaform").attr("readonly", false);
+					$(".sectorform").attr("readonly", true);
+					$(".areaform").addClass("required");
+					$("#sector-select").attr("disabled", true);
+					$("#area-select").attr("disabled", false);
+					//document.getElementById("forgot-btn").disabled = false;
+
+				}
+				
+				//alert(val);
+			
+			});
+			/// $('#feedbak :input').attr('readonly','');
+			});
+			
+	    </script>
+		<!-- /script -->
+	</body>
+	<!-- /body -->
+</html>

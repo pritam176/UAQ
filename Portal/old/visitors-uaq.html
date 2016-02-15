@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>UAQ</title>
+	<link href="css/app.css" rel="stylesheet">
+  	<!--<link rel="shortcut icon" href="" type="image/x-icon" />-->
+ 	<script src="js/libs/jquery.min.js"></script>
+  	 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+ <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="js/ie.min.js"></script>
+    <![endif]-->
+
+	
+</head>
+
+<!--body starts from here -->
+	<body>
+		<main class="wrapper">
+			<div class="container-fluid">
+					<div class="headerPart" style="width:100%;">
+						<div class="row">
+							<header id="header" class="cf">
+								<script>
+		 						$('#header').load('views/header/header.html');
+								</script>
+							</header>
+						</div>
+					</div>
+					<div id="mobileMenu" class="visible-xs">
+						<script>
+						 $('#mobileMenu').load('views/mobilemenu/mobilemenu.html');
+						</script>
+					</div>
+					<div class="mainContent cf">
+
+
+						<div class="breadCrumb hidden-xs">
+							<ul class="no-list cf"> 
+								<li><a href="#"><img src="img/home1.png" alt="Home UAQ"></a></li>
+								<li class="active"><a href="#">START A BUSINESS</a></li>
+								<li><a href="#">CLOSE A BUSINESS</a></li>
+								<li><a href="#">WORKING WITH GOVERNMENT</a></li>
+								<li class="active"><a href="#">START A BUSINESS</a></li>
+								<li><a href="#">CLOSE A BUSINESS</a></li>
+								<li><a href="#">WORKING WITH GOVERNMENT</a></li>
+
+						</div>
+
+						<div class="mobBreadCrumb visible-xs green">
+							
+							Business
+
+						</div>
+						
+						<div class="innerBanner">
+								<div class="bgImg"></div>
+							<div class="innerbannerContent cf">
+								<div class="col-sm-10">
+									<h3>Visitors UAQ</h3>
+									<p>Donec pretium urna velit, eget gravida ante efficitur non. Nulla lobortis interdum nulla at molestie. Pellentesque rutrum vitae lorem et aliquam. Nam pretium vel felis ut egestas. Cras a nisi et nulla tempus mattis. Praesent imperdiet est eget condimentum varius.</p>
+								</div>
+								<div class="col-sm-2 text-right">
+									<a href="#" class="readmore">
+										readmore
+									</a>
+								</div>
+							</div>							
+						</div>
+						
+						
+						<div class="businesscontent cf">
+							<div class="col-sm-4 col-md-2 col-xs-12">
+								<div class="items">
+									<a href="#">
+										<img src="img/img1.jpg" alt="" class="thumbnail" />
+										<h3>INVEST IN UAQ</h3>
+										<p><img src="img/arrow.png" alt="" class="arrow" />Donec pretium urna velit, eget gravida ante efficitur non. Nulla lobortis interdum nulla at molestie.</p>
+									</a>
+								</div>
+							</div>
+						</div>
+						
+						
+					</div>
+					<footer class="stickyBottom cf" id="footer">
+						<script>
+							$('#footer').load('views/footer/footer.html');
+						</script>
+					</footer>
+				</div> <!-- container fluid ends here -->
+			</main>
+		<script src="js/dest/app.js"></script>
+ 	</body>
+	<!-- body ends here -->
+</html>

@@ -1,0 +1,153 @@
+
+.divtable .tr {
+  overflow: hidden;
+  clear: both;
+}
+
+.divtable .th,
+.divtable .td {
+  padding: 5px 10px;
+  float: left;
+  border-bottom:1px solid $grayC;
+  border-right:1px solid $grayC;
+}
+.divtable .th {
+  min-height:55px;
+  background: $gray3;
+}
+.divtable .td {
+  min-height:90px;
+  &:first-child {
+  border-left:1px solid $grayC;
+  }
+}
+.divtable .headings .th {
+  border-top:1px solid $grayC;
+  &:first-child {
+  border-left:1px solid $grayC;
+  }
+  &:last-child {
+  border-right:1px solid $grayC;
+    }
+}
+.divtable .inner .td:first-child {
+  border-left:none !important;
+}
+.table-wrap {
+  .red-txt {
+    display:none;
+    color:$lred;
+    margin-bottom:$space-10;
+  }
+}
+
+.divtable .th { font-weight: bold; }
+
+.firstname { width: 40%; }
+
+.lastname { width: 30%; }
+
+.username { width: 30%; }
+
+.divtable .link-btn { padding:5px; min-width:110px; margin-bottom:$space-5; text-align:center; margin-top:20px; }
+.first-col-hist{ width:13%; padding: 5px 2px !important;}
+.second-col-hist{ width:15%;}
+.three-col-hist{ width:22%;}
+ @media (max-width: 900px) {
+.table-wrap {
+  .red-txt {
+    display:block;
+  }
+}
+.accordion-xs .headings { display: none; }
+
+.accordion-xs .tr { border-bottom-color: #fff; }
+
+.accordion-xs .th,
+ .accordion-xs .td {
+  float: none;
+  width: auto;
+  padding: 0;
+}
+
+.accordion-xs .accordion-xs-toggle {
+  background-color: $grayC;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.accordion-xs .accordion-xs-toggle:hover { }
+
+.accordion-xs .accordion-xs-toggle:after {
+  content: '\2b';
+  float: right;
+}
+.accordion-xs .accordion-xs-toggle.collapsed:after { content: '\2212'; }
+
+.accordion-xs-collapse .inner {border-top:1px solid $grayC;
+border-bottom:1px solid $grayC;
+border-left:1px solid $grayC;}
+
+.accordion-xs-collapse .td:before { font-weight: bold; }
+
+.accordion-xs-collapse .tbl-service-name:before { content: 'Service Name: '; width:30%; display:block; float:left; background: $gray3; padding: 5px 0px 5px 10px; min-height: 39px; margin-right:$space-10;}
+.accordion-xs-collapse .tbl-created-date:before { content: 'Created Date: '; width:30%; display:block; float:left;background: $gray3; padding: 5px 0px 5px 10px; min-height: 39px; margin-right:$space-10;}
+.accordion-xs-collapse .tbl-modified-date:before { content: 'Modified Date: '; width:30%; display:block; float:left;background: $gray3; padding: 5px 0px 5px 10px; min-height: 39px;margin-right:$space-10;}
+.accordion-xs-collapse .tbl-status:before { content: 'Status: '; width:30%; display:block; float:left;background: $gray3; padding: 5px 0px 5px 10px; min-height: 39px;margin-right:$space-10;}
+.accordion-xs-collapse .tbl-action:before { content: 'Action: '; width:30%; display:block; float:left;background: $gray3; padding: 5px 0px 5px 10px; min-height: 39px;margin-right:$space-10;}
+
+
+.accordion-xs .accordion-xs-toggle:after {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+.divtable {
+  width:100%;
+  .tr {
+    display:block;
+    .td {
+      display:block;
+      min-height:40px;
+      margin-bottom:1px;
+      color:$black;
+    }
+  }
+
+}
+
+.divtable .inner .td:last-child {}
+.divtable .tr.headings {
+  display:none;
+}
+.divtable .link-btn{
+
+ margin-top:2px;
+}
+
+.first-col-hist { padding:0px !important;}
+
+}
+.first-col {
+  width: 15%;
+}
+.second-col {
+  width:20%;
+}
+.three-col {
+  width:20%;
+}
+
+@media (max-width: 430px) {
+	.divtable .tr .td{ min-height:49px;}
+	.accordion-xs-collapse .tbl-status:before{ min-height: 47px;}
+	.accordion-xs-collapse .tbl-created-date:before { min-height: 47px;}
+	.accordion-xs-collapse .tbl-action:before { min-height: 47px;}
+	.accordion-xs-collapse .tbl-service-name:before { min-height: 47px;}
+}

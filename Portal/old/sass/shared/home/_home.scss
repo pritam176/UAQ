@@ -1,0 +1,214 @@
+.wrapper{
+	.sliderHolder{
+		>ul{
+		height : 80%;
+		width : 100%;
+
+		}
+		height : 100%;
+		width : 100%;
+		li{
+		
+			height: 100%;
+			width: 100%;
+			
+		}
+		.slideItem {
+			background-size: cover !important; 
+			height: 100%;
+			width: 100%;
+		}
+		.slider-item-1{
+			background: #111 url("../img/uaqbg.jpg") 50% 50%; 
+		}	
+		.slider-item-2{
+			background: #111 url("../img/welcome-cover-1.png") 50% 50%; 
+		}
+
+	   .slider-item-3{ 
+			background: #111 url("../img/welcome-cover-2.png") 50% 50%; 
+		} 
+
+	}
+}
+
+
+.home{
+	background: #ccc;
+	.bx-wrapper{
+		margin-bottom : 0px;
+	}
+	.bx-wrapper,.bx-viewport,.slider{
+		width: 100%;
+		height: 100%;
+		left : 0px !important; 
+	}
+	.bx-viewport{
+		box-shadow : none !important;
+		border : 0px !important;
+		height: 100% !important; 
+	}
+	.bx-wrapper .bx-pager{
+		bottom : 250px !important;
+	}
+
+	.bx-wrapper .bx-pager.bx-default-pager a{
+		background: $white;
+	}
+
+	.bx-wrapper .bx-pager.bx-default-pager a:hover, .bx-wrapper .bx-pager.bx-default-pager a.active{
+		background: $black;
+	}
+
+	.bx-wrapper .bx-prev{
+		background : url(../img/sliderleft.png) no-repeat 7px 0px;
+		  width: 82px;
+	 	 height: 70px;
+
+	 	 &:hover{
+		background : url(../img/sliderleft.png) no-repeat 7px 0px;
+
+	 	 }
+	}
+	.bx-wrapper .bx-next{
+		background : url(../img/sliderright.png) no-repeat 7px 0px;
+		  width: 82px;
+	 	 height: 70px;
+
+	 	 &:hover{
+
+	 	 		background : url(../img/sliderright.png) no-repeat 7px 0px;
+	 	 }
+	}
+}
+
+
+
+
+// Smiley CSS
+.overlay {
+    background-color: rgba(0, 0, 0, 0.8);
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+	padding: 50px 0;
+	
+	.close {
+		float: right;
+		margin-right: 5%;
+		cursor: pointer;
+	}
+	
+	.smileys {
+		width: 380px;
+		float: right;
+		clear: both;
+		margin-right: 8%;
+	
+		.faceIcons {
+			margin: 0 15px;
+		}
+	}
+	
+	h2 {
+		color: #ccc;
+		font-size: 24px;
+		margin: 20px 0;
+	}
+	
+	.login {
+		float: right;
+		clear: both;
+		margin-right: 5%;
+		
+		.form-control {
+			background: #333;
+			border-color: #222;
+			color: #999;
+			font-size: 18px;
+			height: auto;
+			padding: 12px 10px;
+		}
+		
+		.btn {
+			background: #b3161b;
+			color: $white;
+			font-size: 18px;
+			border: 0;
+			padding: 12px 30px;
+		}
+		
+		.links {
+			clear: both;
+			padding: 15px 0 0 5px;
+			
+			a {
+				color: #ccc;
+				text-decoration: underline;
+				margin-right: 15px;
+				font-size: 14px;
+				
+				&:hover {
+					text-decoration: none;
+				}
+			}
+		}
+	}
+}
+
+
+
+@media all and (max-width : 480px){
+	.overlay {
+		.smileys {
+			margin-right: 0;
+			width: 95%;
+			
+			.faceIcons {
+				margin: 0 10px;
+				width: 22%;
+			}
+		}
+	}
+}
+
+
+
+
+
+
+
+@media all and (max-width : 768px){
+
+	.bx-wrapper .bx-prev,.bx-wrapper .bx-next{
+
+		display: none;
+	}
+
+.wrapper .sliderHolder{
+	height: 300px;
+}
+
+.home{
+	.bx-wrapper .bx-pager{
+		bottom : 10px !important;
+	}
+}
+
+
+.overlay {
+	.login {
+		width: 90%;
+	}
+}
+
+}
+
+
+
+
+
+
+

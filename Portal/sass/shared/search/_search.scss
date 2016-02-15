@@ -1,0 +1,32 @@
+.search-listing {
+    .listing { border-bottom: none !important;}
+	a {
+		color:#000;
+		margin-bottom:$space-15;
+		display:inline-block;
+	}
+	.listing-content {
+		p {
+			margin-bottom:$space-5 !important;
+		}
+	}
+}
+.search-pagination-wrap {
+	@extend .box-div;
+	.listing-count {
+		color:#707070;
+	}
+}
+
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+	.select-filter-lbl {
+		margin-right:20px;
+		float:right;
+	}
+}
+@media (min-width: $screen-lg-min) {
+	.select-filter-lbl {
+		margin-right:20px;
+		float:right;
+	}
+}
