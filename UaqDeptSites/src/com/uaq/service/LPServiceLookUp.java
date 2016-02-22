@@ -16,10 +16,14 @@ import uaq.db.si.model.common.AppModuleService_Service;
 import uaq.db.si.model.common.ApplicantRequestViewSDO;
 import uaq.db.si.model.common.AreaLookupsViewSDO;
 import uaq.db.si.model.common.EmirateLookupsViewSDO;
+import uaq.db.si.model.common.GrantLandReqViewSDO;
 import uaq.db.si.model.common.LpLandCategoryViewSDO;
 import uaq.db.si.model.common.LpLandStatusLookupViewSDO;
 import uaq.db.si.model.common.LpLandTypeLookupViewSDO;
+import uaq.db.si.model.common.LpLostDocReplacementViewSDO;
+import uaq.db.si.model.common.LpLostDocTypeLookupViewSDO;
 import uaq.db.si.model.common.LpProCardReqDetailsViewSDO;
+import uaq.db.si.model.common.LpRealestateOfficeReqViewSDO;
 import uaq.db.si.model.common.LpValuationViewSDO;
 import uaq.db.si.model.common.NationalityLookupsViewSDO;
 import uaq.db.si.model.common.SectorLookupsViewSDO;
@@ -780,6 +784,87 @@ public class LPServiceLookUp {
 		lookupStatusReturnMap.put("ar", lookupStatus_AR);
 		lookupStatusReturnMap.put("en", lookupStatus_EN);
 		return lookupStatusReturnMap;
+	}
+
+	public Map<String, Map<String, String>> getLostDocumentTypeListAR_EN() throws UAQException {
+		// TODO condition if needed
+		//List<FilterCondition> conditions = new ArrayList<FilterCondition>();
+		//conditions.add(new FilterCondition(null, null, null));
+		//FindCriteria findCriteria = createFilterCriteria(conditions, null);
+		FindControl findControl = getFindControl();
+
+		service = new AppModuleService_Service();
+		stub = service.getAppModuleServiceSoapHttpPort();
+
+		List<LpLostDocTypeLookupViewSDO> lostDocumentTypeList;
+		try {
+			lostDocumentTypeList = stub.findLpLostDocTypeLookupView1(null, findControl);
+		} catch (uaq.db.si.model.common.ServiceException e) {
+			throw new UAQException("findLpLostDocTypeLookupView1 Service Execution Failed");
+		}
+
+		Map<String, Map<String, String>> lostDocumenTypeReturnMap = new HashMap<String, Map<String, String>>();
+		Map<String, String> documentType_EN = new HashMap<String, String>();
+		Map<String, String> documentType_AR = new HashMap<String, String>();
+		if (lostDocumentTypeList != null) {
+			for (int i = 0; i < lostDocumentTypeList.size(); i++) {
+				LpLostDocTypeLookupViewSDO documentType = lostDocumentTypeList.get(i);
+				documentType_EN.put(documentType.getLostDocId().toString(), documentType.getLostDocTypeEn().getValue());
+				documentType_AR.put(documentType.getLostDocId().toString(), documentType.getLostDocTypeAr().getValue());
+			}
+		}
+
+		lostDocumenTypeReturnMap.put("ar", documentType_AR);
+		lostDocumenTypeReturnMap.put("en", documentType_EN);
+		return lostDocumenTypeReturnMap;
+	}
+	
+	public LpLostDocReplacementViewSDO getLpLostDocRequestByRequestNumber(String requestNumber) {
+		List<FilterCondition> conditions = new ArrayList<FilterCondition>();
+		conditions.add(new FilterCondition("RequestNo", "=", requestNumber));
+		FindCriteria criteria = createFilterCriteria(conditions, null);
+		FindControl findControl = getFindControl();
+
+		try {
+			service = new AppModuleService_Service();
+			stub = service.getAppModuleServiceSoapHttpPort();
+			return stub.findLpLostDocReplacementView1(criteria, findControl).get(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public LpRealestateOfficeReqViewSDO getRealEstateOfficeByRequestNumber(String requestNumber) {
+		List<FilterCondition> conditions = new ArrayList<FilterCondition>();
+		conditions.add(new FilterCondition("RequestNo", "=", requestNumber));
+		FindCriteria findCriteria = createFilterCriteria(conditions, null);
+		FindControl findControl = getFindControl();
+
+		service = new AppModuleService_Service();
+		stub = service.getAppModuleServiceSoapHttpPort();
+		try {
+			return stub.findLpRealestateOfficeReqView1(findCriteria, findControl).get(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public GrantLandReqViewSDO getGrantLandRequestByRequestNumber(String requestNumber) {
+		List<FilterCondition> conditions = new ArrayList<FilterCondition>();
+		conditions.add(new FilterCondition("RequestNo", "=", requestNumber));
+		FindCriteria findCriteria = createFilterCriteria(conditions, null);
+		FindControl findControl = getFindControl();
+
+		service = new AppModuleService_Service();
+		stub = service.getAppModuleServiceSoapHttpPort();
+		try {
+			return stub.findGrantLandReqView1(findCriteria, findControl).get(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

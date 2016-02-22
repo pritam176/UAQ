@@ -80,7 +80,7 @@ public class LPReSubmitController extends BaseController {
 						WhomItmayConcernVO whomItmayConcernVO = LPDataMapper.getWhomItmayConcernVOForResubmit(whomItmayConcernCommand);
 						whomItmayConcernVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), whomItmayConcernCommand.getRequestNo(), whomItmayConcernCommand.getStatusId())) {
 							LandOutputVO outputVo = lPReSubmissionRequestService.reSubmitWhomItMayConcern(userdetailVO, whomItmayConcernVO);
 							if (!outputVo.getStatus().equalsIgnoreCase(SERVICE_FAILED)) {
@@ -113,7 +113,7 @@ public class LPReSubmitController extends BaseController {
 						WhomItmayConcernVO whomItmayConcernVO = LPDataMapper.getWhomItmayConcernVOForResubmit(whomItmayConcernCommand);
 						whomItmayConcernVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), whomItmayConcernCommand.getRequestNo(), whomItmayConcernCommand.getStatusId())) {
 							
 							LandOutputVO outputVo = lPReSubmissionRequestService.reSubmitWhomItMayConcern(userdetailVO, whomItmayConcernVO);

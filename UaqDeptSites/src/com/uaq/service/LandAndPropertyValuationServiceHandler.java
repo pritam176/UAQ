@@ -12,6 +12,7 @@ import uaq.db.si.model.common.LpValuationViewSDO;
 
 import com.uaq.command.ServiceParamsCommand.FieldTypeEnum;
 import com.uaq.command.ServiceParamsCommand.ServiceField;
+import com.uaq.common.PropertiesUtil;
 import com.uaq.vo.SendBackInfo;
 import com.uaq.service.WebServiceInvoker.RequestIdData;
 import com.uaq.util.UCMUploader;
@@ -40,7 +41,7 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		ServiceField f2 = new ServiceField("landStatus", "lpv.landStatus", FieldTypeEnum.Select, true);
 		ServiceField f3 = new ServiceField("landType", "lpv.landType", FieldTypeEnum.Select, true);
 		ServiceField f4 = new ServiceField("ownerLandCategory", "lpv.landCategory", FieldTypeEnum.Select, false);
-		ServiceField f5 = new ServiceField("hierLandCategory", "lpv.landCategory", FieldTypeEnum.Select, false);
+		ServiceField f5 = new ServiceField("heirLandCategory", "lpv.landCategory", FieldTypeEnum.Select, false);
 		ServiceField f6 = new ServiceField("sitePlanNo", "lpv.sitePlanNo", FieldTypeEnum.Number, true);
 		ServiceField f7 = new ServiceField("landLocation", "lpv.landLocation", FieldTypeEnum.Radio, true);
 		ServiceField f8 = new ServiceField("sector", "lpv.sector", FieldTypeEnum.Select, false);
@@ -164,14 +165,14 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		f17.setRequiredCondition("applicantPosition", "2");
 		f18.setRequiredCondition("applicantPosition", "2");
 		f19.setRequiredCondition("applicantPosition", "2");
-//		if (phase == null) {
+		if (phase == null) {
 			f22.setRequiredCondition("applicantPosition", "2");
 			f23.setRequiredCondition("applicantPosition", "2");
 			f24.setRequiredCondition("applicantPosition", "2");
 			f25.setRequiredCondition("applicantPosition", "2");
 			f26.setRequiredCondition("applicantPosition", "2");
 			f27.setRequiredCondition("applicantPosition", "2");
-//		}
+		}
 		serviceFields.add(f1);
 		serviceFields.add(f2);
 		serviceFields.add(f3);
@@ -193,14 +194,14 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		serviceFields.add(f19);
 		serviceFields.add(f20);
 		serviceFields.add(f21);
-//		if (phase != null && applicantPosition.equals("2")) {
+		if (phase == null || applicantPosition.equals("2")) {
 			serviceFields.add(f22);
 			serviceFields.add(f23);
 			serviceFields.add(f24);
 			serviceFields.add(f25);
 			serviceFields.add(f26);
 			serviceFields.add(f27);
-//		}
+		}
 
 		if (sendBackInfo != null) {
 			f20.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f20.getDocTypeId()));
@@ -223,6 +224,7 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 			return null;
 		try {
 			inputParams.put("serviceId", params.get("serviceId"));
+			inputParams.put("serviceDept", params.get("serviceDept"));
 			inputParams.put("accountDetails", accountDetails);
 			inputParams.putAll(params);
 			SimpleDateFormat wsDateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -239,6 +241,8 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 				requestData = WebServiceInvoker.saveValuationRequest(inputParams);
 				inputParams.put("requestNumber", requestData.getRequestNumber());
 				inputParams.put("requestId", requestData.getRequestId());
+				inputParams.put("stepAction", "SUBMIT");
+				inputParams.put("stepName", null);
 				WebServiceInvoker.sendSmsAndEMail(inputParams);
 			}
 			System.out.println("--------->  Request Id: " + requestData.getRequestId());
@@ -249,6 +253,7 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 			if (!new UCMUploader().genericSaveAttachmentToDB(attachmentInfos))
 				return null;
 			if (phase.equals("Resubmit")) {
+				inputParams.put("phase", phase);
 				resubmitService(inputParams);
 			}
 			System.out.println("Request Saved");
@@ -283,19 +288,18 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 
 	@Override
 	public void proceedWithServiceAfterPayment(Map<String, String> params) throws Exception {
-		Map<String, Object> inputParams = new HashMap<String, Object>();
-		inputParams.put("requestId", params.get("requestId"));
-		WebServiceInvoker.issueLandAndPropertyValuationProcessServiceFee(inputParams);
-		System.out.println("Process proceeded");
-	}
-
-	@Override
-	public String getResubmitActivityName() {
-		return "Resubmit Request Land and Property Valuation";
+		WebServiceInvoker.proceedWithLpServiceAfterPayment(PropertiesUtil.getProperty("SOA_URL_LAND&PROPERTY"), "serviceFeesMessage", "requestId", params.get("requestId"));
 	}
 
 	@Override
 	public String getResubmissionUser() {
 		return "lpuser";
+	}
+
+	@Override
+	public String getPhaseActivityName(String phase) {
+		if (phase != null && phase.equals("Resubmit"))
+			return "Resubmit Request Land and Property Valuation";
+		return null;
 	}
 }

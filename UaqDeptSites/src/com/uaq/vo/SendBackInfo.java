@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class SendBackInfo {
 	private String reviewComment;
-	private ServiceAttachment reviewAttachment;
+	private Map<String, ServiceAttachment> reviewAttachments;
 	private Map<String, ServiceAttachment> latestApplicantAttachment;
 
 	public String getReviewComment() {
@@ -16,11 +16,17 @@ public class SendBackInfo {
 	}
 
 	public ServiceAttachment getReviewAttachment() {
-		return reviewAttachment;
+		if (reviewAttachments != null && reviewAttachments.size() > 0)
+			return reviewAttachments.values().iterator().next();
+		return null;
 	}
 
-	public void setReviewAttachment(ServiceAttachment reviewAttachment) {
-		this.reviewAttachment = reviewAttachment;
+	public Map<String, ServiceAttachment> getReviewAttachments() {
+		return reviewAttachments;
+	}
+
+	public void setReviewAttachments(Map<String, ServiceAttachment> reviewAttachment) {
+		this.reviewAttachments = reviewAttachment;
 	}
 
 	public Map<String, ServiceAttachment> getLatestApplicantAttachment() {
@@ -87,8 +93,8 @@ public class SendBackInfo {
 			try {
 				ServiceAttachmentEnum serviceAttachmentField = ServiceAttachmentEnum.valueOf(nodeName);
 				getClass().getDeclaredField(serviceAttachmentField.memberName).set(this, textContent);
-			} catch (IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
-//				e.printStackTrace();
+			} catch (Exception e) {
+				// e.printStackTrace();
 			}
 		}
 	}

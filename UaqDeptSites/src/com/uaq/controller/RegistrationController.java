@@ -7,7 +7,7 @@ import static com.uaq.common.UAQURLConstant.*;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-
+ 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;

@@ -98,13 +98,13 @@
 													<div class="${parentDivClass} }">
 														<c:choose>
 															<c:when test="${fields[status.index].fieldType == 'Radio'}">
-		                                                    	<c:if test="${fields[status.index].disabled}">
+		                                                    	<c:if test="${fields[status.index].disabled || param.statusId == '6'}">
 		                                                    		<input type="hidden" name="params['${fields[status.index].fieldName}']" value="${fields[status.index].fieldValue}">
 		                                                    	</c:if>
 																<c:forEach var="fieldLkVal" items="${fields[status.index].fieldLkValues}" varStatus="lkStatus">
 				                                            	<div class="col-md-3 remove-pad">
 				                                                    <div class="radio inline-custom">
-			                                                            <input id="${fields[status.index].displayKey}-${lkStatus.index}" type="${fields[status.index].fieldType}" name="params['${fields[status.index].fieldName}']" <c:if test="${fields[status.index].fieldValue == fieldLkVal.key}">checked="checked"</c:if> <c:if test="${fields[status.index].disabled}">disabled="disabled"</c:if> value="${fieldLkVal.key}">
+			                                                            <input id="${fields[status.index].displayKey}-${lkStatus.index}" type="${fields[status.index].fieldType}" name="params['${fields[status.index].fieldName}']" <c:if test="${fields[status.index].fieldValue == fieldLkVal.key}">checked="checked"</c:if> <c:if test="${fields[status.index].disabled || param.statusId == '6'}">disabled="disabled"</c:if> value="${fieldLkVal.key}">
 			                                                            <label for="${fields[status.index].displayKey}-${lkStatus.index}" class="custom">
 																			<c:choose>
 																				<c:when test="${fields[status.index].fieldLkNeedLocalization}">
@@ -123,7 +123,7 @@
 															<c:when test="${fields[status.index].fieldType == 'Select'}">
 																<div class="custom-select-box cf">
 																	<c:choose>
-																		<c:when test="${fields[status.index].disabled}">
+																		<c:when test="${fields[status.index].disabled || param.statusId == '6'}">
 																			<c:choose>
 																				<c:when test="${fields[status.index].fieldLkNeedLocalization}">
 																					<input type="text" disabled="disabled" value='<spring:message code="${fields[status.index].fieldValue}"/>' class="form-control required" placeholder="" />
@@ -152,7 +152,8 @@
 															</c:when>
 															<c:when test="${fields[status.index].fieldType == 'File'}">
 																<div class="input-group file-upload">
-																    <c:if test="${fields[status.index].fieldName != null && fields[status.index].fieldName != '' }">
+																	<c:set var="attachmentValueStyle" value=""/>
+																    <c:if test="${fields[status.index].fieldName != null && fields[status.index].fieldName != '' && param.statusId != '6'}">
 																		<input name="files['${fields[status.index].fieldName}'].docTypeId" type="hidden" value="${fields[status.index].docTypeId}"/>
 																		<input name="files['${fields[status.index].fieldName}'].docTypeName" type="hidden" value="${fields[status.index].docTypeName}"/>
 																		<input type="text" class="form-control  other-form-file file-upload-option-view" name ="" data-msg-required="required" readonly="readonly" />
@@ -162,24 +163,27 @@
 																				<input name="files['${fields[status.index].fieldName}'].attachmentFile" type="file" class="form-control file-upload-option" accept="image/jpg, image/JPG, image/JPEG, image/jpeg,image/jpeg,image/gif,image/png, application/pdf,image/x-eps, application/msword" error-size="${filesize}" error-extention="${fileextention}" error-failed="${fileerror}" />
 																			</span>
 																		</span>
+																		<c:set var="attachmentValueStyle" value="position: absolute; margin: 35px -270px"/>
 																    </c:if>
+																    <form:errors path="files['${fields[status.index].fieldName}'].attachmentFile" class="error"/>
+																	<span style="${attachmentValueStyle}">
 																    <c:if test="${fields[status.index].attachmentValue != null}">
 																    	<a href="${fields[status.index].attachmentValue.viewUrl}">${fields[status.index].attachmentValue.fileName}</a><br/>
 																    </c:if>
-																    <form:errors path="files['${fields[status.index].fieldName}'].attachmentFile" class="error"/>
+																	</span>
 																</div>
 															</c:when>
 															<c:otherwise>
 																<!-- Checking if field is disabled or not -->
 																<c:choose>
-																<c:when test="${fields[status.index].disabled}">
+																<c:when test="${fields[status.index].disabled || param.statusId == '6'}">
 																	<input type="${fields[status.index].fieldType}" disabled="disabled" value="${fields[status.index].fieldValue}" class="form-control required" placeholder="" />
 																	<c:if test="${fields[status.index].fieldName != null && fields[status.index].fieldName != '' }">
 																		<input name="params['${fields[status.index].fieldName}']" type="hidden" value="${fields[status.index].fieldValue}"/>
 															    	</c:if>
 																</c:when>
 																<c:otherwise>
-																	<input name="params['${fields[status.index].fieldName}']" type="${fields[status.index].fieldType}" value="${fields[status.index].fieldValue}" class="form-control required" placeholder="" />
+																	<input name="params['${fields[status.index].fieldName}']" type="${fields[status.index].fieldType}" value="${fields[status.index].fieldValue}" class="${fields[status.index].fieldName} form-control required" placeholder="" />
 																    <form:errors path="params['${fields[status.index].fieldName}']" class="error"/>
 																</c:otherwise>
 																</c:choose>
@@ -199,6 +203,7 @@
 										<div class="col-md-12 remove-pad">
 											<div class="col-md-6 remove-pad">
 												<!-- submit button -->
+												<c:if test="${param.statusId != '6'}">
 												<div class="row">
 													<div class="form-group submission">
 														<div class="col-md-offset-5 col-md-7">
@@ -206,6 +211,7 @@
 														</div>
 													</div>
 												</div>
+												</c:if>
 												<!-- /submit button -->
 											</div>
 										</div>
@@ -218,16 +224,16 @@
 				</div>
 			</div>
 			<!-- /content area -->
-	
+		</div>
+	</div>
+</div>
 <!-- script -->
 
 <!--  //TODO don't forget to send this file to UAQ in the public HTML folder -->
 <script type="text/javascript" src="/js/serviceValidation.js"></script>
 <script>
 jQuery(function($) { 
- $([name="params[proIdExpiryDate]"]).datepicker({
-  dateFormat: 'mm/dd/yy'
+ $(".proIdExpiryDate").datepicker({
  });
 });
 </script>
-

@@ -174,7 +174,7 @@ public class PaymentController extends BaseController {
 						if (accountDetailForMobile != null && accountDetailForMobile.getAccountId() != null) {
 							logger.info("Mobile    |    Token Validated  | Redirecting Paynment Page");
 							model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-							viewname = "service.duplicate.request";
+							viewname = DUPLICATE_REQUEST_MOBILE;
 							if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), requestNo, statusId)) {
 								request.getSession().setAttribute(SESSION_LOGIN_INFO_PORTAL, logininfo);
 								viewname = paymentURL;
@@ -201,7 +201,7 @@ public class PaymentController extends BaseController {
 						if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
 							logger.info("Desktop    |    Token Validated  | Redirecting Paynment Page");
 							model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-							viewname = "service.duplicate.request";
+							viewname = DUPLICATE_REQUEST;
 							if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), requestNo, statusId)) {
 								viewname = paymentURL;
 								sessionRequestDetail.setMobile(false);
@@ -370,7 +370,41 @@ public class PaymentController extends BaseController {
 			PSResubmissonOutputVO resubmitVO = pSFindRequestService.findExtentionGrandLandRequest(inputVO);
 			searchCriteriaMap.put("calculatedAmountFromService", resubmitVO.getCreatedby());
 			break;
-		
+		case NEW_REAL_ESTATE:
+			searchCriteriaMap = new HashMap<String, String>();
+			String realStateStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
+			String realStatePropertyFileKey = serviceId + UNDERSCORE + realStateStatus;
+			String realStateCritera = PropertiesUtil.getProperty(realStatePropertyFileKey);
+			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, NEW_REAL_ESTATE);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, realStateCritera);
+			break;
+		case RENEW_REAL_ESTATE:
+			searchCriteriaMap = new HashMap<String, String>();
+			String renewRealStateStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
+			String renewRealStatePropertyFileKey = serviceId + UNDERSCORE + renewRealStateStatus;
+			String renewRealStateCritera = PropertiesUtil.getProperty(renewRealStatePropertyFileKey);
+			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, RENEW_REAL_ESTATE);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, renewRealStateCritera);
+			break;
+		case LOST_DOCUMENT:
+			searchCriteriaMap = new HashMap<String, String>();
+			String lostDocumentStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
+			String lostDocumentPropertyFileKey = serviceId + UNDERSCORE + lostDocumentStatus;
+			String lostDocumentCritera = PropertiesUtil.getProperty(lostDocumentPropertyFileKey);
+			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, LOST_DOCUMENT);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, lostDocumentCritera);
+			break;
+		case GRANT_LAND_REQUEST:
+			searchCriteriaMap = new HashMap<String, String>();
+			String grantLandTypeofUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
+			String grantLandrequestSTatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
+			String grantLandrequestpropertyFileKey = serviceId + UNDERSCORE + grantLandrequestSTatus + UNDERSCORE + grantLandTypeofUser;
+			String grantLandSerachCrieteria = PropertiesUtil.getProperty(grantLandrequestpropertyFileKey);
+			keywords = grantLandSerachCrieteria.split(COMMA);
+			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, GRANT_LAND_REQUEST);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
+			searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
+			break;
 
 		default:
 			searchCriteriaMap = new HashMap<String, String>();

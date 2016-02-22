@@ -163,10 +163,10 @@ public class PaymentConfirmationController extends BaseController {
 						}
 					}
 
-					if (cookies.get(responsePUN) == null ) {
+					/*if (cookies.get(responsePUN) == null ) {
 						
 						Cookie responsePUNCookie = new Cookie(responsePUN, "valid");
-						response.addCookie(responsePUNCookie);
+						response.addCookie(responsePUNCookie);*/
 						logger.debug(webPaymentResponse.toString());
 						/*
 						 * try { webPaymentResponse.setStatusMessage(URLDecoder
@@ -291,7 +291,7 @@ public class PaymentConfirmationController extends BaseController {
 
 						logger.debug("inquiryPaymentResponse payment details :" + inquiryPaymentResponse);
 						
-					}
+					
 				}
 			} catch (UAQException e) {
 				logger.error(e.getMessage());

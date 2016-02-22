@@ -13,7 +13,7 @@ import com.uaq.util.UCMUploader;
 import com.uaq.util.UCMUploader.AttachmentInfo;
 
 public abstract class ProCardServiceHandler extends ServiceHandler {
-
+ 
 	@Override
 	public String saveOrSubmitServiceRequestData(String phase, AccountDetailsViewSDO accountDetails, LPServiceLookUp lookupServiceEN_AR, Map<String, String> params, List<AttachmentInfo> attachmentInfos) {
 		Map<String, Object> inputParams = new HashMap<String, Object>();
@@ -22,11 +22,12 @@ public abstract class ProCardServiceHandler extends ServiceHandler {
 			return null;
 		try {
 			inputParams.put("serviceId", params.get("serviceId"));
+			inputParams.put("serviceDept", params.get("serviceDept"));
 			inputParams.put("accountDetails", accountDetails);
 			inputParams.put("nameOfPro", params.get("nameOfPro"));
 			inputParams.put("proIdNo", params.get("proIdNo"));
 			inputParams.put("proNationality", params.get("proNationality"));
-			Date proIdExpiryDate = new SimpleDateFormat("yyyy-MM-dd").parse(params.get("proIdExpiryDate"));
+			Date proIdExpiryDate = new SimpleDateFormat("MM/dd/yyyy").parse(params.get("proIdExpiryDate"));
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 			inputParams.put("proIdExpiryDate", formatter.format(proIdExpiryDate));
 
@@ -42,6 +43,8 @@ public abstract class ProCardServiceHandler extends ServiceHandler {
 				requestData = WebServiceInvoker.saveCardRequest(inputParams);
 				inputParams.put("requestNumber", requestData.getRequestNumber());
 				inputParams.put("requestId", requestData.getRequestId());
+				inputParams.put("stepAction", "SUBMIT");
+				inputParams.put("stepName", "Submit Request Issue New PRO Card");
 				WebServiceInvoker.sendSmsAndEMail(inputParams);
 			}
 			System.out.println("--------->  Request Id: " + requestData.getRequestId());
@@ -52,6 +55,7 @@ public abstract class ProCardServiceHandler extends ServiceHandler {
 			if (!new UCMUploader().genericSaveAttachmentToDB(attachmentInfos))
 				return null;
 			if (phase.equals("Resubmit")) {
+				inputParams.put("phase", phase);
 				resubmitService(inputParams);
 			}
 			System.out.println("Request Saved");
@@ -80,15 +84,15 @@ public abstract class ProCardServiceHandler extends ServiceHandler {
 
 	public abstract void issueServiceRequest(Map<String, Object> inputParams) throws Exception;
 
-	@Override
-	public void proceedWithServiceAfterPayment(Map<String, String> params) throws Exception {
-		Map<String, Object> inputParams = new HashMap<String, Object>();
-		inputParams.put("requestId", params.get("requestId"));
-		String serviceId = params.get("serviceId").toString();
-		if(serviceId.equals("403"))
-			WebServiceInvoker.issueNewProCardServiceFee(inputParams);
-		else if(serviceId.equals("404"))
-			WebServiceInvoker.issueNewProCardServiceFee(inputParams);
-		System.out.println("Process proceeded");
-	}
+//	@Override
+//	public void proceedWithServiceAfterPayment(Map<String, String> params) throws Exception {
+//		Map<String, Object> inputParams = new HashMap<String, Object>();
+//		inputParams.put("requestId", params.get("requestId"));
+//		String serviceId = params.get("serviceId").toString();
+//		if(serviceId.equals("403"))
+//			WebServiceInvoker.issueNewProCardServiceFee(inputParams);
+//		else if(serviceId.equals("404"))
+//			WebServiceInvoker.issueNewProCardServiceFee(inputParams);
+//		System.out.println("Process proceeded");
+//	}
 }

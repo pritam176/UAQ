@@ -133,13 +133,7 @@ public class MyRequestResubmitController extends BaseController {
 			PSResubmissonOutputVO resubmitdata = pSFindRequestService.findIssueSitePlanDocRequest(inputVO);
 			viewname = addingModelToIssueSitePlanDoc(resubmitdata, request, response, model);
 			logger.info("ReSubmission Issue Site Paln Document Page Loaded");
-		} else if (serviceId.equals(GRAND_LAND_REQUEST)) {
-
-			PSGrandLandRequestVO resubmitdata = pSFindRequestService.getGrandLandRequest(inputVO);
-			viewname = addingModelToGrantLand(resubmitdata, request, response, model);
-			logger.info("ReSubmission Grant Land Document Page Loaded");
-
-		} else if (serviceId.equals(ISSUE_TO_WHOME_IT_MAY_CERTIFICATE)) {
+		}  else if (serviceId.equals(ISSUE_TO_WHOME_IT_MAY_CERTIFICATE)) {
 			LPtoWhomeConcernVO lptoWhomeConcernVO = lpFindRequestService.findLpToWhomConcernView1(inputVO, languageCode);
 			lptoWhomeConcernVO.setStatus(statusId);
 			viewname = addingModelToWhomItMayConcern(lptoWhomeConcernVO, request, response, model);
@@ -171,7 +165,7 @@ public class MyRequestResubmitController extends BaseController {
 			}
 
 			viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + "/showServicePhase.html?serviceId=" + ISSUE_NEW_PRO_REQUEST + "&requestNumber="
-					+ inputVO.getAttributeValue() + "&servicePhase=Resubmit";
+					+ inputVO.getAttributeValue() + "&servicePhase=Resubmit"+ "&statusId="+statusId;
 
 		} else if (serviceId.equals(RENEW_PRO_REQUEST)) {
 
@@ -186,7 +180,7 @@ public class MyRequestResubmitController extends BaseController {
 			}
 
 			viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + "/showServicePhase.html?serviceId=" + RENEW_PRO_REQUEST + "&requestNumber="
-					+ inputVO.getAttributeValue() + "&servicePhase=Resubmit";
+					+ inputVO.getAttributeValue() + "&servicePhase=Resubmit"+ "&statusId="+statusId;
 
 		}
 		else if (serviceId.equals(LAND_PROPERTY_VALUTION_REQUEST)) {
@@ -202,10 +196,73 @@ public class MyRequestResubmitController extends BaseController {
 		}
 
 		viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + "/showServicePhase.html?serviceId=" + LAND_PROPERTY_VALUTION_REQUEST + "&requestNumber="
-				+ inputVO.getAttributeValue() + "&servicePhase=Resubmit";
+				+ inputVO.getAttributeValue() + "&servicePhase=Resubmit"+ "&statusId="+statusId;
 
 	}
-		
+		else if (serviceId.equals(NEW_REAL_ESTATE)) {
+
+			if (portalUtil.isMobile(request, response)) {
+				model.addAttribute(ISMOBILE, "true");
+				viewname = MOBILE_LOGIN_AGAIN;
+				LoginOutputVO logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+				//LoginOutputVO logininfo = portalUtil.getLoginDetailFromMobileRequest(request);
+				if (logininfo != null) {
+					request.getSession().setAttribute(SESSION_LOGIN_INFO_MOBILE, logininfo);
+				}
+			}
+
+			viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + "/showServicePhase.html?serviceId=" + NEW_REAL_ESTATE + "&requestNumber="
+					+ inputVO.getAttributeValue() + "&servicePhase="+("31".equals(statusId)?"Step1":"Resubmit")+ "&statusId="+statusId;
+
+		}
+		else if (serviceId.equals(RENEW_REAL_ESTATE)) {
+
+			if (portalUtil.isMobile(request, response)) {
+				model.addAttribute(ISMOBILE, "true");
+				viewname = MOBILE_LOGIN_AGAIN;
+				LoginOutputVO logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+				//LoginOutputVO logininfo = portalUtil.getLoginDetailFromMobileRequest(request);
+				if (logininfo != null) {
+					request.getSession().setAttribute(SESSION_LOGIN_INFO_MOBILE, logininfo);
+				}
+			}
+
+			viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + "/showServicePhase.html?serviceId=" + RENEW_REAL_ESTATE + "&requestNumber="
+					+ inputVO.getAttributeValue() + "&servicePhase="+("31".equals(statusId)?"Step1":"Resubmit")+ "&statusId="+statusId;
+
+		}
+		else if (serviceId.equals(LOST_DOCUMENT)) {
+
+			if (portalUtil.isMobile(request, response)) {
+				model.addAttribute(ISMOBILE, "true");
+				viewname = MOBILE_LOGIN_AGAIN;
+				LoginOutputVO logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+				//LoginOutputVO logininfo = portalUtil.getLoginDetailFromMobileRequest(request);
+				if (logininfo != null) {
+					request.getSession().setAttribute(SESSION_LOGIN_INFO_MOBILE, logininfo);
+				}
+			}
+
+			viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + "/showServicePhase.html?serviceId=" + LOST_DOCUMENT + "&requestNumber="
+					+ inputVO.getAttributeValue() + "&servicePhase="+("44".equals(statusId)?"Step1":"Resubmit")+ "&statusId="+statusId;
+
+		}
+		else if (serviceId.equals(GRAND_LAND_REQUEST)) {
+
+			if (portalUtil.isMobile(request, response)) {
+				model.addAttribute(ISMOBILE, "true");
+				viewname = MOBILE_LOGIN_AGAIN;
+				LoginOutputVO logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+				//LoginOutputVO logininfo = portalUtil.getLoginDetailFromMobileRequest(request);
+				if (logininfo != null) {
+					request.getSession().setAttribute(SESSION_LOGIN_INFO_MOBILE, logininfo);
+				}
+			}
+
+			viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + "/showServicePhase.html?serviceId=" + GRAND_LAND_REQUEST + "&requestNumber="
+					+ inputVO.getAttributeValue() + "&servicePhase=Resubmit";
+
+		}
 		model.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
 		return viewname;
 
@@ -410,7 +467,7 @@ public class MyRequestResubmitController extends BaseController {
 		}
 		model.addAttribute(PAGE_LABEL, "label.ps.extensiongrantland");
 		model.addAttribute(PAGE_META_DATA, pageMetadataVO);
-		logger.exit("addingModelToExtentonGrandLand");
+		logger.info("addingModelToExtentonGrandLand");
 		return viewname;
 	}
 

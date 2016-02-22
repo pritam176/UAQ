@@ -11,6 +11,7 @@ import java.util.Map;
  */
 public class ApplicationConstants {
 
+	
 	public static final String ACTIVE_SATUS = "Active";
 
 	public static final String INACTIVE_SATUS = "Inactive";
@@ -251,6 +252,10 @@ public class ApplicationConstants {
 	
 	
 	
+	
+
+	
+	
 	public static String getSite(String Site) {
 		Map<String, String> sectorMap = new HashMap<String, String>();
 		sectorMap.put("EGovernment", "egd");
@@ -268,6 +273,8 @@ public class ApplicationConstants {
 		sectorMap.put("UAQInternetPortal", "uaq");
 
 		return sectorMap.get(Site);
+		
+		
 
 	}
 

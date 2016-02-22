@@ -96,12 +96,14 @@ public class ServiceParamsCommand {
 		private boolean allowedForIndividual;
 		private boolean allowedForEstablishment;
 		private ServiceHandler serviceHandler;
+		private String dept;
 
 		public Service() {
 		}
 
-		public Service(int id, String serviceName, boolean allowedForIndividual, boolean allowedForEstablishment) {
+		public Service(int id, String serviceDept, String serviceName, boolean allowedForIndividual, boolean allowedForEstablishment) {
 			setId(id);
+			setDept(serviceDept);
 			setServiceName(serviceName);
 			setAllowedForIndividual(allowedForIndividual);
 			setAllowedForEstablishment(allowedForEstablishment);
@@ -115,6 +117,14 @@ public class ServiceParamsCommand {
 			this.id = id;
 		}
 
+		public String getDept() {
+			return dept;
+		}
+
+		public void setDept(String dept) {
+			this.dept = dept;
+		}
+		
 		public String getServiceName() {
 			return serviceName;
 		}
@@ -400,6 +410,8 @@ public class ServiceParamsCommand {
 							errors.pushNestedPath("files[" + field.getFieldName() + "]");
 							errors.rejectValue("attachmentFile", "field.required");
 							errors.popNestedPath();
+						} else {
+							validateFileSize(errors, field, attachment);
 						}
 					} else {
 						String paramValue = serviceParams.getParams().get(field.getFieldName());
@@ -410,13 +422,17 @@ public class ServiceParamsCommand {
 				} else {
 					if (field.getFieldType() == FieldTypeEnum.File) {
 						ServiceAttachment attachment = serviceParams.getFiles().get(field.getFieldName());
-						if (attachment.attachmentFile.getSize() > 2 * 1024 * 1024) {
-							errors.pushNestedPath("files[" + field.getFieldName() + "]");
-							errors.rejectValue("attachmentFile", "field.file.exceeds2MB");
-							errors.popNestedPath();
-						}
+						validateFileSize(errors, field, attachment);
 					}
 				}
+			}
+		}
+
+		private void validateFileSize(Errors errors, ServiceField field, ServiceAttachment attachment) {
+			if (attachment != null && attachment.attachmentFile != null && attachment.attachmentFile.getSize() > 2 * 1024 * 1024) {
+				errors.pushNestedPath("files[" + field.getFieldName() + "]");
+				errors.rejectValue("attachmentFile", "field.file.exceeds2MB");
+				errors.popNestedPath();
 			}
 		}
 	}

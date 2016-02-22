@@ -6,8 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.uaq.service.WebServiceInvoker;
 import com.tacme.uaq.services.utils.ucm.UCMUtilities;
+import com.uaq.common.PropertiesUtil;
+import com.uaq.service.WebServiceInvoker;
 
 public class UCMUploader {
 
@@ -44,8 +45,10 @@ public class UCMUploader {
 					attachmentParams.put("serviceId", attachment.getServiceId());
 					attachmentParams.put("fileName", fileName);
 					attachmentParams.put("ucmDid", attachment.getDocInfo().get("DID"));
+					attachmentParams.put("downloadurl", getNativeFileUrl(attachment.getDocInfo().get("DID")));
 					attachmentParams.put("viewurl", attachment.getDocInfo().get("DocUrl"));
-					WebServiceInvoker.uploadAttachmentToDatabase(attachmentParams);
+					String attachmentId = WebServiceInvoker.uploadAttachmentToDatabase(attachmentParams);
+					attachment.setAttachmentId(attachmentId);
 				} catch (Exception e) {
 					e.printStackTrace();
 					return false;
@@ -53,6 +56,12 @@ public class UCMUploader {
 			}
 		}
 		return true;
+	}
+
+	public String getNativeFileUrl(String dID) {
+		String dUrl = "http://" + PropertiesUtil.getProperty("ucm.ip") + ":" + PropertiesUtil.getProperty("ucm.port");
+		dUrl += "/cs/idcplg?IdcService=GET_FILE&amp;dID=" + dID + "&amp;allowInterrupt=1";
+		return dUrl;
 	}
 
 	public static class AttachmentInfo {
@@ -64,6 +73,9 @@ public class UCMUploader {
 		private String serviceId;
 		private String requestId;
 		private Map<String, String> docInfo;
+		//from service_attachments table
+		private String attachmentId;
+		private String fieldName;
 
 		public String getFilename() {
 			return fileName;
@@ -116,10 +128,26 @@ public class UCMUploader {
 		public Map<String, String> getDocInfo() {
 			return docInfo;
 		}
-		
+
 		public void setDocInfo(Map<String, String> docInfo) {
 			this.docInfo = docInfo;
 		}
-	}
 
+		public String getAttachmentId() {
+			return attachmentId;
+		}
+		
+		public void setAttachmentId(String attachmentId) {
+			this.attachmentId = attachmentId;
+		}
+
+		public String getFieldName() {
+			return fieldName;
+		}
+		
+		public void setFieldName(String fieldName) {
+			this.fieldName = fieldName;
+		}
+
+	}
 }

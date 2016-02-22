@@ -1,16 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/common/activation-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/asm-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/asm-commons-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/asm-util-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/common/asprise-imaging-core.jar"/>
-	<classpathentry kind="lib" path="lib/common/asprise-imaging-ui.jar"/>
-	<classpathentry kind="lib" path="lib/common/assetapi-impl.jar"/>
-	<classpathentry kind="lib" path="lib/common/assetapi.jar"/>
-	<classpathentry kind="lib" path="lib/common/assetframework.jar"/>
 	<classpathentry kind="lib" path="lib/common/axis.jar"/>
 	<classpathentry kind="lib" path="lib/common/basic.jar"/>
 	<classpathentry kind="lib" path="lib/common/cas-client-core-3.1.9.jar"/>
@@ -22,11 +16,9 @@
 	<classpathentry kind="lib" path="lib/common/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/commons-configuration-1.6.jar"/>
 	<classpathentry kind="lib" path="lib/common/commons-digester.jar"/>
-	<classpathentry kind="lib" path="lib/common/commons-discovery-0.2.jar"/>
 	<classpathentry kind="lib" path="lib/common/commons-discovery-0.4.jar"/>
 	<classpathentry kind="lib" path="lib/common/commons-fileupload-1.2.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/commons-httpclient-3.1.jar"/>
-	<classpathentry kind="lib" path="lib/common/commons-io-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/common/commons-lang-2.4.jar"/>
 	<classpathentry kind="lib" path="lib/common/cs-cache-11.1.1.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/common/cs-core.jar"/>
@@ -35,15 +27,12 @@
 	<classpathentry kind="lib" path="lib/common/ezmorph-1.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/common/fluent-hc-4.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/framework.jar"/>
-	<classpathentry kind="lib" path="lib/common/gator.jar"/>
-	<classpathentry kind="lib" path="lib/common/gson-2.3.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/httpclient-4.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/httpclient-cache-4.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/httpclient-win-4.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/httpcore-4.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/httpmime-4.4.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/j2ee.jar"/>
-	<classpathentry kind="lib" path="lib/common/jaxrpc.jar"/>
 	<classpathentry kind="lib" path="lib/common/jcaptcha-1.0-all.jar"/>
 	<classpathentry kind="lib" path="lib/common/jdom-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/jersey-client-1.1.4.1.jar"/>
@@ -55,8 +44,6 @@
 	<classpathentry kind="lib" path="lib/common/jna-platform-4.1.0.jar"/>
 	<classpathentry kind="lib" path="lib/common/joda-time-1.6.jar"/>
 	<classpathentry kind="lib" path="lib/common/json-lib-2.4.jar"/>
-	<classpathentry kind="lib" path="lib/common/jsr311-api-1.1.1.jar"/>
-	<classpathentry kind="lib" path="lib/common/jssc.jar"/>
 	<classpathentry kind="lib" path="lib/common/jstl-1.1.2.jar"/>
 	<classpathentry kind="lib" path="lib/common/log4j-1.2.16.jar"/>
 	<classpathentry kind="lib" path="lib/common/mail.jar"/>
@@ -69,8 +56,6 @@
 	<classpathentry kind="lib" path="lib/common/rest-api-11.1.1.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/common/rest-api-local-impl-11.1.1.8.0.jar"/>
 	<classpathentry kind="lib" path="lib/common/rome-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/common/RXTXcomm.jar"/>
-	<classpathentry kind="lib" path="lib/common/saaj.jar"/>
 	<classpathentry kind="lib" path="lib/common/servlet-api.jar"/>
 	<classpathentry kind="lib" path="lib/common/sitemapgen4j-1.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/slf4j-api-1.5.8.jar"/>
@@ -78,7 +63,6 @@
 	<classpathentry kind="lib" path="lib/common/spring-aop-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/common/spring-asm-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/common/spring-jdbc-3.1.1.RELEASE.jar"/>
-	<classpathentry kind="lib" path="lib/common/spring-security-crypto-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/common/spring-web-3.1.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="lib/common/spring.transaction-3.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/common/standard-1.1.2.jar"/>
@@ -91,9 +75,13 @@
 	<classpathentry kind="lib" path="lib/common/velocity-1.7.jar"/>
 	<classpathentry kind="lib" path="lib/common/wem-sso-api-1.2.jar"/>
 	<classpathentry kind="lib" path="lib/common/wem-sso-api-cas-1.2.jar"/>
-	<classpathentry kind="lib" path="lib/common/wsdl4j.jar"/>
 	<classpathentry kind="lib" path="lib/common/xcelerate.jar"/>
 	<classpathentry kind="lib" path="lib/common/xwork-2.0.4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="lib/dev/CreateAccount.jar"/>
 	<classpathentry kind="lib" path="lib/dev/EGD_GetSupplierDetails.jar"/>
 	<classpathentry kind="lib" path="lib/dev/EGD_ServicePayment.jar"/>
@@ -101,6 +89,7 @@
 	<classpathentry kind="lib" path="lib/dev/LP_SubmitCreateRequest.jar"/>
 	<classpathentry kind="lib" path="lib/dev/LP_SubmitResubmitRequest.jar"/>
 	<classpathentry kind="lib" path="lib/dev/Payment_Fees.jar"/>
+	<classpathentry kind="lib" path="lib/dev/PaymentHistory.jar"/>
 	<classpathentry kind="lib" path="lib/dev/PostPayment.jar"/>
 	<classpathentry kind="lib" path="lib/dev/PS_Resubmit.jar"/>
 	<classpathentry kind="lib" path="lib/dev/PS_ServicePayment.jar"/>
@@ -108,35 +97,16 @@
 	<classpathentry kind="lib" path="lib/dev/PS_SubmitNOC.jar"/>
 	<classpathentry kind="lib" path="lib/dev/PWS_Resubmit.jar"/>
 	<classpathentry kind="lib" path="lib/dev/PWS_Submit.jar"/>
+	<classpathentry kind="lib" path="lib/dev/Reg_RegistrationService.jar"/>
 	<classpathentry kind="lib" path="lib/dev/Reg_TokenValidationService.jar"/>
 	<classpathentry kind="lib" path="lib/dev/UAQ_ChangePasswordService.jar"/>
 	<classpathentry kind="lib" path="lib/dev/UAQ_Common_myRequest.jar"/>
 	<classpathentry kind="lib" path="lib/dev/uaq_lookup.jar"/>
 	<classpathentry kind="lib" path="lib/dev/UCM_FileUploadDownloadService.jar"/>
 	<classpathentry kind="lib" path="lib/dev/UCM_WebLocation.jar"/>
-	<classpathentry kind="lib" path="lib/stg/CreateAccount.jar"/>
-	<classpathentry kind="lib" path="lib/stg/customfilter_stg.jar"/>
-	<classpathentry kind="lib" path="lib/stg/EGD_GetSupplierDetails.jar"/>
-	<classpathentry kind="lib" path="lib/stg/EGD_ServicePayment.jar"/>
-	<classpathentry kind="lib" path="lib/stg/EGD_SubmitResubmit.jar"/>
-	<classpathentry kind="lib" path="lib/stg/LP_SubmitCreateRequest.jar"/>
-	<classpathentry kind="lib" path="lib/stg/LP_SubmitResubmitRequest.jar"/>
-	<classpathentry kind="lib" path="lib/stg/Payment_Fees.jar"/>
-	<classpathentry kind="lib" path="lib/stg/PaymentHistory.jar"/>
-	<classpathentry kind="lib" path="lib/stg/PostPayment.jar"/>
-	<classpathentry kind="lib" path="lib/stg/PS_Resubmit.jar"/>
-	<classpathentry kind="lib" path="lib/stg/PS_ServicePayment.jar"/>
-	<classpathentry kind="lib" path="lib/stg/PS_Submit.jar"/>
-	<classpathentry kind="lib" path="lib/stg/PS_SubmitNOCt.jar"/>
-	<classpathentry kind="lib" path="lib/stg/PWS_Resubmit.jar"/>
-	<classpathentry kind="lib" path="lib/stg/PWS_Submit.jar"/>
-	<classpathentry kind="lib" path="lib/stg/Reg_RegistrationService.jar"/>
-	<classpathentry kind="lib" path="lib/stg/Reg_TokenValidationService.jar"/>
-	<classpathentry kind="lib" path="lib/stg/UAQ_ChangePasswordService.jar"/>
-	<classpathentry kind="lib" path="lib/stg/UAQ_Common_myRequest.jar"/>
-	<classpathentry kind="lib" path="lib/stg/UAQ_Common.jar"/>
-	<classpathentry kind="lib" path="lib/stg/UCM_FileUploadDownloadService.jar"/>
-	<classpathentry kind="lib" path="lib/stg/UCM_WebLocation.jar"/>
-	<classpathentry kind="lib" path="lib/stg/UCMUtils.jar"/>
+	<classpathentry kind="lib" path="lib/dev/oracle.ucm.ridc-11.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/dev/TaskQueryService-Client.jar"/>
+	<classpathentry kind="lib" path="lib/dev/TaskService-Client.jar"/>
+	<classpathentry kind="lib" path="lib/dev/UCMUtils.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

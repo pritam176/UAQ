@@ -219,8 +219,23 @@ public class BaseController {
 		try {
 			model.addAttribute("sourceURL", sourceURL);
 			navigationMAP = navigationService.getSitesNavigationDetails(site, multiticket);
+			
+			//TODO:will revisit this
+			List<NavigationVO> navigationList = navigationMAP.get(request.getParameter("languageCode"));
+			for(NavigationVO navigationVO : navigationList){
+				if(navigationVO.getName().equals("Archaeological Sites")){
+					for(NavigationVO association : navigationVO.getAssociations()){
+						association.setUrl(association.getUrl().replace("archsites_d", "archaeology"));
+					}
+				}
+				if(navigationVO.getName().equals("Museums")){
+					for(NavigationVO association : navigationVO.getAssociations()){
+						association.setUrl(association.getUrl().replace("museum_d", "museums"));
+					}
+				}
+			}
+			
 			model.addAttribute("navigations", navigationMAP);
-
 			if (source.contains("/")) {
 				parentPageName = source.split("/")[0];
 			}

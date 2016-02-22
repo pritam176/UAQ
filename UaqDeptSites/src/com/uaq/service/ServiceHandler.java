@@ -20,7 +20,7 @@ import com.uaq.vo.SendBackInfo;
 public abstract class ServiceHandler {
 
 	private Logger logger = Logger.getLogger(ServiceHandler.class);
-	protected SimpleDateFormat displayDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	protected SimpleDateFormat displayDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 	public static enum LookupTypeEnum {
 		Nationality,
@@ -31,7 +31,9 @@ public abstract class ServiceHandler {
 		LandCategory,
 		LandLocation,
 		Sector,
-		Area, 
+		Area,
+		LostDocumentType,
+		MaritalStatus
 	}
 
 	protected Map<String, String> lookUpDataDropDown(LPServiceLookUp lPService, LookupTypeEnum lookupType, String languageCode, Map<String, String> params) throws Exception {
@@ -65,7 +67,7 @@ public abstract class ServiceHandler {
 				lookupList = new HashMap<String, Map<String, String>>();
 				Map<String, String> lookupValuesMap = new HashMap<String, String>();
 				lookupValuesMap.put("1", "lpv.applicantPosition.lk.owner");
-				lookupValuesMap.put("2", "lpv.applicantPosition.lk.hier");
+				lookupValuesMap.put("2", "lpv.applicantPosition.lk.heir");
 				lookupList.put("All", lookupValuesMap);
 				break;
 			case LandLocation:
@@ -73,6 +75,18 @@ public abstract class ServiceHandler {
 				lookupValuesMap = new HashMap<String, String>();
 				lookupValuesMap.put("1", "lpv.landLocation.lk.area");
 				lookupValuesMap.put("2", "lpv.landLocation.lk.sector");
+				lookupList.put("All", lookupValuesMap);
+				break;
+			case LostDocumentType:
+				lookupList = lPService.getLostDocumentTypeListAR_EN();
+				break;
+			case MaritalStatus:
+				lookupList = new HashMap<String, Map<String, String>>();
+				lookupValuesMap = new HashMap<String, String>();
+				lookupValuesMap.put("1", "grantLand.maritalStatus.lk.single");
+				lookupValuesMap.put("2", "grantLand.maritalStatus.lk.married");
+				lookupValuesMap.put("3", "grantLand.maritalStatus.lk.devroced");
+				lookupValuesMap.put("4", "grantLand.maritalStatus.lk.widdow");
 				lookupList.put("All", lookupValuesMap);
 				break;
 			default:
@@ -110,7 +124,7 @@ public abstract class ServiceHandler {
 				if (lookupValueCode.equals("1"))
 					return "lpv.applicantPosition.lk.owner";
 				else
-					return "lpv.applicantPosition.lk.hier";
+					return "lpv.applicantPosition.lk.heir";
 			case LandLocation:
 				if (lookupValueCode.equals("1"))
 					return "lpv.landLocation.lk.area";
@@ -127,38 +141,61 @@ public abstract class ServiceHandler {
 	}
 
 	protected void getReviewerResponse(SendBackInfo sendBackInfo, List<ServiceField> serviceFields) {
+		getReviewerResponse(sendBackInfo, null, null, serviceFields);
+	}
+
+	protected void getReviewerResponse(SendBackInfo sendBackInfo, String attachmentDisplayKey, List<ServiceField> serviceFields) {
+		getReviewerResponse(sendBackInfo, attachmentDisplayKey, null, serviceFields);
+	}
+
+	protected void getReviewerResponse(SendBackInfo sendBackInfo, String attachmentDisplayKey, String docTypeId, List<ServiceField> serviceFields) {
+		if (attachmentDisplayKey == null)
+			attachmentDisplayKey = "service.resubmit.ReviewerAttachment";
 		if (sendBackInfo != null) {
 			ServiceField f7 = new ServiceField("", "service.resubmit.ReviewerComment", FieldTypeEnum.Text, false);
-			ServiceField f8 = new ServiceField("", "service.resubmit.ReviewerAttachment", FieldTypeEnum.File, false);
+			ServiceField f8 = new ServiceField("", attachmentDisplayKey, FieldTypeEnum.File, false);
 			f7.setPanelHeader("service.resubmit.reviewerResponse");
 			f7.setDisabled(true);
 			f7.setFieldValue(sendBackInfo.getReviewComment());
 			f8.setDisabled(true);
-			f8.setAttachmentValue(sendBackInfo.getReviewAttachment());
+			if (docTypeId == null)
+				f8.setAttachmentValue(sendBackInfo.getReviewAttachment());
+			else
+				f8.setAttachmentValue(sendBackInfo.getReviewAttachments().get(docTypeId));
 			serviceFields.add(f7);
 			serviceFields.add(f8);
 		}
 	}
 
 	public void resubmitService(Map<String, Object> inputParams) {
+		resubmitService(inputParams, null);
+	}
+
+	public void resubmitService(Map<String, Object> inputParams, Map<String, String> payloadParams) {
 		String requestNumber = inputParams.get("requestNumber").toString();
+		String phase = inputParams.get("phase").toString();
 		// String loggedInUser =
 		// ((AccountDetailsViewSDO)inputParams.get("accountDetails")).getUserDetailsView().get(0).getLoginusername().getValue().toString();
 		String loggedInUser = getResubmissionUser();
-		Map<String, String> resubmittionTasks = new TaskQueryServicePortClient().getUserTasks(ApplicationConstants.WS_USERNAME, ApplicationConstants.WS_PASSWORD, loggedInUser, getResubmitActivityName());
+		Map<String, String> resubmittionTasks = new TaskQueryServicePortClient().getUserTasks(ApplicationConstants.WS_USERNAME, ApplicationConstants.WS_PASSWORD, loggedInUser, getPhaseActivityName(phase));
 		String taskId = resubmittionTasks.get(requestNumber);
-		new TaskServicePortClient().updateTaskOutcome(ApplicationConstants.WS_USERNAME, ApplicationConstants.WS_PASSWORD, loggedInUser, taskId);
+		new TaskServicePortClient().updateTaskOutcome(ApplicationConstants.WS_USERNAME, ApplicationConstants.WS_PASSWORD, loggedInUser, taskId, getResubmissionAction(), payloadParams);
 	}
 
-	public abstract List<ServiceField> getServicePreparationFields(String phase, LPServiceLookUp lPServiceLookUp, String languageCode, Map<String, Object> initialParams) throws Exception;
+	public abstract List<ServiceField> getServicePreparationFields(String phase, LPServiceLookUp lookupServiceEN_AR, String languageCode, Map<String, Object> initialParams) throws Exception;
 
-	public abstract String saveOrSubmitServiceRequestData(String phase, AccountDetailsViewSDO accountDetails, LPServiceLookUp lPServiceLookUp, Map<String, String> params, List<AttachmentInfo> attachmentInfos) throws Exception;
+	public abstract String saveOrSubmitServiceRequestData(String phase, AccountDetailsViewSDO accountDetails, LPServiceLookUp lookupServiceEN_AR, Map<String, String> params, List<AttachmentInfo> attachmentInfos) throws Exception;
 
-	public abstract void issueServiceRequest(AccountDetailsViewSDO accountDetails, LPServiceLookUp lPServiceLookUp, String languageCode, Map<String, String> params) throws Exception;
+	public abstract void issueServiceRequest(AccountDetailsViewSDO accountDetails, LPServiceLookUp lookupServiceEN_AR, String languageCode, Map<String, String> params) throws Exception;
 
 	public abstract void proceedWithServiceAfterPayment(Map<String, String> params) throws Exception;
 
-	public abstract String getResubmitActivityName();
+	public abstract String getPhaseActivityName(String phase);
 
 	public abstract String getResubmissionUser();
+
+	public String getResubmissionAction() {
+		return "SUBMIT";
+	}
+
 }

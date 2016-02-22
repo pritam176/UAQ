@@ -59,6 +59,12 @@
 		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
 		<put-attribute name="body" value="/WEB-INF/jsp/sites/news/newsLandingPage.jsp" />
 	</definition>
+	
+	
+	<definition name="sites.archaeological.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/archaeology/archaeologyLandingPage.jsp" />
+	</definition>
 
 	<definition name="sites.news.detail" extends="departmentBaseLayout">
 		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />

@@ -86,6 +86,13 @@ public class ViewPath {
 	public static final String NEWS_DETAIL_SITES = "/{site}/{landing}/news/{name}.html";
 	
 	public static final String NEWS_AND_ANNOUNCEMENT_LISTING_SITES = "/{site}/{landing}/news-and-announcements.html";
+	
+	
+	//ArchaeologicalSites
+	public static final String ARCHAEOLOGICAL_LISTING_SITES = "/{site}/{landing}/archaeological-sites.html";
+	public static final String MUSEUMS_LISTING_SITES = "/{site}/{landing}/museums.html";
+	public static final String ARCHAEOLOGICAL_DETAIL_SITES = "/{site}/{landing}/archaeology/{name}.html";
+	public static final String MUSEUMS_DETAIL_SITES = "/{site}/{landing}/museums/{name}.html";
 
 	// Publication
 	public static final String PUBLICATION_DETAIL = "/{site}/{landing}/publication/{name}.html";

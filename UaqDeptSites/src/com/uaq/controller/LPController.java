@@ -34,13 +34,18 @@ import com.uaq.command.ServiceParamsCommand.ServiceField;
 import com.uaq.common.ApplicationConstants;
 import com.uaq.common.PaymentSessionUtil;
 import com.uaq.common.PropertiesUtil;
+import com.uaq.common.TilesViewConstant;
 import com.uaq.common.UAQURLConstant;
 import com.uaq.common.ViewPath;
 import com.uaq.service.LandAndPropertyValuationServiceHandler;
 
+import com.uaq.service.GrantLandRequestServiceHandler;
+import com.uaq.service.LostDocumentServiceHandler;
 import com.uaq.service.PortalUtil;
 import com.uaq.service.ProCardIssuerServiceHandler;
 import com.uaq.service.ProCardRenewerServiceHandler;
+import com.uaq.service.RealEstateOfficeIssuerServiceHandler;
+import com.uaq.service.RealEstateOfficeRenewerServiceHandler;
 import com.uaq.util.UCMUploader.AttachmentInfo;
 import com.uaq.vo.AccountDetailTokenInput;
 import com.uaq.vo.LoginOutputVO;
@@ -64,15 +69,27 @@ public class LPController extends BaseController {
 	public static final List<Service> services = new ArrayList<Service>();
 
 	static {
-		Service s1 = new Service(403, "NEW PRO CARD REQUEST", false, true);
-		Service s2 = new Service(404, "RENEW PRO CARD REQUEST", false, true);
-		Service s3 = new Service(401, "LAND AND PROPERTY VALUATION", true, false);
+		Service s1 = new Service(403, "LP", "NEW PRO CARD REQUEST", false, true);
+		Service s2 = new Service(404, "LP", "RENEW PRO CARD REQUEST", false, true);
+		Service s3 = new Service(401, "LP", "LAND AND PROPERTY VALUATION", true, false);
+		Service s4 = new Service(408, "LP", "LOST DOCUMENT", true, true);
+		Service s5 = new Service(406, "LP", "NEW REAL ESTATE OFFICE", false, true);
+		Service s6 = new Service(407, "LP", "RENEW REAL ESTATE OFFICE", false, true);
+		Service s7 = new Service(305, "PS", "GRANT LAND REQUEST", true, true);
 		s1.setServiceHandler(new ProCardIssuerServiceHandler());
 		s2.setServiceHandler(new ProCardRenewerServiceHandler());
 		s3.setServiceHandler(new LandAndPropertyValuationServiceHandler());
+		s4.setServiceHandler(new LostDocumentServiceHandler());
+		s5.setServiceHandler(new RealEstateOfficeIssuerServiceHandler());
+		s6.setServiceHandler(new RealEstateOfficeRenewerServiceHandler());
+		s7.setServiceHandler(new GrantLandRequestServiceHandler());
 		services.add(s1);
 		services.add(s2);
 		services.add(s3);
+		services.add(s4);
+		services.add(s5);
+		services.add(s6);
+		services.add(s7);
 	}
 
 	@RequestMapping("/uaq/welcome.html")
@@ -220,6 +237,7 @@ public class LPController extends BaseController {
 				String fileName = attachment.getAttachmentFile().getOriginalFilename();
 				if (!"".equalsIgnoreCase(fileName)) {
 					AttachmentInfo attachmentInfo = new AttachmentInfo();
+					attachmentInfo.setFieldName(fieldName);
 					attachmentInfo.setFileName(fileName);
 					attachmentInfo.setInputStream(attachment.getAttachmentFile().getInputStream());
 					attachmentInfo.setDocTypeId(attachment.getDocTypeId());
@@ -270,6 +288,7 @@ public class LPController extends BaseController {
 				AccountDetailsViewSDO accountDetails = LPServiceLookUp.getAccountDetails(loginInfo.getAcountId());
 				validatePrerequisites(modelMap, serviceForm.getServicePhase(), serviceForm.getRequestNumber(), service, accountDetails);
 				params.put("serviceId", "" + service.getId());
+				params.put("serviceDept", service.getDept());
 				if (serviceForm.getServicePhase() != null && !serviceForm.getServicePhase().isEmpty()) {
 					params.put("requestNumber", serviceForm.getRequestNumber());
 				} else {
@@ -355,6 +374,7 @@ public class LPController extends BaseController {
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("requestId", requestId);
 		params.put("serviceId", "" + service.getId());
+		params.put("requestNumber", requestNumber);
 
 		try {
 			AccountDetailsViewSDO accountDetails = LPServiceLookUp.getAccountDetails(loginInfo.getAcountId());
@@ -386,7 +406,9 @@ public class LPController extends BaseController {
 		// the card status,
 		// user_typeis allowed for this service
 		boolean isValid = true;
-		if ((service.isAllowedForIndividual() && !accountDetails.getTypeOfUser().equals("1")) || (service.isAllowedForEstablishment() && !accountDetails.getTypeOfUser().equals("2"))) {
+		if (!((service.isAllowedForIndividual() && service.isAllowedForEstablishment()) || 
+				(service.isAllowedForIndividual() && accountDetails.getTypeOfUser().equals("1")) ||
+				(service.isAllowedForEstablishment() && accountDetails.getTypeOfUser().equals("2")))) {
 			modelMap.addAttribute("messageId", "error.service.notAuthorized");
 			isValid = false;
 		} else if (requestNumber != null && !requestNumber.isEmpty()) {
@@ -396,7 +418,7 @@ public class LPController extends BaseController {
 				isValid = false;
 			} else {
 				if (servicePhase != null && !servicePhase.isEmpty()) {
-					if (servicePhase.equals("Resubmit") && (applicantRequest.getStatusId().getValue() == null || applicantRequest.getStatusId().getValue().intValue() != 5)) {
+					if (servicePhase.equals("Resubmit") && applicantRequest.getStatusId().getValue() != null && !( applicantRequest.getStatusId().getValue().intValue() == 5 || applicantRequest.getStatusId().getValue().intValue() == 6)) {
 						modelMap.addAttribute("messageId", "error.service.invalidState");
 						isValid = false;
 					} else if (servicePhase.equals("ApplicationPaymentDone") && (applicantRequest.getStatusId().getValue() == null || applicantRequest.getStatusId().getValue().intValue() != 33)) {

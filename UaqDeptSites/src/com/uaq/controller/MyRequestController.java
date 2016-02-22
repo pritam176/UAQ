@@ -15,6 +15,7 @@ import static com.uaq.common.StatusNameConstant.DELEVER_ID;
 import static com.uaq.common.StatusNameConstant.INITIATE_ACOUNT_ACTIVATE_ID;
 import static com.uaq.common.StatusNameConstant.PROCEED_TO_APPLICATION_FEE_PAYMENT_ID;
 import static com.uaq.common.StatusNameConstant.PROCEED_TO_RESUBMIT_ID;
+import static com.uaq.common.StatusNameConstant.WAITING_AD;
 import static com.uaq.common.StatusNameConstant.PROCEED_TO_SERVICE_FEE_PAYMENT_ID;
 import static com.uaq.common.StatusNameConstant.REJECT;
 import static com.uaq.common.StatusNameConstant.SUBMIT_LECCENCE_ID;
@@ -243,6 +244,10 @@ public class MyRequestController extends BaseController {
 			case PROCEED_TO_RESUBMIT_ID:
 				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_RESUBMIT_URL;
 				break;
+			case WAITING_AD:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_RESUBMIT_URL;
+				break;
+			
 			/*
 			 * case PROCEED_TO_REVEWER_ID: url = "/" + languageCode +
 			 * "/myrequestreview.html"; break;
@@ -251,7 +256,7 @@ public class MyRequestController extends BaseController {
 				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + SUBMIT_NOC_URL;
 				break;
 			case SUBMIT_LECCENCE_ID:
-				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + SUBMIT_LICENCE_URL;
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_RESUBMIT_URL;
 				break;
 			case TO_ISSUE_SITE_PLAN_INICEATE_ID:
 				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_TO_ISSUE_SITEPLAN_URL;

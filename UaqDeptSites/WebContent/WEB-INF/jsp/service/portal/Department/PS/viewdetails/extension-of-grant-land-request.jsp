@@ -438,7 +438,7 @@
 																</div>
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
-																	<c:if test="${fn:trim(attachments.createdby) ne fn:trim('Reviewer Supportive Attachment')}">
+																	<c:if test="${fn:trim(attachments.createdby) eq fn:trim('Site Plan Document')}">
 																	<div class="col-md-12 remove-pad attachment-btm">
 																		<a href="${attachments.downloadurl}" target="_blank"> ${attachments.createdby}</a>
 																	</div>
@@ -464,7 +464,7 @@
 																</div>
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
-																	<c:if test="${fn:containsIgnoreCase(fn:trim(attachments.createdby), fn:trim('Reviewer Supportive Attachment'))}">
+																	<c:if test="${fn:trim(attachments.createdby) ne fn:trim('Site Plan Document')}">
 																	<div class="col-md-12 remove-pad attachment-btm">
 																		<a href="${attachments.downloadurl}" target="_blank"> ${attachments.createdby}</a>
 																	</div>

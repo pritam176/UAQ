@@ -19,9 +19,11 @@
 										<div class="form-content cf">
 											<div class="col-md-12 thankyou-page"> 
 												<h2> <spring:message code="dept.lbl.thank" /> </h2>
-												
 												  <div>${param.message} 
-												 								</div>
+												</div>
+			 								<c:if test="${not empty actmessage}">
+												  <div>${actmessage}</div>
+												  </c:if>
 												  <c:if test="${param.statusId == '33'}">
 												<c:url var="actionUrl" value="${param.paymentUrl}">
            											 <c:param name="serviceId" value="${param.serviceId}" />

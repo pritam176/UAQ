@@ -1,7 +1,7 @@
 package com.uaq.controller;
 
 import static com.uaq.common.ApplicationConstants.*;
-import static com.uaq.common.TilesViewConstant.MOBILE_LOGIN_AGAIN;
+import static com.uaq.common.TilesViewConstant.*;
 import static com.uaq.common.UAQURLConstant.MY_REQUEST_URL;
 import static com.uaq.common.UAQURLConstant.SERVICES_ERROR_PAGE;
 import static com.uaq.common.UAQURLConstant.THANKYOU_PAGE;
@@ -209,10 +209,10 @@ public class PSResubmitController extends BaseController {
 						LandInputVO landInputVO = PSReSubmitDataMapper.addLandDataToService(addLandRequestCommand, accountDetailfromToken);
 						landInputVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), addLandRequestCommand.getRequestNo(), addLandRequestCommand.getStausId())) {
 							LandOutputVO output = pSReSubmissionRequestService.reSubmitAddLand(user, landInputVO);
-							logger.debug("OutPut="+output != null ? output.getStatus() : "null");
+							logger.debug("OutPut=" + output != null ? output.getStatus() : "null");
 							if (!SERVICE_FAILED.equals(output.getStatus())) {
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
 								model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
@@ -242,10 +242,10 @@ public class PSResubmitController extends BaseController {
 						LandInputVO landInputVO = PSReSubmitDataMapper.addLandDataToService(addLandRequestCommand, accountDetailfromToken);
 						landInputVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), addLandRequestCommand.getRequestNo(), addLandRequestCommand.getStausId())) {
 							LandOutputVO output = pSReSubmissionRequestService.reSubmitAddLand(user, landInputVO);
-							logger.debug("OutPut="+output != null ? output.getStatus() : "null");
+							logger.debug("OutPut=" + output != null ? output.getStatus() : "null");
 							if (!SERVICE_FAILED.equals(output.getStatus())) {
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
 								model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
@@ -298,12 +298,12 @@ public class PSResubmitController extends BaseController {
 						landInputVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						LandOutputVO output;
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), landDemarcationRequestCommand.getRequestNo(), landDemarcationRequestCommand.getStatusid())) {
 							try {
-								
+
 								output = pSReSubmissionRequestService.reSubmitLandDemarcationPalnDocument(user, landInputVO);
-								logger.debug("OutPut="+output != null ? output.getStatus() : "null");
+								logger.debug("OutPut=" + output != null ? output.getStatus() : "null");
 								if (!SERVICE_FAILED.equals(output.getStatus())) {
 									model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
 									viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
@@ -340,12 +340,12 @@ public class PSResubmitController extends BaseController {
 						landInputVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						LandOutputVO output;
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), landDemarcationRequestCommand.getRequestNo(), landDemarcationRequestCommand.getStatusid())) {
 							try {
-								
+
 								output = pSReSubmissionRequestService.reSubmitLandDemarcationPalnDocument(user, landInputVO);
-								logger.debug("OutPut="+output != null ? output.getStatus() : "null");
+								logger.debug("OutPut=" + output != null ? output.getStatus() : "null");
 								if (!SERVICE_FAILED.equals(output.getStatus())) {
 									model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
 									viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
@@ -411,12 +411,11 @@ public class PSResubmitController extends BaseController {
 						LandOutputVO output;
 						// This will over written when success
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), issueSitePlanDocumentCommand.getRequestNo(), issueSitePlanDocumentCommand.getStausId())) {
 							try {
-								
 								output = pSReSubmissionRequestService.reSubmitissueSitePlanDocument(user, landInputVO);
-								logger.debug("OutPut="+output != null ? output.getStatus() : "null");
+								logger.debug("OutPut=" + output != null ? output.getStatus() : "null");
 								if (output != null && !output.getStatus().equalsIgnoreCase(SERVICE_FAILED)) {
 									model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
 									viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
@@ -454,12 +453,12 @@ public class PSResubmitController extends BaseController {
 						landInputVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						LandOutputVO output;
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), issueSitePlanDocumentCommand.getRequestNo(), issueSitePlanDocumentCommand.getStausId())) {
 							try {
-								
+
 								output = pSReSubmissionRequestService.reSubmitissueSitePlanDocument(user, landInputVO);
-								logger.debug("OutPut="+output != null ? output.getStatus() : "null");
+								logger.debug("OutPut=" + output != null ? output.getStatus() : "null");
 								if (output != null && !output.getStatus().equalsIgnoreCase(SERVICE_FAILED)) {
 									model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
 									viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
@@ -496,7 +495,7 @@ public class PSResubmitController extends BaseController {
 		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
 		Locale locale = new Locale(languageCode);
 		super.handleRequest(request, model);
-		logger.info("Issue Site Plan Document Request | handle POST Request");
+		logger.enter("Issue Site Plan Document Request | handle POST Request");
 
 		String viewname = EMPTY_STRING;
 		LoginOutputVO logininfo = null;
@@ -517,18 +516,15 @@ public class PSResubmitController extends BaseController {
 						LandInputVO landInputVO = PSReSubmitDataMapper.extentionGrandLandToService(extensionOfGrandCommand, accountDetailfromToken);
 						LandOutputVO output;
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), extensionOfGrandCommand.getRequestNo(), extensionOfGrandCommand.getStausId())) {
 							try {
-								
 								output = pSReSubmissionRequestService.reSubmitExtentionGrandLand(user, landInputVO);
 								if (!output.getStatus().equals(SERVICE_FAILED)) {
 									model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
-									viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+									viewname = MOBILE_THANKU_VIEW;
 								}
-							} catch (DatatypeConfigurationException e) {
-								logger.error("Failure | " + e.getMessage());
-							} catch (ParseException e) {
+							} catch (Exception e) {
 								logger.error("Failure | " + e.getMessage());
 							}
 						}
@@ -556,10 +552,10 @@ public class PSResubmitController extends BaseController {
 						LandOutputVO output;
 						// This will over written when success
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), extensionOfGrandCommand.getRequestNo(), extensionOfGrandCommand.getStausId()))
 							try {
-								
+
 								output = pSReSubmissionRequestService.reSubmitExtentionGrandLand(user, landInputVO);
 								if (!output.getStatus().equals(SERVICE_FAILED)) {
 									model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
@@ -573,17 +569,18 @@ public class PSResubmitController extends BaseController {
 					}
 
 				}
-			}if (viewname.equals(defaultpage)) {
+			}
+			if (viewname.equals(defaultpage)) {
 				request.getSession().invalidate();
 				logger.info("Failure    |  User Not Loged In   ");
 			}
 		}
 
-		logger.debug("viewReturn-"+viewname);
+		logger.debug("viewReturn-" + viewname);
 		model.addAttribute(PAGE_LABEL, "label.ps.extensiongrantland");
 		model.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
 		model.addAttribute("myRequestUrl", PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + URL_SEPARATOR + MY_REQUEST_URL);
-		logger.exit("reSubmitExtentionGrandLand");
+		logger.info("reSubmitExtentionGrandLand");
 		return viewname;
 
 	}

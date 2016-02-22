@@ -107,6 +107,11 @@
 		<put-attribute name="sitesrightcolumn" value="" />
 	</definition>
 	
+	<definition name="service.duplicate.request.mobile" extends="serviceMobileBaseLayout" >
+		<put-attribute name="body" value="/WEB-INF/jsp/service/portal/Department/error_page.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+	
 	<!-- Tiles for Land and property -->
 			
 	<definition name="land.property" extends="serviceBaseLayout">

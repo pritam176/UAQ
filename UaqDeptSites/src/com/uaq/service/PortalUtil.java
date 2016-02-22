@@ -397,10 +397,10 @@ public class PortalUtil {
 		return sortedMap;
 	}
 
-	public boolean validateRequestForSubmission(String requestedUsername, String requestNo, String operartion) {
+	public boolean validateRequestForSubmission(String requestedUsername, String requestNo, String action) {
 		boolean isVaid = false;
-		logger.debug("requestNo-"+requestNo+"requestedUsername-"+requestedUsername+"operartion-"+operartion);
-		if(StringUtil.isEmpty(requestedUsername) && StringUtil.isEmpty(requestNo) && StringUtil.isEmpty(operartion)  )
+		logger.debug("requestNo-"+requestNo+"requestedUsername-"+requestedUsername+"action-"+action);
+		if(StringUtil.isEmpty(requestedUsername) && StringUtil.isEmpty(requestNo) && StringUtil.isEmpty(action)  )
 			return isVaid;
 		
 		MyRequestOutputVO requestOutpur = myRequestService.getUserNameFromRequestNo(requestNo);
@@ -408,7 +408,7 @@ public class PortalUtil {
 		if (!SERVICE_FAILED.equals(requestOutpur.getServiceExecution())) {
 			if (requestedUsername.equals(requestOutpur.getUserName())) {
 				logger.debug("request no from this user");
-				if(operartion.equals(requestOutpur.getStatusId().toString())){
+				if(action.equals(requestOutpur.getStatusId().toString())){
 					logger.debug("request has valid status for operation");
 					isVaid =true;
 				}

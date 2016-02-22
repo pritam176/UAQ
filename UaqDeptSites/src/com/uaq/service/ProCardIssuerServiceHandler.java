@@ -10,6 +10,7 @@ import uaq.db.si.model.common.LpProCardReqDetailsViewSDO;
 
 import com.uaq.command.ServiceParamsCommand.FieldTypeEnum;
 import com.uaq.command.ServiceParamsCommand.ServiceField;
+import com.uaq.common.PropertiesUtil;
 import com.uaq.vo.SendBackInfo;
 
 /**
@@ -77,8 +78,15 @@ public class ProCardIssuerServiceHandler extends ProCardServiceHandler {
 		WebServiceInvoker.issueNewCardProcess(inputParams);
 	}
 
+	
+	
 	@Override
-	public String getResubmitActivityName() {
+	public void proceedWithServiceAfterPayment(Map<String, String> params) throws Exception {
+		WebServiceInvoker.proceedWithLpServiceAfterPayment(PropertiesUtil.getProperty("SOA_URL_ISSUE_PROCARD"), "serviceFeesMessage", "requestId", params.get("requestId"));
+	}
+
+	@Override
+	public String getPhaseActivityName(String phase) {
 		return "Resubmit Request Issue New PRO Card";
 	}
 }

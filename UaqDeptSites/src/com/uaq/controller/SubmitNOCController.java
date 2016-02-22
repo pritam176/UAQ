@@ -211,7 +211,7 @@ public class SubmitNOCController extends BaseController {
 							LandInputVO inputVo = SubmitNOCDataMapper.setdataToSUbmitNOCService(submitNocCommand);
 							inputVo.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 							model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-							viewname = "service.duplicate.request";
+							viewname = DUPLICATE_REQUEST_MOBILE;
 							if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), submitNocCommand.getRequestNo(), submitNocCommand.getStausId())) {
 								LandOutputVO output = submitNOCRequestService.submitNOCRequest(user, inputVo);
 								logger.debug("OutPut="+output != null ? output.getStatus() : "null");
@@ -245,7 +245,7 @@ public class SubmitNOCController extends BaseController {
 							LandInputVO inputVo = SubmitNOCDataMapper.setdataToSUbmitNOCService(submitNocCommand);
 							inputVo.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 							model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-							viewname = "service.duplicate.request";
+							viewname = DUPLICATE_REQUEST;
 							if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), submitNocCommand.getRequestNo(), submitNocCommand.getStausId())) {
 								LandOutputVO output = submitNOCRequestService.submitNOCRequest(user, inputVo);
 								logger.debug("OutPut="+output != null ? output.getStatus() : "null");

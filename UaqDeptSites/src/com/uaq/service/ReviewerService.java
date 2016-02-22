@@ -83,6 +83,7 @@ public class ReviewerService {
 		inputVO.setAttributeName(SOAP_REQUESTNO_ARGUMENT);
 		inputVO.setAttributeValue(requestNo);
 
+		
 		if (serviceId.equals(ADD_LAND_REQUEST)) {
 
 			PSResubmissonOutputVO resubmitdata = pSFindRequestService.findAddLandRequest(inputVO);
@@ -270,7 +271,119 @@ public class ReviewerService {
 				logger.exit("Failed-"+e.getMessage());
 				landOutputVO.setStatus(SERVICE_FAILED);
 			}
-		} else if (serviceId.equals(EXTENTION_OF_GRANT_LAND_REQUEST)) {
+		} else if (serviceId.equals(NEW_REAL_ESTATE)) {
+			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+			String requestId = applicantRequest.getRequestId().toString();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + NEW_REAL_ESTATE);
+			try {
+				if (status.equals(PROCEED_TO_REVEWER)) {
+					new RealEstateOfficeIssuerServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+					landOutputVO.setStatus(SERVICE_SUCCESS);
+					String message = messageSource.getMessage("label.paymentCompletedSuccessfully", new String[] { requestNo }, new Locale(languageCode));
+					landOutputVO.setStatus_EN(message);
+					landOutputVO.setStatus_AR(message);
+				}
+				if (status.equals(PROCEED_TO_OPERATOR)) {
+					new RealEstateOfficeIssuerServiceHandler().proceedWithServiceAfterPayment(params);
+					landOutputVO.setStatus(SERVICE_SUCCESS);
+					String message = messageSource.getMessage("label.paymentCompletedSuccessfully", new String[] { requestNo }, new Locale(languageCode));
+					landOutputVO.setStatus_EN(message);
+					landOutputVO.setStatus_AR(message);
+
+				}
+			} catch (Exception e) {
+				logger.exit("Failed-"+e.getMessage());
+				landOutputVO.setStatus(SERVICE_FAILED);
+			}
+		} else if (serviceId.equals(RENEW_REAL_ESTATE)) {
+			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+			String requestId = applicantRequest.getRequestId().toString();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + RENEW_REAL_ESTATE);
+			try {
+				if (status.equals(PROCEED_TO_REVEWER)) {
+					new RealEstateOfficeRenewerServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+					landOutputVO.setStatus(SERVICE_SUCCESS);
+					String message = messageSource.getMessage("label.paymentCompletedSuccessfully", new String[] { requestNo }, new Locale(languageCode));
+					landOutputVO.setStatus_EN(message);
+					landOutputVO.setStatus_AR(message);
+				}
+				if (status.equals(PROCEED_TO_OPERATOR)) {
+					new RealEstateOfficeRenewerServiceHandler().proceedWithServiceAfterPayment(params);
+					landOutputVO.setStatus(SERVICE_SUCCESS);
+					String message = messageSource.getMessage("label.paymentCompletedSuccessfully", new String[] { requestNo }, new Locale(languageCode));
+					landOutputVO.setStatus_EN(message);
+					landOutputVO.setStatus_AR(message);
+
+				}
+			} catch (Exception e) {
+				logger.exit("Failed-"+e.getMessage());
+				landOutputVO.setStatus(SERVICE_FAILED);
+			}
+		} else if (serviceId.equals(GRANT_LAND_REQUEST)) {
+			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+			String requestId = applicantRequest.getRequestId().toString();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + GRANT_LAND_REQUEST);
+			try {
+				if (status.equals(PROCEED_TO_REVEWER)) {
+					new GrantLandRequestServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+					landOutputVO.setStatus(SERVICE_SUCCESS);
+					String message = messageSource.getMessage("label.paymentCompletedSuccessfully", new String[] { requestNo }, new Locale(languageCode));
+					landOutputVO.setStatus_EN(message);
+					landOutputVO.setStatus_AR(message);
+				}
+				if (status.equals(SERVICE_PAYMENT_SUCCESS)) {
+					new GrantLandRequestServiceHandler().proceedWithServiceAfterPayment(params);
+					landOutputVO.setStatus(SERVICE_SUCCESS);
+					String message = messageSource.getMessage("label.paymentCompletedSuccessfully", new String[] { requestNo }, new Locale(languageCode));
+					landOutputVO.setStatus_EN(message);
+					landOutputVO.setStatus_AR(message);
+
+				}
+			} catch (Exception e) {
+				logger.exit("Failed-"+e.getMessage());
+				landOutputVO.setStatus(SERVICE_FAILED);
+			}
+		} else if (serviceId.equals(LOST_DOCUMENT)) {
+			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+			String requestId = applicantRequest.getRequestId().toString();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + LOST_DOCUMENT);
+			try {
+				if (status.equals(PROCEED_TO_REVEWER)) {
+					new LostDocumentServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+					landOutputVO.setStatus(SERVICE_SUCCESS);
+					String message = messageSource.getMessage("label.paymentCompletedSuccessfully", new String[] { requestNo }, new Locale(languageCode));
+					landOutputVO.setStatus_EN(message);
+					landOutputVO.setStatus_AR(message);
+				}
+				if (status.equals(SERVICE_PAYMENT_SUCCESS)) {
+					new LostDocumentServiceHandler().proceedWithServiceAfterPayment(params);
+					landOutputVO.setStatus(SERVICE_SUCCESS);
+					String message = messageSource.getMessage("label.paymentCompletedSuccessfully", new String[] { requestNo }, new Locale(languageCode));
+					landOutputVO.setStatus_EN(message);
+					landOutputVO.setStatus_AR(message);
+
+				}
+			} catch (Exception e) {
+				logger.exit("Failed-"+e.getMessage());
+				landOutputVO.setStatus(SERVICE_FAILED);
+			}
+		}else if (serviceId.equals(EXTENTION_OF_GRANT_LAND_REQUEST)) {
 
 			PSResubmissonOutputVO resubmitdata = pSFindRequestService.findExtentionGrandLandRequest(inputVO);
 

@@ -78,7 +78,7 @@ public class EGDResubmitController extends BaseController {
 						NewSupplierRegistrationVO supplierDetails = EGDDataMapper.getSupplierDataForResubmit(accountDetailfromToken, newSupplierRegistrationCommand);
 						supplierDetails.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), newSupplierRegistrationCommand.getRequestNo(), newSupplierRegistrationCommand.getStatusId())) {
 							
 							LandOutputVO output = eGDResubmitRequestService.reSubmitSupplierRequest(userDetails, supplierDetails);
@@ -113,7 +113,7 @@ public class EGDResubmitController extends BaseController {
 						supplierDetails.setServiceId("502");
 						supplierDetails.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), newSupplierRegistrationCommand.getRequestNo(), newSupplierRegistrationCommand.getStatusId())) {
 							
 							LandOutputVO output = eGDResubmitRequestService.reSubmitSupplierRequest(userDetails, supplierDetails);
@@ -177,7 +177,7 @@ public class EGDResubmitController extends BaseController {
 						supplierDetails.setServiceId("502");
 						supplierDetails.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), newSupplierRegistrationCommand.getRequestNo(), newSupplierRegistrationCommand.getStatusId())) {
 							
 							LandOutputVO output = eGDResubmitRequestService.reSubmitSupplierRequest(userDetails, supplierDetails);
@@ -212,7 +212,7 @@ public class EGDResubmitController extends BaseController {
 						NewSupplierRegistrationVO supplierDetails = EGDDataMapper.getSupplierDataForResubmit(accountDetailfromToken, newSupplierRegistrationCommand);
 						supplierDetails.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), newSupplierRegistrationCommand.getRequestNo(), newSupplierRegistrationCommand.getStatusId())) {
 							
 							LandOutputVO output = eGDResubmitRequestService.reSubmitSupplierRequest(userDetails, supplierDetails);

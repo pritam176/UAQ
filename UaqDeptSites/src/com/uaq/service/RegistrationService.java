@@ -463,13 +463,14 @@ public class RegistrationService {
 			} catch (RemoteException e) {
 			logger.error("Failure  |" + e.getMessage());
 
-		}*/
+		}
 		if (output != null) {
 			otp = output.getStatus();
 			logger.info("Sucess  |" + output.getMessage_EN());
 		} else {
 			logger.error("Failure | output.getOTPValue() return Null ");
 		}
+		*/
 		return otp;
 	}
 

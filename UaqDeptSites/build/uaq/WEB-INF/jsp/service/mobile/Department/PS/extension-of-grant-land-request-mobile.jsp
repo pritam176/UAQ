@@ -330,7 +330,7 @@
 														<input type="text" class="form-control required"
 															name="sitePlanDocument"  data-msg-required="${sitePlanDocReq}" readonly="readonly" /> <span class="input-group-btn">
 															<span class="btn btn-file"> <spring:message code="file.browse" />&hellip; <input
-																type="file" accept="image/jpg, image/JPG,image/JPEG, image/jpeg,image/jpeg,image/gif,image/png, application/pdf,image/x-eps, application/msword" id= "sitePlanDocument" name="sitePlanDocument">
+																type="file" accept="image/jpg, image/JPG,image/JPEG, image/jpeg,image/jpeg,image/gif,image/png, application/pdf,image/x-eps, application/msword" id= "sitePlanDocument" name="sitePlanDocument" error-size="${filesize}" error-extention="${fileextention}" error-failed="${fileerror}">
 														</span>
 														<form:hidden path="sitePlanDocument_name" id="sitePlanDocument_name" value=""/>
 														</span>
@@ -380,34 +380,37 @@
 	jQuery(function($) { 
 
 
-				$('#grand-date').datepicker({
-					dateFormat: 'mm/dd/yy',
-					maxDate: -1,
-					onSelect: function(selected) {
-						var date2 = $("#grand-date").datepicker('getDate');
-						//date2.setDate(date2.getDate() + 30);
-						$("#grand-exp-date").datepicker('setDate', date2);
-						//sets minDate to dt1 date + 1
-						date2.setDate(date2.getDate() + 1);
-						$("#grand-exp-date").datepicker('option', 'minDate', date2);
+		$('#grand-date').datepicker({
+			dateFormat: 'mm/dd/yy',
+			maxDate: -1,
+			onSelect: function(selected) {
+				var date2 = $("#grand-date").datepicker('getDate');
+				//date2.setDate(date2.getDate() + 30);
+				//$("#grand-exp-date").datepicker('setDate', date2);
+				//sets minDate to dt1 date + 1
+				date2.setDate(date2.getDate() + 1);
+				$("#grand-exp-date").datepicker('option', 'minDate', date2);
+			}
+
+		});
+		var date_exp = $('#grand-date').datepicker('getDate') +1 ;
+		$('#grand-exp-date').datepicker({
+			yearRange: '1900:2050',
+			dateFormat: 'mm/dd/yy',
+			minDate:date_exp,
+				onClose: function () {
+					var dt1 = $('#grand-date').datepicker('getDate');
+					//console.log(dt1);
+					var dt2 = $('#grand-exp-date').datepicker('getDate');
+					dt2.setDate(dt1.getDate() + 1);
+					if (dt2 <= dt1) {alert('s');
+						var minDate = $('#grand-exp-date').datepicker('option', 'maxDate');
+						$('#grand-exp-date').datepicker('setDate', minDate);
 					}
+				}
 
-				});
-				$('#grand-exp-date').datepicker({
-					yearRange: '1900:2050',
-					dateFormat: 'mm/dd/yy',
-						onClose: function () {
-							var dt1 = $('#grand-date').datepicker('getDate');
-							console.log(dt1);
-							var dt2 = $('#grand-exp-date').datepicker('getDate');
-							dt2.setDate(dt1.getDate() + 30);
-							if (dt2 <= dt1) {
-								var minDate = $('#grand-exp-date').datepicker('option', 'maxDate');
-								$('#grand-exp-date').datepicker('setDate', minDate);
-							}
-						}
+		});
 
-				});
 				$("#feedbak").validate();
 				val2= document.querySelector('input[name="locations"]:checked').value; 
 				if(val2 == "sector"){

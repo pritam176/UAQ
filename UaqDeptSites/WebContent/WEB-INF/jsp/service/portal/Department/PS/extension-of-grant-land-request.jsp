@@ -434,28 +434,31 @@
 					onSelect: function(selected) {
 						var date2 = $("#grand-date").datepicker('getDate');
 						//date2.setDate(date2.getDate() + 30);
-						$("#grand-exp-date").datepicker('setDate', date2);
+						//$("#grand-exp-date").datepicker('setDate', date2);
 						//sets minDate to dt1 date + 1
 						date2.setDate(date2.getDate() + 1);
 						$("#grand-exp-date").datepicker('option', 'minDate', date2);
 					}
 
 				});
+				var date_exp = $('#grand-date').datepicker('getDate') +1 ;
 				$('#grand-exp-date').datepicker({
 					yearRange: '1900:2050',
 					dateFormat: 'mm/dd/yy',
+					minDate:date_exp,
 						onClose: function () {
 							var dt1 = $('#grand-date').datepicker('getDate');
-							console.log(dt1);
+							//console.log(dt1);
 							var dt2 = $('#grand-exp-date').datepicker('getDate');
-							dt2.setDate(dt1.getDate() + 30);
-							if (dt2 <= dt1) {
+							dt2.setDate(dt1.getDate() + 1);
+							if (dt2 <= dt1) {alert('s');
 								var minDate = $('#grand-exp-date').datepicker('option', 'maxDate');
 								$('#grand-exp-date').datepicker('setDate', minDate);
 							}
 						}
 
 				});
+
 
 			
 			

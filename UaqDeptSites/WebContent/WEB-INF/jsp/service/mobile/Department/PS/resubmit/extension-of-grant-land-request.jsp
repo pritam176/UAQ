@@ -395,7 +395,7 @@
 														<input type="text" class="form-control "
 															name="sitePlanDocument" data-msg-required="${sitePlanDocReq}" readonly="readonly"/> <span class="input-group-btn">
 															<span class="btn btn-file"> <spring:message code="file.browse" />&hellip; <input
-																type="file" name="sitePlanDocument" id="sitePlanDocument" >
+																type="file" name="sitePlanDocument" id="sitePlanDocument" accept="image/jpg, image/JPG,image/JPEG, image/jpeg,image/jpeg,image/gif,image/png, application/pdf,image/x-eps, application/msword" error-size="${filesize}" error-extention="${fileextention}" error-failed="${fileerror}">
 														</span>
 														<form:hidden path="sitePlanDocument_name" id="sitePlanDocument_name" value=""/>
 														</span>
@@ -418,7 +418,7 @@
 																</div>
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
-																	<c:if test="${fn:trim(attachments.createdby) ne fn:trim('Reviewer Supportive Attachment')}">
+																	<c:if test="${fn:trim(attachments.createdby) eq  fn:trim('Site Plan Document')}">
 																	<div class="col-md-12 remove-pad attachment-btm">
 																		<a href="${attachments.downloadurl}" target="_blank"> ${attachments.createdby}</a>
 																	</div>
@@ -444,7 +444,7 @@
 																</div>
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
-																	<c:if test="${fn:containsIgnoreCase(fn:trim(attachments.createdby), fn:trim('Reviewer Supportive Attachment'))}">
+																	<c:if test="${fn:trim(attachments.createdby) ne fn:trim('Site Plan Document')}">
 																	<div class="col-md-12 remove-pad attachment-btm">
 																		<a href="${attachments.downloadurl}" target="_blank"> ${attachments.createdby}</a>
 																	</div>
@@ -513,34 +513,33 @@
 
 			jQuery(function($) { 
 				
+				var date_today = new Date();
+				date_today.setDate(date_today.getDate() - 1);
+				var date_today_add = new Date(date_today);
+					
+				var current_selected_date = $('#grand-date').datepicker('getDate');
 				$('#grand-date').datepicker({
-					dateFormat: 'mm/dd/yy',
-					maxDate: -1,
-					onSelect: function(selected) {
+					maxDate: date_today_add,	
+					onSelect: function (selected) {
 						var date2 = $("#grand-date").datepicker('getDate');
-						//date2.setDate(date2.getDate() + 30);
-						$("#grand-exp-date").datepicker('setDate', date2);
-						//sets minDate to dt1 date + 1
 						date2.setDate(date2.getDate() + 1);
 						$("#grand-exp-date").datepicker('option', 'minDate', date2);
 					}
-
 				});
+				
+				var date_today = new Date();
+				date_today.setDate(date_today.getDate() - 1);
+				var date_today_add = new Date(date_today);
+				
+				var current_date2 = $("#grand-date").datepicker('getDate');
+				current_date2.setDate(current_date2.getDate() + 1);
 				$('#grand-exp-date').datepicker({
 					yearRange: '1900:2050',
 					dateFormat: 'mm/dd/yy',
-						onClose: function () {
-							var dt1 = $('#grand-date').datepicker('getDate');
-							console.log(dt1);
-							var dt2 = $('#grand-exp-date').datepicker('getDate');
-							dt2.setDate(dt1.getDate() + 30);
-							if (dt2 <= dt1) {
-								var minDate = $('#grand-exp-date').datepicker('option', 'maxDate');
-								$('#grand-exp-date').datepicker('setDate', minDate);
-							}
-						}
-
+					minDate:current_date2,
 				});
+
+
 
 				
 				$("#feedbak").validate();

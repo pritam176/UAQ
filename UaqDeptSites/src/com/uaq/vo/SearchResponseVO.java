@@ -37,6 +37,25 @@ public class SearchResponseVO extends BaseVO {
 	private List<PublicationsVO> searchPublicationResults;
 	
 	private List<PeopleVO> searchPeopleResults;
+	
+	private List<ArchaeologyHeritageVO> searchArchaeologyHeritageResults;
+	
+	
+
+	
+	/**
+	 * @return the searchArchaeologyHeritageResults
+	 */
+	public List<ArchaeologyHeritageVO> getSearchArchaeologyHeritageResults() {
+		return searchArchaeologyHeritageResults;
+	}
+
+	/**
+	 * @param searchArchaeologyHeritageResults the searchArchaeologyHeritageResults to set
+	 */
+	public void setSearchArchaeologyHeritageResults(List<ArchaeologyHeritageVO> searchArchaeologyHeritageResults) {
+		this.searchArchaeologyHeritageResults = searchArchaeologyHeritageResults;
+	}
 
 	/**
 	 * @return the searchProjectResults

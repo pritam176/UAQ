@@ -11,6 +11,7 @@ import uaq.db.si.model.common.LpProCardReqDetailsViewSDO;
 
 import com.uaq.command.ServiceParamsCommand.FieldTypeEnum;
 import com.uaq.command.ServiceParamsCommand.ServiceField;
+import com.uaq.common.PropertiesUtil;
 import com.uaq.vo.SendBackInfo;
 
 public class ProCardRenewerServiceHandler extends ProCardServiceHandler {
@@ -86,8 +87,14 @@ public class ProCardRenewerServiceHandler extends ProCardServiceHandler {
 		WebServiceInvoker.renewCardProcess(inputParams);
 	}
 
+	
 	@Override
-	public String getResubmitActivityName() {
+	public void proceedWithServiceAfterPayment(Map<String, String> params) throws Exception {
+		WebServiceInvoker.proceedWithLpServiceAfterPayment(PropertiesUtil.getProperty("SOA_URL_RENEW_PROCARD"), "serviceFeesMessage", "requestId", params.get("requestId"));
+	}
+
+	@Override
+	public String getPhaseActivityName(String phase) {
 		return "Resubmit Request Renew PRO Card";
 	}
 }

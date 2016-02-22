@@ -45,6 +45,7 @@ public final class DynamicSoapClient {
 		String value;
 		String namespace;
 		List<Param> values;
+		boolean hasPrefix=true;
 
 		public Param(String name, String value) {
 			this.name = name;
@@ -55,6 +56,20 @@ public final class DynamicSoapClient {
 			this.name = name;
 			this.namespace = namespace;
 			this.values = values;
+		}
+		public Param(String name, String namespace, List<Param> values, boolean hasPrefix) {
+			this.name = name;
+			this.namespace = namespace;
+			this.values = values;
+			this.hasPrefix = hasPrefix;
+		}
+
+		public boolean isHasPrefix() {
+			return hasPrefix;
+		}
+
+		public void setHasPrefix(boolean hasPrefix) {
+			this.hasPrefix = hasPrefix;
 		}
 
 		public String getName() {
@@ -220,12 +235,15 @@ public final class DynamicSoapClient {
 		xmlString += "</ns1:" + serviceName + ">";
 		return xmlString.toString();
 	}
-
+	
 	private String hashMap2XmlNode(List<Param> params, String xmlString, String nsAlias, int nsCount) {
 		for (Param param : params) {
 			if (param.getNamespace() != null) {
 				nsAlias = "ns" + nsCount;
-				xmlString += "\n\t<" + nsAlias + ":" + param.getName() + " xmlns:" + nsAlias + "=\"" + param.getNamespace() + "\">";
+				if(param.isHasPrefix())
+					xmlString += "\n\t<" + nsAlias + ":" + param.getName() + " xmlns:" + nsAlias + "=\"" + param.getNamespace() + "\">";
+				else
+					xmlString += "\n\t<" + param.getName() + " xmlns:" + nsAlias + "=\"" + param.getNamespace() + "\">";
 				nsCount++;
 			} else {
 				xmlString += "\t<" + nsAlias + ":" + param.getName() + ">";
@@ -234,7 +252,10 @@ public final class DynamicSoapClient {
 				xmlString = hashMap2XmlNode(param.getValues(), xmlString, nsAlias, nsCount);
 			else
 				xmlString += param.getValue() == null ? "" : param.getValue();
-			xmlString += "</" + nsAlias + ":" + param.getName() + ">\n";
+			if(param.isHasPrefix())
+				xmlString += "</" + nsAlias + ":" + param.getName() + ">\n";
+			else
+				xmlString += "</" + param.getName() + ">\n";
 		}
 		return xmlString;
 	}

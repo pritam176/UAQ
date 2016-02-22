@@ -75,7 +75,7 @@ public class PWSResubmitController extends BaseController {
 						wasteContainerRequestInputVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						// This will over written when success
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), wasteContainerCommand.getRequestNo(), wasteContainerCommand.getStatus())) {
 							
 							WasteContainerRequestOutputVO output = pWSResubmitRequestService.reSubmitWasteContainor(user, wasteContainerRequestInputVO, wasteContainerCommand);
@@ -108,7 +108,7 @@ public class PWSResubmitController extends BaseController {
 						wasteContainerRequestInputVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						// This will over written when success
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
-						viewname = "service.duplicate.request";
+						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), wasteContainerCommand.getRequestNo(), wasteContainerCommand.getStatus())) {
 							
 							WasteContainerRequestOutputVO output = pWSResubmitRequestService.reSubmitWasteContainor(user, wasteContainerRequestInputVO, wasteContainerCommand);

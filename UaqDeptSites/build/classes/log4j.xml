@@ -5,7 +5,7 @@
 
    <appender
         name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File"  value="/U01/tomcat/logs/uaq_sites.log"/>
+        <param name="File"  value="E:\\JAVA\\tomcat\\apache-tomcat-6.0.35\\logs\\uaq_sites.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
         <param name="append" value="true"/>
         <layout class="org.apache.log4j.PatternLayout">
@@ -17,7 +17,7 @@
     
     <appender
         name="PAYMENTFA" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File"  value="/U01/tomcat/logs/uaq_epay.log"/>
+        <param name="File"  value="/tomcat/logs/uaq_epay.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
         <param name="append" value="true"/>
         <layout class="org.apache.log4j.PatternLayout">

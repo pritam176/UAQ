@@ -69,7 +69,7 @@ public class NewsController extends BaseController {
 	 * @return view the name of the JSP page
 	 */
 	@RequestMapping(value = { ViewPath.NEWS_LISTING_SITES ,ViewPath.NEWS_AND_ANNOUNCEMENT_LISTING_SITES}, method = RequestMethod.GET)
-	public String handleRequest(@PathVariable("site") String site,@PathVariable("landing")String landing, @ModelAttribute("newsSearchCommand") SearchCommand newsSearchCommand,
+	public String handleRequest(@PathVariable("site") String site,@PathVariable("landing")String landing,@ModelAttribute("newsSearchCommand") SearchCommand newsSearchCommand,
 			HttpServletRequest request, ModelMap modelMap) {
 
 		logger.enter("Get News Detail | handle Request");
@@ -321,25 +321,37 @@ public class NewsController extends BaseController {
 		return view;
 	}
 
-	@RequestMapping(value = { ViewPath.NEWS_DETAIL, ViewPath.NEWS_DETAIL_SITES }, method = RequestMethod.GET)
+	@RequestMapping(value = {ViewPath.NEWS_DETAIL,ViewPath.NEWS_DETAIL_SITES,ViewPath.ARCHAEOLOGICAL_DETAIL_SITES,ViewPath.MUSEUMS_DETAIL_SITES }, method = RequestMethod.GET)
 	public String newsDetail(@PathVariable("site") String site, @PathVariable("name") String name, HttpServletRequest request, ModelMap modelMap) {
 
 		logger.enter("Get News Detail | handle Request");
 
 		String landing="";
 		String pageName = "";
+		String parent="";
 		String source = StringUtil.getString(request.getServletPath());
 		
 		if (source.contains("/")) {
 			landing = source.split("/")[0];
+			parent = source.split("/")[1];
 		}
 		
 		String view = "news.detail";
-		if (!site.equals("uaq")) {
+		if (!site.equals("uaq") && !parent.equals("archaeology") && !parent.equals("museums")) {
 			view = "sites.news.detail";
 			pageName = "News & Announcements";
 			super.handleDepartmentRequest(request, modelMap, site);
-		} else {
+		} else if(parent.equalsIgnoreCase("archaeology")){
+			view = "sites.news.detail";
+			pageName = "Archaeological Sites";
+			super.handleDepartmentRequest(request, modelMap, site);
+		}
+		else if(parent.equalsIgnoreCase("museums")){
+			view = "sites.news.detail";
+			pageName = "Museums";
+			super.handleDepartmentRequest(request, modelMap, site);
+		}
+		else {
 			super.handleRequest(request, modelMap);
 			pageName = "News";
 		}

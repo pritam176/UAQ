@@ -102,7 +102,17 @@ public class PaymentSessionUtil {
 				pgLbl = "label.lp.landProperty";
 			}else if (serviceId.equals(ServiceNameConstant.RENEW_PRO_REQUEST)) {
 				pgLbl = "label.lp.renewProCard";
+			}else if (serviceId.equals(ServiceNameConstant.NEW_REAL_ESTATE)) {
+				pgLbl = "label.lp.newRealEstate";
+			}else if (serviceId.equals(ServiceNameConstant.RENEW_REAL_ESTATE)) {
+				pgLbl = "label.lp.renewRealEstate";
+			}else if (serviceId.equals(ServiceNameConstant.LOST_DOCUMENT)) {
+				pgLbl = "label.lp.lostdocument";
+			}else if (serviceId.equals(ServiceNameConstant.GRAND_LAND_REQUEST)) {
+				pgLbl = "label.ps.grantlandreq";
 			}
+			
+			
 			
 			
 		}
