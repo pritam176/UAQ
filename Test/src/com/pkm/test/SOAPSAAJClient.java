@@ -9,6 +9,7 @@ public class SOAPSAAJClient {
 		// TODO Auto-generated method stub
 		
 		System.out.println("started");
+		System.out.println("started");
 
 	}
 
