@@ -1,0 +1,281 @@
+package com.uaq.controller;
+
+import static com.uaq.common.ApplicationConstants.EMPTY_STRING;
+import static com.uaq.common.ApplicationConstants.ISMOBILE;
+import static com.uaq.common.ApplicationConstants.LANGUAGE_TRANSFORMATION_IGNORE;
+import static com.uaq.common.ApplicationConstants.LANG_ENGLISH;
+import static com.uaq.common.ApplicationConstants.PAGE_LABEL;
+import static com.uaq.common.ApplicationConstants.PAGE_META_DATA;
+import static com.uaq.common.ApplicationConstants.PARAM_LANGUAGE_CODE;
+import static com.uaq.common.ApplicationConstants.SESSION_ACCOUNT_DETAIL_FROM_TOKEN;
+import static com.uaq.common.ApplicationConstants.SESSION_LOGIN_INFO_MOBILE;
+import static com.uaq.common.ApplicationConstants.SESSION_LOGIN_INFO_PORTAL;
+import static com.uaq.common.ApplicationConstants.URL_SEPARATOR;
+import static com.uaq.common.StatusNameConstant.DELEVER_ID;
+import static com.uaq.common.StatusNameConstant.INITIATE_ACOUNT_ACTIVATE_ID;
+import static com.uaq.common.StatusNameConstant.PROCEED_TO_APPLICATION_FEE_PAYMENT_ID;
+import static com.uaq.common.StatusNameConstant.PROCEED_TO_RESUBMIT_ID;
+import static com.uaq.common.StatusNameConstant.WAITING_AD;
+import static com.uaq.common.StatusNameConstant.PROCEED_TO_SERVICE_FEE_PAYMENT_ID;
+import static com.uaq.common.StatusNameConstant.REJECT;
+import static com.uaq.common.StatusNameConstant.SUBMIT_LECCENCE_ID;
+import static com.uaq.common.StatusNameConstant.SUBMIT_NOC_LETTER_ID;
+import static com.uaq.common.StatusNameConstant.TO_ISSUE_SITE_PLAN_INICEATE_ID;
+import static com.uaq.common.TilesViewConstant.MOBILE_LOGIN_AGAIN;
+import static com.uaq.common.TilesViewConstant.PORTAL_LOGIN_AGAIN;
+import static com.uaq.common.TilesViewConstant.PORTAL_MYREQUEST;
+import static com.uaq.common.TilesViewConstant.MOBILE_MYREQUEST;
+import static com.uaq.common.UAQURLConstant.DELEVERY_URL;
+import static com.uaq.common.UAQURLConstant.PROCEED_PAYMENT_URL;
+import static com.uaq.common.UAQURLConstant.PROCEED_RESUBMIT_URL;
+import static com.uaq.common.UAQURLConstant.PROCEED_TO_INITIATE_ACTIVATE_ACCOUNT_URL;
+import static com.uaq.common.UAQURLConstant.PROCEED_TO_ISSUE_SITEPLAN_URL;
+import static com.uaq.common.UAQURLConstant.PROCEED_TO_RESUBMIT_URL;
+import static com.uaq.common.UAQURLConstant.SUBMIT_LICENCE_URL;
+import static com.uaq.common.UAQURLConstant.SUBMIT_NOC_URL;
+import static com.uaq.common.WebServiceConstant.SOAP_USERNAME_ARGUMENT;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.rpc.ServiceException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.uaq.common.ViewPath;
+import com.uaq.logger.UAQLogger;
+import com.uaq.service.MyRequestService;
+import com.uaq.service.PortalUtil;
+import com.uaq.service.PostPaymentService;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+import com.uaq.vo.LoginOutputVO;
+import com.uaq.vo.MyRequestInputVO;
+import com.uaq.vo.MyRequestOutputVO;
+import com.uaq.vo.MyRequestViewVO;
+import com.uaq.vo.PageMetadataVO;
+import com.uaq.vo.StatusLookupsOutputVO;
+
+/**
+ * Controller for My Request for User
+ * 
+ * @author G Sekhar
+ * 
+ */
+
+@Controller
+public class MyRequestController extends BaseController {
+	public static transient UAQLogger logger = new UAQLogger(MyRequestController.class);
+
+	@Autowired
+	private MyRequestService myRequestService;
+
+	@Autowired
+	private PortalUtil portalUtil;
+
+	@Autowired
+	private PostPaymentService postPaymentService;
+
+	/***
+	 * Handler Method for MyRequest URL-/uaq/myrequest.html
+	 * 
+	 * @throws ServiceException
+	 * @throws RemoteException
+	 **/
+
+	@RequestMapping(value = ViewPath.MYREQUEST, method = RequestMethod.GET)
+	public String handelMyRequest(ModelMap modelMap, HttpServletRequest request, HttpServletResponse response) throws RemoteException, ServiceException {
+		logger.enter("entered Myrequest | handle Request");
+		super.handleRequest(request, modelMap);
+		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
+		Locale locale = new Locale(languageCode);
+		PageMetadataVO pageMetadataVO = new PageMetadataVO();
+		pageMetadataVO.setPageTitle(messageSource.getMessage("label.uaq.myrequest.pagetitle", null, locale));
+		pageMetadataVO.setPageDescription(messageSource.getMessage("label.uaq.myrequest.pagedescription", null, locale));
+		pageMetadataVO.setPageKeywords(messageSource.getMessage("label.uaq.myrequest.pagekeyword", null, locale));
+
+		AccountDetailTokenOutputVO accountDetailfromToken = null;
+		LoginOutputVO logininfo = null;
+
+		String view = EMPTY_STRING;
+		if (portalUtil.isMobile(request, response)) {
+			logger.debug("Mobile MyRequest Loaded");
+			modelMap.addAttribute(ISMOBILE, "true");
+			view = MOBILE_LOGIN_AGAIN;
+			logininfo = portalUtil.getLoginDetailFromMobileRequest(request);
+			String pushNotificationRequestNo=request.getParameter("requestNo");
+			modelMap.addAttribute("pushNotificationRequestNo", pushNotificationRequestNo);
+			if (logininfo != null) {
+				logger.debug("Mobile User Detail- Account Id" + logininfo.toString());
+				if (portalUtil.validateToken(logininfo)) {
+					request.getSession().setAttribute(SESSION_LOGIN_INFO_MOBILE, logininfo);
+					accountDetailfromToken = portalUtil.getAccountDetailForMobile(logininfo);
+					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
+						view = MOBILE_MYREQUEST;
+					}
+
+				}
+			}
+			if (view.equals(MOBILE_LOGIN_AGAIN)) {
+				logger.info("Failure    |    User is Not Loged In ");
+				request.getSession().invalidate();
+
+			}
+		} else {
+			modelMap.addAttribute(ISMOBILE, "false");
+			logger.debug("Portal MyRequest Loaded");
+			view = PORTAL_LOGIN_AGAIN;
+			logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
+			if (logininfo != null) {
+				if (portalUtil.validateToken(logininfo)) {
+					accountDetailfromToken = (AccountDetailTokenOutputVO) request.getSession().getAttribute(SESSION_ACCOUNT_DETAIL_FROM_TOKEN);
+					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
+						view = PORTAL_MYREQUEST;
+					}
+				}
+			}
+			if (view.equals(PORTAL_LOGIN_AGAIN)) {
+				logger.info("Failure    |    User is Not Loged In ");
+				request.getSession().invalidate();
+
+			}
+		}
+
+		// accountDetailfromToken = (AccountDetailTokenOutputVO)
+		// request.getSession().getAttribute(SESSION_ACCOUNT_DETAIL_FROM_TOKEN);
+		if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
+
+			String result = postPaymentService.excutePostPayment(accountDetailfromToken.getUserName());
+
+			logger.debug("Post Payment for Broken Tranasction Service status-" + result);
+
+			MyRequestInputVO inputVo = new MyRequestInputVO();
+			inputVo.setAttributeName(SOAP_USERNAME_ARGUMENT);
+			inputVo.setAttributeValue(accountDetailfromToken.getUserName());
+
+			List<MyRequestOutputVO> dateaLis = myRequestService.getMyRequestData(inputVo);
+			logger.debug("Get Data from Service| No Of Row-" + dateaLis.size());
+			MyRequestInputVO statusVo = new MyRequestInputVO();
+
+			Map<BigDecimal, StatusLookupsOutputVO> statusList = myRequestService.getStatusLookups(statusVo);
+			logger.debug("No of Status = " + statusList.size());
+			Map<BigDecimal, StatusLookupsOutputVO> serviceList = myRequestService.getServiceLookups(statusVo);
+			logger.debug("No of Service = " + serviceList.size());
+
+			List<MyRequestViewVO> viewVo = new ArrayList<MyRequestViewVO>();
+			for (MyRequestOutputVO temp : dateaLis) {
+
+				MyRequestViewVO myRequestViewVO = new MyRequestViewVO();
+
+				myRequestViewVO.setUserType(accountDetailfromToken.getTypeOfUser());
+				myRequestViewVO.setRequestNo(temp.getRequestNo());
+				myRequestViewVO.setUrl(createUrlAction(temp.getServiceId(), temp.getStatusId(), temp.getRequestNo(), languageCode));
+				myRequestViewVO.setServiceId(temp.getServiceId().toString());
+				myRequestViewVO.setCreatedDate((temp.getCreatedDate() == null) ? "" : portalUtil.gregorianCaltoDate(temp.getCreatedDate()));
+				myRequestViewVO.setModifiedDate((temp.getModifiedDate() == null) ? "" : portalUtil.gregorianCaltoDate(temp.getModifiedDate()));
+				myRequestViewVO.setStatusId((temp.getStatusId() == null) ? "" : temp.getStatusId().toString());
+				myRequestViewVO.setSorceType(temp.getSorceType());
+				if (serviceList.containsKey(temp.getServiceId())) {
+					myRequestViewVO.setServiceName((languageCode.equalsIgnoreCase(LANG_ENGLISH)) ? serviceList.get(temp.getServiceId()).getServiceNameEn() : serviceList.get(temp.getServiceId())
+							.getServiceNameAr());
+				}
+
+				if (statusList.containsKey(temp.getStatusId())) {
+					StatusLookupsOutputVO status = statusList.get(temp.getStatusId());
+					myRequestViewVO.setStatusName((languageCode.equalsIgnoreCase(LANG_ENGLISH)) ? status.getStatusEn() : status.getStatusAr());
+				}
+				/*
+				 * if
+				 * (ISSUE_TO_WHOME_IT_MAY_CERTIFICATE.equals(String.valueOf(temp
+				 * .getServiceId()))) { ReSubmiisionInputVO inputVO = new
+				 * ReSubmiisionInputVO();
+				 * inputVO.setAttributeName(SOAP_REQUESTNO_ARGUMENT);
+				 * inputVO.setAttributeValue(temp.getRequestNo());
+				 * LPtoWhomeConcernVO lptoWhomeConcernVO =
+				 * lFindRequestService.findLpToWhomConcernView1
+				 * (inputVO,languageCode);
+				 * myRequestViewVO.setLetter(String.valueOf
+				 * (lptoWhomeConcernVO.getAddressedtoId()));
+				 * 
+				 * }
+				 */
+
+				viewVo.add(myRequestViewVO);
+			}
+
+			modelMap.addAttribute("myRequest", viewVo);
+
+		}
+		modelMap.addAttribute(PAGE_LABEL, "label.myrequest");
+		modelMap.addAttribute(PAGE_META_DATA, pageMetadataVO);
+		modelMap.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
+		logger.debug("Render View="+view);
+		logger.exit("handelMyRequest");
+		return view;
+	}
+
+	/**
+	 * G sekhar
+	 * 
+	 * @param serviceId
+	 * @param statusId
+	 * @return
+	 */
+	private String createUrlAction(BigDecimal serviceId, BigDecimal statusId, String requestNo, String languageCode) {
+		String url = EMPTY_STRING;
+		if (statusId != null) {
+
+			switch (statusId.intValue()) {
+			case PROCEED_TO_APPLICATION_FEE_PAYMENT_ID:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_PAYMENT_URL;
+				break;
+			case PROCEED_TO_SERVICE_FEE_PAYMENT_ID:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_PAYMENT_URL;
+				break;
+			case PROCEED_TO_RESUBMIT_ID:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_RESUBMIT_URL;
+				break;
+			case WAITING_AD:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_RESUBMIT_URL;
+				break;
+			
+			/*
+			 * case PROCEED_TO_REVEWER_ID: url = "/" + languageCode +
+			 * "/myrequestreview.html"; break;
+			 */
+			case SUBMIT_NOC_LETTER_ID:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + SUBMIT_NOC_URL;
+				break;
+			case SUBMIT_LECCENCE_ID:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_RESUBMIT_URL;
+				break;
+			case TO_ISSUE_SITE_PLAN_INICEATE_ID:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_TO_ISSUE_SITEPLAN_URL;
+				break;
+			case DELEVER_ID:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + DELEVERY_URL;
+				break;
+			case INITIATE_ACOUNT_ACTIVATE_ID:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_TO_INITIATE_ACTIVATE_ACCOUNT_URL;
+				break;
+			case REJECT:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_TO_RESUBMIT_URL;
+				break;
+			}
+
+		}
+
+		return url;
+
+	}
+
+}

@@ -1,0 +1,439 @@
+package com.uaq.command;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.uaq.controller.LPController;
+import com.uaq.service.ServiceHandler;
+import com.uaq.vo.SendBackInfo;
+
+public class ServiceParamsCommand {
+
+	private int serviceId;
+	private String servicePhase;
+	private String requestNumber;
+	private Map<String, String> params;
+	private Map<String, ServiceAttachment> attachments;
+
+	public Map<String, String> getParams() {
+		return params;
+	}
+
+	public int getServiceId() {
+		return serviceId;
+	}
+
+	public void setServiceId(int serviceId) {
+		this.serviceId = serviceId;
+	}
+
+	public String getServicePhase() {
+		return servicePhase;
+	}
+
+	public void setServicePhase(String servicePhase) {
+		this.servicePhase = servicePhase;
+	}
+
+	public String getRequestNumber() {
+		return requestNumber;
+	}
+
+	public void setRequestNumber(String requestNumber) {
+		this.requestNumber = requestNumber;
+	}
+
+	public void setParams(Map<String, String> params) {
+		this.params = params;
+	}
+
+	public Map<String, ServiceAttachment> getFiles() {
+		return attachments;
+	}
+
+	public void setFiles(Map<String, ServiceAttachment> files) {
+		this.attachments = files;
+	}
+
+	public static class ServiceAttachment {
+		private MultipartFile attachmentFile;
+		private String docTypeId;
+		private String docTypeName;
+
+		public MultipartFile getAttachmentFile() {
+			return attachmentFile;
+		}
+
+		public void setAttachmentFile(MultipartFile attachmentFile) {
+			this.attachmentFile = attachmentFile;
+		}
+
+		public String getDocTypeId() {
+			return docTypeId;
+		}
+
+		public void setDocTypeId(String docTypeId) {
+			this.docTypeId = docTypeId;
+		}
+
+		public String getDocTypeName() {
+			return docTypeName;
+		}
+
+		public void setDocTypeName(String docTypeName) {
+			this.docTypeName = docTypeName;
+		}
+
+	}
+
+	public static class Service {
+		private long id;
+		private String serviceName;
+		private boolean allowedForIndividual;
+		private boolean allowedForEstablishment;
+		private ServiceHandler serviceHandler;
+		private String dept;
+
+		public Service() {
+		}
+
+		public Service(int id, String serviceDept, String serviceName, boolean allowedForIndividual, boolean allowedForEstablishment) {
+			setId(id);
+			setDept(serviceDept);
+			setServiceName(serviceName);
+			setAllowedForIndividual(allowedForIndividual);
+			setAllowedForEstablishment(allowedForEstablishment);
+		}
+
+		public long getId() {
+			return id;
+		}
+
+		public void setId(long id) {
+			this.id = id;
+		}
+
+		public String getDept() {
+			return dept;
+		}
+
+		public void setDept(String dept) {
+			this.dept = dept;
+		}
+		
+		public String getServiceName() {
+			return serviceName;
+		}
+
+		public void setServiceName(String serviceName) {
+			this.serviceName = serviceName;
+		}
+
+		public boolean isAllowedForIndividual() {
+			return allowedForIndividual;
+		}
+
+		public void setAllowedForIndividual(boolean allowedForIndividual) {
+			this.allowedForIndividual = allowedForIndividual;
+		}
+
+		public boolean isAllowedForEstablishment() {
+			return allowedForEstablishment;
+		}
+
+		public void setAllowedForEstablishment(boolean allowedForEstablishment) {
+			this.allowedForEstablishment = allowedForEstablishment;
+		}
+
+		public ServiceHandler getHandlerClass() {
+			return serviceHandler;
+		}
+
+		public void setServiceHandler(ServiceHandler serviceHandler) {
+			this.serviceHandler = serviceHandler;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			Service service = (Service) obj;
+			if (service.id != 0 && id != 0)
+				return id == service.id;
+			return serviceName.equals(service.serviceName);
+		}
+	}
+
+	public static class ServiceField {
+		private String fieldName;
+		private String displayKey;
+		private FieldTypeEnum fieldType;
+		private String fieldValue;
+		private String fieldIdValue;
+		// for the lk fields
+		private Map<String, String> fieldLkValues;
+		// for the attachment fields
+		private String docTypeId;
+		private String docTypeName;
+		// custom property only set to say the service has next phase field
+		private boolean nextPhaseField;
+		// These are display parameters
+		private boolean fieldLkNeedLocalization;
+		private boolean disabled;
+		private boolean nextFieldInSameRow;
+		private boolean inSameRow;
+		private String infoMessage;
+		private String panelHeader;
+		private boolean required;
+		private SendBackInfo.ServiceAttachment attachmentValue;
+		/**
+		 * Notifier Field is the one that changes the visibility of other fields
+		 * when changed
+		 */
+		private boolean notifierField;
+		private String requiredUpon_FieldName;
+		private String requiredUpon_FieldValue;
+
+		public ServiceField(String fieldName, String displayKey, FieldTypeEnum type, boolean required) {
+			this.fieldName = fieldName;
+			this.displayKey = displayKey;
+			this.fieldType = type;
+			this.required = required;
+		}
+
+		public ServiceField(String fieldName, String displayKey, String value, boolean disabled) {
+			this.fieldName = fieldName;
+			this.displayKey = displayKey;
+			this.fieldValue = value;
+			this.disabled = disabled;
+		}
+
+		public String getFieldName() {
+			return fieldName;
+		}
+
+		public void setFieldName(String fieldName) {
+			this.fieldName = fieldName;
+		}
+
+		public String getDisplayKey() {
+			return displayKey;
+		}
+
+		public void setDisplayKey(String displayKey) {
+			this.displayKey = displayKey;
+		}
+
+		public FieldTypeEnum getFieldType() {
+			return fieldType;
+		}
+
+		public void setFieldType(FieldTypeEnum fieldType) {
+			this.fieldType = fieldType;
+		}
+
+		public Map<String, String> getFieldLkValues() {
+			return fieldLkValues;
+		}
+
+		public void setFieldLkValues(Map<String, String> fieldLkValues) {
+			this.fieldLkValues = fieldLkValues;
+		}
+
+		public boolean getFieldLkNeedLocalization() {
+			return fieldLkNeedLocalization;
+		}
+
+		public void setFieldLkNeedLocalization(boolean fieldLkNeedLocalization) {
+			this.fieldLkNeedLocalization = fieldLkNeedLocalization;
+		}
+
+		public String getFieldValue() {
+			return fieldValue;
+		}
+
+		public void setFieldValue(String value) {
+			fieldValue = value;
+		}
+
+		public String getFieldIdValue() {
+			return fieldIdValue;
+		}
+		
+		public void setFieldIdValue(String fieldIdValue) {
+			this.fieldIdValue = fieldIdValue;
+		}
+
+		public boolean getDisabled() {
+			return disabled;
+		}
+
+		public void setDisabled(boolean disabled) {
+			this.disabled = disabled;
+		}
+
+		public String getDocTypeId() {
+			return docTypeId;
+		}
+
+		public void setDocTypeId(String docTypeId) {
+			this.docTypeId = docTypeId;
+		}
+
+		public String getDocTypeName() {
+			return docTypeName;
+		}
+
+		public void setDocTypeName(String docTypeName) {
+			this.docTypeName = docTypeName;
+		}
+
+		public boolean isNextPhaseField() {
+			return nextPhaseField;
+		}
+
+		public void setNextPhaseField(boolean nextPhaseField) {
+			this.nextPhaseField = nextPhaseField;
+		}
+
+		public boolean getNextFieldInSameRow() {
+			return nextFieldInSameRow;
+		}
+
+		public void setNextFieldInSameRow(boolean nextFieldInSameRow) {
+			this.nextFieldInSameRow = nextFieldInSameRow;
+		}
+
+		public boolean isInSameRow() {
+			return inSameRow;
+		}
+
+		public void setInSameRow(boolean inSameRow) {
+			this.inSameRow = inSameRow;
+		}
+
+		public String getInfoMessage() {
+			return infoMessage;
+		}
+
+		public void setInfoMessage(String infoMessage) {
+			this.infoMessage = infoMessage;
+		}
+
+		public String getPanelHeader() {
+			return panelHeader;
+		}
+
+		public void setPanelHeader(String panelHeader) {
+			this.panelHeader = panelHeader;
+		}
+
+		public boolean isRequired() {
+			return this.required;
+		}
+
+		public void setRequired(boolean required) {
+			this.required = required;
+		}
+
+		public void setDocType(String typeId, String typeName) {
+			docTypeId = typeId;
+			docTypeName = typeName;
+		}
+
+		public SendBackInfo.ServiceAttachment getAttachmentValue() {
+			return attachmentValue;
+		}
+
+		public void setAttachmentValue(SendBackInfo.ServiceAttachment attachment) {
+			this.attachmentValue = attachment;
+		}
+
+		public boolean isNotifierField() {
+			return notifierField;
+		}
+
+		public void setNotifierField(boolean notifierField) {
+			this.notifierField = notifierField;
+		}
+
+		public String getRequiredUpon_FieldName() {
+			return requiredUpon_FieldName;
+		}
+
+		public String getRequiredUpon_FieldValue() {
+			return requiredUpon_FieldValue;
+		}
+
+		public void setRequiredCondition(String requiredUpon_FieldName, String requiredUpon_FieldValue) {
+			this.requiredUpon_FieldName = requiredUpon_FieldName;
+			this.requiredUpon_FieldValue = requiredUpon_FieldValue;
+		}
+
+	}
+
+	public enum FieldTypeEnum {
+		Number,
+		Text,
+		Date,
+		File,
+		Select,
+		Radio
+	}
+
+	public static class SerivceParamsValidator implements Validator {
+
+		@Override
+		public boolean supports(Class<?> clazz) {
+			return ServiceParamsCommand.class.equals(clazz);
+		}
+
+		@Override
+		public void validate(Object target, Errors errors) {
+			ServiceParamsCommand serviceParams = (ServiceParamsCommand) target;
+			int serviceId = serviceParams.getServiceId();
+			ServiceHandler handler = LPController.getService(serviceId).getHandlerClass();
+			List<ServiceField> fields = null;
+			try {
+				fields = handler.getServicePreparationFields(serviceParams.getServicePhase(), null, null, null);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			for (ServiceField field : fields) {
+				if (field.isRequired()) {
+					if (field.getFieldType() == FieldTypeEnum.File) {
+						ServiceAttachment attachment = serviceParams.getFiles().get(field.getFieldName());
+						if (attachment.attachmentFile == null || attachment.attachmentFile.isEmpty()) {
+							errors.pushNestedPath("files[" + field.getFieldName() + "]");
+							errors.rejectValue("attachmentFile", "field.required");
+							errors.popNestedPath();
+						} else {
+							validateFileSize(errors, field, attachment);
+						}
+					} else {
+						String paramValue = serviceParams.getParams().get(field.getFieldName());
+						if (paramValue == null || paramValue.isEmpty()) {
+							errors.rejectValue("params[" + field.getFieldName() + "]", "field.required");
+						}
+					}
+				} else {
+					if (field.getFieldType() == FieldTypeEnum.File) {
+						ServiceAttachment attachment = serviceParams.getFiles().get(field.getFieldName());
+						validateFileSize(errors, field, attachment);
+					}
+				}
+			}
+		}
+
+		private void validateFileSize(Errors errors, ServiceField field, ServiceAttachment attachment) {
+			if (attachment != null && attachment.attachmentFile != null && attachment.attachmentFile.getSize() > 2 * 1024 * 1024) {
+				errors.pushNestedPath("files[" + field.getFieldName() + "]");
+				errors.rejectValue("attachmentFile", "field.file.exceeds2MB");
+				errors.popNestedPath();
+			}
+		}
+	}
+}

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="UAQ-WS-FrontDesk" default="build"   basedir=".">
+    <description>
+            Builds WAR file for the uaqwsfd application
+    </description>
+    
+	<property file="${basedir}/build.properties" />
+	
+	 <target name="clean">
+		        <delete dir="${build.dir}" />
+		    </target>
+	
+	<target name="copy-configs"  description="Copies the Configuration Files into the Destination Directory.">
+			<copy todir="${class.dir}" filtering="true">
+				<fileset dir="${conf.dir}/common">
+					<include name="**/*.properties" />
+					<include name="**/*.xml" />
+					<include name="**/*.vm" />
+				</fileset>
+			</copy>
+		</target>
+	
+	<target name="copy-environment-configs"  description="Copies the Configuration Files into the Destination Directory.">
+			<echo message="${environment}"/>
+			<copy todir="${class.dir}">
+				<fileset dir="${conf.dir}/${environment}">
+					<include name="**/*.properties" />
+					<include name="**/*.xml" />
+					<include name="**/*.p12" />
+				</fileset>
+			</copy>
+		</target>
+
+	
+	<target name="compile">
+	        <mkdir dir="build/classes" />
+	        <javac srcdir="src" destdir="${class.dir}" debug="on" nowarn="on" >
+	            <classpath>
+	                <fileset dir="lib">
+	                    <include name="*.jar" />
+	                </fileset>
+	            </classpath>
+	        </javac>
+	    </target>
+	
+
+
+    <target name="build" depends="clean,compile,copy-configs,copy-environment-configs" description="Builds WAR file">
+        <copy todir="${build.dir}/uaqwsfd">
+            <fileset dir="webapp" />
+        </copy>  	
+
+        <copy todir="${build.dir}/uaqwsfd/WEB-INF/lib">
+            <fileset dir="lib">
+                <exclude name="servlet-api.jar" />
+            	<exclude name="jsp-api.jar" />
+            </fileset>
+        </copy>
+
+        <copy todir="build/uaqwsfd/WEB-INF/classes">
+            <fileset dir="${class.dir}" />
+        </copy>
+    	   	
+        <zip destfile="${dist.dir}/uaqwsfd.war">
+            <fileset dir="${build.dir}/uaqwsfd" />
+        </zip>
+    	
+    	<copy file="${dist.dir}/uaqwsfd.war" todir="E:\\JAVA\\tomcat\\apache-tomcat-6.0.35\\webapps" />
+    </target>
+	
+
+</project>

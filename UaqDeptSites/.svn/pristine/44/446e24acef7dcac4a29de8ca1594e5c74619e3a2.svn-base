@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+	<definition name="departmentBaseLayout" template="/WEB-INF/jsp/sites/common/layout.jsp">
+		<put-attribute name="mobilemenu" value="/WEB-INF/jsp/sites/common/mobileMenu.jsp" />
+		<put-attribute name="header" value="/WEB-INF/jsp/sites/common/header.jsp" />
+		<put-attribute name="navigation" value="" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/jsp/sites/common/footer.jsp" />
+
+	</definition>
+
+	<definition name="department.home" extends="departmentBaseLayout">
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/home/homeBody.jsp" />
+	</definition>
+	
+	<definition name="department.sitemap" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/siteMap/siteMap.jsp" />
+	</definition>
+
+	<definition name="department.landing.page" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/landing/landingPage.jsp" />
+	</definition>
+	
+	<definition name="sites.services.detail" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/services/servicesBody.jsp" />
+		<put-attribute name="sitesrightcolumn" value="" />
+	</definition>
+
+
+	<definition name="sites.events.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/events/eventLandingPage.jsp" />
+	</definition>
+
+	<definition name="sites.events.detail" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/events/eventDetailPage.jsp" />
+	</definition>
+
+	<definition name="sites.services.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/services/servicesList.jsp" />
+	</definition>
+
+	<definition name="sites.events.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/events/eventLandingPage.jsp" />
+	</definition>
+
+	<definition name="sites.news.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/news/newsLandingPage.jsp" />
+	</definition>
+	
+	
+	<definition name="sites.archaeological.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/archaeology/archaeologyLandingPage.jsp" />
+	</definition>
+
+	<definition name="sites.news.detail" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/news/newsDetailPage.jsp" />
+	</definition>
+
+	<definition name="sites.awards.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/awards/awardLandingPage.jsp" />
+	</definition>
+
+	<definition name="sites.awards.detail" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/awards/awardDetailPage.jsp" />
+	</definition>
+	
+	<definition name="sites.certificates.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/certificates/certificateLandingPage.jsp" />
+	</definition>
+
+	<definition name="sites.certificates.detail" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/certificates/certificateDetailPage.jsp" />
+	</definition>
+	
+	<definition name="sites.reports.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/reports/reportLandingPage.jsp" />
+	</definition>
+
+	<definition name="sites.reports.detail" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/reports/reportDetailPage.jsp" />
+	</definition>
+
+	<definition name="sites.projects.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/projects/projectsLandingPage.jsp" />
+	</definition>
+	
+	<definition name="sites.projects.detail" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/projects/projectsDetailPage.jsp" />
+	</definition>
+
+	<definition name="sites.image.gallery" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/imageGallery/imageGallery.jsp" />
+	</definition>
+
+	<definition name="sites.video.gallery" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/videoGallery/videoGallery.jsp" />
+	</definition>
+
+	<definition name="sites.detail.page" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/detail/detailBody.jsp" />
+	</definition>
+
+	<definition name="sites.publications.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/publications/publicationLandingPage.jsp" />
+	</definition>
+
+	<definition name="sites.publications.detail" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/publications/publicationDetailPage.jsp" />
+	</definition>
+	
+	<definition name="sites.people.list" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/people/peopleList.jsp" />
+	</definition>
+
+	<definition name="polls.results" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/polls_and_surveys/polls_results.jsp" />
+	</definition>
+
+	<definition name="sites.generic.page" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/common/genericContent.jsp" />
+	</definition>
+
+	<definition name="polls.surveys" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/polls_and_surveys/polls_and_surveys.jsp" />
+	</definition>
+
+	<definition name="sites.search" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/common/DeptSiteSearch.jsp" />
+	</definition>
+
+	<definition name="sites.feedback" extends="departmentBaseLayout">
+	<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/common/sitesFeedback.jsp" />
+	</definition>
+
+	<definition name="sites.feedback.confirmation" extends="departmentBaseLayout">
+	<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/common/sitesFeedbackConfirmation.jsp" />
+	</definition>
+
+	<definition name="survey.confirmation" extends="departmentBaseLayout">
+	<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/common/surveyConfirmation.jsp" />
+	</definition>
+	
+	<definition name="sites.page.not.found" extends="departmentBaseLayout">
+		<put-attribute name="navigation" value="/WEB-INF/jsp/sites/common/navigation.jsp" />
+		<put-attribute name="body" value="/WEB-INF/jsp/sites/common/pagenotfound.jsp" />
+	</definition>
+
+</tiles-definitions>

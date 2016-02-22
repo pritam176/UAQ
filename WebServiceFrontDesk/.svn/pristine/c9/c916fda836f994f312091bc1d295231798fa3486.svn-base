@@ -1,0 +1,9 @@
+conf.dir = ./conf
+
+build.dir = ./build
+class.dir = ${build.dir}/classes
+
+dist.dir=${build.dir}/dist
+
+
+tomcat.path=E:\apache-tomcat-6.0.35\webapps
