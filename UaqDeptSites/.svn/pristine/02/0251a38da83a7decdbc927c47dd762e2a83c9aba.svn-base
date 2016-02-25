@@ -16,7 +16,6 @@ import uaq.db.si.model.common.LpProCardReqDetailsViewSDO;
 import com.uaq.common.PropertiesUtil;
 import com.uaq.common.UAQURLConstant;
 import com.uaq.service.WebServiceInvoker.RequestIdData;
-import com.uaq.util.StringUtil;
 import com.uaq.util.UCMUploader;
 import com.uaq.util.UCMUploader.AttachmentInfo;
 
@@ -26,7 +25,7 @@ public abstract class ProCardServiceHandler extends ServiceHandler {
 	public String saveOrSubmitServiceRequestData(String phase, AccountDetailsViewSDO accountDetails, LPServiceLookUp lookupServiceEN_AR, Map<String, String> params, List<AttachmentInfo> attachmentInfos) throws Exception {
 		Map<String, Object> inputParams = new HashMap<String, Object>();
 
-		if(StringUtil.isEmpty(phase)){
+		if(phase==null){
 			LpProCardReqDetailsViewSDO cardDetails = lookupServiceEN_AR.getProCardByProNumber(params.get("proIdNo"));
 			if(cardDetails!=null){
 				throw new Exception("error.proCardId.exist");

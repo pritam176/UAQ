@@ -315,9 +315,6 @@ public class LPController extends BaseController {
 				viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + ApplicationConstants.URL_SEPARATOR + languageCode + UAQURLConstant.THANKYOU_PAGE;
 			} catch (Exception e) {
 				logger.error("Failed :" + e.getMessage());
-				if(e.getMessage().equals("error.proCardId.exist"))
-					modelMap.addAttribute("statusId", null);
-					viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + ApplicationConstants.URL_SEPARATOR + languageCode + UAQURLConstant.THANKYOU_PAGE;
 				try {
 					modelMap.addAttribute("message", messageSource.getMessage(e.getMessage(), null, new Locale(languageCode)));
 				} catch (Exception ex) {

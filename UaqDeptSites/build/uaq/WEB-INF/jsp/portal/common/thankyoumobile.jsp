@@ -21,6 +21,8 @@
 												<h2> <spring:message code="dept.lbl.thank" /> </h2>
 												  <div>${param.message} 
 												</div>
+												<div>${message} 
+												</div>
 			 								<c:if test="${not empty actmessage}">
 												  <div>${actmessage}</div>
 												  </c:if>

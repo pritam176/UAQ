@@ -16,26 +16,17 @@ import uaq.db.si.model.common.LpProCardReqDetailsViewSDO;
 import com.uaq.common.PropertiesUtil;
 import com.uaq.common.UAQURLConstant;
 import com.uaq.service.WebServiceInvoker.RequestIdData;
-import com.uaq.util.StringUtil;
 import com.uaq.util.UCMUploader;
 import com.uaq.util.UCMUploader.AttachmentInfo;
 
 public abstract class ProCardServiceHandler extends ServiceHandler {
  
 	@Override
-	public String saveOrSubmitServiceRequestData(String phase, AccountDetailsViewSDO accountDetails, LPServiceLookUp lookupServiceEN_AR, Map<String, String> params, List<AttachmentInfo> attachmentInfos) throws Exception {
+	public String saveOrSubmitServiceRequestData(String phase, AccountDetailsViewSDO accountDetails, LPServiceLookUp lookupServiceEN_AR, Map<String, String> params, List<AttachmentInfo> attachmentInfos) {
 		Map<String, Object> inputParams = new HashMap<String, Object>();
 
-		if(StringUtil.isEmpty(phase)){
-			LpProCardReqDetailsViewSDO cardDetails = lookupServiceEN_AR.getProCardByProNumber(params.get("proIdNo"));
-			if(cardDetails!=null){
-				throw new Exception("error.proCardId.exist");
-			}
-		}
-		
 		if (attachmentInfos.size() > 0 && !new UCMUploader().genericUploadAttachment(attachmentInfos))
 			return null;
-		
 		try {
 			inputParams.put("serviceId", params.get("serviceId"));
 			inputParams.put("serviceDept", params.get("serviceDept"));
@@ -57,7 +48,10 @@ public abstract class ProCardServiceHandler extends ServiceHandler {
 				WebServiceInvoker.updateCardRequest(inputParams);
 				requestData = new RequestIdData(requestId, requestNumber);
 			} else {
-				
+				LpProCardReqDetailsViewSDO cardDetails = lookupServiceEN_AR.getProCardByProNumber(params.get("proIdNo"));
+				if(cardDetails!=null){
+					throw new Exception("error.proCardId.exist");
+				}
 				requestData = WebServiceInvoker.saveCardRequest(inputParams);
 				inputParams.put("requestNumber", requestData.getRequestNumber());
 				inputParams.put("requestId", requestData.getRequestId());

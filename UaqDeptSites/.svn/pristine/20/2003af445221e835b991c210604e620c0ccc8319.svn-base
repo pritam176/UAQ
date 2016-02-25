@@ -1,9 +1,5 @@
 package com.uaq.service;
 
-import static com.uaq.common.ApplicationConstants.SPRING_REDIRECT;
-import static com.uaq.common.ApplicationConstants.UAQ_URL;
-import static com.uaq.common.ApplicationConstants.URL_SEPARATOR;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,31 +7,19 @@ import java.util.List;
 import java.util.Map;
 
 import uaq.db.si.model.common.AccountDetailsViewSDO;
-import uaq.db.si.model.common.LpProCardReqDetailsViewSDO;
 
-import com.uaq.common.PropertiesUtil;
-import com.uaq.common.UAQURLConstant;
 import com.uaq.service.WebServiceInvoker.RequestIdData;
-import com.uaq.util.StringUtil;
 import com.uaq.util.UCMUploader;
 import com.uaq.util.UCMUploader.AttachmentInfo;
 
 public abstract class ProCardServiceHandler extends ServiceHandler {
  
 	@Override
-	public String saveOrSubmitServiceRequestData(String phase, AccountDetailsViewSDO accountDetails, LPServiceLookUp lookupServiceEN_AR, Map<String, String> params, List<AttachmentInfo> attachmentInfos) throws Exception {
+	public String saveOrSubmitServiceRequestData(String phase, AccountDetailsViewSDO accountDetails, LPServiceLookUp lookupServiceEN_AR, Map<String, String> params, List<AttachmentInfo> attachmentInfos) {
 		Map<String, Object> inputParams = new HashMap<String, Object>();
 
-		if(StringUtil.isEmpty(phase)){
-			LpProCardReqDetailsViewSDO cardDetails = lookupServiceEN_AR.getProCardByProNumber(params.get("proIdNo"));
-			if(cardDetails!=null){
-				throw new Exception("error.proCardId.exist");
-			}
-		}
-		
 		if (attachmentInfos.size() > 0 && !new UCMUploader().genericUploadAttachment(attachmentInfos))
 			return null;
-		
 		try {
 			inputParams.put("serviceId", params.get("serviceId"));
 			inputParams.put("serviceDept", params.get("serviceDept"));
@@ -48,16 +32,14 @@ public abstract class ProCardServiceHandler extends ServiceHandler {
 			inputParams.put("proIdExpiryDate", formatter.format(proIdExpiryDate));
 
 			RequestIdData requestData;
-			String requestNumber = params.get("requestNumber");
 			if (phase != null && phase.equals("Resubmit")) {
-				
+				String requestNumber = params.get("requestNumber");
 				String requestId = lookupServiceEN_AR.getProCardByRequestNumber(requestNumber).getReqId().toString();
 				inputParams.put("requestNumber", requestNumber);
 				inputParams.put("requestId", requestId);
 				WebServiceInvoker.updateCardRequest(inputParams);
 				requestData = new RequestIdData(requestId, requestNumber);
 			} else {
-				
 				requestData = WebServiceInvoker.saveCardRequest(inputParams);
 				inputParams.put("requestNumber", requestData.getRequestNumber());
 				inputParams.put("requestId", requestData.getRequestId());

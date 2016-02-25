@@ -118,7 +118,7 @@ public class WebServiceInvoker {
 	}
 
 	public static void sendSmsAndEMail(Map<String, Object> inputParams) throws Exception {
-		String operationName = "sendApplicantNotifications";
+		String operationName = "sendNotifications";
 		List<Param> params = new ArrayList<Param>();
 		AccountDetailsViewSDO accountDetails = (AccountDetailsViewSDO) inputParams.get("accountDetails");
 		params.add(new Param("applicantEmailAddress", accountDetails.getEmailAddress()));
@@ -130,9 +130,6 @@ public class WebServiceInvoker {
 		// (WorkflowHistory to be dynamic)
 		params.add(new Param("stepAction", (String) inputParams.get("stepAction")));
 		params.add(new Param("stepName", (String) inputParams.get("stepName")));
-		params.add(new Param("amount", (String) inputParams.get("amount")));
-		params.add(new Param("applicantId", (String) inputParams.get("applicantId")));
-		params.add(new Param("applicantName", (String) inputParams.get("applicantName")));
 		boolean hasResponse = false;
 		new DynamicSoapClient().consume(wsdlUrl, operationName, params, true, hasResponse);
 	}
@@ -737,6 +734,4 @@ public class WebServiceInvoker {
 		boolean hasResponse = false;
 		new DynamicSoapClient().consume(PropertiesUtil.getProperty("SOA_URL_APPLICANT_NOTIFICATION"), operationName, notificationParams, true, hasResponse);
 	}
-	
-	
 }

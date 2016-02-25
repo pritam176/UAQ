@@ -213,7 +213,12 @@ public class PaymentConfirmationController extends BaseController {
 							status = PAYMENT_STATUS_SUCCESS;
 							message = messageSource.getMessage("purchase.payment.success", null, locale);
 
-							
+							/*
+							 * Insert In Payment Work FLow Tabel.Call The
+							 * Reviewr Service .If Success Delete That Row Else
+							 * Update Row
+							 */
+							// From E-dhram side
 							accountDetailTokenOutputVO = userDetailService.getUserdetail(purchaseVO.getCustomerId());
 
 							PaymentWorkFlowVO paymentWorkFlowVO = PaymentDataMapper.setTranactionWorkFlowVO(paymentStatus, accountDetailTokenOutputVO, purchaseVO);

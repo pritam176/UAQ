@@ -136,11 +136,7 @@
 																		</c:when>
 																		<c:otherwise>
 																		<select class="required1 required" name="params['${fields[status.index].fieldName}']">
-																			<option <c:if test="${fields[status.index].fieldValue == null}">selected</c:if> value="">
-																				<spring:message code="option.select"/>
-																			</option>
 																			<c:forEach var="fieldLkVal" items="${fields[status.index].fieldLkValues}">
-							
 																			<option <c:if test="${fields[status.index].fieldValue == fieldLkVal.key}">selected</c:if> value="${fieldLkVal.key}">
 																				<c:choose>
 																					<c:when test="${fields[status.index].fieldLkNeedLocalization}"><spring:message code="${fieldLkVal.value}"/></c:when>
@@ -169,19 +165,13 @@
 																		</span>
 																		<c:set var="attachmentValueStyle" value="position: absolute; margin: 35px -270px"/>
 																    </c:if>
-																    
+																    <form:errors path="files['${fields[status.index].fieldName}'].attachmentFile" class="error"/>
 																	<span style="${attachmentValueStyle}">
 																    <c:if test="${fields[status.index].attachmentValue != null}">
-																    	<a href="${fields[status.index].attachmentValue.viewUrl}" target="_blank">${fields[status.index].attachmentValue.fileName}</a><br/>
+																    	<a href="${fields[status.index].attachmentValue.viewUrl}">${fields[status.index].attachmentValue.fileName}</a><br/>
 																    </c:if>
 																	</span>
 																</div>
-																<form:errors path="files['${fields[status.index].fieldName}'].attachmentFile" class="error"/>
-															</c:when>
-															<c:when test="${fields[status.index].fieldType == 'Span'}">
-																<span>
-																	${fields[status.index].fieldValue}
-																</span>
 															</c:when>
 															<c:otherwise>
 																<!-- Checking if field is disabled or not -->
@@ -244,7 +234,7 @@
 <script>
 jQuery(function($) { 
  $(".proIdExpiryDate").datepicker({
-	 minDate:1
+	 minDate:0
  });
 });
 </script>
