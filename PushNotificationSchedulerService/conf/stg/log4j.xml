@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+    
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" >
+
+   <appender
+        name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+        <param name="File"  value="/U01/tomcat/logs/pnservice.log"/>
+        <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+        <param name="append" value="true"/>
+        <layout class="org.apache.log4j.PatternLayout">
+            <param
+                name="ConversionPattern"
+                value="[UAQ][%p][%d{dd-MMM-yyyy HH:mm:ss.SSS z}] %c{1}.%M(%L) | %m%n" />
+        </layout>
+    </appender>
+    
+	   
+    <logger name="com.uaq.ws">
+        <level value="DEBUG"/>
+        <appender-ref ref="FILE"/>
+    </logger>
+    
+</log4j:configuration>

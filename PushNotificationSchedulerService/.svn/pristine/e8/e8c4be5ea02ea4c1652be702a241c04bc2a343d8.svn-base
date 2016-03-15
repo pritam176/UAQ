@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<project name="PushNotificationService" default="jar">
+
+	<!-- Load the default properties							-->
+	<property file="${basedir}/build.properties" />
+
+	<!-- the normal classpath -->
+	<path id="classpath">
+		<pathelement location="${build.classes}" />
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<!-- ====================================================== -->
+	<!-- Stuff needed by all targets                            -->
+	<!-- ====================================================== -->
+	<target name="init">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${build.classes}" />
+	</target>
+
+	<!-- ====================================================== -->
+	<!-- Compile the Java files                                 -->
+	<!-- ====================================================== -->
+	<target name="compile" depends="clean,init">
+		<javac encoding="${build.encoding}" 
+			srcdir="${src.dir}"			
+			destdir="${build.classes}">
+			
+			<classpath refid="classpath" />
+		</javac>
+	</target>
+
+	<!-- ================================================================== -->
+	<!-- Make bulk_indexer.jar                                              -->
+	<!-- ================================================================== -->
+	<target name="jar" depends="compile">
+		<copy file="${conf.dir}/${environment}/Application.properties" todir="${build.classes}" />
+		<copy file="${conf.dir}/${environment}/jdbc.properties" todir="${build.classes}" />
+		<copy file="${conf.dir}/${environment}/log4j.xml" todir="${build.classes}" />
+		<copy file="${conf.dir}/${environment}/UAQ_Push_Certificate.p12" todir="${build.classes}" />
+		<jar jarfile="${build.dir}/${final.name}.jar" 
+			basedir="${build.classes}">
+			<manifest>
+			</manifest>
+		</jar>
+	</target>
+
+	<!-- ================================================================== -->
+	<!-- Clean.  Delete the build files, and their directories              -->
+	<!-- ================================================================== -->
+	<target name="clean">
+		<delete dir="${build.dir}"/>
+	</target>
+	
+	
+</project>
