@@ -215,7 +215,7 @@ public class PaymentUtil {
 		return requestQuery.toString();
 	}
 
-	public static AutoUpdatePaymentResponse fillAutoUpdatePaymentResponse(String responseText) {
+	public static AutoUpdatePaymentResponse fillAutoUpdatePaymentResponse(String responseText,String transactionId) {
 		
 		logger.enter("fillAutoUpdatePaymentResponse");
 
@@ -229,8 +229,11 @@ public class PaymentUtil {
 				autoUpdatePaymentResponse.setAction(PAYMENT_ACTION_AUTOUPDATE);
 				autoUpdatePaymentResponse.setStatus(responseStatus);
 				autoUpdatePaymentResponse.setStatusMessage(extractValue(responseMap, "Response.StatusMessage"));
-
-				autoUpdatePaymentResponse.setTransactionId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+				
+				
+				
+//				autoUpdatePaymentResponse.setTransactionId(String.valueOf(Calendar.getInstance().getTimeInMillis()));
+				autoUpdatePaymentResponse.setTransactionId(transactionId);
 				if ((responseStatus.equals(RESPONSE_STATUS_SUCCESS)) || 
 						(responseStatus.equals(PAYMENT_RESPONSE_STATUS_CODE_ALREADY_UPDATED)) || 
 						(responseStatus.equals(PAYMENT_RESPONSE_STATUS_CODE_UPDATED_FAILED))) {
@@ -281,16 +284,16 @@ public class PaymentUtil {
 		return autoUpdatePaymentResponse;
 	}
 
-	public static AutoUpdatePaymentResponse autoUpdatePaymentTransaction(String transactionId, MerchantAccount merchantAccount) throws UAQException {
+	public static AutoUpdatePaymentResponse autoUpdatePaymentTransaction(String transactionId, MerchantAccount merchantAccount,String newTransactionId) throws UAQException {
 		
 		logger.enter("autoUpdatePaymentTransaction");
 
 		PaymentServiceManager paymentServiceManager = new PaymentServiceManager();
 		AutoUpdatePaymentResponse autoUpdatePaymentResponse = null;
 		try {
-			autoUpdatePaymentResponse = paymentServiceManager.doAutoUpdateTransaction(fillAutoUpdatePaymentRequest(transactionId, merchantAccount));
+			autoUpdatePaymentResponse = paymentServiceManager.doAutoUpdateTransaction(fillAutoUpdatePaymentRequest(transactionId, merchantAccount),newTransactionId);
 		} catch (Exception e) {
-			logger.error(e.getMessage());
+			logger.error(e.getMessage()); 
 			throw new UAQException(e.getMessage());
 		}
 		

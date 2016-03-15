@@ -42,6 +42,9 @@
 					</li>
 				</ul>
 			</div>
+			<div class="detail-post-content">		
+									<p><a href="${lawAsset.file}">${lawAsset.title}</a></p>
+								</div>
 			</div>
 				<h2 class="main-title no-border">${publicationsVO.title}</h2>
 				<div class="detail-post-content">
@@ -49,6 +52,9 @@
 					<span class="post-date">${publicationsVO.date}</span> <img
 						src="${publicationsVO.image}" class="pull-right" alt="">
 					<c:set var="teaserImage" value="${publicationsVO.teaserImage}"></c:set>
+					<div class="detail-post-content">		
+									<p><a href="${publicationsVO.file}">${publicationsVO.title}</a></p>
+								</div>
 					<p>${publicationsVO.body}</p>
 
 				</div>

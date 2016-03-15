@@ -9,6 +9,7 @@ public class PaymentTransactionDetailVO {
 	private String serviceId;
 	private String statusId;
 	private String languageCode;
+	private String requestId;
 
 	public String getTransactionId() {
 		return transactionId;
@@ -64,5 +65,13 @@ public class PaymentTransactionDetailVO {
 
 	public void setLanguageCode(String languageCode) {
 		this.languageCode = languageCode;
+	}
+
+	public String getRequestId() {
+		return requestId;
+	}
+
+	public void setRequestId(String requestId) {
+		this.requestId = requestId;
 	}
 }

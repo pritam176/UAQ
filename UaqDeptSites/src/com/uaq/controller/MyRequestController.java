@@ -37,6 +37,7 @@ import static com.uaq.common.WebServiceConstant.SOAP_USERNAME_ARGUMENT;
 
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -53,16 +54,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.uaq.common.ViewPath;
+import com.uaq.dao.DAOManager;
 import com.uaq.logger.UAQLogger;
 import com.uaq.service.MyRequestService;
+import com.uaq.service.PaymentWorkFlowService;
 import com.uaq.service.PortalUtil;
 import com.uaq.service.PostPaymentService;
+import com.uaq.service.ReviewerServiceBrokenTracaction;
 import com.uaq.vo.AccountDetailTokenOutputVO;
 import com.uaq.vo.LoginOutputVO;
 import com.uaq.vo.MyRequestInputVO;
 import com.uaq.vo.MyRequestOutputVO;
 import com.uaq.vo.MyRequestViewVO;
 import com.uaq.vo.PageMetadataVO;
+import com.uaq.vo.PaymentTransactionDetailVO;
+import com.uaq.vo.PaymentWorkFlowVO;
 import com.uaq.vo.StatusLookupsOutputVO;
 
 /**
@@ -81,9 +87,9 @@ public class MyRequestController extends BaseController {
 
 	@Autowired
 	private PortalUtil portalUtil;
-
+	
 	@Autowired
-	private PostPaymentService postPaymentService;
+	private PaymentWorkFlowService paymentWorkFlowService;
 
 	/***
 	 * Handler Method for MyRequest URL-/uaq/myrequest.html
@@ -154,10 +160,32 @@ public class MyRequestController extends BaseController {
 		// request.getSession().getAttribute(SESSION_ACCOUNT_DETAIL_FROM_TOKEN);
 		if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
 
-			String result = postPaymentService.excutePostPayment(accountDetailfromToken.getUserName());
+//			String result = postPaymentService.excutePostPayment(accountDetailfromToken.getUserName());
 
-			logger.debug("Post Payment for Broken Tranasction Service status-" + result);
-
+//			logger.debug("Post Payment for Broken Tranasction Service status-" + result);
+			
+//			DAOManager daoManager = new DAOManager();
+//			try {
+//				ReviewerServiceBrokenTracaction reviewerServiceBrokenTracaction = new ReviewerServiceBrokenTracaction();
+//				List<PaymentWorkFlowVO> paymentWorkFlowVOList = paymentWorkFlowService.getPaymentWorkFlowVOList(accountDetailfromToken.getUserName(), daoManager.getConnection());
+//				for(PaymentWorkFlowVO vo : paymentWorkFlowVOList){
+//					PaymentTransactionDetailVO paymentTransactionDetailVO = new PaymentTransactionDetailVO();
+//					paymentTransactionDetailVO.setRequestId(vo.getRequestId());
+//					paymentTransactionDetailVO.setRequestNo(vo.getRequestNo());
+//					paymentTransactionDetailVO.setServiceId(vo.getServiceId());
+//					paymentTransactionDetailVO.setStatusId(vo.getStatusId());
+//					paymentTransactionDetailVO.setTransactionAmount(vo.getEdiramFees());
+//					paymentTransactionDetailVO.setTransactionId(vo.getTransactionId());
+//					reviewerServiceBrokenTracaction.invokeRevierIneceator(accountDetailfromToken, paymentTransactionDetailVO);
+//				}
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}finally{
+//				daoManager.closeConnection();
+//			}
+			
+			
 			MyRequestInputVO inputVo = new MyRequestInputVO();
 			inputVo.setAttributeName(SOAP_USERNAME_ARGUMENT);
 			inputVo.setAttributeValue(accountDetailfromToken.getUserName());

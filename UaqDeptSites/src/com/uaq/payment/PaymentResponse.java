@@ -64,6 +64,8 @@ public abstract class PaymentResponse {
 	protected String merchantModuleSessionID;
 	
 	protected List<PurchaseServiceVO> purchaseServices;
+	
+	protected String receiptNumber;
 
 	
 	/**
@@ -370,7 +372,15 @@ public abstract class PaymentResponse {
 				+ collectionCentreFeesDecimal + ", transactionAmount=" + transactionAmount + ", transactionAmountDecimal=" + transactionAmountDecimal
 				+ ", amount=" + amount + ", amountDecimal=" + amountDecimal + ", transactionResponseDate=" + transactionResponseDate
 				+ ", referenceId=" + referenceId + ", otherInfo=" + otherInfo + ", currency=" + currency + ", paymentMethodType=" + paymentMethodType
-				+ ", merchantModuleSessionID=" + merchantModuleSessionID + ", purchaseServices=" + purchaseServices + "]";
+				+ ", merchantModuleSessionID=" + merchantModuleSessionID + ", purchaseServices=" + purchaseServices + ", receiptNumber=" + receiptNumber + "]";
+	}
+
+	public String getReceiptNumber() {
+		return receiptNumber;
+	}
+
+	public void setReceiptNumber(String receiptNumber) {
+		this.receiptNumber = receiptNumber;
 	}
 		
 }

@@ -120,10 +120,11 @@ public abstract class RealEstateOfficeServiceHandler extends ServiceHandler {
 				inputParams.put("requestNumber", requestData.getRequestNumber());
 				inputParams.put("requestId", requestData.getRequestId());
 				inputParams.put("stepAction", "SUBMITTED");
-				inputParams.put("stepName", null);
+				inputParams.put("stepName", "BEFORE_APP_FEES");
 				inputParams.put("applicantId", accountDetails.getId());
 				inputParams.put("applicantName", accountDetails.getFirstName());
 				inputParams.put("amount", params.get("feeAmount"));
+				inputParams.put("status", "1");
 				WebServiceInvoker.sendSmsAndEMail(inputParams);
 			}
 			System.out.println("--------->  Request Id: " + requestData.getRequestId());
@@ -137,6 +138,29 @@ public abstract class RealEstateOfficeServiceHandler extends ServiceHandler {
 				inputParams.put("phase", phase);
 				Map<String, String> payloadParams = getPayloadParams(inputParams);
 				resubmitService(inputParams, payloadParams);
+				
+				if(phase.equals("Resubmit")){
+					inputParams.put("requestNumber", requestData.getRequestNumber());
+					inputParams.put("requestId", requestData.getRequestId());
+					inputParams.put("stepAction", "RESUBMITTED");
+					inputParams.put("stepName", "RESUBMITED");
+					inputParams.put("applicantId", accountDetails.getId());
+					inputParams.put("applicantName", accountDetails.getFirstName());
+					inputParams.put("amount", params.get("feeAmount"));
+					inputParams.put("status", "15");
+					WebServiceInvoker.sendSmsAndEMail(inputParams);
+				}
+				else{
+					inputParams.put("requestNumber", requestData.getRequestNumber());
+					inputParams.put("requestId", requestData.getRequestId());
+					inputParams.put("stepAction", "Submit Trading License");
+					inputParams.put("stepName", "RESUBMITED_TRADE_LICENSE");
+					inputParams.put("applicantId", accountDetails.getId());
+					inputParams.put("applicantName", accountDetails.getFirstName());
+					inputParams.put("amount", params.get("feeAmount"));
+					inputParams.put("status", "54");
+					WebServiceInvoker.sendSmsAndEMail(inputParams);
+				}
 			}
 			System.out.println("Request Saved");
 			return requestData.getRequestNumber();

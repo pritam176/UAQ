@@ -294,7 +294,7 @@
 														</div>
 														<div class="col-md-7">
 															<div class="input-group file-upload">
-																<form:input path="" type="text"
+																<input  type="text"
 																	class="form-control required" name="emiratesid-back" data-msg-required="${sitePlanDocReq}" readonly="readonly"/>
 																<span class="input-group-btn"> <span
 																	class="btn btn-file"> <spring:message code="file.browse" />&hellip; 

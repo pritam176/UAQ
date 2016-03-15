@@ -55,6 +55,12 @@
 					<c:set var ="confirmemailmsg"><spring:message code="confirm.email.failure"/></c:set>
 					
 					<c:set var ="acceptMessgaelabel"><spring:message code="acceptMessgae"/></c:set>
+					
+					<c:set var ="usernamemax"><spring:message code="username.max"/></c:set>
+					<c:set var ="usernamemin"><spring:message code="username.min"/></c:set>
+					
+					<c:set var ="alphmsg"><spring:message code="alph.msg"/></c:set>
+					<c:set var ="passwordformatmsg"><spring:message code="password.format"/></c:set>
 				
 					<div class="row">
 						<!-- left col -->
@@ -224,8 +230,8 @@
 																<div class="col-md-8 col-xs-9 remove-pad">
 																	<form:input path="landLineNumber"  id="landline" name="landline" type="text" class="form-control "  
 																	data-rule-maxlength="7" data-rule-minlength="7" 
-																	data-msg-maxlength="Enter 7 digit number" 
-																	data-msg-minlength="Enter 7 digit number" data-rule-number="true" data-msg-number="${valMobileLength}" data-mask="0000000"/>
+																	data-msg-maxlength="${valMobileLength}" 
+																	data-msg-minlength="${valMobileLength}" data-rule-number="true" data-msg-number="${valMobileLength}" data-mask="0000000"/>
 																</div>	
 			                                                </div>
 		                                            	</div>
@@ -239,7 +245,8 @@
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
-																<form:input path="address" id="address" name="address" type="text" class="form-control" required="required" data-msg-required="${addressReq}" maxlength="100"/>
+																<form:input path="address" id="address" name="address" type="text" class="form-control " required="required" data-msg-required="${addressReq}" maxlength="100"
+																/>
 			                                                </div>
 		                                            	</div>
 													
@@ -275,7 +282,7 @@
 				                                            </div>
 				                                            <div class="col-md-7">
 																
-																<form:input type="email" path="emailconfirm" id="emailconfirm" name="emailconfirm" class="form-control"   data-msg-required="${emailMsg}" data-msg-email="${validemailMsg}" equalto="#email" data-msg-equalto="${confirmemailmsg}" />
+																<form:input type="email" path="emailconfirm" id="emailconfirm" name="emailconfirm" class="form-control confirm-email"   data-msg-required="${emailMsg}" data-msg-email="${validemailMsg}" equalto="#email" data-msg-equalto="${confirmemailmsg}" />
 			                                                </div>
 		                                            	</div>
 													
@@ -299,7 +306,12 @@
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7"> 
-			                                                    <form:input path="userName" id="username" name="username" type="text" class="form-control required"   data-msg-required="${userName}" />
+			                                                    <form:input path="userName" id="username" name="username" type="text" class="form-control  required"   data-msg-required="${userName}" 
+			                                                     data-rule-alphacheck="true" data-msg-alphacheck="${alphmsg}"
+			                                                    data-rule-maxlength="15"
+																data-rule-minlength="4" 
+																data-msg-maxlength="${usernamemax}" 
+																data-msg-minlength="${usernamemin}"/>
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -322,7 +334,8 @@
 																data-rule-maxlength="15" 
 																data-rule-minlength="8" 
 																data-msg-maxlength="${passwordMax}" 
-																data-msg-minlength="${passwordMin}" />
+																data-msg-minlength="${passwordMin}"
+																data-rule-passwdweak="true" data-msg-passwdweak="${passwordformatmsg}" />
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -354,12 +367,12 @@
 														<!-- text box -->
 		                                            	<div class="form-group cf">
 			                                                <div class="col-md-5">
-			                                                    <label for="fullNameEmirates" class="form-lbl mandatory_lbl"><spring:message code="fullNameBook" /> 
+			                                                    <label for="fullNameEmirates" class="form-lbl"><spring:message code="fullNameBook" /> 
 			                                                    </label><span class="form-lbl-subtxt"> <br/> <spring:message code="fullNameHintText"/> </span>
 				                                            </div>
 				                                            <div class="col-md-7 form-grp-help">
 																<div class="custom-input">	 <!-- added for help poover  -->
-																	<form:input path="fullNameEmirates" id="fullNameEmirates" name="fullNameEmirates" type="text" class="form-control col-md-11 charecterKey required"  data-msg-required="${fullNamereq}"/> <!-- <span class="form-help" id="popover2">?</span>-->
+																	<form:input path="fullNameEmirates" id="fullNameEmirates" name="fullNameEmirates" type="text" class="form-control col-md-11 charecterKey "  data-msg-required="${fullNamereq}"/> <!-- <span class="form-help" id="popover2">?</span>-->
 																</div><span class="form-help" id="popoverFullName">?</span> <!-- added for help poover  -->
 														   </div>
 		                                            	</div>
@@ -373,11 +386,11 @@
 														<!-- text box -->
 		                                            	<div class="form-group cf">
 			                                                <div class="col-md-5">
-			                                                    <label for="emiratesid" class="form-lbl mandatory_lbl"><spring:message code="emiratedId" />
+			                                                    <label for="emiratesid" class="form-lbl "><spring:message code="emiratedId" />
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
-			                                                    <form:input path="emiratesId" id="emaritesid" name="emiratesid" type="text" class="form-control required"  data-rule-maxlength="18" data-rule-minlength="18"
+			                                                    <form:input path="emiratesId" id="emaritesid" name="emiratesid" type="text" class="form-control "  data-rule-maxlength="18" data-rule-minlength="18"
 															 data-msg-required="${enterEmirate}"
 																	data-msg-maxlength="${valLength}" 
 																	data-msg-minlength="${valLength}" data-mask="000-0000-0000000-0" />
@@ -389,11 +402,11 @@
 														<!-- text box -->
 		                                            	<div class="form-group cf">
 			                                                <div class="col-md-5">
-			                                                    <label  for="emiratesidexp" class="form-lbl mandatory_lbl"><spring:message code="emiratesIdExp" /> 
+			                                                    <label  for="emiratesidexp" class="form-lbl "><spring:message code="emiratesIdExp" /> 
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
-																<form:input path="emiratesIdExpDate"  type="text" id="emiratesidexp-password" name="emiratesidexp-password" class="form-control required"  data-msg-required="${emirateExpDateMsg}"/>
+																<form:input path="emiratesIdExpDate"  type="text" id="emiratesidexp-password" name="emiratesidexp-password" class="form-control "  data-msg-required="${emirateExpDateMsg}"/>
 			                                                </div>
 		                                            	</div>
 													
@@ -407,12 +420,12 @@
 														<!-- text box -->
 		                                            	<div class="form-group cf">
 			                                                <div class="col-md-5">
-			                                                    <label for="emirates" class="form-lbl mandatory_lbl"><spring:message code="chooseEmirates" /> 
+			                                                    <label for="emirates" class="form-lbl "><spring:message code="chooseEmirates" /> 
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
 			                                                    <div class="custom-select-box">
-	                                                                <form:select path="emirates"  class="required1 required" name="emirates"  data-msg-required="${emiratesMsg}" >
+	                                                                <form:select path="emirates"  class="required1 " name="emirates"  data-msg-required="${emiratesMsg}" >
 	                                                                   <form:option value=""><spring:message code="selectEmirates"/></form:option>
 																			<form:options items="${emirateList}" />
 	                                                                </form:select>
@@ -429,11 +442,11 @@
 														<!-- text box -->
 		                                            	<div class="form-group cf">
 			                                                <div class="col-md-5">
-			                                                    <label for="dob" class="form-lbl mandatory_lbl"><spring:message code="dob" />
+			                                                    <label for="dob" class="form-lbl "><spring:message code="dob" />
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
-			                                                    <form:input path="dob" id="dob" name="dob" type="text" class="form-control required"  data-msg-required="${dobmsg}" />
+			                                                    <form:input path="dob" id="dob" name="dob" type="text" class="form-control "  data-msg-required="${dobmsg}" />
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -446,12 +459,12 @@
 														<!-- text box -->
 		                                            	<div class="form-group cf">
 			                                                <div class="col-md-5">
-			                                                    <label for="emiratesidfront" class="form-lbl mandatory_lbl"><spring:message code="emiratedIdFrontAttch" />
+			                                                    <label for="emiratesidfront" class="form-lbl "><spring:message code="emiratedIdFrontAttch" />
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
 			                                                    <div class="input-group file-upload">
-																	<form:input type="text" class="form-control required " readonly="true" path="emiratesidfront" name ="emiratesidfront"  data-msg-required="${emiratesFront}" />
+																	<form:input type="text" class="form-control  " readonly="true" path="emiratesidfront" name ="emiratesidfront"  data-msg-required="${emiratesFront}" />
 																	<span class="input-group-btn">
 																		<span class="btn btn-file">
 																			<spring:message code="file.browse" />&hellip; 
@@ -468,12 +481,12 @@
 														<!-- text box -->
 		                                            	<div class="form-group cf">
 			                                                <div class="col-md-5">
-			                                                    <label  for="emiratesidback" class="form-lbl mandatory_lbl"><spring:message code="emiratedIdBackAttch" />
+			                                                    <label  for="emiratesidback" class="form-lbl "><spring:message code="emiratedIdBackAttch" />
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
 																<div class="input-group file-upload">
-																	<form:input type="text" class="form-control required " path="emiratesidback" readonly="true" name="emiratesidback"  data-msg-required="${emiratesBack}" />
+																	<form:input type="text" class="form-control  " path="emiratesidback" readonly="true" name="emiratesidback"  data-msg-required="${emiratesBack}" />
 																	<span class="input-group-btn">
 																		<span class="btn btn-file">
 																			<spring:message code="file.browse" />&hellip; 
@@ -614,7 +627,7 @@
 																<!-- text box -->
 																<div class="form-group cf">
 																	<div class="col-md-5">
-																		<label for="termsandcondition" class="form-lbl "><spring:message code="acceptTerans"/></label>
+																		<label for="termsandcondition" class="form-lbl mandatory_lbl"><spring:message code="acceptTerans"/></label>
 																	</div>
 																	<div class="col-md-7">
 																		
@@ -699,6 +712,20 @@
 	    <script>
 				
 			jQuery(function($) { 
+				
+				$.validator.addMethod("alphacheck", function(value, element) {
+					return this.optional(element) || /^([a-zA-Z0-9._])+$/i.test(value);
+				});
+				
+				 $.validator.addMethod("passwdweak", function(value, element) {
+						if(/^[a-z0-9\-\s]+$/i.test(value)){
+							return false;	
+						}else{
+							
+							return true;
+						}
+					});
+
 
 			$("#feedbak").validate({ignore: []});
 			

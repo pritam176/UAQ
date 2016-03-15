@@ -16,6 +16,7 @@ public class PaymentDataMapper {
 		vo.setRequestNo(paymentStatus.getRequestNo());
 		vo.setServiceId(paymentStatus.getServiceId());
 		vo.setStatusId(paymentStatus.getStatusId());
+		vo.setRequestId(paymentStatus.getRequestId());
 		return vo;
 	}
 
@@ -40,7 +41,7 @@ public class PaymentDataMapper {
 		if(ISSUE_TO_WHOME_IT_MAY_CERTIFICATE.equals(paymentStatus.getServiceId())){
 			FEE_TYPE_CODE="S001";
 		}
-		if(PROCEED_TO_OPERATOR.equals(paymentStatus.getServiceId())){
+		if(PROCEED_TO_OPERATOR.equals(paymentStatus.getStatusId())){
 			FEE_TYPE_CODE="S001";
 		}
 		

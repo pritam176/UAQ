@@ -146,12 +146,12 @@
 												<div class="row">
 	                                            	<div class="form-group cf">
 		                                                <div class="col-md-3">
-		                                                    <label class="form-lbl" for="files1"><spring:message code="dept.lbl.pws.attch" />
+		                                                    <label class="form-lbl" for="files1" id="files1"><spring:message code="dept.lbl.pws.attch" />
 		                                                    </label>
 			                                            </div>
 			                                            <div class="col-md-9">
 		                                                    <div class="input-group file-upload">
-		                                                        <input type="text" name="files1" class="form-control" readonly data-msg-required="${deptlblattachmntmsg}" readonly="readonly" />
+		                                                        <input type="text" name="files1" class="form-control" id = "files0" readonly data-msg-required="${deptlblattachmntmsg}" readonly="readonly" />
 	                                                        	<span class="input-group-btn">
 		                                                			<span class="btn btn-file">
 		                                                				<spring:message code="file.browse"/>&hellip; 
@@ -496,34 +496,44 @@ function updatePosition() {
 		$(".replacement-lbl").addClass("mandatory_lbl");
 		$("#reason_replacement").attr("readonly", false);
 		//$("label[for='files1']").addClass("mandatory_lbl");
+		$("#files0").addClass("required");
+		$("#files1").addClass("mandatory_lbl");
 	 
 	 }else{
 		//$("#reason_replacement").val("");
 		$("#reason_replacement").removeClass("required");
 		$(".replacement-lbl").removeClass("mandatory_lbl");
 		$("#reason_replacement").attr("readonly", true);
+		
+		
 		//$("label[for='files1']").removeClass("mandatory_lbl");
 	 
 	 }
 		
-		$("input[name='serviceType']").click(function(){
-			 if($(this).val()=="replacement"){
-			 
-			    $("#reason_replacement").val("");
-				$("#reason_replacement").addClass("required");
-				$(".replacement-lbl").addClass("mandatory_lbl");
-				$("#reason_replacement").attr("readonly", false);
-				$("label[for='files1']").addClass("mandatory_lbl");
-			 
-			 }else{
-				$("#reason_replacement").val("");
-				$("#reason_replacement").removeClass("required");
-				$(".replacement-lbl").removeClass("mandatory_lbl");
-				$("#reason_replacement").attr("readonly", true);
-				$("label[for='files1']").removeClass("mandatory_lbl");
-			 
-			 }
-			})
+	$("input[name='serviceType']").click(function(){
+		 if($(this).val()=="replacement"){
+		 
+		    $("#reason_replacement").val("");
+			$("#reason_replacement").addClass("required");
+			$("#reason_replacement").attr("readonly", false);
+			$("label[for='files1']").addClass("mandatory_lbl");
+			$(".replacement-lbl").addClass("mandatory_lbl");
+			$("#files0").addClass("required");
+			$('.file-upload').find('label.error').remove();	
+			
+		 }else{
+			$("#reason_replacement").val("");
+			$("#reason_replacement").removeClass("required");
+			$("#reason_replacement").attr("readonly", true);
+			$("label[for='files1']").removeClass("mandatory_lbl");
+			$(".replacement-lbl").removeClass("mandatory_lbl");
+			$("#files0").removeClass("required");
+			$("#files1").removeClass("mandatory_lbl");
+			$('.file-upload').find('label.error').remove();	
+			$('.col-md-9 .col-md-4 + .col-md-8 ').find('label.error').remove();	
+				
+		 }
+		})
 			/* add more files ---------------------------   */
 			var certificateId = 1;
 		$("#addMorefile").click(function(event){

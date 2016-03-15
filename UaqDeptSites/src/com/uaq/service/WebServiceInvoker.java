@@ -51,7 +51,7 @@ public class WebServiceInvoker {
 		List<Param> applicantData = new ArrayList<Param>();
 		applicantData.add(new Param("requestId", "1"));
 		applicantData.add(new Param("requestNo", null));
-		applicantData.add(new Param("statusId", "1"));
+		applicantData.add(new Param("statusId", inputParams.get("statusId")==null?"33":(String)inputParams.get("statusId")));
 		applicantData.add(new Param("source", "1"));
 		applicantData.add(new Param("userName", loginInfo.getUserName()));
 		applicantData.add(new Param("serviceId", inputParams.get("serviceId").toString()));
@@ -124,15 +124,19 @@ public class WebServiceInvoker {
 		params.add(new Param("applicantEmailAddress", accountDetails.getEmailAddress()));
 		params.add(new Param("applicantMobileNumber", accountDetails.getMobileNo()));
 		params.add(new Param("requestNumber", inputParams.get("requestNumber").toString()));
-		params.add(new Param("username", accountDetails.getUserDetailsView().get(0).getLoginusername().getValue()));
+		params.add(new Param("username", accountDetails.getUserDetailsView().get(0).getUserName()));
 		params.add(new Param("requestId", inputParams.get("requestId").toString()));
 		// Asmaa changed according to the new sendNotification
 		// (WorkflowHistory to be dynamic)
 		params.add(new Param("stepAction", (String) inputParams.get("stepAction")));
 		params.add(new Param("stepName", (String) inputParams.get("stepName")));
 		params.add(new Param("amount", (String) inputParams.get("amount")));
-		params.add(new Param("applicantId", (String) inputParams.get("applicantId")));
-		params.add(new Param("applicantName", (String) inputParams.get("applicantName")));
+		params.add(new Param("applicantId", accountDetails.getId()));
+		params.add(new Param("applicantName", accountDetails.getFirstName()));
+		params.add(new Param("transactionId", (String) inputParams.get("transactionId")));
+		params.add(new Param("userLoginName", accountDetails.getUserDetailsView().get(0).getLoginusername().getValue()));
+		params.add(new Param("status", (String) inputParams.get("status")));
+		
 		boolean hasResponse = false;
 		new DynamicSoapClient().consume(wsdlUrl, operationName, params, true, hasResponse);
 	}
@@ -561,10 +565,13 @@ public class WebServiceInvoker {
 		detailData.add(new Param("maritalStatus", inputParams.get("maritalStatus").toString()));
 		detailData.add(new Param("ownername", loginInfo.getLoginusername().getValue()));
 		detailData.add(new Param("ownerId", loginInfo.getAccountId()));
+		detailData.add(new Param("parentReqNo", inputParams.get("fromRequestNo")==null?null:inputParams.get("fromRequestNo").toString()));
 		detailData.add(new Param("ownerNationalityId", accountDetails.getNationalityId()==null?null:accountDetails.getNationalityId().toString()));
 		return detailData;
 	}
 
+	
+	
 	private static List<Param> getGrantLandAttachmentData(Map<String, Object> inputParams) {
 		List<Param> detailData = new ArrayList<Param>();
 		if (inputParams.get("familyBookId") != null)
@@ -583,6 +590,8 @@ public class WebServiceInvoker {
 			detailData.add(new Param("spouseEmirateDocId", (String) inputParams.get("spouseEmirateDocId")));
 		if (inputParams.get("salaryCertificateDocId") != null)
 			detailData.add(new Param("salaryCertificateDocId", (String) inputParams.get("salaryCertificateDocId")));
+		if (inputParams.get("rulersCourtAcceptanceDocId") != null)
+			detailData.add(new Param("rulersCourtAcceptanceDocId", (String) inputParams.get("rulersCourtAcceptanceDocId")));
 		return detailData;
 	}
 
@@ -738,5 +747,92 @@ public class WebServiceInvoker {
 		new DynamicSoapClient().consume(PropertiesUtil.getProperty("SOA_URL_APPLICANT_NOTIFICATION"), operationName, notificationParams, true, hasResponse);
 	}
 	
+	public static void copyRequestLatestAttachments(Map<String, Object> inputParams) throws Exception {
+		String operationName = "copyRequestAttachments";
+		List<Param> params = new ArrayList<Param>();
+		params.add(new Param("fromRequestId", (String)inputParams.get("fromRequestId")));
+		params.add(new Param("toRequestId", (String)inputParams.get("toRequestId")));
+		params.add(new Param("serviceId", (String)inputParams.get("serviceId").toString()));
+		
+		boolean hasResponse = false;
+		new DynamicSoapClient().consume(wsdlUrl, operationName, params, true, hasResponse);		
+	}
+	public static void issueGrantLandRequestExceptionProcess(Map<String, Object> inputParams) throws Exception {
+		String operationName = "startGLRException";		
+		
+		List<Param> detailsParams = new ArrayList<Param>();		
+		detailsParams.add(new Param("GLRData", "http://www.glr.com", getGLRData(inputParams),false));
+		detailsParams.add(new Param("ISPDInput", "http://IssueSitePlanDoc", getISPDInput(inputParams)));
+		
+		boolean hasResponse = false;
+		new DynamicSoapClient().consume(PropertiesUtil.getProperty("SOA_URL_GRANTLAND_EXCEP_REQ"), operationName, detailsParams, true, hasResponse);
+	}
+
+	private static List<Param> getGLRData(Map<String, Object> inputParams) {
+		List<Param> detailParams = new ArrayList<Param>();
+		detailParams.add(new Param("requestId", (String)inputParams.get("requestId")));
+		detailParams.add(new Param("requestNo", (String)inputParams.get("requestNumber")));
+		detailParams.add(new Param("requestDate", (String)inputParams.get("requestDate")));
+		detailParams.add(new Param("serviceFees", "150"));
+		detailParams.add(new Param("stepNumber", "1"));
+		detailParams.add(new Param("instanceId", null));
+		detailParams.add(new Param("comment", null));
+		detailParams.add(new Param("sourceType", "1"));
+		return detailParams;
+	}
+	
+	private static List<Param> getISPDInput(Map<String, Object> inputParams) {
+		AccountDetailsViewSDO accountDetails = (AccountDetailsViewSDO) inputParams.get("accountDetails");
+		UserDetailsViewSDO loginInfo = accountDetails.getUserDetailsView().get(0);
+		
+		List<Param> detailParams = new ArrayList<Param>();
+		detailParams.add(new Param("UserDetails", null, getUserDetails(inputParams, accountDetails, loginInfo)));
+		detailParams.add(new Param("ServiceType", "NEW"));
+		detailParams.add(new Param("SourceType", "1"));
+		detailParams.add(new Param("SubmittedByUserId",loginInfo.getAccountId()));
+		detailParams.add(new Param("Status", "1"));
+		detailParams.add(new Param("ServiceName", "Grant Land Request Exception"));
+		detailParams.add(new Param("Serviceid", (String)inputParams.get("serviceId")));//Site_Plan_No
+		detailParams.add(new Param("Site_Plan_No", (String)inputParams.get("sitePlanNo")));
+		int landLocation = Integer.parseInt((String)inputParams.get("landLocation"));
+		if(landLocation == 1) {
+			// Area
+			detailParams.add(new Param("Area_Name", (String)inputParams.get("area")));
+			detailParams.add(new Param("Area_Block", (String)inputParams.get("areaBlock")));
+			detailParams.add(new Param("Area_Sub_Area", (String)inputParams.get("subArea")));
+			detailParams.add(new Param("Area_Plot_No", (String)inputParams.get("areaPlotNumber")));
+		} else {
+			// Sector
+			detailParams.add(new Param("Sec_Sector_Name", (String)inputParams.get("sector")));
+			detailParams.add(new Param("Sector_block", (String)inputParams.get("sectorBlock")));
+			detailParams.add(new Param("Sub_Sector_No", (String)inputParams.get("subSector")));
+			detailParams.add(new Param("Sec_Plot_No", (String)inputParams.get("sectorPlotNumber")));
+		}
+		detailParams.add(new Param("AttachmentList", null, getAttachmentList(inputParams)));
+		detailParams.add(new Param("Land_Usage", (String)inputParams.get("landUsage")));
+		return detailParams;
+	}
+	
+	private static List<Param> getUserDetails(Map<String, Object> inputParams, AccountDetailsViewSDO accountDetails, UserDetailsViewSDO loginInfo) {
+		List<Param> detailParams = new ArrayList<Param>();
+		detailParams.add(new Param("Username", loginInfo.getLoginusername().getValue().toString()));
+		detailParams.add(new Param("TypeOfUser", accountDetails.getTypeOfUser()));
+		detailParams.add(new Param("nationality", accountDetails.getNationalityId()==null?null:accountDetails.getNationalityId().toString()));
+		return detailParams;
+	}
+	
+	private static List<Param> getAttachmentList(Map<String, Object> inputParams) {
+		ServiceAttachment sitePlanAttachment = (ServiceAttachment)inputParams.get("sitePlanAttachment");		
+		List<Param> attachDetailParams = new ArrayList<Param>();
+		attachDetailParams.add(new Param("Contentid", sitePlanAttachment.getDID()));
+		attachDetailParams.add(new Param("Filename", sitePlanAttachment.getFileName()));
+		attachDetailParams.add(new Param("IsMandatory", "0"));
+		attachDetailParams.add(new Param("Url", sitePlanAttachment.getViewUrl()));
+		attachDetailParams.add(new Param("DocType", sitePlanAttachment.getDocId()));
+		
+		List<Param> detailParams = new ArrayList<Param>();
+		detailParams.add(new Param("AttachmentRec", null, attachDetailParams));
+		return detailParams;
+	}
 	
 }

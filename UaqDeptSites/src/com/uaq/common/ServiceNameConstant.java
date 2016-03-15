@@ -43,6 +43,7 @@ public class ServiceNameConstant {
 	public static final String RENEW_REAL_ESTATE = "407";
 	public static final String LOST_DOCUMENT = "408";
 	public static final String GRANT_LAND_REQUEST = "305";
+	public static final String GRANT_LAND_EXCEPTION_REQUEST = "306";
 	
 	public static final String ISSUE_TO_WHOME_IT_MAY_CERTIFICATE_NAME = "Issue To Whome Ever It May Concern";
 

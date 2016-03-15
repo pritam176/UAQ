@@ -59,6 +59,11 @@
 					<c:set var ="acceptMessgaelabel"><spring:message code="acceptMessgae"/></c:set>
 					<c:set var ="validemailMsg"><spring:message code="validemail"/></c:set>
 					
+					<c:set var ="usernamemax"><spring:message code="username.max"/></c:set>
+					<c:set var ="usernamemin"><spring:message code="username.min"/></c:set>
+					
+					<c:set var ="alphmsg"><spring:message code="alph.msg"/></c:set>
+					<c:set var ="passwordformatmsg"><spring:message code="password.format"/></c:set>
 					
 					
 					
@@ -114,7 +119,7 @@
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7"> 
-			                                                    <form:input path="establishmentName" id="establisname" name="establisname" type="text" class="form-control required" data-msg-required="${establishmentRequired}" />
+			                                                    <form:input path="establishmentName" id="establisname" name="establisname" type="text" class="form-control required" maxlength="100" data-msg-required="${establishmentRequired}" />
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -215,7 +220,7 @@
 															</div>
 															<div class="col-md-7">
 																
-																<form:input type="email" path="emailconfirm" id="emailconfirm" name="emailconfirm" class="form-control"   data-msg-required="${emailMsg}" data-msg-email="${validemailMsg}" equalto="#email" data-msg-equalto="${confirmemailmsg}" />
+																<form:input type="email" path="emailconfirm" id="emailconfirm" name="emailconfirm" class="form-control confirm-email"   data-msg-required="${emailMsg}" data-msg-email="${validemailMsg}" equalto="#email" data-msg-equalto="${confirmemailmsg}" />
 			                                                </div>
 														</div>
 													
@@ -260,7 +265,8 @@
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
-																<form:input path="address" id="address" name="address" type="text" class="form-control" required="required" data-msg-required="${addressReq}" maxlength="100"/>
+																<form:input path="address" id="address" name="address" type="text" class="form-control " required="required" data-msg-required="${addressReq}" maxlength="100"
+																/>
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -326,7 +332,7 @@
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
-																<form:input path="tradeLicenseNumber" id="tradelicenceNumber" name="tradelicenceNumber" type="text" class="form-control" required="required" data-msg-required="${tradeLicNoReq}"/>
+																<form:input path="tradeLicenseNumber" id="tradelicenceNumber" name="tradelicenceNumber" type="text" class="form-control" required="required" maxlength="20" data-msg-required="${tradeLicNoReq}"/>
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -496,7 +502,12 @@
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7"> 
-			                                                    <form:input path="userName" id="username" name="username" type="text" class="form-control" required="required"  data-msg-required="${userName}"/>
+			                                                    <form:input path="userName" id="username" name="username" type="text" class="form-control " required="required"  data-msg-required="${userName}"
+			                                                     data-rule-alphacheck="true" data-msg-alphacheck="${alphmsg}"
+			                                                    data-rule-maxlength="15"
+																data-rule-minlength="4" 
+																data-msg-maxlength="${usernamemax}" 
+																data-msg-minlength="${usernamemin}"/>
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -517,7 +528,8 @@
 																data-rule-maxlength="15" 
 																data-rule-minlength="8" 
 																data-msg-maxlength="${passwordMax}"
-																data-msg-minlength="${passwordMin}"/>
+																data-msg-minlength="${passwordMin}"
+																data-rule-passwdweak="true" data-msg-passwdweak="${passwordformatmsg}"/>
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -601,7 +613,7 @@
 																<!-- text box -->
 																<div class="form-group cf">
 																	<div class="col-md-5">
-																		<label for="termsandcondition" class="form-lbl "><spring:message code="acceptTerans"/></label>
+																		<label for="termsandcondition" class="form-lbl mandatory_lbl"><spring:message code="acceptTerans"/></label>
 																	</div>
 																	<div class="col-md-7">
 																		
@@ -681,6 +693,20 @@
 			jQuery(function($) { 
 				jQuery.validator.addMethod("website", function(value, element, param) { return this.optional(element) || /^(www\.)(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
 				}, jQuery.validator.messages.website);
+				
+				$.validator.addMethod("alphacheck", function(value, element) {
+					return this.optional(element) || /^([a-zA-Z0-9._])+$/i.test(value);
+				});
+				
+				$.validator.addMethod("passwdweak", function(value, element) {
+					if(/^[a-z0-9\-\s]+$/i.test(value)){
+						return false;	
+					}else{
+						
+						return true;
+					}
+				});
+
 
 				$("#feedbak").validate({ignore: []});
 				

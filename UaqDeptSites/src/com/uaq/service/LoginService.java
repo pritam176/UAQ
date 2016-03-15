@@ -99,7 +99,7 @@ public class LoginService {
 		
 		LoginOutputVO outpuVO = new LoginOutputVO();
 		UserLogin.InputPayload inputPayload = new UserLogin.InputPayload();
-		inputPayload.setLoginUsername(input.getLoginUserName());
+		inputPayload.setLoginUsername(input.getLoginUserName().toLowerCase());
 		inputPayload.setPassword(input.getLoginPassword());
 		UserLogin.OutputPayload output = null;
 		try {
@@ -155,7 +155,7 @@ public class LoginService {
 		authenticationTokenPayload.setStatus(inputVO.getStatus());
 		authenticationTokenPayload.setTokenCode(inputVO.getTokenCode());
 		authenticationTokenPayload.setTypeOfUser(inputVO.getTypeOfUser());
-		authenticationTokenPayload.setUsername(inputVO.getUsername());
+		authenticationTokenPayload.setUsername(inputVO.getUsername().toLowerCase());
 		input.setAuthenticationTokenData(authenticationTokenPayload);
 
 		LogoutOutputVO outputVO = new LogoutOutputVO();
@@ -192,7 +192,7 @@ public class LoginService {
 		tokenInput.setStatus(input.getStatus());
 		tokenInput.setTokenCode(input.getTokenCode());
 		tokenInput.setTypeOfUser(input.getTypeOfUser());
-		tokenInput.setUsername(input.getUsername());
+		tokenInput.setUsername(input.getUsername().toLowerCase());
 		authenticationTokenData.setAuthenticationTokenData(tokenInput);
 		
 		List<uaq.db.si.model.common.AccountattachmentsViewSDO> userAttachmentsList	= lookupServiceEN_AR.getUserAttachments(input.getAcountId());
@@ -336,7 +336,7 @@ public class LoginService {
 		 authenticationTokenPayload.setAcountId(accountDetailTokenInput.getAcountId());
 		 authenticationTokenPayload.setTokenCode(accountDetailTokenInput.getTokenCode());
 		 authenticationTokenPayload.setTypeOfUser(accountDetailTokenInput.getTypeOfUser());
-		 authenticationTokenPayload.setUsername(accountDetailTokenInput.getUsername());
+		 authenticationTokenPayload.setUsername(accountDetailTokenInput.getUsername().toLowerCase());
 		 authenticationTokenPayload.setStatus(accountDetailTokenInput.getStatus());
 		 authenticationTokenPayload.setCreatedDate(accountDetailTokenInput.getCreatedDate());
 		 authenticationTokenPayload.setLastUpdatedDate(accountDetailTokenInput.getLastUpdatedDate());

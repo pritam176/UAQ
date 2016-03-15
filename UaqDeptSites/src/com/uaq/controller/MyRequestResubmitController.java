@@ -263,6 +263,22 @@ public class MyRequestResubmitController extends BaseController {
 					+ inputVO.getAttributeValue() + "&servicePhase=Resubmit"+ "&statusId="+statusId;
 
 		}
+		else if (serviceId.equals(GRAND_LAND_REQUEST_EXCEPTION)) {
+
+			if (portalUtil.isMobile(request, response)) {
+				model.addAttribute(ISMOBILE, "true");
+				viewname = MOBILE_LOGIN_AGAIN;
+				LoginOutputVO logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+				//LoginOutputVO logininfo = portalUtil.getLoginDetailFromMobileRequest(request);
+				if (logininfo != null) {
+					request.getSession().setAttribute(SESSION_LOGIN_INFO_MOBILE, logininfo);
+				}
+			}
+
+			viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + "/showServicePhase.html?serviceId=" + GRAND_LAND_REQUEST_EXCEPTION + "&requestNumber="
+					+ inputVO.getAttributeValue() + "&servicePhase=Resubmit"+ "&statusId="+statusId;
+
+		}
 		model.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
 		return viewname;
 

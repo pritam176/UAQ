@@ -347,6 +347,26 @@
 													</a>
 													
 												</c:if>
+												<c:if test="${item.serviceId ==306 &&  item.sorceType == 1 && ( item.statusId ==5 || item.statusId ==6 || item.statusId ==33 || item.statusId ==18 )}">
+													
+													<a href="${item.url}?serviceId=${item.serviceId}&requestNo=${item.requestNo}&statusId=${item.statusId}&isNative=true&typeOfUser=${item.userType}" class="link-btn">
+													<c:if test="${item.statusId ==5}">
+													<spring:message code="label.eservice.resubmit"/>
+													</c:if>
+													<c:if test="${item.statusId ==6}">
+													<spring:message code="label.eservice.viewdetails"/>
+													</c:if>
+													<c:if test="${item.statusId ==33}">
+													<spring:message code="label.payment.paynow"/>
+													</c:if><c:if test="${item.statusId ==18}">
+													<spring:message code="label.payment.paynow"/>
+													</c:if>
+													<c:if test="${item.statusId !=5 && item.statusId !=6 && item.statusId !=33 && item.statusId !=18}">
+													${item.statusName}
+													</c:if>
+													</a>
+													
+												</c:if>
 								
 							 </div>
 		 				 </div>

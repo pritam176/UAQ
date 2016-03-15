@@ -97,16 +97,18 @@ public class ServiceParamsCommand {
 		private boolean allowedForEstablishment;
 		private ServiceHandler serviceHandler;
 		private String dept;
+		private boolean initiatableAfterSave;
 
 		public Service() {
 		}
 
-		public Service(int id, String serviceDept, String serviceName, boolean allowedForIndividual, boolean allowedForEstablishment) {
+		public Service(int id, String serviceDept, String serviceName, boolean allowedForIndividual, boolean allowedForEstablishment, boolean initiatableAfterSave) {
 			setId(id);
 			setDept(serviceDept);
 			setServiceName(serviceName);
 			setAllowedForIndividual(allowedForIndividual);
 			setAllowedForEstablishment(allowedForEstablishment);
+			setInitiatableAfterSave(initiatableAfterSave);
 		}
 
 		public long getId() {
@@ -156,6 +158,14 @@ public class ServiceParamsCommand {
 		public void setServiceHandler(ServiceHandler serviceHandler) {
 			this.serviceHandler = serviceHandler;
 		}
+		public boolean isInitiatableAfterSave() {
+			return initiatableAfterSave;
+		}
+
+		public void setInitiatableAfterSave(boolean initiatableAfterSave) {
+			this.initiatableAfterSave = initiatableAfterSave;
+		}
+
 
 		@Override
 		public boolean equals(Object obj) {
@@ -195,6 +205,7 @@ public class ServiceParamsCommand {
 		private boolean notifierField;
 		private String requiredUpon_FieldName;
 		private String requiredUpon_FieldValue;
+		private int length = 100;
 
 		public ServiceField(String fieldName, String displayKey, FieldTypeEnum type, boolean required) {
 			this.fieldName = fieldName;
@@ -202,12 +213,27 @@ public class ServiceParamsCommand {
 			this.fieldType = type;
 			this.required = required;
 		}
+		
+		public ServiceField(String fieldName, String displayKey, FieldTypeEnum type, boolean required, int length) {
+			this.fieldName = fieldName;
+			this.displayKey = displayKey;
+			this.fieldType = type;
+			this.required = required;
+			this.length = length;
+		}
 
 		public ServiceField(String fieldName, String displayKey, String value, boolean disabled) {
 			this.fieldName = fieldName;
 			this.displayKey = displayKey;
 			this.fieldValue = value;
 			this.disabled = disabled;
+		}
+		public ServiceField(String fieldName, String displayKey, String value, boolean disabled, int length) {
+			this.fieldName = fieldName;
+			this.displayKey = displayKey;
+			this.fieldValue = value;
+			this.disabled = disabled;
+			this.length = length;
 		}
 
 		public String getFieldName() {
@@ -370,6 +396,14 @@ public class ServiceParamsCommand {
 		public void setRequiredCondition(String requiredUpon_FieldName, String requiredUpon_FieldValue) {
 			this.requiredUpon_FieldName = requiredUpon_FieldName;
 			this.requiredUpon_FieldValue = requiredUpon_FieldValue;
+		}
+
+		public int getLength() {
+			return length;
+		}
+
+		public void setLength(int length) {
+			this.length = length;
 		}
 
 	}

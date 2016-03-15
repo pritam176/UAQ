@@ -155,7 +155,7 @@ public class ApplicationConstants {
 
 	public static final String LOGIN_PASSWORD = "password";
 
-	public static final String DD_MM_YYYY = "dd/mm/yyyy";
+	public static final String DD_MM_YYYY = "dd/MM/yyyy";
 	
 	public static final String MM_DD_YYYY = "MM/dd/yyyy";
 

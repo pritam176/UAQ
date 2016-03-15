@@ -73,17 +73,18 @@ public class EGDResubmitController extends BaseController {
 				if (portalUtil.validateToken(logininfo)) {
 					AccountDetailTokenOutputVO accountDetailfromToken = portalUtil.getAccountDetailForMobile(logininfo);
 					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
-						viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						//viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
 						UserDeatilVO userDetails = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
 						NewSupplierRegistrationVO supplierDetails = EGDDataMapper.getSupplierDataForResubmit(accountDetailfromToken, newSupplierRegistrationCommand);
 						supplierDetails.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
 						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), newSupplierRegistrationCommand.getRequestNo(), newSupplierRegistrationCommand.getStatusId())) {
-							
+							viewname = "service.errorpage.mobile";
 							LandOutputVO output = eGDResubmitRequestService.reSubmitSupplierRequest(userDetails, supplierDetails);
 							if (output != null && !output.getStatus().equalsIgnoreCase(SERVICE_FAILED)) {
-								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+								//viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+								viewname = MOBILE_THANKU_VIEW;
 								model.addAttribute(REQUEST_PARAM_STATUS_ID, output.getSatausId());
 								model.addAttribute(REQUEST_PARAM_SERVICE_ID, output.getServiceId());
 								model.addAttribute(REQUEST_PARAM_REQUEST_NO, output.getRequestNo());
@@ -107,15 +108,15 @@ public class EGDResubmitController extends BaseController {
 				if (portalUtil.validateToken(logininfo)) {
 					AccountDetailTokenOutputVO accountDetailfromToken = portalUtil.getAccountDetailForMobile(logininfo);
 					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
-						viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						//viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
 						UserDeatilVO userDetails = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
 						NewSupplierRegistrationVO supplierDetails = EGDDataMapper.getSupplierDataForResubmit(accountDetailfromToken, newSupplierRegistrationCommand);
-						supplierDetails.setServiceId("502");
+						//supplierDetails.setServiceId("502");
 						supplierDetails.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
 						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), newSupplierRegistrationCommand.getRequestNo(), newSupplierRegistrationCommand.getStatusId())) {
-							
+							viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
 							LandOutputVO output = eGDResubmitRequestService.reSubmitSupplierRequest(userDetails, supplierDetails);
 							if (output != null && !output.getStatus().equalsIgnoreCase(SERVICE_FAILED)) {
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
@@ -171,7 +172,7 @@ public class EGDResubmitController extends BaseController {
 				if (portalUtil.validateToken(logininfo)) {
 					AccountDetailTokenOutputVO accountDetailfromToken = portalUtil.getAccountDetailForMobile(logininfo);
 					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
-						viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						//viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
 						UserDeatilVO userDetails = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
 						NewSupplierRegistrationVO supplierDetails = EGDDataMapper.getSupplierDataForResubmit(accountDetailfromToken, newSupplierRegistrationCommand);
 						supplierDetails.setServiceId("502");
@@ -179,10 +180,11 @@ public class EGDResubmitController extends BaseController {
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
 						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), newSupplierRegistrationCommand.getRequestNo(), newSupplierRegistrationCommand.getStatusId())) {
-							
+							viewname = "service.errorpage.mobile";
 							LandOutputVO output = eGDResubmitRequestService.reSubmitSupplierRequest(userDetails, supplierDetails);
 							if (output != null && !output.getStatus().equalsIgnoreCase(SERVICE_FAILED)) {
-								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+								//viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+								viewname = MOBILE_THANKU_VIEW;
 								model.addAttribute(REQUEST_PARAM_STATUS_ID, output.getSatausId());
 								model.addAttribute(REQUEST_PARAM_SERVICE_ID, output.getServiceId());
 								model.addAttribute(REQUEST_PARAM_REQUEST_NO, output.getRequestNo());
@@ -207,14 +209,15 @@ public class EGDResubmitController extends BaseController {
 				if (portalUtil.validateToken(logininfo)) {
 					AccountDetailTokenOutputVO accountDetailfromToken = portalUtil.getAccountDetailForMobile(logininfo);
 					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
-						viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						
 						UserDeatilVO userDetails = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
 						NewSupplierRegistrationVO supplierDetails = EGDDataMapper.getSupplierDataForResubmit(accountDetailfromToken, newSupplierRegistrationCommand);
 						supplierDetails.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
+						supplierDetails.setServiceId("502");
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
 						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), newSupplierRegistrationCommand.getRequestNo(), newSupplierRegistrationCommand.getStatusId())) {
-							
+							viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
 							LandOutputVO output = eGDResubmitRequestService.reSubmitSupplierRequest(userDetails, supplierDetails);
 							if (output != null && !output.getStatus().equalsIgnoreCase(SERVICE_FAILED)) {
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;

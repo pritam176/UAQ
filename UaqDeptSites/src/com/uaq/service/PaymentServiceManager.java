@@ -26,7 +26,7 @@ public class PaymentServiceManager extends Connection {
 	 * @throws Exception
 	 */
 
-	public AutoUpdatePaymentResponse doAutoUpdateTransaction(AutoUpdatePaymentRequest paymentRequest) throws Exception {
+	public AutoUpdatePaymentResponse doAutoUpdateTransaction(AutoUpdatePaymentRequest paymentRequest,String transactionId) throws Exception {
 
 		logger.enter("doAutoUpdateTransaction");
 
@@ -34,21 +34,21 @@ public class PaymentServiceManager extends Connection {
 
 		logger.exit("doAutoUpdateTransaction");
 
-		return processAutoUpdateTransaction(doTransaction(paymentRequest));
+		return processAutoUpdateTransaction(doTransaction(paymentRequest),transactionId);
 	}
 
 	/**
 	 * This method is used to process the auto update response
 	 * 
 	 * @param response
-	 * @return
+	 * @return 
 	 */
 
-	private AutoUpdatePaymentResponse processAutoUpdateTransaction(String response) {
+	private AutoUpdatePaymentResponse processAutoUpdateTransaction(String response,String transactionId) {
 
 		logger.enter("processAutoUpdateTransaction");
 
-		AutoUpdatePaymentResponse autoUpdatePaymentResponse = PaymentUtil.fillAutoUpdatePaymentResponse(response);
+		AutoUpdatePaymentResponse autoUpdatePaymentResponse = PaymentUtil.fillAutoUpdatePaymentResponse(response,transactionId);
 
 		logger.exit("processAutoUpdateTransaction");
 

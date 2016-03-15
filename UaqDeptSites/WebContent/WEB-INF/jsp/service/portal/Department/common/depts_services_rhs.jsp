@@ -41,7 +41,7 @@
 				jQuery(function($) { 
 				
 				var departments = ${departmentServicesJSON};
-				var departmentotion ="<option> Please Select </option>";
+				var departmentotion ="<spring:message code="label.departments" />";
 				var servicelist ="";
 				$.each(departments, function(i,k){
 					if(i!==" "){

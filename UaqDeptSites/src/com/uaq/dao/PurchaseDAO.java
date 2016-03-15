@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.uaq.common.PropertiesUtil;
 import com.uaq.exception.DAOException;
@@ -42,56 +44,6 @@ public class PurchaseDAO {
 
 	private static final String PURCHASE_STATUS_APPROVED = "Approved";
 	
-	private static final String DB_DRIVER = PropertiesUtil.getProperty("soa.jdbc.driverClassName");
-	private static final String DB_CONNECTION = PropertiesUtil.getProperty("soa.jdbc.url");
-	private static final String DB_USER = PropertiesUtil.getProperty("soa.jdbc.username");
-	private static final String DB_PASSWORD = PropertiesUtil.getProperty("soa.jdbc.password");
-	
-	private static final String DB_CONNECTION_ERP = PropertiesUtil.getProperty("erp.jdbc.url");
-	private static final String DB_USER_ERP = PropertiesUtil.getProperty("erp.jdbc.username");
-	private static final String DB_PASSWORD_ERP = PropertiesUtil.getProperty("erp.jdbc.password");
-	
-	
-	private Connection con; 
-	
-	//used to establish connection with SOA database 
-	private Connection getConnection() throws ClassNotFoundException, SQLException 
-	{ 
-				 
-		try { 
-			Class.forName(DB_DRIVER); 
-		} catch (ClassNotFoundException e) { 
-			logger.error(e.getMessage()); 
-		}
- 
-		try { 
-			con = DriverManager.getConnection(DB_CONNECTION, DB_USER,DB_PASSWORD); 
-		} catch (SQLException e) { 
-			logger.error(e.getMessage()); 
-		}	
-		
-		return con;
-	}
-	
-	//used to establish connection with ERP database 
-		private Connection getConnectionERP() throws ClassNotFoundException, SQLException 
-		{ 
-					 
-			try { 
-				Class.forName(DB_DRIVER); 
-			} catch (ClassNotFoundException e) { 
-				logger.error(e.getMessage()); 
-			}
-	 
-			try { 
-				con = DriverManager.getConnection(DB_CONNECTION_ERP, DB_USER_ERP,DB_PASSWORD_ERP); 
-			} catch (SQLException e) { 
-				logger.error(e.getMessage()); 
-			}	
-			
-			return con;
-		}
-	
 	
 
 	/**
@@ -103,18 +55,14 @@ public class PurchaseDAO {
 	 * @throws SQLException 
 	 */
 
-	public boolean updatePurchaseStatus(String purchaseId, String status) throws SQLException {
+	public boolean updatePurchaseStatus(String purchaseId, String status,Connection con) throws SQLException {
 		
 		boolean result = false;
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		String sql = "update PURCHASE set PURCHASE_STATUS=?, LAST_MODIFIED_DATE=SYSDATE where PURCHASE_ID=?";
 		
-		try {
-			
-			con = getConnection();
-			ps = con.prepareStatement(sql); 
+		ps = con.prepareStatement(sql); 
 			ps.setString( 1, status);
 			ps.setString( 2, purchaseId);
 			Integer updateCount = ps.executeUpdate();
@@ -123,22 +71,7 @@ public class PurchaseDAO {
 			
 			result = true;
 			
-		} catch (SQLException e) {
-
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
+		
 		return result;
 	}
 
@@ -150,20 +83,16 @@ public class PurchaseDAO {
 	 * @return true
 	 * @throws SQLException 
 	 */
-	public boolean purchasePaymentInProgress(String purchaseId, boolean status) throws SQLException {
+	public boolean purchasePaymentInProgress(String purchaseId, boolean status,Connection con) throws SQLException {
 
 		logger.enter("purchasePaymentInProgress");
 
 		boolean result = false;
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		String sql = "update PURCHASE set payment_in_progress=?, LAST_MODIFIED_DATE=SYSDATE where PURCHASE_ID=?";
 		
-		try {
-			
-			con = getConnection();			
-			ps = con.prepareStatement(sql); 
+		ps = con.prepareStatement(sql); 
 			ps.setBoolean( 1, status);
 			ps.setString( 2, purchaseId);
 			
@@ -173,22 +102,7 @@ public class PurchaseDAO {
 			
 			result = true;
 			
-		} catch (SQLException e) {
-
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
+		
 
 		logger.exit("purchasePaymentInProgress");
 
@@ -203,20 +117,16 @@ public class PurchaseDAO {
 	 * @return true
 	 * @throws SQLException 
 	 */
-	public boolean transactionAutoUpdated(String transactionId, boolean status) throws SQLException {
+	public boolean transactionAutoUpdated(String transactionId, boolean status,Connection con) throws SQLException {
 
 		logger.enter("transactionAutoUpdated");
 
 		boolean result = false;
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		String sql = "update PAYMENT_TRANSACTION set auto_updated=? where TRANSACTION_ID=?";
 		
-		try {
-			
-			con = getConnection();			
-			ps = con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 			
 			ps.setBoolean( 1, status);
 			ps.setString( 2, transactionId);
@@ -226,23 +136,7 @@ public class PurchaseDAO {
 			System.out.println("Rows Updated = " + updateCount);
 			
 			result = true;
-		} catch (SQLException e) {
-
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
-
+		
 		logger.exit("transactionAutoUpdated");
 
 		return result;
@@ -255,20 +149,15 @@ public class PurchaseDAO {
 	 * @return purchaseId
 	 * @throws SQLException 
 	 */
-	public String getPurchaseIdForTransactionId(String transactionId) throws UAQException, SQLException {
+	public String getPurchaseIdForTransactionId(String transactionId,Connection con) throws UAQException, SQLException {
 
 		logger.enter("getPurchaseIdForTransactionId : transactionId = " + transactionId);
 		
 		String purchaseId = null;
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		String sql = "select reference_id from PAYMENT_TRANSACTION where transaction_id = ?";
 		
-		try {
-			
-			con = getConnection();
-			
 			logger.debug("sql query = " + sql);
 			
 			ps = con.prepareStatement(sql); 
@@ -281,23 +170,6 @@ public class PurchaseDAO {
 				purchaseId = resultset.getString(1);
 			}
 
-		} catch (SQLException e) {
-			
-			logger.error(e.getMessage());
-			con.rollback();
-			
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
 		
 		logger.exit("getPurchaseIdForTransactionId : purchaseId = " + purchaseId);
 
@@ -309,27 +181,25 @@ public class PurchaseDAO {
 	 * 
 	 * @param autoUpdatePaymentResponse
 	 * @return result
+	 * @throws DAOException 
 	 * @throws UAQException
 	 * @throws SQLException 
+	 * @throws ParseException 
 	 */
 
-	public boolean saveAutoUpdatePaymentTransaction(AutoUpdatePaymentResponse autoUpdatePaymentResponse){
+	public boolean saveAutoUpdatePaymentTransaction(AutoUpdatePaymentResponse autoUpdatePaymentResponse,Connection con) throws DAOException, SQLException, ParseException{
 
 		logger.enter("saveAutoUpdatePaymentTransaction");
 
 		String query = "";
 		int intResult = 0;
 		PreparedStatement pStmt = null;
-		Connection con = null;
 		
 		query = "INSERT INTO PAYMENT_TRANSACTION (transaction_id, action, status, status_message, confirmation_id, " +
 				"transaction_amount, transaction_date, reference_id, autoupdated_payweb_txn_status, autoupdated_payweb_status_msg, " + 
 				"edirham_fees, collection_centre_fees, payment_method_type, other) " + " values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-		try {
-			
-			con = getConnection();
-			pStmt = con.prepareStatement(query); 
+		pStmt = con.prepareStatement(query); 
 			
 			pStmt.setString( 1, autoUpdatePaymentResponse.getTransactionId());
 			pStmt.setString( 2, "13"); // autoupdate
@@ -353,40 +223,10 @@ public class PurchaseDAO {
 			intResult = pStmt.executeUpdate();	
 			
 			if(intResult > 0 && autoUpdatePaymentResponse.getService() != null){
-				batchUpdateServices(autoUpdatePaymentResponse.getService(), autoUpdatePaymentResponse.getTransactionId());
+				batchUpdateServices(autoUpdatePaymentResponse.getService(), autoUpdatePaymentResponse.getTransactionId(),con);
 			}
 			
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				logger.error(e.getMessage());
-			}
-		} catch (ParseException e) {
-			logger.error(e.getMessage());
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} catch (UAQException e) {
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (pStmt != null) {
-				try {
-					pStmt.close();
-				} catch (SQLException e) {
-					logger.error(e.getMessage());
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.error(e.getMessage());
-				}
-			}
-		}
+		
 
 		logger.exit("saveAutoUpdatePaymentTransaction");
 
@@ -404,22 +244,18 @@ public class PurchaseDAO {
 	 * @throws SQLException
 	 */
 	
-	public boolean updatePaymentTransaction(AutoUpdatePaymentResponse autoUpdatePaymentResponse) throws UAQException, SQLException {
+	public boolean updatePaymentTransaction(AutoUpdatePaymentResponse autoUpdatePaymentResponse,Connection con) throws UAQException, SQLException {
 
 		logger.enter("updatePaymentTransaction");
 
 		String query = "";
 		int intResult = 0;
 		PreparedStatement pStmt = null;
-		Connection con = null;
 		
 			query = "update PAYMENT_TRANSACTION set autoupdated_payweb_txn_status=?, autoupdated_payweb_status_msg=?, confirmation_id=?, transaction_amount=?, " +
 					"edirham_fees=?, collection_centre_fees=? where TRANSACTION_ID=?";
 
-			try{
-				
-				con = getConnection();
-				pStmt = con.prepareStatement(query); 
+			pStmt = con.prepareStatement(query); 
 	
 				pStmt.setString( 1, autoUpdatePaymentResponse.getOriginalTransactionStatus());
 				pStmt.setString( 2, autoUpdatePaymentResponse.getOriginalTransactionStatusMessage());
@@ -431,21 +267,7 @@ public class PurchaseDAO {
 				
 				intResult = pStmt.executeUpdate();			
 			
-			} catch (SQLException e) {
-				logger.error(e.getMessage());
-				con.rollback();
-			} catch (ClassNotFoundException e) {				
-				logger.error(e.getMessage());
-			} 
-			finally {
-
-				if (pStmt != null) {
-					pStmt.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-			}
+			
 			logger.exit("updatePaymentTransaction");
 	
 			if (intResult > 0)
@@ -461,24 +283,21 @@ public class PurchaseDAO {
 	 * @return
 	 * @throws UAQException
 	 * @throws SQLException 
+	 * @throws ParseException 
 	 */
 
-	public boolean savePaywebRequestTransaction(PayWebPaymentRequest payWebPaymentRequest) throws UAQException, SQLException {
+	public boolean savePaywebRequestTransaction(PayWebPaymentRequest payWebPaymentRequest,Connection con) throws UAQException, SQLException, ParseException {
 
 		logger.enter("savePaywebRequestTransaction");
 		String query = "";
 		int intResult = 0;
-		Connection con = null;
 		
 		PreparedStatement pStmt = null;
 		
 		query = "INSERT INTO PAYMENT_TRANSACTION (" + "transaction_id," + "action, " + "transaction_amount, " + "transaction_date, "
 				+ "reference_id) " + "values(?, ?, ?, ?, ?)";
 
-		try {
-			
-			con = getConnection();
-			pStmt = con.prepareStatement(query); 
+		pStmt = con.prepareStatement(query); 
 
 			pStmt.setString( 1, payWebPaymentRequest.getTransactionId());
 			pStmt.setString( 2, "0");
@@ -492,24 +311,7 @@ public class PurchaseDAO {
 
 			intResult = pStmt.executeUpdate();
 		
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ParseException e) {
-			logger.error(e.getMessage());
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (pStmt != null) {
-				pStmt.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
-
+		
 		logger.exit("savePaywebRequestTransaction");
 
 		if (intResult > 0)
@@ -525,25 +327,22 @@ public class PurchaseDAO {
 	 * @return
 	 * @throws UAQException
 	 * @throws SQLException 
+	 * @throws ParseException 
 	 */
 
-	public boolean savePaywebPaymentTransaction(PayWebPaymentResponse payWebPaymentResponse) throws UAQException, SQLException {
+	public boolean savePaywebPaymentTransaction(PayWebPaymentResponse payWebPaymentResponse,Connection con) throws UAQException, SQLException, ParseException {
 
 		logger.enter("savePaywebPaymentTransaction");
 
 		int intResult = 0;
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		String query = "update PAYMENT_TRANSACTION set " + "status=?," + "status_message=?," + "transaction_id=?," + 
 							"transaction_date=?, " + "confirmation_id=?, " + "amount=?, " + 
 							"collection_centre_fees=?, " + "edirham_fees=?, " + "transaction_amount=?, " + "other=?, " + 
 							"payment_method_type=?, " + "reference_id=? " + " where transaction_id=?";
 		
-		try {
-			
-			con = getConnection();
-			ps = con.prepareStatement(query); 
+		ps = con.prepareStatement(query); 
 
 			ps.setString( 1, payWebPaymentResponse.getStatus());
 			ps.setString( 2, payWebPaymentResponse.getStatusMessage());
@@ -566,25 +365,9 @@ public class PurchaseDAO {
 			intResult = ps.executeUpdate();
 			if(intResult > 0){
 				//batchUpdateServices(payWebPaymentResponse.getPurchaseServices(), payWebPaymentResponse.getTransactionId()); // when multiple services per request
-				batchUpdateServices(payWebPaymentResponse.getService(), payWebPaymentResponse.getTransactionId());
+				batchUpdateServices(payWebPaymentResponse.getService(), payWebPaymentResponse.getTransactionId(),con);
 			}
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ParseException e) {
-			logger.error(e.getMessage());
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} 
-		finally {
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}	
-
+		
 		logger.exit("savePaywebPaymentTransaction");
 
 		if (intResult > 0)
@@ -653,14 +436,12 @@ public class PurchaseDAO {
 	 * @throws DAOException
 	 * @throws SQLException
 	 */
-	private void batchUpdateServices(final PurchaseServiceVO purchaseService, final String transactionId) throws DAOException,
+	private void batchUpdateServices(final PurchaseServiceVO purchaseService, final String transactionId,Connection con) throws DAOException,
 	SQLException {
 
 		logger.enter("batchUpdateServices");
 		
 		PreparedStatement ps = null;
-		Connection con = null;
-		
 		int result = 0;
 		
 		if(purchaseService != null && transactionId != null){
@@ -672,10 +453,7 @@ public class PurchaseDAO {
 			
 			logger.debug("sql query = " + sql);
 			
-			try {
-				
-				con = getConnection();
-				ps = con.prepareStatement(sql);					
+			ps = con.prepareStatement(sql);					
 				
 				ps.setString(1, transactionId);
 				ps.setString(2, purchaseService.getServiceCode());
@@ -687,19 +465,7 @@ public class PurchaseDAO {
 					
 				result = ps.executeUpdate();				
 				
-			} catch (SQLException e) {
-				logger.error(e.getMessage());
-				con.rollback();
-			} catch (ClassNotFoundException e) {			
-				logger.error(e.getMessage());
-			} finally {
-				if (ps != null) {
-					ps.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-			}
+			
 		}
 		
 		if(result > 0){
@@ -717,20 +483,16 @@ public class PurchaseDAO {
 	 * 
 	 */
 	
-	public PurchaseVO execute(String purchaseId) throws UAQException, SQLException {
+	public PurchaseVO execute(String purchaseId,Connection con) throws UAQException, SQLException {
 		
 		logger.enter("Inside execute");		
 		
 		PurchaseVO purchaseCommandResult =  null;		
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		String query = "select * from Purchase p where p.purchase_id=?";
 		
-		try {
-			
-			con = getConnection();
-			ps = con.prepareStatement(query); 
+		ps = con.prepareStatement(query); 
 	
 			ps.setString( 1, purchaseId);
 			
@@ -751,22 +513,10 @@ public class PurchaseDAO {
 				purchaseCommandResult.setCreatedDate(resultset.getDate("CREATED_DATE"));
 				// LAST_UPDATED_DATE for PURCHASE table
 				purchaseCommandResult.setLastModifiedDate(resultset.getDate("LAST_MODIFIED_DATE"));
- 
+				purchaseCommandResult.setReceiptNumber(resultset.getString("RECEIPT_NUMBER"));
 			}			
 		
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} finally {
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
+		
 		
 		logger.exit("exiting execute");
 		
@@ -781,25 +531,21 @@ public class PurchaseDAO {
 	 * @throws SQLException
 	 */
 	
-	public InquiryPaymentResponse getPaymentDetails(String confirmationId) throws UAQException, SQLException {
+	public InquiryPaymentResponse getPaymentDetails(String confirmationId,Connection con) throws UAQException, SQLException {
 
 		logger.enter("getPaymentDetails : confirmationId = " + confirmationId);
 
 		InquiryPaymentResponse inquiryPaymentResponse = null;
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 
-		String sql = "select * from PAYMENT_TRANSACTION pt "				
-				+ "where pt.action = '0' and pt.confirmation_id=?";
+		String sql = "select pt.*,Pur.receipt_number from PAYMENT_TRANSACTION pt Join Purchase Pur on Pt.Reference_Id=Pur.Purchase_id				\r\n" + 
+				"where pt.action = '0' and pt.confirmation_id=?";
 
 		logger.debug("sql query = " + sql);
 		
-		try {
-			
-			con = getConnection();
-			ps = con.prepareStatement(sql);	
+		ps = con.prepareStatement(sql);	
 
 			ps.setString(1, confirmationId);
 			
@@ -827,29 +573,17 @@ public class PurchaseDAO {
 				ipr.setAmount(resultset.getString("amount"));
 				ipr.setPaymentMethodType(resultset.getString("payment_method_type"));
 				ipr.setTransactionResponseDate(sdf.format(resultset.getTimestamp("transaction_date")));
-								
+				ipr.setReceiptNumber(resultset.getString("receipt_number"))		;		
 				inquiryObjects.add(ipr); 
 			}			
 			
 			if (inquiryObjects != null && !inquiryObjects.isEmpty()) {
 				inquiryPaymentResponse = inquiryObjects.get(0);
-				inquiryPaymentResponse.setPurchaseCommandServices(fetchPaymentCharges(inquiryPaymentResponse.getTransactionId()));
+				inquiryPaymentResponse.setPurchaseCommandServices(fetchPaymentCharges(inquiryPaymentResponse.getTransactionId(),con));
 				inquiryPaymentResponse.seteServicesCount(inquiryPaymentResponse.getPurchaseCommandServices().size());
 			}
 
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} finally {
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
+		
 
 		logger.exit("getPaymentDetails");
 
@@ -865,12 +599,11 @@ public class PurchaseDAO {
 	 * @throws SQLException
 	 */
 
-	private List<PurchaseServiceVO> fetchPaymentCharges(String transaction_id) throws UAQException, SQLException {
+	private List<PurchaseServiceVO> fetchPaymentCharges(String transaction_id,Connection con) throws UAQException, SQLException {
 
 		logger.enter("fetchPaymentCharges : transaction_id = " + transaction_id);
 		
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		List<PurchaseServiceVO> charges = new ArrayList<PurchaseServiceVO>();
 		
@@ -878,10 +611,7 @@ public class PurchaseDAO {
 		
 		logger.debug("sql query = " + sql);
 		
-		try{
-			
-			con = getConnection();
-			ps = con.prepareStatement(sql);		
+		ps = con.prepareStatement(sql);		
 			
 			ps.setString(1, transaction_id);
 			
@@ -901,19 +631,7 @@ public class PurchaseDAO {
 				charges.add(paymentCharge);
 			}			
 
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} finally {
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
+		
 
 		logger.exit("fetchPaymentCharges");
 
@@ -929,14 +647,14 @@ public class PurchaseDAO {
 	 * @throws SQLException 
 	 */
 	
-	public boolean savePurchaseTransaction(PurchaseVO purchaseCommand) throws DAOException, SQLException{
+	public boolean savePurchaseTransaction(PurchaseVO purchaseCommand,Connection con) throws DAOException, SQLException{
 		
 		logger.enter("savePurchaseTransaction");
 		
 		boolean result = false;			
 				
-		savePurchase(purchaseCommand);
-		batchUpdatePurchaseServices(purchaseCommand.getPurchaseServiceCodes());		
+		savePurchase(purchaseCommand,con);
+		batchUpdatePurchaseServices(purchaseCommand.getPurchaseServiceCodes(),con);		
 					
 		result = true;	
 		
@@ -952,7 +670,7 @@ public class PurchaseDAO {
 	 * @throws SQLException 
 	 */
 	
-	private void savePurchase(final PurchaseVO purchaseCommand) throws DAOException, SQLException{
+	private void savePurchase(final PurchaseVO purchaseCommand,Connection con) throws DAOException, SQLException{
 		
 		logger.enter("savePurchase");
 		
@@ -960,12 +678,9 @@ public class PurchaseDAO {
 		
 		PreparedStatement ps = null;
 		
-		String sql = "INSERT INTO PURCHASE (PURCHASE_ID, PURCHASE_STATUS, PAYMENT_IN_PROGRESS, department_id, service_id, fee_id, customer_id, customer_name, CREATED_DATE, LAST_MODIFIED_DATE) " +
-				"values (?, ?, ?, ?, ?, ?, ?, ?, SYSDATE,SYSDATE)";		
-		try{
-			
-			con = getConnection();
-			ps = con.prepareStatement(sql);
+		String sql = "INSERT INTO PURCHASE (PURCHASE_ID, PURCHASE_STATUS, PAYMENT_IN_PROGRESS, department_id, service_id, fee_id, customer_id, customer_name, CREATED_DATE, LAST_MODIFIED_DATE,REQUEST_ID) " +
+				"values (?, ?, ?, ?, ?, ?, ?, ?, SYSDATE,SYSDATE,?)";		
+		ps = con.prepareStatement(sql);
 			
 			ps.setString(1, purchaseCommand.getPurchaseId());
 			ps.setString(2, PURCHASE_STATUS_APPROVED);
@@ -975,34 +690,23 @@ public class PurchaseDAO {
 			ps.setString(6, purchaseCommand.getFeeId());
 			ps.setString(7, purchaseCommand.getCustomerId());
 			ps.setString(8, purchaseCommand.getCustomerName());
+			ps.setLong(9, purchaseCommand.getRequestId());
 			
 			rowCount = ps.executeUpdate();
 			
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} finally {			
-			if (con != null) {
-				con.close();
-			}
-		} 
+		
 		
 		logger.exit("savePurchase : inserted rowCount=" + rowCount);
 	}
 	
-	private void batchUpdatePurchaseServices(final List<PurchaseServiceVO> purchaseServices) throws DAOException, SQLException{
+	private void batchUpdatePurchaseServices(final List<PurchaseServiceVO> purchaseServices,Connection con) throws DAOException, SQLException{
 		
 		PreparedStatement ps = null;
 		
 		String sql = "INSERT INTO PURCHASE_SERVICE " +
 				"(service_code, units, unit_price, purchase_id) VALUES (?, ?, ?, ?)";
 	 		
-		try{
-			
-			con = getConnection();
-			ps = con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 			
 			for (PurchaseServiceVO purchaseServiceCommand : purchaseServices) {				
 				ps.setString(1, purchaseServiceCommand.getServiceCode());
@@ -1015,19 +719,7 @@ public class PurchaseDAO {
 			
 			ps.executeBatch();				
 				
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} finally {
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		} 
+		
 	}
 	
 	/**
@@ -1038,13 +730,12 @@ public class PurchaseDAO {
 	 * @throws UAQException
 	 * @throws SQLException 
 	 */
-	public PurchaseVO fetchPurchase(String purchaseId) throws UAQException, SQLException {
+	public PurchaseVO fetchPurchase(String purchaseId,Connection con) throws UAQException, SQLException {
 
 		logger.enter("fetchPurchase");
 
 		PurchaseVO purchaseCommandResult = null;
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		List<PurchaseVO> purchases = new ArrayList<PurchaseVO>();
 		
@@ -1052,10 +743,7 @@ public class PurchaseDAO {
 						    + " where p.PURCHASE_ID=? "
 							+ " order by p.PURCHASE_ID desc";
 		
-		try{
-
-			con = getConnection();
-			ps = con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 			ps.setString(1, purchaseId);
 			
 			ResultSet resultset = ps.executeQuery();
@@ -1090,21 +778,7 @@ public class PurchaseDAO {
 				
 			}		
 		
-		} catch (SQLException e) {
-
-			logger.error(e.getMessage());
-			con.rollback();
-
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} finally {
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
+		
 		logger.exit("fetchPurchase");
 
 		return purchaseCommandResult;
@@ -1130,9 +804,7 @@ public class PurchaseDAO {
 		
 		String sql = "select * from PURCHASE_SERVICE ps where ps.PURCHASE_ID=? order by ps.PURCHASE_ID";
 		
-		try{
-			
-			ps = con.prepareStatement(sql);
+		ps = con.prepareStatement(sql);
 			ps.setString(1, purchaseId);
 			
 			ResultSet resultset = ps.executeQuery();
@@ -1157,10 +829,7 @@ public class PurchaseDAO {
 				}
 			}
 		
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
-			con.rollback();
-		} 
+		
 		
 		logger.exit("fetchPurchaseServiceCodes()");
 
@@ -1175,13 +844,12 @@ public class PurchaseDAO {
 	 * @throws SQLException
 	 */
 	
-	public String getLastPaymentTransactionId(String purchaseId) throws UAQException, SQLException {
+	public String getLastPaymentTransactionId(String purchaseId,Connection con) throws UAQException, SQLException {
 		
 		logger.enter("getLastPaymentTransactionId purchaseId = " + purchaseId);
 		
 		String transactionId = null;
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		/*String queryString = "Select Pt.Transaction_Id Transaction_Id from Payment_Transaction Pt " +  
 				 " Join Purchase Pur on Pt.Reference_Id=Pur.Purchase_id and Pur.Purchase_Status <> 'Completed' " +
@@ -1190,21 +858,24 @@ public class PurchaseDAO {
 				 " And (Pt.Action ='0' or Pt.Action ='32') " +
 				 " And Pt.Reference_Id = ?" ;*/
 		
-		String queryString = "SELECT * FROM (Select Pt.Transaction_Id Transaction_Id from Payment_Transaction Pt 	" +
-				" Join Purchase Pur on Pt.Reference_Id=Pur.Purchase_id and Pur.Purchase_Status <> 'Completed' " +
-				" where (Pt.Status is null OR Pt.Status <> '0000')  " +
-				" And (Pt.Action ='0') " +
-				"  And Pt.Reference_Id = ? " +
-				"  order by pt.transaction_date desc)" +
-				"  WHERE  ROWNUM <= 1 " ;
+//		String queryString = "SELECT * FROM (Select Pt.Transaction_Id Transaction_Id from Payment_Transaction Pt 	" +
+//				" Join Purchase Pur on Pt.Reference_Id=Pur.Purchase_id and Pur.Purchase_Status <> 'Completed' " +
+//				" where (Pt.Status is null OR Pt.Status <> '0000')  " +
+//				" And (Pt.Action ='0') " +
+//				"  And Pt.Reference_Id = ? " +
+//				"  order by pt.transaction_date desc)" +
+//				"  WHERE  ROWNUM <= 1 " ;
+		
+		String queryString ="select max(transaction_id)transaction_id\r\n" + 
+				"from payment_Transaction Pt , Purchase Pur \r\n" + 
+				"where Pt.Reference_Id=Pur.Purchase_id \r\n" + 
+				"and Pur.Purchase_Status <> 'Completed'  \r\n" + 
+				"And Pt.Reference_Id = ?";
 		
 		
 		if(purchaseId != null && !purchaseId.isEmpty()){
 			
-			try{
-				
-				con = getConnection();
-				ps = con.prepareStatement(queryString);		
+			ps = con.prepareStatement(queryString);		
 				
 				ps.setString(1, purchaseId);
 				
@@ -1213,19 +884,7 @@ public class PurchaseDAO {
 				while(resultset.next()){					
 					transactionId = resultset.getString("Transaction_Id");
 				}
-			} catch (SQLException e) {
-				logger.error(e.getMessage());
-				con.rollback();
-			} catch (ClassNotFoundException e) {			
-				logger.error(e.getMessage());
-			} finally {
-				if (ps != null) {
-					ps.close();
-				}
-				if (con != null) {
-					con.close();
-				}
-			}				 
+						 
 		}
 				
 		logger.exit("getLastPaymentTransactionId transactionId = " + transactionId);
@@ -1241,18 +900,17 @@ public class PurchaseDAO {
 	 * @throws SQLException
 	 */
 	
-	public InquiryPaymentResponse getSuccessfulPaymentTransaction(String purchaseId){
+	public InquiryPaymentResponse getSuccessfulPaymentTransaction(String purchaseId,Connection con) throws UAQException, SQLException{
 		
 		logger.enter("getSuccessfulPaymentTransaction purchaseId = " + purchaseId);
 
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 		InquiryPaymentResponse ipr = new InquiryPaymentResponse();
 		
 		String queryString = "Select Pt.action, Pt.transaction_Id, Pt.reference_id, Pt.confirmation_id, Pt.edirham_fees, Pt.collection_centre_fees, " +
-				 " Pt.transaction_amount, Pt.amount, Pt.payment_method_type, Pt.transaction_date, Pt.other from Payment_Transaction Pt " +  
+				 " Pt.transaction_amount, Pt.amount, Pt.payment_method_type, Pt.transaction_date, Pt.other,Pur.RECEIPT_NUMBER from Payment_Transaction Pt " +  
 				 " Join Purchase Pur on Pt.Reference_Id=Pur.Purchase_id and Pur.Purchase_Status = 'Completed' " +
 				 " where (Pt.Status='0000')  " +				 
 				 " And (Pt.Action ='0' OR Pt.Action ='13') " +
@@ -1262,10 +920,7 @@ public class PurchaseDAO {
 		
 		if(purchaseId != null && !purchaseId.isEmpty()){
 			
-			try{
-				
-				con = getConnection();
-				ps = con.prepareStatement(queryString);		
+			ps = con.prepareStatement(queryString);		
 				
 				ps.setString(1, purchaseId);
 				
@@ -1290,11 +945,12 @@ public class PurchaseDAO {
 					ipr.setAmount(resultset.getString("amount"));
 					ipr.setPaymentMethodType(resultset.getString("payment_method_type"));
 					ipr.setTransactionResponseDate(sdf.format(resultset.getTimestamp("transaction_date")));
+					ipr.setReceiptNumber(resultset.getString("RECEIPT_NUMBER"));
 				
 				}			
 				
 				if (ipr != null) {					
-					ipr.setPurchaseCommandServices(fetchPaymentCharges(ipr.getTransactionId()));
+					ipr.setPurchaseCommandServices(fetchPaymentCharges(ipr.getTransactionId(),con));
 					ipr.seteServicesCount(ipr.getPurchaseCommandServices().size());
 				}
 				
@@ -1308,34 +964,7 @@ public class PurchaseDAO {
 					ipr.setTransactionId(ipr.getOtherInfo()); // using parent payweb transaction id as transaction id
 				}
 				
-			} catch (SQLException e) {
-				logger.error(e.getMessage());				
-				try {
-					con.rollback();
-				} catch (SQLException e1) {
-					logger.error(e1.getMessage());
-				}
-				 
-			} catch (ClassNotFoundException e) {			
-				logger.error(e.getMessage());
-			} catch (UAQException e) {
-				logger.error(e.getMessage());
-			} finally {
-				if (ps != null) {
-					try {
-						ps.close();
-					} catch (SQLException e) {
-						logger.error(e.getMessage());
-					}
-				}
-				if (con != null) {
-					try {
-						con.close();
-					} catch (SQLException e) {
-						logger.error(e.getMessage());
-					}
-				}
-			}				 
+							 
 		}
 				
 		logger.exit("getSuccessfulPaymentTransaction transactionId = " + ipr.getTransactionId());
@@ -1351,7 +980,7 @@ public class PurchaseDAO {
 	 * @throws SQLException
 	 */
 	
-	public List<PaymentReportVO> getPaymentBrokenTransactions(PaymentReportFilterVO paymentReportFilterCommand) throws DAOException, SQLException {
+	public List<PaymentReportVO> getPaymentBrokenTransactions(PaymentReportFilterVO paymentReportFilterCommand,Connection con) throws DAOException, SQLException {
 
 		logger.enter("getPaymentBrokenTransactions");
 
@@ -1367,10 +996,7 @@ public class PurchaseDAO {
 		
 		logger.debug("query : " + queryString);
 		
-		try{
-			
-			con = getConnection();
-			ps = con.prepareStatement(queryString);
+		ps = con.prepareStatement(queryString);
 			
 			ps.setString(1, paymentReportFilterCommand.getStartDate() + " 00:00:00");
 			ps.setString(2, paymentReportFilterCommand.getEndDate() + " 23:59:59");
@@ -1383,19 +1009,7 @@ public class PurchaseDAO {
 				transactions.add(transaction);
 			}			
 		
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {
-			logger.error(e.getMessage());
-		} finally {
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
+		
 
 		logger.exit("getPaymentBrokenTransactions");
 
@@ -1411,12 +1025,11 @@ public class PurchaseDAO {
 	 * @throws SQLException
 	 */
 	
-	public PaymentStatus updateApplicantRequestTableStatus(String purchaseId) throws SQLException {
+	public PaymentStatus updateApplicantRequestTableStatus(String purchaseId,Connection con) throws SQLException {
 		
 		logger.enter("updateApplicantRequestTableStatus purchaseId = " + purchaseId);
 
 		PreparedStatement ps = null;
-		Connection con = null;
 		PaymentStatus paymentStatus = null;
 		
 		String requestId = purchaseId.split("_")[0]; //discarding the  _feeId part
@@ -1425,12 +1038,9 @@ public class PurchaseDAO {
 		
 		logger.debug("sql = " + sql);
 		
-		try {
+		ps = con.prepareStatement(sql);
 			
-			con = getConnection();
-			ps = con.prepareStatement(sql);
-			
-			paymentStatus = getPaymentStatus(purchaseId); // method call to get payment status information such as statusId and requestNo
+			paymentStatus = getPaymentStatus(purchaseId,con); // method call to get payment status information such as statusId and requestNo
 			
 			ps.setString( 1, paymentStatus.getStatusId()); 
 			ps.setString( 2, requestId); 
@@ -1441,27 +1051,65 @@ public class PurchaseDAO {
 			
 			paymentStatus.setRequestId(requestId); // including requestId in payment status information		
 			
-		} catch (SQLException e) {
-
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
+		
 		
 		logger.exit("updateApplicantRequestTableStatus paymentStatus = " + paymentStatus.toString());
 		
 		return paymentStatus;
-	}	
+	}
+	
+	public boolean updateReceptNo(String purchaseId ,String receptNo,Connection con) throws SQLException{
+		
+		logger.enter("updateReceptNo in SOA tabel - purchaseId = " + purchaseId);
+		
+		boolean flag = false;
+		
+		 
+		
+		String sql = "UPDATE PURCHASE SET RECEIPT_NUMBER=?, LAST_MODIFIED_DATE=SYSDATE WHERE PURCHASE_ID=?";
+		
+		PreparedStatement ps = con.prepareStatement(sql);
+		
+		ps.setString( 1, receptNo); 
+		ps.setString( 2, purchaseId); 
+		
+		Integer updateCount = ps.executeUpdate();
+		
+		logger.debug("Rows Updated = " + updateCount);
+		
+		if(updateCount>0){
+			flag = true;
+		}
+		
+		logger.exit("upadate flag-"+flag);
+		return flag;
+		
+	}
+	public boolean updateReceptNoERP(String transactionId,String receptNo,Connection con) throws SQLException{
+		
+		boolean flag = false;
+		logger.enter("updateReceptNoERP in ERP tabel - transactionId = " + transactionId);
+		String SQL = " UPDATE " + PropertiesUtil.getProperty("erp.table.name") + " SET RECEIPT_NUMBER=? WHERE SERVICE_TRANSACTION_ID=? " ;
+		logger.debug("SQL |"+SQL);
+
+		
+		PreparedStatement ps = con.prepareStatement(SQL);
+		
+		ps.setString( 1, receptNo); 
+		ps.setString( 2, transactionId); 
+		
+		Integer updateCount = ps.executeUpdate();
+		
+		logger.debug("Rows Updated = " + updateCount);
+		
+		if(updateCount == 2){
+			flag = true;
+		}
+		
+		
+		return flag;
+		
+	}
 	
 	/**
 	 * This method is used to get payment information such as requestId, statusId, serviceId for a given purchaseId
@@ -1470,7 +1118,7 @@ public class PurchaseDAO {
 	 * @throws SQLException
 	 */
 	
-	public PaymentStatus getPaymentInfo(String purchaseId) throws SQLException {
+	public PaymentStatus getPaymentInfo(String purchaseId,Connection con) throws SQLException {
 		
 		logger.enter("getPaymentInfo purchaseId = " + purchaseId);
 
@@ -1478,7 +1126,7 @@ public class PurchaseDAO {
 		
 		String requestId = purchaseId.split("_")[0]; //discarding the  _feeId part					
 			
-		paymentStatus = getPaymentStatus(purchaseId); // method call to get payment status information such as statusId and requestNo			
+		paymentStatus = getPaymentStatus(purchaseId,con); // method call to get payment status information such as statusId and requestNo			
 		
 		paymentStatus.setRequestId(requestId); // including requestId in payment status information			
 		
@@ -1491,15 +1139,14 @@ public class PurchaseDAO {
 	 * This method is used to update the ERP system. Its not a regular table and operation.
 	 * @return
 	 * @throws SQLException
+	 * @throws ParseException 
 	 */
 	
 	public boolean updateERPtable(Double amount, String deptCode, String transactionId, String feeId, String custId, 
-			String custName, String transactionDate, String edirhamRefNo) throws SQLException {
+			String custName, String transactionDate, String edirhamRefNo,Connection con) throws SQLException, ParseException {
 		
 		boolean result = false;
 		PreparedStatement ps = null;
-		Connection con = null;
-		
 		logger.enter("updateERPtable");
 		
 		String sql = "INSERT INTO " + PropertiesUtil.getProperty("erp.table.name") + " (CURRENCY_CODE, AMOUNT, DEPARTMENT_CODE, RECEIPT_METHOD_TYPE, " +
@@ -1508,10 +1155,7 @@ public class PurchaseDAO {
 		
 		logger.debug("sql = " + sql);
 		
-		try {
-			
-			con = getConnectionERP(); // ERP specific database connection
-			ps = con.prepareStatement(sql); 			
+		ps = con.prepareStatement(sql); 			
 			
 			java.sql.Timestamp dateTime = new java.sql.Timestamp( DateUtil.getSqlDateFromStringDate(transactionDate).getTime());
 						
@@ -1532,53 +1176,34 @@ public class PurchaseDAO {
 			
 			result = true;
 			
-		} catch (SQLException e) {
-
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} catch (ParseException e) {
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
+		
 		
 		logger.exit("updateERPtable result = " + result);
 		
 		return result;
 	}
+	
+	
 
 	/**
 	 * This method is used to get payment status information such as statusId, serviceId and RequestNo for a given purchaseId
 	 * @param purchaseId
 	 * @return
+	 * @throws SQLException 
 	 */
 	
-	public PaymentStatus getPaymentStatus(String purchaseId){
+	public PaymentStatus getPaymentStatus(String purchaseId,Connection con) throws SQLException{
 		
 		logger.enter("getPaymentStatus : purchaseId = " + purchaseId);
 		
 		PaymentStatus paymentStatus = new PaymentStatus();
 		PreparedStatement ps = null;
-		Connection con = null;
-		
 		String requestId = purchaseId.split("_")[0]; //discarding the _feeId part
 		
 		String sql = "select psl.STATE_ID_AFTER_SUCCESS, p.service_id from PaymentStatus_Lookups psl " +
 					 "join PURCHASE p on psl.fee_id = p.fee_id and p.purchase_id = ?";
 		
-		try {
-			
-			con = getConnection();
-			
+		
 			logger.debug("sql query = " + sql);
 			
 			ps = con.prepareStatement(sql); 
@@ -1591,37 +1216,9 @@ public class PurchaseDAO {
 				paymentStatus.setServiceId(resultset.getString(2));
 			}		
 			
-			paymentStatus.setRequestNo(getRequestNoForRequestId(requestId)); // method call to get requestNo for given requestId
+			paymentStatus.setRequestNo(getRequestNoForRequestId(requestId,con)); // method call to get requestNo for given requestId
 				
-		} catch (SQLException e) {
-			
-			logger.error(e.getMessage());
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				logger.error(e.getMessage());
-			}
-			
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.error(e.getMessage());
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.error(e.getMessage());
-				}
-			}
-		}
+		
 		
 		logger.exit("getPaymentStatus status = " + paymentStatus.getStatusId());
 
@@ -1632,24 +1229,20 @@ public class PurchaseDAO {
 	 * This method is used to get request no for given request id
 	 * @param requestId
 	 * @return
+	 * @throws SQLException 
 	 */
 	
-	public String getRequestNoForRequestId(String requestId){		
+	public String getRequestNoForRequestId(String requestId,Connection con) throws SQLException{		
 		
 		logger.enter("getRequestNoForRequestId : requestId = " + requestId);
 				
 		PreparedStatement ps = null;
-		Connection con = null;
 		String requestNo = null;
 		
 		String sql = "select REQUEST_NO from APPLICANT_REQUEST " +
 					 " where REQUEST_ID = ?";
 		
-		try {
-			
-			con = getConnection();
-			
-			logger.debug("sql query = " + sql);
+		logger.debug("sql query = " + sql);
 			
 			ps = con.prepareStatement(sql); 
 			ps.setString( 1, requestId );
@@ -1661,35 +1254,7 @@ public class PurchaseDAO {
 				requestNo = resultset.getString(1);											
 			}		
 				
-		} catch (SQLException e) {
-			
-			logger.error(e.getMessage());
-			try {
-				con.rollback();
-			} catch (SQLException e1) {
-				logger.error(e.getMessage());
-			}
-			
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.error(e.getMessage());
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.error(e.getMessage());
-				}
-			}
-		}
+		
 		
 		logger.exit("getRequestNoForRequestId requestNo = " + requestNo);
 		
@@ -1705,24 +1270,20 @@ public class PurchaseDAO {
 	 * @throws SQLException
 	 */
 	
-	public PaymentServiceCode getPaymentServiceCode(String serviceId) throws UAQException, SQLException {
+	public PaymentServiceCode getPaymentServiceCode(String serviceId,Connection con) throws UAQException, SQLException {
 
 		logger.enter("getPaymentServiceCode : serviceId = " + serviceId);
 
 		PaymentServiceCode paymentServiceCode = new PaymentServiceCode();
 		PreparedStatement ps = null;
-		Connection con = null;
-
+		
 		StringBuilder sql = new StringBuilder("select * from PAYMENT_SERVICE_CODE ");				
 		sql.append(" where service_id=?");
 		
 
 		logger.debug("sql query = " + sql.toString());
 		
-		try {
-			
-			con = getConnection();
-			ps = con.prepareStatement(sql.toString());	
+		ps = con.prepareStatement(sql.toString());	
 
 			ps.setString(1, serviceId);
 			
@@ -1746,20 +1307,7 @@ public class PurchaseDAO {
 				break; // single record is returned by the query
 			}			
 
-		} catch (SQLException e) {
-			logger.error(e.getMessage());
-			con.rollback();
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} finally {
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
-
+		
 		logger.exit("getPaymentServiceCode");
 
 		return paymentServiceCode;
@@ -1772,21 +1320,16 @@ public class PurchaseDAO {
 	 * @throws SQLException
 	 */
 	
-	public Double getGeneralFee()  throws UAQException, SQLException{
+	public Double getGeneralFee(Connection con)  throws UAQException, SQLException{
 		
 		logger.enter("getGeneralFee");
 		
 		Double feeAmount = null;
 		PreparedStatement ps = null;
-		Connection con = null;
 		
 		String sql = "select amount from ESERVICE_FEE_MATRIX where fee_id = ?";
 		
-		try {
-			
-			con = getConnection();
-			
-			logger.debug("sql query = " + sql);
+		logger.debug("sql query = " + sql);
 			
 			ps = con.prepareStatement(sql); 
 			
@@ -1799,23 +1342,6 @@ public class PurchaseDAO {
 				feeAmount = resultset.getDouble(1);
 			}
 
-		} catch (SQLException e) {
-			
-			logger.error(e.getMessage());
-			con.rollback();
-			
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
 		
 		logger.exit("getGeneralFee feeAmount = " + feeAmount);
 
@@ -1830,22 +1356,17 @@ public class PurchaseDAO {
 	 * @throws SQLException
 	 */
 	
-	public PaymentServiceCode getFeeDetail(String feeId)  throws UAQException, SQLException{
+	public PaymentServiceCode getFeeDetail(String feeId,Connection con)  throws UAQException, SQLException{
 		
 		logger.enter("getFeeDetail");
 				
 		PreparedStatement ps = null;
-		Connection con = null;		
 		
 		PaymentServiceCode paymentServiceCode = new PaymentServiceCode();
 		
 		String sql = "select DEPARTMENT_CODE, service_id, amount from ESERVICE_FEE_MATRIX where fee_id = ?";
 		
-		try {
-			
-			con = getConnection();
-			
-			logger.debug("sql query = " + sql);
+		logger.debug("sql query = " + sql);
 			
 			ps = con.prepareStatement(sql); 
 			
@@ -1860,26 +1381,26 @@ public class PurchaseDAO {
 				paymentServiceCode.setDepartmentId(resultset.getString("DEPARTMENT_CODE"));
 			}
 
-		} catch (SQLException e) {
-			
-			logger.error(e.getMessage());
-			con.rollback();
-			
-		} catch (ClassNotFoundException e) {			
-			logger.error(e.getMessage());
-		} 
-		finally {
-
-			if (ps != null) {
-				ps.close();
-			}
-			if (con != null) {
-				con.close();
-			}
-		}
+		
 		
 		logger.exit("getFeeDetail");
 
 		return paymentServiceCode;
+	}
+	public Map<String,String> getAllFailedPurchase(Connection con) throws SQLException{
+		Map<String,String> failedPurchaseMap = new HashMap<String,String>();	
+		
+		String SQL= "SELECT PURCHASE_ID,payment_in_progress," +
+				"(select max(transaction_id) from payment_transaction where reference_id = p.purchase_id) as TRANSACTION_NO" +
+				" FROM PURCHASE p WHERE PURCHASE_STATUS = 'Approved' AND PAYMENT_IN_PROGRESS = '1'";
+		logger.debug(SQL);
+		
+		PreparedStatement ps = con.prepareStatement(SQL); 
+		ResultSet resultset = ps.executeQuery();
+		
+		while (resultset.next()) {
+			failedPurchaseMap.put(resultset.getString("PURCHASE_ID"), resultset.getString("TRANSACTION_NO"));
+		}
+		return failedPurchaseMap;
 	}
 }

@@ -30,6 +30,16 @@ public class ActivateFormCommand {
 	
 	private String treadLicence;
 	private String treadLicenceExprDate;
+	
+	private String captchaText;
+
+	public String getCaptchaText() {
+		return captchaText;
+	}
+
+	public void setCaptchaText(String captchaText) {
+		this.captchaText = captchaText;
+	}
 
 	public String getFullName() {
 		return fullName;

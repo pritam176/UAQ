@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.uaq.command.SearchCommand;
+import com.uaq.common.PropertiesUtil;
 import com.uaq.exception.UAQException;
 import com.uaq.logger.UAQLogger;
 import com.uaq.vo.PublicationsVO;
@@ -60,7 +61,7 @@ public class PublicationsDAO implements BaseDAO<SearchCommand, List<Publications
 
 		StringBuilder queryString = new StringBuilder("");
 
-		queryString.append("select * from PUBLICATION_SUMMARY where site='" + searchCommand.getSite() + "' and lang='" + searchCommand.getLanguage() + "'");
+		queryString.append("select * from PUBLICATION_SUMMARY where site='" + PropertiesUtil.getProperty(searchCommand.getSite() + "_csSiteName") + "' and lang='" + searchCommand.getLanguage() + "'");
 		if (searchCommand != null && searchCommand.getKeyword() != null && !searchCommand.getKeyword().isEmpty()) {
 			queryString.append(" and (lower(teasertitle) like '%' || lower('" + searchCommand.getKeyword() + "') || '%' OR " + "lower(teasertext) like '%' || lower('" + searchCommand.getKeyword()
 					+ "') || '%' OR " + "lower(body) like '%' || lower('" + searchCommand.getKeyword() + "') || '%')");

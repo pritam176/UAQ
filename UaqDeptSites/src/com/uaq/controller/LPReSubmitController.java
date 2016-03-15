@@ -82,10 +82,12 @@ public class LPReSubmitController extends BaseController {
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
 						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), whomItmayConcernCommand.getRequestNo(), whomItmayConcernCommand.getStatusId())) {
+							viewname = "service.errorpage.mobile";
 							LandOutputVO outputVo = lPReSubmissionRequestService.reSubmitWhomItMayConcern(userdetailVO, whomItmayConcernVO);
 							if (!outputVo.getStatus().equalsIgnoreCase(SERVICE_FAILED)) {
 								model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? outputVo.getStatus_EN() : outputVo.getStatus_AR());
-								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+								//viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+								viewname = MOBILE_THANKU_VIEW;
 							}
 						}
 					}
@@ -108,14 +110,14 @@ public class LPReSubmitController extends BaseController {
 					AccountDetailTokenOutputVO accountDetailfromToken = portalUtil.getAccountDetailForMobile(logininfo);
 					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
 						UserDeatilVO userdetailVO = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
-						viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						//viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
 						logger.info("Account Detail From LoginInfo =" + accountDetailfromToken.toString());
 						WhomItmayConcernVO whomItmayConcernVO = LPDataMapper.getWhomItmayConcernVOForResubmit(whomItmayConcernCommand);
 						whomItmayConcernVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
 						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), whomItmayConcernCommand.getRequestNo(), whomItmayConcernCommand.getStatusId())) {
-							
+							viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
 							LandOutputVO outputVo = lPReSubmissionRequestService.reSubmitWhomItMayConcern(userdetailVO, whomItmayConcernVO);
 							if (outputVo != null && !outputVo.getStatus().equalsIgnoreCase(SERVICE_FAILED)) {
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;

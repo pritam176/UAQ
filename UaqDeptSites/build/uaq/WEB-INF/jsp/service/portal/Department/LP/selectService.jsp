@@ -4,6 +4,10 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
+<c:set var ="filesize"><spring:message code="filesizemsg"/></c:set>
+					<c:set var ="fileextention"><spring:message code="fileextentionmsg"/></c:set>
+					<c:set var ="fileerror"><spring:message code="fileerrormsg"/></c:set>
+<c:set var ="fieldmsg"><spring:message code="field.validate"/></c:set>
 
 <div class="container-fluid">
 	<div class="wrapper">
@@ -17,7 +21,7 @@
 								</li>
 								<li class=""><a href=""><spring:message code="dept.lbl.department" /></a>
 								</li>
-								<li class="active"><a href="#">${selectedService.serviceName} </a>
+								<li class="active"><a href="#"><spring:message code="${selectedService.serviceName}"/> </a>
 								</li>
 							</ul>
 						</div>
@@ -39,7 +43,8 @@
 								<!-- /sub page title -->
 								<!-- page title -->
 								<h2 class="page-title">
-									${selectedService.serviceName}           <!--- BPM03.1.01: pgno 19 -->
+								<spring:message code="${selectedService.serviceName}"/>
+									         <!--- BPM03.1.01: pgno 19 -->
 								</h2>
 								<!-- /page title -->
 							</div>
@@ -89,7 +94,7 @@
 												<!-- text box -->
 												<div id="serviceField-${status.index}" class="form-group cf <c:if test='${fields[status.index].notifierField}'>notifierFieldClass</c:if>" <c:if test="${fields[status.index].requiredUpon_FieldName != null}">${fields[status.index].requiredUpon_FieldName}='${fields[status.index].requiredUpon_FieldValue}'</c:if>>
 													<div class="${labelDivClass}">
-														<label class="form-lbl ${fields[status.index].required?'mandatory_lbl':''}"><spring:message code="${fields[status.index].displayKey}"/>
+														<label for="params['${fields[status.index].fieldName}']"  class="form-lbl ${fields[status.index].required?'mandatory_lbl':''}"><spring:message code="${fields[status.index].displayKey}"/>
 															<c:if test="${fields[status.index].infoMessage != null}">
 														 	<span class="form-lbl-subtxt"> <spring:message code="${fields[status.index].infoMessage}"/></span>
 														 	</c:if>
@@ -124,18 +129,14 @@
 																<div class="custom-select-box cf">
 																	<c:choose>
 																		<c:when test="${fields[status.index].disabled || param.statusId == '6'}">
-																			<c:choose>
-																				<c:when test="${fields[status.index].fieldLkNeedLocalization}">
-																					<input type="text" disabled="disabled" value='<spring:message code="${fields[status.index].fieldValue}"/>' class="form-control required" placeholder="" />
-																				</c:when>
-																				<c:otherwise>
-																					<input type="text" disabled="disabled" value="${fields[status.index].fieldValue}" class="form-control required" placeholder="" />
-																				</c:otherwise>
-																			</c:choose>
-																		<input name="params['${fields[status.index].fieldName}']" type="hidden" value="${fields[status.index].fieldIdValue}"/>
+																			
+																		<input name="params['${fields[status.index].fieldName}']" type="hidden" value="${fields[status.index].fieldValue}"/>
+																		<select class="required1 required" disabled="true">
 																		</c:when>
 																		<c:otherwise>
-																		<select class="required1 required" name="params['${fields[status.index].fieldName}']">
+																		<select class="required1 required" name="params['${fields[status.index].fieldName}']" data-msg-required="${fieldmsg}" >
+																		</c:otherwise>
+																	</c:choose>	
 																			<option <c:if test="${fields[status.index].fieldValue == null}">selected</c:if> value="">
 																				<spring:message code="option.select"/>
 																			</option>
@@ -150,8 +151,7 @@
 																			</c:forEach>
 																		</select>
 																	    <form:errors path="params['${fields[status.index].fieldName}']" class="error"/>
-																		</c:otherwise>
-																	</c:choose>
+																		
 																</div>
 															</c:when>
 															<c:when test="${fields[status.index].fieldType == 'File'}">
@@ -160,11 +160,11 @@
 																    <c:if test="${fields[status.index].fieldName != null && fields[status.index].fieldName != '' && param.statusId != '6'}">
 																		<input name="files['${fields[status.index].fieldName}'].docTypeId" type="hidden" value="${fields[status.index].docTypeId}"/>
 																		<input name="files['${fields[status.index].fieldName}'].docTypeName" type="hidden" value="${fields[status.index].docTypeName}"/>
-																		<input type="text" class="form-control  other-form-file file-upload-option-view" name ="" data-msg-required="required" readonly="readonly" />
+																		<input type="text" class="form-control  other-form-file file-upload-option-view  <c:if test='${fields[status.index].attachmentValue == null}'>required</c:if>" name ="files['${fields[status.index].fieldName}'].attachmentFile"  data-msg-required="${fieldmsg}" readonly="readonly" />
 																		<span class="input-group-btn">
 																			<span class="btn btn-file">
 																				<spring:message code="file.browse" />&hellip; 
-																				<input name="files['${fields[status.index].fieldName}'].attachmentFile" type="file" class="form-control file-upload-option" accept="image/jpg, image/JPG, image/JPEG, image/jpeg,image/jpeg,image/gif,image/png, application/pdf,image/x-eps, application/msword" error-size="${filesize}" error-extention="${fileextention}" error-failed="${fileerror}" />
+																				<input name="files['${fields[status.index].fieldName}'].attachmentFile" type="file" class="form-control file-upload-option file-upload-no-ajax" accept="image/jpg, image/JPG, image/JPEG, image/jpeg,image/jpeg,image/gif,image/png, application/pdf,image/x-eps, application/msword" error-size="${filesize}" error-extention="${fileextention}" error-failed="${fileerror}" />
 																			</span>
 																		</span>
 																		<c:set var="attachmentValueStyle" value="position: absolute; margin: 35px -270px"/>
@@ -172,7 +172,9 @@
 																    
 																	<span style="${attachmentValueStyle}">
 																    <c:if test="${fields[status.index].attachmentValue != null}">
-																    	<a href="${fields[status.index].attachmentValue.viewUrl}" target="_blank">${fields[status.index].attachmentValue.fileName}</a><br/>
+																    	<div class="attachment-btm">
+																			<a href="${fields[status.index].attachmentValue.viewUrl}" target="_blank">${fields[status.index].attachmentValue.fileName}</a><br/>
+																    	</div>
 																    </c:if>
 																	</span>
 																</div>
@@ -193,7 +195,7 @@
 															    	</c:if>
 																</c:when>
 																<c:otherwise>
-																	<input name="params['${fields[status.index].fieldName}']" type="${fields[status.index].fieldType}" value="${fields[status.index].fieldValue}" class="${fields[status.index].fieldName} form-control required" placeholder="" />
+																	<input data-msg-required="${fieldmsg}"  name="params['${fields[status.index].fieldName}']" type="${fields[status.index].fieldType}" value="${fields[status.index].fieldValue}" maxlength="${fields[status.index].length}" class="${fields[status.index].fieldName} form-control required" placeholder="" />
 																    <form:errors path="params['${fields[status.index].fieldName}']" class="error"/>
 																</c:otherwise>
 																</c:choose>
@@ -217,7 +219,7 @@
 												<div class="row">
 													<div class="form-group submission">
 														<div class="col-md-offset-5 col-md-7">
-															<input type="submit" class="btn" value="Submit" />
+															<input type="submit" class="btn" value="<spring:message code="form.button.submit"/>" />
 														</div>
 													</div>
 												</div>
@@ -241,10 +243,13 @@
 
 <!--  //TODO don't forget to send this file to UAQ in the public HTML folder -->
 <script type="text/javascript" src="/js/serviceValidation.js"></script>
+<script src="/js/libs/jquery.validate.js"></script>
 <script>
+
 jQuery(function($) { 
  $(".proIdExpiryDate").datepicker({
 	 minDate:1
  });
+ $("#serviceFormId").validate();
 });
 </script>

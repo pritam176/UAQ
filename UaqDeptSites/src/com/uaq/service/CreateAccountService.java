@@ -44,7 +44,7 @@ public class CreateAccountService {
 	private RegistrationService_Service service = null;
 	private RegistrationServicePortBindingStub stub = null;
 	private UserContext uc = null;
-	DateFormat df = new SimpleDateFormat(ApplicationConstants.DD_MM_YYYY);
+	DateFormat df = new SimpleDateFormat(ApplicationConstants.MM_DD_YYYY);
 	Calendar calender = null;
 
 	@Autowired
@@ -201,7 +201,7 @@ public class CreateAccountService {
 
 		payload.setUserDetails(user);
 		payload.setTypeOfUser(input.getTypeofUser());
-		payload.setLoginUserName(input.getUsername());
+		payload.setLoginUserName(input.getUsername().toLowerCase());
 		payload.setPassword(input.getPassword());
 
 		CreateOnlineAccount.GenericDetailsPayload ge = new CreateOnlineAccount.GenericDetailsPayload();
@@ -209,7 +209,7 @@ public class CreateAccountService {
 		ge.setLanguageID(input.getLanguageId());
 		ge.setProfileImageId("1");
 		ge.setSubcribeForNewsLetterFlag(input.isNewsLetter() ? "1" : "0");
-		ge.setUsername(input.getUsername());
+		ge.setUsername(input.getUsername().toLowerCase());
 		ge.setAccountid("1");
 		ge.setRequestId("1");
 		ge.setRequestNo("1");

@@ -26,7 +26,7 @@ public abstract class ProCardServiceHandler extends ServiceHandler {
 	public String saveOrSubmitServiceRequestData(String phase, AccountDetailsViewSDO accountDetails, LPServiceLookUp lookupServiceEN_AR, Map<String, String> params, List<AttachmentInfo> attachmentInfos) throws Exception {
 		Map<String, Object> inputParams = new HashMap<String, Object>();
 
-		if(StringUtil.isEmpty(phase)){
+		if(StringUtil.isEmpty(phase)&& params.get("serviceId").equals("403")){
 			LpProCardReqDetailsViewSDO cardDetails = lookupServiceEN_AR.getProCardByProNumber(params.get("proIdNo"));
 			if(cardDetails!=null){
 				throw new Exception("error.proCardId.exist");
@@ -61,11 +61,12 @@ public abstract class ProCardServiceHandler extends ServiceHandler {
 				requestData = WebServiceInvoker.saveCardRequest(inputParams);
 				inputParams.put("requestNumber", requestData.getRequestNumber());
 				inputParams.put("requestId", requestData.getRequestId());
-				inputParams.put("stepAction", "SUBMIT");
-				inputParams.put("stepName", "Submit Request Issue New PRO Card");
+				inputParams.put("stepAction", "SUBMITTED");
+				inputParams.put("stepName", "BEFORE_APP_FEES");
 				inputParams.put("applicantId", accountDetails.getId());
 				inputParams.put("applicantName", accountDetails.getFirstName());
 				inputParams.put("amount", params.get("feeAmount"));
+				inputParams.put("status", "1");
 				WebServiceInvoker.sendSmsAndEMail(inputParams);
 			}
 			System.out.println("--------->  Request Id: " + requestData.getRequestId());
@@ -78,6 +79,15 @@ public abstract class ProCardServiceHandler extends ServiceHandler {
 			if (phase.equals("Resubmit")) {
 				inputParams.put("phase", phase);
 				resubmitService(inputParams);
+				inputParams.put("requestNumber", requestData.getRequestNumber());
+				inputParams.put("requestId", requestData.getRequestId());
+				inputParams.put("stepAction", "RESUBMITTED");
+				inputParams.put("stepName", "RESUBMITED");
+				inputParams.put("applicantId", accountDetails.getId());
+				inputParams.put("applicantName", accountDetails.getFirstName());
+				inputParams.put("amount", params.get("feeAmount"));
+				inputParams.put("status", "15");
+				WebServiceInvoker.sendSmsAndEMail(inputParams);
 			}
 			System.out.println("Request Saved");
 			return requestData.getRequestNumber();

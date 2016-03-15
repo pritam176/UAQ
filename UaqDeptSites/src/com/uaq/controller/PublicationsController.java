@@ -76,7 +76,7 @@ public class PublicationsController extends BaseController {
 		SearchResponseVO searchResponseVO = new SearchResponseVO();
 		publicationsVO.setTicketId((String) request.getSession().getAttribute(SESSION_TICKET));
 		publicationsSearchCommand.setTicketId((String) request.getSession().getAttribute(SESSION_TICKET));
-		publicationsSearchCommand.setSite(PropertiesUtil.getProperty(site + "_" + "csSiteName"));
+		publicationsSearchCommand.setSite(site);
 		
 		String pageName="Publications";
 		NavigationVO navigationVO = new NavigationVO();
@@ -112,8 +112,6 @@ public class PublicationsController extends BaseController {
 			publicationsSearchCommand.setLanguage(languageCode);
 
 			searchResponseVO = ((PublicationsService) publicationsService).getPublicationsList(publicationsSearchCommand);
-
-			super.handleDepartmentRequest(request, modelMap, site);
 
 			categories = ((PublicationsService) publicationsService).getPublicationsCategories(publicationsVO);
 			categoriesMap = getMapFromCategoryList(categories, languageCode);

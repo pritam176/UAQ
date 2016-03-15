@@ -90,7 +90,12 @@
 				<c:if test="${not empty searchResponse.searchPublicationResults}">
 
 					<c:forEach items="${searchResponse.searchPublicationResults}" var="publicationsList">
-						<article class="news-list">
+						
+						<div class="detail-post-content">		
+							<p><a href="${publicationsList.file}">${publicationsList.title}</a></p>
+						</div>
+						
+						<%-- <article class="news-list">
 							<div class="row">
 								<c:if test="${not empty publicationsList.image}">
 									<div
@@ -109,7 +114,7 @@
 							</p>
 								</div>
 							</div>
-						</article>
+						</article> --%>
 					</c:forEach>
 
 				</c:if>

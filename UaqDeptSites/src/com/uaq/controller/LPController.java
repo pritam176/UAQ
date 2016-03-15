@@ -40,6 +40,8 @@ import com.uaq.common.ViewPath;
 import com.uaq.service.LandAndPropertyValuationServiceHandler;
 
 import com.uaq.service.FeeIdService;
+import com.uaq.service.GrantLandRequestExceptionServiceHandler;
+import com.uaq.service.GrantLandRequestIssuerServiceHandler;
 import com.uaq.service.GrantLandRequestServiceHandler;
 import com.uaq.service.LostDocumentServiceHandler;
 import com.uaq.service.PaymentService;
@@ -51,6 +53,8 @@ import com.uaq.service.RealEstateOfficeRenewerServiceHandler;
 import com.uaq.util.UCMUploader.AttachmentInfo;
 import com.uaq.vo.AccountDetailTokenInput;
 import com.uaq.vo.LoginOutputVO;
+import com.uaq.vo.PageMetadataVO;
+
 import static com.uaq.common.ApplicationConstants.*;
 import static com.uaq.common.TilesViewConstant.*;
 import static com.uaq.common.UAQURLConstant.*;
@@ -74,20 +78,23 @@ public class LPController extends BaseController {
 	public static final List<Service> services = new ArrayList<Service>();
 
 	static {
-		Service s1 = new Service(403, "LP", "NEW PRO CARD REQUEST", false, true);
-		Service s2 = new Service(404, "LP", "RENEW PRO CARD REQUEST", false, true);
-		Service s3 = new Service(401, "LP", "LAND AND PROPERTY VALUATION", true, false);
-		Service s4 = new Service(408, "LP", "LOST DOCUMENT", true, true);
-		Service s5 = new Service(406, "LP", "NEW REAL ESTATE OFFICE", false, true);
-		Service s6 = new Service(407, "LP", "RENEW REAL ESTATE OFFICE", false, true);
-		Service s7 = new Service(305, "PS", "GRANT LAND REQUEST", true, true);
+		Service s1 = new Service(403, "LP", "label.lp.newProCard", false, true, false);
+		Service s2 = new Service(404, "LP", "label.lp.renewProCard", false, true, false);
+		Service s3 = new Service(401, "LP", "label.lp.landProperty", true, false, false);
+		Service s4 = new Service(408, "LP", "label.lp.lostdocument", true, true, false);
+		Service s5 = new Service(406, "LP", "label.lp.newRealEstate", false, true, false);
+		Service s6 = new Service(407, "LP", "label.lp.renewRealEstate", false, true, false);
+		Service s7 = new Service(305, "PS", "label.ps.grantlandreq", true, true, false);
+		Service s8 = new Service(306, "PS", "label.ps.extensiongrantland", true, true, true);
 		s1.setServiceHandler(new ProCardIssuerServiceHandler());
 		s2.setServiceHandler(new ProCardRenewerServiceHandler());
 		s3.setServiceHandler(new LandAndPropertyValuationServiceHandler());
 		s4.setServiceHandler(new LostDocumentServiceHandler());
 		s5.setServiceHandler(new RealEstateOfficeIssuerServiceHandler());
 		s6.setServiceHandler(new RealEstateOfficeRenewerServiceHandler());
-		s7.setServiceHandler(new GrantLandRequestServiceHandler());
+		s7.setServiceHandler(new GrantLandRequestIssuerServiceHandler());
+		s8.setServiceHandler(new GrantLandRequestExceptionServiceHandler());
+		services.add(s8);
 		services.add(s1);
 		services.add(s2);
 		services.add(s3);
@@ -213,6 +220,12 @@ public class LPController extends BaseController {
 			}
 
 		}
+		Locale locale = new Locale(languageCode);
+		PageMetadataVO pageMetadataVO = new PageMetadataVO();
+		pageMetadataVO.setPageTitle(messageSource.getMessage(PaymentSessionUtil.getPageLable(serviceIdString), null, locale));
+		pageMetadataVO.setPageDescription(messageSource.getMessage(PaymentSessionUtil.getPageLable(serviceIdString), null, locale));
+		pageMetadataVO.setPageKeywords(messageSource.getMessage(PaymentSessionUtil.getPageLable(serviceIdString), null, locale));
+		modelMap.addAttribute(PAGE_META_DATA, pageMetadataVO);
 		modelMap.addAttribute(PAGE_LABEL, PaymentSessionUtil.getPageLable(serviceIdString));
 		return viewname;
 	}
@@ -296,22 +309,27 @@ public class LPController extends BaseController {
 				params.put("serviceDept", service.getDept());
 				if (serviceForm.getServicePhase() != null && !serviceForm.getServicePhase().isEmpty()) {
 					params.put("requestNumber", serviceForm.getRequestNumber());
-				} else {
+				} else if(!service.isInitiatableAfterSave()) {
 					modelMap.addAttribute("statusId", "33");
 				}
 				
-				String feeAmount = feeIdService.getAmountForService(""+service.getId(), "33", accountDetails.getTypeOfUser());
+				String feeAmount = feeIdService.getAmountForService(""+service.getId(), service.isInitiatableAfterSave()?"18":"33", accountDetails.getTypeOfUser());
 				params.put("feeAmount", feeAmount);
 				String requestNumber = service.getHandlerClass().saveOrSubmitServiceRequestData(serviceForm.getServicePhase(), accountDetails, LPServiceLookUp, params, attachmentInfos);
 				
 				if (requestNumber == null)
 					throw new Exception("error.general.networkError");
-				modelMap.addAttribute("messageId", "label.requestSavedSuccessfully");
-				modelMap.addAttribute("messageParams", requestNumber);
-				modelMap.addAttribute(ApplicationConstants.PAYMENT_URL_EXPRESSON, UAQURLConstant.PORTAL_PAYMENT_URL);
-				modelMap.addAttribute("requestNo", requestNumber);
-				modelMap.addAttribute("serviceId", service.getId());
-				modelMap.addAttribute(REQUEST_PARAM_TYPE_OF_USER, accountDetails.getTypeOfUser());
+				if(!service.isInitiatableAfterSave()) {
+					modelMap.addAttribute("messageId", "label.requestSavedSuccessfully");
+						modelMap.addAttribute("serviceId", service.getId());
+						modelMap.addAttribute(ApplicationConstants.PAYMENT_URL_EXPRESSON, UAQURLConstant.PORTAL_PAYMENT_URL);
+						modelMap.addAttribute(REQUEST_PARAM_TYPE_OF_USER, accountDetails.getTypeOfUser());				
+					} else {
+						modelMap.addAttribute(ApplicationConstants.PAYMENT_URL_EXPRESSON, PropertiesUtil.getProperty("globalUrl") + ApplicationConstants.URL_SEPARATOR + languageCode + "/initiateSevice.html");
+						modelMap.addAttribute("messageId", "label.requestIssuedSuccessfully");
+					}			
+					modelMap.addAttribute("messageParams", requestNumber);
+					modelMap.addAttribute("requestNo", requestNumber);
 				viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + ApplicationConstants.URL_SEPARATOR + languageCode + UAQURLConstant.THANKYOU_PAGE;
 			} catch (Exception e) {
 				logger.error("Failed :" + e.getMessage());
@@ -443,7 +461,7 @@ public class LPController extends BaseController {
 			}
 		}
 		if (!isValid)
-			throw new Exception("Request Prerequisite validation didn't pass");
+			throw new Exception("");
 	}
 
 	private String validateRequest(HttpServletRequest request, HttpServletResponse response, LoginOutputVO loginInfo) {

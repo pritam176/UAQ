@@ -44,7 +44,7 @@ public class ProCardIssuerServiceHandler extends ProCardServiceHandler {
 		if (initialParams == null) // just prevent the nullPpointerException
 			initialParams = new HashMap<String, Object>();
 		ServiceField f1 = new ServiceField("nameOfPro", "proCard.NameOfPro", FieldTypeEnum.Text, true);
-		ServiceField f2 = new ServiceField("proIdNo", "proCard.ProIdNo", FieldTypeEnum.Text, true);
+		ServiceField f2 = new ServiceField("proIdNo", "proCard.ProIdNo", FieldTypeEnum.Text, true,20);
 		ServiceField f3 = new ServiceField("proIdExpiryDate", "proCard.ProIdExpiryDate", FieldTypeEnum.Text, true);
 		ServiceField f4 = new ServiceField("proNationality", "proCard.ProNationality", FieldTypeEnum.Select, true);
 		ServiceField f5 = new ServiceField("identityOfPro", "proCard.IdentityOfPro", FieldTypeEnum.File, phase == null);

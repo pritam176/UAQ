@@ -305,7 +305,7 @@ function initialize() {
 	//map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
 	// map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
 	var localityOptions = {
-			types: ['geocode'], 
+			//types: ['geocode'], 
 			componentRestrictions: {
 				country: 'ARE'
 			}
@@ -324,7 +324,7 @@ function initialize() {
 	var marker = new google.maps.Marker({
 		map : map,
 		position: myLatLng,
-		draggable : true,
+		draggable : false,
 		anchorPoint : new google.maps.Point(0, -29)
 	});
 	

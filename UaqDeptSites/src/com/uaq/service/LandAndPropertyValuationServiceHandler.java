@@ -24,7 +24,7 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 	public List<ServiceField> getServicePreparationFields(String phase, LPServiceLookUp lookupServiceEN_AR, String languageCode, Map<String, Object> initialParams) throws Exception {
 		LpValuationViewSDO lpValuation = null;
 		SendBackInfo sendBackInfo = null;
-		String applicantPosition = null, landLocation = null, subArea = null, subSector = null, ownerName = null, ownerNationality = null, ownerId = null, familyBookNumber = null;
+		String applicantPosition = null, landLocation = null,area = null,sector = null, subArea = null, subSector = null, ownerName = null, ownerNationality = null, ownerId = null, familyBookNumber = null;
 		phase = (phase == null || phase.isEmpty()) ? null : phase;
 		if (phase != null && phase.equals("Resubmit")) {
 			if (initialParams != null && initialParams.get("requestNumber") != null) {
@@ -81,8 +81,10 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		if (landLocation != null) {
 			if (landLocation.equals("1")) {
 				subArea = lpValuation == null ? (String) initialParams.get(f13.getFieldName()) : lpValuation.getSubArea().getValue().toString();
+				area = lpValuation == null ? (String) initialParams.get(f12.getFieldName()) : lpValuation.getArea().getValue().toString();
 			} else {
 				subSector = lpValuation == null ? (String) initialParams.get(f9.getFieldName()) : lpValuation.getSubSector().getValue().toString();
+				sector = lpValuation == null ? (String) initialParams.get(f8.getFieldName()) : lpValuation.getSector().getValue().toString();
 			}
 		} else {
 			landLocation = "1";
@@ -102,9 +104,8 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		f4.setFieldLkValues(lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.LandCategory, languageCode, null));
 		f4.setFieldValue(lpValuation == null ? (String) initialParams.get(f4.getFieldName()) : lpValuation.getLandCategory().getValue().toString());
 		f5.setDisabled(true);
-		f5.setFieldIdValue("7");
-		f5.setFieldValue("lpv.landCategory.lk.valuation");
-		f5.setFieldLkNeedLocalization(true);
+		f5.setFieldValue("7");
+		f5.setFieldLkValues(lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.HeirLandCategory, languageCode, null));
 		f6.setInfoMessage("lpv.sitePlanNo.info");
 		f6.setFieldValue(lpValuation == null ? (String) initialParams.get(f6.getFieldName()) : lpValuation.getSiteplanId().getValue().toString());
 		f7.setNotifierField(true);
@@ -113,7 +114,7 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		f7.setFieldValue(landLocation);
 		f7.setFieldLkNeedLocalization(true);
 		f8.setFieldLkValues(lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.Sector, languageCode, null));
-		f8.setFieldValue(lpValuation == null ? (String) initialParams.get(f8.getFieldName()) : lpValuation.getSector().getValue().toString());
+		f8.setFieldValue(sector);
 		f8.setNextFieldInSameRow(true);
 		f9.setFieldValue(subSector);
 		f9.setInSameRow(true);
@@ -122,7 +123,7 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		f11.setFieldValue(lpValuation == null ? (String) initialParams.get(f11.getFieldName()) : lpValuation.getPlotNumber().getValue().toString());
 		f11.setInSameRow(true);
 		f12.setFieldLkValues(lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.Area, languageCode, null));
-		f12.setFieldValue(lpValuation == null ? (String) initialParams.get(f12.getFieldName()) : lpValuation.getArea().getValue().toString());
+		f12.setFieldValue(area);
 		f12.setNextFieldInSameRow(true);
 		f13.setFieldValue(subArea);
 		f13.setInSameRow(true);
@@ -237,15 +238,17 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 				inputParams.put("requestId", requestId);
 				WebServiceInvoker.updateValuationRequest(inputParams);
 				requestData = new RequestIdData(requestId, requestNumber);
+				
 			} else {
 				requestData = WebServiceInvoker.saveValuationRequest(inputParams);
 				inputParams.put("requestNumber", requestData.getRequestNumber());
 				inputParams.put("requestId", requestData.getRequestId());
-				inputParams.put("stepAction", "SUBMIT");
-				inputParams.put("stepName", null);
+				inputParams.put("stepAction", "SUBMITTED");
+				inputParams.put("stepName", "BEFORE_APP_FEES");
 				inputParams.put("applicantId", accountDetails.getId());
 				inputParams.put("applicantName", accountDetails.getFirstName());
 				inputParams.put("amount", params.get("feeAmount"));
+				inputParams.put("status", "1");
 				WebServiceInvoker.sendSmsAndEMail(inputParams);
 			}
 			System.out.println("--------->  Request Id: " + requestData.getRequestId());
@@ -258,6 +261,15 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 			if (phase.equals("Resubmit")) {
 				inputParams.put("phase", phase);
 				resubmitService(inputParams);
+				inputParams.put("requestNumber", requestData.getRequestNumber());
+				inputParams.put("requestId", requestData.getRequestId());
+				inputParams.put("stepAction", "RESUBMITTED");
+				inputParams.put("stepName", "RESUBMIT");
+				inputParams.put("applicantId", accountDetails.getId());
+				inputParams.put("applicantName", accountDetails.getFirstName());
+				inputParams.put("amount", params.get("feeAmount"));
+				inputParams.put("status", "15");
+				WebServiceInvoker.sendSmsAndEMail(inputParams);
 			}
 			System.out.println("Request Saved");
 			return requestData.getRequestNumber();

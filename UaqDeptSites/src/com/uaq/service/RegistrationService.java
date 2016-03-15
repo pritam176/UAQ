@@ -299,7 +299,7 @@ public class RegistrationService {
 		ActivateUserAccount.InputPayload payload = new ActivateUserAccount.InputPayload();
 		payload.setAccountId(input.getAccountId());
 		payload.setTypeOfUser(input.getTypeOfUser());
-		payload.setLoginusername(input.getLoginusername());
+		payload.setLoginusername(input.getLoginusername().toLowerCase());
 		payload.setPassword(input.getPassword());
 		payload.setMobileno(input.getMobileno());
 
@@ -438,8 +438,8 @@ public class RegistrationService {
 		}
 		return outputVo;
 	}
-
-	public String generateOTP(GenerateOTPInputVO input) {
+	//moved to generateOTP service
+	/*public String generateOTP(GenerateOTPInputVO input) {
 		createStub();
 		String otp = EMPTY_STRING;
 		GenerateOTP.InputPayload payload = new GenerateOTP.InputPayload();
@@ -458,7 +458,7 @@ public class RegistrationService {
 		payload.setEstablishmentREC(establishmentPayLoad);
 		GenerateOTP.OutputPayload output = null;
 		//In dev is not Deployed Yet
-		/*try {
+		try {
 			output = stub.generateOTP(payload,uc);	
 			} catch (RemoteException e) {
 			logger.error("Failure  |" + e.getMessage());
@@ -470,9 +470,9 @@ public class RegistrationService {
 		} else {
 			logger.error("Failure | output.getOTPValue() return Null ");
 		}
-		*/
+		
 		return otp;
-	}
+	}*/
 
 	public ValidateOTPOutput validateOTP(ValidateOTPInputVO input) {
 
@@ -559,14 +559,14 @@ public class RegistrationService {
 
 		applicantDetailsPayload.setMobileNo(inputVO.getMobile());
 		applicantDetailsPayload.setPassportNo(inputVO.getPassportNo());
-		applicantDetailsPayload.setUsername(inputVO.getUserName());
+		applicantDetailsPayload.setUsername(inputVO.getUserName().toLowerCase());
 		applicantDetailsPayload.setEmiritesID(inputVO.getEmiritesID());
 
 		ForgetPassword.EstablishmentDetailsPayload establishmentDetailsPayload = new ForgetPassword.EstablishmentDetailsPayload();
 
 		establishmentDetailsPayload.setTradeLicenseNo(inputVO.getTradeLicence());
 		establishmentDetailsPayload.setMobileNo(inputVO.getMobileNumberEstablish());
-		establishmentDetailsPayload.setUsername(inputVO.getEstablishUsername());
+		establishmentDetailsPayload.setUsername(inputVO.getEstablishUsername().toLowerCase());
 
 		ForgetPassword.UserDetailsPayload userDetailsPayload = new ForgetPassword.UserDetailsPayload();
 		userDetailsPayload.setApplicantUserDetails(applicantDetailsPayload);

@@ -29,11 +29,14 @@ public abstract class ServiceHandler {
 		LandStatus,
 		LandType,
 		LandCategory,
+		HeirLandCategory,
 		LandLocation,
 		Sector,
 		Area,
 		LostDocumentType,
-		MaritalStatus
+		MaritalStatus,
+		RejectedGrantLandRequests,
+		LandUsage
 	}
 
 	protected Map<String, String> lookUpDataDropDown(LPServiceLookUp lPService, LookupTypeEnum lookupType, String languageCode, Map<String, String> params) throws Exception {
@@ -56,6 +59,9 @@ public abstract class ServiceHandler {
 				break;
 			case LandCategory:
 				lookupList = lPService.getOwnerLandCatergoryListAR_EN();
+				break;
+			case HeirLandCategory:
+				lookupList = lPService.getHeirLandCatergoryListAR_EN();
 				break;
 			case Sector:
 				lookupList = lPService.getSectorListAR_EN();
@@ -88,6 +94,13 @@ public abstract class ServiceHandler {
 				lookupValuesMap.put("3", "grantLand.maritalStatus.lk.devroced");
 				lookupValuesMap.put("4", "grantLand.maritalStatus.lk.widdow");
 				lookupList.put("All", lookupValuesMap);
+				break;
+			case RejectedGrantLandRequests:
+				lookupList = new HashMap<String, Map<String, String>>();				;
+				lookupList.put("All", lPService.getRejectedGrantLandRequestMap(params.get("accountId")));
+				break;
+			case LandUsage:
+				lookupList = lPService.getLandUsageListAR_EN();
 				break;
 			default:
 				throw new Exception("Lookup type \"" + lookupType + "\" not handled !!!");

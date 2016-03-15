@@ -1,5 +1,9 @@
 package com.uaq.service;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.uaq.dao.PaymentWorkFLowDAO;
@@ -15,24 +19,26 @@ public class PaymentWorkFlowService {
 	PaymentWorkFLowDAO paymentWorkFLowDAO = new PaymentWorkFLowDAO();
 	
 	
-	public boolean savePaymentWorkFlow(PaymentWorkFlowVO paymentWorkFlowVO){
+	public boolean savePaymentWorkFlow(PaymentWorkFlowVO paymentWorkFlowVO,Connection con) throws SQLException{
 		logger.debug("RequestNo-"+paymentWorkFlowVO.getRequestNo()+": Request Status-"+paymentWorkFlowVO.getStatusId());
-		return paymentWorkFLowDAO.savePaymentWorkFlow(paymentWorkFlowVO);
+		return paymentWorkFLowDAO.savePaymentWorkFlow(paymentWorkFlowVO,con);
 	}
 	
-	public boolean updatePaymentWorkFLow(PaymentWorkFlowVO paymentWorkFlowVO){
+	public boolean updatePaymentWorkFLow(PaymentWorkFlowVO paymentWorkFlowVO,Connection con) throws SQLException{
 		logger.debug("RequestNo-"+paymentWorkFlowVO.getRequestNo()+": Request Status-"+paymentWorkFlowVO.getStatusId());
-		return paymentWorkFLowDAO.updatePaymentWorkFLow(paymentWorkFlowVO);
+		return paymentWorkFLowDAO.updatePaymentWorkFLow(paymentWorkFlowVO,con);
 	}
 	
-	public boolean deletePaymentWorkFLow(PaymentWorkFlowVO paymentWorkFlowVO){
+	public boolean deletePaymentWorkFLow(PaymentWorkFlowVO paymentWorkFlowVO,Connection con) throws SQLException{
 		logger.debug("RequestNo-"+paymentWorkFlowVO.getRequestNo()+": Request Status-"+paymentWorkFlowVO.getStatusId());
-		return paymentWorkFLowDAO.deletePaymentWorkFLow(paymentWorkFlowVO);
+		return paymentWorkFLowDAO.deletePaymentWorkFLow(paymentWorkFlowVO,con);
 	}
 	
-	public boolean isExistInPaymentWorkFlow(PaymentWorkFlowVO paymentWorkFlowVO){
+	public boolean isExistInPaymentWorkFlow(PaymentWorkFlowVO paymentWorkFlowVO,Connection con) throws SQLException{
 		logger.debug("RequestNo-"+paymentWorkFlowVO.getRequestNo()+": Request Status-"+paymentWorkFlowVO.getStatusId());
-		return paymentWorkFLowDAO.isExistInPaymentWorkFlow(paymentWorkFlowVO);
+		return paymentWorkFLowDAO.isExistInPaymentWorkFlow(paymentWorkFlowVO,con);
 	}
-
+	public List<PaymentWorkFlowVO> getPaymentWorkFlowVOList(Connection con) throws SQLException{
+		return paymentWorkFLowDAO.getPaymentWorkFlowVOList(con);
+	}
 }

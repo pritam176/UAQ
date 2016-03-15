@@ -35,6 +35,16 @@ public class PublicationsVO extends BaseVO {
 	private String imageAssetId;
 	
 	private String landingPageDate;
+	
+	private String file;
+
+	public String getFile() {
+		return file;
+	}
+
+	public void setFile(String file) {
+		this.file = file;
+	}
 
 	/**
 	 * @return the imageAssetId

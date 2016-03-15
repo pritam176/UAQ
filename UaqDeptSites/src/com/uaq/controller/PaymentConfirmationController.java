@@ -21,6 +21,7 @@ import static com.uaq.payment.PaymentConstants.PAYMENT_METHOD_TYPE_VISA;
 import static com.uaq.payment.PaymentConstants.RESPONSE_STATUS_SUCCESS;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -42,6 +43,7 @@ import com.uaq.common.PaymentSessionUtil;
 import com.uaq.common.PropertiesUtil;
 import com.uaq.common.ViewPath;
 import com.uaq.controller.mapper.PaymentDataMapper;
+import com.uaq.dao.DAOManager;
 import com.uaq.exception.UAQException;
 import com.uaq.logger.UAQLogger;
 import com.uaq.payment.InquiryPaymentResponse;
@@ -50,6 +52,7 @@ import com.uaq.payment.PayWebPaymentResponse;
 import com.uaq.payment.PaymentConstants;
 import com.uaq.payment.PaymentStatus;
 import com.uaq.payment.PaymentUtil;
+import com.uaq.service.PaymentSequenceService;
 import com.uaq.service.PaymentServiceManager;
 import com.uaq.service.PaymentWorkFlowService;
 import com.uaq.service.PortalUtil;
@@ -57,6 +60,7 @@ import com.uaq.service.PurchaseService;
 import com.uaq.service.ReviewerService;
 import com.uaq.service.UserDetailService;
 
+import com.uaq.util.StringUtil;
 import com.uaq.vo.AccountDetailTokenOutputVO;
 import com.uaq.vo.LandOutputVO;
 import com.uaq.vo.LoginOutputVO;
@@ -76,6 +80,9 @@ public class PaymentConfirmationController extends BaseController {
 
 	@Autowired
 	private PaymentWorkFlowService paymentWorkFlowService;
+	
+	@Autowired
+	private PaymentSequenceService paymentSequenceService;
 
 	private UserDetailService userDetailService = null;
 
@@ -91,6 +98,7 @@ public class PaymentConfirmationController extends BaseController {
 	static final String PAYMENT_CONFIRMATION_PAGE = "payment_confirmation.jsp";
 
 	PaymentServiceManager paymentServiceManager = new PaymentServiceManager();
+	
 	PurchaseService purchaseService = new PurchaseService();
 
 	@RequestMapping(value = ViewPath.PAYMENT_CONFIRMATION, method = RequestMethod.POST)
@@ -127,8 +135,10 @@ public class PaymentConfirmationController extends BaseController {
 
 			logger.debug(" : isMobile = " + isMobile);
 			view = (isMobile == false) ? PORTAL_PAYMENT_CONFIRNM : MOBILE_PAYMENT_CONFIRNM;
+			DAOManager daoManager = new DAOManager();
 			try {
-
+				Connection con = daoManager.getConnection();
+				Connection erpCon = daoManager.getERPConnection();
 				String purchaseId = null;
 				String otherInfo = getAllRequestParameters(request);
 				logger.debug("Request all info : " + otherInfo);
@@ -138,14 +148,14 @@ public class PaymentConfirmationController extends BaseController {
 				logger.debug("responsePUN = " + responsePUN + " : Status = " + request.getParameter("Response.Status") + " : StatusMessage = " + request.getParameter("Response.StatusMessage"));
 
 				if ((responsePUN != null) && (!responsePUN.isEmpty())) {
-					purchaseId = purchaseService.getPurchaseIdForTransactionId(request.getParameter("Response.PUN"));
+					purchaseId = purchaseService.getPurchaseIdForTransactionId(request.getParameter("Response.PUN"),con);
 
 					logger.debug("purchaseId = " + purchaseId);
 
 					request.setAttribute("purchaseId", purchaseId);
 
-					PurchaseVO purchaseVO = purchaseService.getPurchase(purchaseId);
-					MerchantAccount merchantAccount = purchaseService.getPaymentServiceCode(purchaseVO.getServiceId()).getMerchantAccount();
+					PurchaseVO purchaseVO = purchaseService.getPurchase(purchaseId,con);
+					MerchantAccount merchantAccount = purchaseService.getPaymentServiceCode(purchaseVO.getServiceId(),con).getMerchantAccount();
 
 					pageLabel = PaymentSessionUtil.getPageLable(purchaseVO.getServiceId());
 					String serviceName = messageSource.getMessage(pageLabel, null, locale);
@@ -163,56 +173,44 @@ public class PaymentConfirmationController extends BaseController {
 						}
 					}
 
-					/*if (cookies.get(responsePUN) == null ) {
-						
-						Cookie responsePUNCookie = new Cookie(responsePUN, "valid");
-						response.addCookie(responsePUNCookie);*/
+					
 						logger.debug(webPaymentResponse.toString());
-						/*
-						 * try { webPaymentResponse.setStatusMessage(URLDecoder
-						 * .decode (webPaymentResponse.getStatusMessage(),
-						 * "UTF-8")); } catch (UnsupportedEncodingException e) {
-						 * webPaymentResponse
-						 * .setStatusMessage("Error in decoding message");
-						 * logger.error(e.getMessage()); }
-						 */
-						result = purchaseService.savePaywebPaymentTransaction(webPaymentResponse);
+						
+						result = purchaseService.savePaywebPaymentTransaction(webPaymentResponse,con);
 						logger.debug("saveWebPaymentResponseTransaction :" + result);
 
 						// mark payment txn status in progress as completed
-						result = purchaseService.purchasePaymentInProgress(purchaseId.toString(), false);
+						result = purchaseService.purchasePaymentInProgress(purchaseId.toString(), false,con);
 						logger.debug("PurchasePaymentInProgress :" + result);
 
-						amount = purchaseService.getGeneralFee();
+						amount = purchaseService.getGeneralFee(con);
 						logger.debug("generalFee -" + amount);
 
 						if (request.getParameter("Response.Status").equals(RESPONSE_STATUS_SUCCESS) && request.getParameter("Response.SecureHash").equals(webPaymentResponse.calculateSecureHash())) {
 
 							// mark purchase transaction as completed
-							result = purchaseService.updatePurchaseStatus(purchaseId.toString(), PURCHASE_STATUS_COMPLETED);
+							result = purchaseService.updatePurchaseStatus(purchaseId.toString(), PURCHASE_STATUS_COMPLETED,con);
 							logger.debug("updatePurchaseStatus :" + result);
 
 							// update SOA table
-							paymentStatus = purchaseService.updateApplicantRequestTableStatus(purchaseId.toString());
+							paymentStatus = purchaseService.updateApplicantRequestTableStatus(purchaseId.toString(),con);
 							logger.debug("updateApplicantRequestTableStatus :" + paymentStatus.toString());
 
 							// update ERP table for eGD super entity general
-							// fee
-							// payment
-							// get eGD super entity fee
+						
 
 							result = purchaseService.updateERPtable(amount, PaymentConstants.EGD_DEPT_ID, responsePUN, PaymentConstants.GENERAL_FEE_ID, purchaseVO.getCustomerId(),
-									purchaseVO.getCustomerName(), webPaymentResponse.getTransactionResponseDate(), webPaymentResponse.getConfirmationID());
+									purchaseVO.getCustomerName(), webPaymentResponse.getTransactionResponseDate(), webPaymentResponse.getConfirmationID(),erpCon);
 							logger.debug("updateERPtable for general fee :" + result);
 
 							// update ERP table for department fee payment
 							result = purchaseService.updateERPtable(webPaymentResponse.getService().getAmountWithFeesDecimal(), purchaseVO.getDepartmentId(), responsePUN, purchaseVO.getFeeId(),
-									purchaseVO.getCustomerId(), purchaseVO.getCustomerName(), webPaymentResponse.getTransactionResponseDate(), webPaymentResponse.getConfirmationID());
+									purchaseVO.getCustomerId(), purchaseVO.getCustomerName(), webPaymentResponse.getTransactionResponseDate(), webPaymentResponse.getConfirmationID(),erpCon);
 							logger.debug("updateERPtable for department fee :" + result);
 
 							status = PAYMENT_STATUS_SUCCESS;
 							message = messageSource.getMessage("purchase.payment.success", null, locale);
-
+							
 							
 							accountDetailTokenOutputVO = userDetailService.getUserdetail(purchaseVO.getCustomerId());
 
@@ -221,36 +219,49 @@ public class PaymentConfirmationController extends BaseController {
 							paymentWorkFlowVO.setTransactionId(webPaymentResponse.getTransactionId());
 							paymentWorkFlowVO.setEdiramFees(String.valueOf(webPaymentResponse.getTransactionAmountDecimal()));
 
-							boolean savePaymentWorkflow = paymentWorkFlowService.savePaymentWorkFlow(paymentWorkFlowVO);
+							boolean savePaymentWorkflow = paymentWorkFlowService.savePaymentWorkFlow(paymentWorkFlowVO,con);
 							logger.debug("status of workflowTabel insert=" + savePaymentWorkflow);
+							daoManager.commit();
+							daoManager.erpCommit();
+							
+							
+							
+							purchaseService.updateReceptNo(purchaseId, "EXXXX", con);
+							daoManager.commit();
+							purchaseVO = purchaseService.getPurchase(purchaseId,con);
+							String receptNo = purchaseVO.getReceiptNumber();
+							logger.debug("Receipt Number -"+receptNo);
+							purchaseService.updateReceptNoERP(responsePUN, receptNo, erpCon);
+							
+							//daoManager.commit();
+							daoManager.erpCommit();
+							
 							if (savePaymentWorkflow) {
-								try {
+								
 									PaymentTransactionDetailVO paymentTransactionDetailVO = PaymentDataMapper.setTranactionDetailVo(paymentStatus);
 									paymentTransactionDetailVO.setTransactionId(webPaymentResponse.getTransactionId());
 									paymentTransactionDetailVO.setTransactionAmount(String.valueOf(webPaymentResponse.getTransactionAmountDecimal()));
-									paymentTransactionDetailVO.setLanguageCode(languageCode);
-									LandOutputVO landOutputVO = reviewerService.invokeRevierIneceator(accountDetailTokenOutputVO, paymentTransactionDetailVO);
-									logger.debug("Reviewer Status-" + landOutputVO.getStatus());
-									model.addAttribute("servicemessage", (languageCode.equals(LANG_ENGLISH)) ? landOutputVO.getStatus_EN() : landOutputVO.getStatus_AR());
-
-									if ("Success".equals(landOutputVO.getStatus())) {
-										logger.debug("delete workflowTabel for requestId=" + paymentWorkFlowVO.getRequestId());
-										boolean deletePaymentWorkflow = paymentWorkFlowService.deletePaymentWorkFLow(paymentWorkFlowVO);
-										logger.debug("status of workflowTabel Deletion=" + deletePaymentWorkflow);
-									} else {
-										logger.debug("update workflowTabel for requestId=" + paymentWorkFlowVO.getRequestId());
-										boolean updataPaymentWorkflow = paymentWorkFlowService.updatePaymentWorkFLow(paymentWorkFlowVO);
-										logger.debug("status of workflowTabel Updation=" + updataPaymentWorkflow);
-										model.addAttribute("servicemessage", messageSource.getMessage("reviewer.failed.again", null, locale));
+										paymentTransactionDetailVO.setLanguageCode(languageCode);
+										try {
+											LandOutputVO landOutputVO = reviewerService.invokeRevierIneceator(accountDetailTokenOutputVO, paymentTransactionDetailVO);
+										logger.debug("Reviewer Status-" + landOutputVO.getStatus());
+										model.addAttribute("servicemessage", (languageCode.equals(LANG_ENGLISH)) ? landOutputVO.getStatus_EN() : landOutputVO.getStatus_AR());
+										if ("Success".equals(landOutputVO.getStatus())) {
+											logger.debug("delete workflowTabel for requestId=" + paymentWorkFlowVO.getRequestId());
+											boolean deletePaymentWorkflow = paymentWorkFlowService.deletePaymentWorkFLow(paymentWorkFlowVO,con);
+											logger.debug("status of workflowTabel Deletion=" + deletePaymentWorkflow);
+										} else {
+											logger.debug("update workflowTabel for requestId=" + paymentWorkFlowVO.getRequestId());
+											boolean updataPaymentWorkflow = paymentWorkFlowService.updatePaymentWorkFLow(paymentWorkFlowVO,con);
+											logger.debug("status of workflowTabel Updation=" + updataPaymentWorkflow);
+											model.addAttribute("servicemessage", messageSource.getMessage("reviewer.failed.again", null, locale));
+										}
+									} catch (Exception e) {
+										logger.error("Initiating BPM process " +paymentTransactionDetailVO.getRequestNo(), e);
 									}
-								} catch (Exception e) {
-									model.addAttribute("servicemessage", messageSource.getMessage("reviewer.failed.again", null, locale));
-									logger.debug("SOA Reviewer Service Failed");
-									logger.debug("update workflowTabel for requestId=" + paymentWorkFlowVO.getRequestId());
-									boolean updataPaymentWorkflow = paymentWorkFlowService.updatePaymentWorkFLow(paymentWorkFlowVO);
-									logger.debug("status of workflowTabel Updation=" + updataPaymentWorkflow);
-									logger.error("Exception" + e.getMessage());
-								}
+										
+
+									
 
 							}
 
@@ -278,35 +289,31 @@ public class PaymentConfirmationController extends BaseController {
 							logger.debug("response message secure hash = ", request.getParameter("Response.SecureHash"));
 							logger.debug("our calculated secure hash = ", webPaymentResponse.calculateSecureHash());
 
-							result = purchaseService.updatePurchaseStatus(purchaseId.toString(), PURCHASE_STATUS_FAILED);
+							result = purchaseService.updatePurchaseStatus(purchaseId.toString(), PURCHASE_STATUS_FAILED,con);
 
 							logger.debug("updatePhotoPurchaseStatus :" + result);
 						}
 
-						inquiryPaymentResponse = purchaseService.getPaymentDetails(webPaymentResponse.getConfirmationID());
+						inquiryPaymentResponse = purchaseService.getPaymentDetails(webPaymentResponse.getConfirmationID(),con);
 
 						inquiryPaymentResponse.setPaymentMethodType(getPaymentMethodTypeDescription(inquiryPaymentResponse.getPaymentMethodType(), languageCode));
 
 						logger.debug("inquiryPaymentResponse payment details :" + inquiryPaymentResponse);
-						
+						daoManager.commit();
+						daoManager.erpCommit();
 					
 				}
-			} catch (UAQException e) {
-				logger.error(e.getMessage());
-				message = messageSource.getMessage("purchase.payment.trans.fail", null, locale);
-				model.addAttribute("servicemessage", messageSource.getMessage("purchase.payment.trans.fail", null, locale));
-			} catch (SQLException e) {
-				logger.error(e.getMessage());
-				message = messageSource.getMessage("purchase.payment.trans.fail", null, locale);
-				model.addAttribute("servicemessage", messageSource.getMessage("purchase.payment.trans.fail", null, locale));
-			} catch (UnsupportedEncodingException e) {
-				logger.error(e.getMessage());
-				message = messageSource.getMessage("purchase.payment.trans.fail", null, locale);
-				model.addAttribute("servicemessage", messageSource.getMessage("purchase.payment.trans.fail", null, locale));
+				
 			} catch (Exception e) {
+				logger.error("RollBack");
+				daoManager.rollback();
+				daoManager.erpRollback();
 				logger.error(e.getMessage());
 				message = messageSource.getMessage("purchase.payment.trans.fail", null, locale);
 				model.addAttribute("servicemessage", messageSource.getMessage("purchase.payment.trans.fail", null, locale));
+			}finally{
+				daoManager.closeConnection();
+				daoManager.closeERPConnection();
 			}
 
 			logger.debug("status = " + status + " : message = " + message);
@@ -319,6 +326,7 @@ public class PaymentConfirmationController extends BaseController {
 			model.addAttribute("status", status);
 			model.addAttribute("message", message);
 			model.addAttribute("generalFee", amount);
+			
 
 			PageMetadataVO pageMetadataVO = new PageMetadataVO();
 			pageMetadataVO.setPageTitle(messageSource.getMessage(pageLabel, null, locale));

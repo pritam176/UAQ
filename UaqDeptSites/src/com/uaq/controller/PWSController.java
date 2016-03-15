@@ -136,7 +136,7 @@ public class PWSController extends BaseController {
 		String view = "";
 		LoginOutputVO logininfo = null;
 		if (portalUtil.isMobile(request, response)) {
-			// mobile site handle
+			model.addAttribute(ISMOBILE, "true");
 			view = MOBILE_LOGIN_AGAIN;
 			logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
 			if (logininfo != null) {
@@ -171,7 +171,7 @@ public class PWSController extends BaseController {
 			}
 
 		} else {
-			// Desktop
+			model.addAttribute(ISMOBILE, "false");
 			view = PORTAL_LOGIN_AGAIN;
 			logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
 			if (logininfo != null) {

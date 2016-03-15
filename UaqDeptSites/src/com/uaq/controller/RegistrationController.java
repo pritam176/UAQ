@@ -7,7 +7,7 @@ import static com.uaq.common.UAQURLConstant.*;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
- 
+
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -40,6 +40,7 @@ import com.uaq.controller.mapper.RegistrationDataMapper;
 import com.uaq.exception.UAQException;
 import com.uaq.logger.UAQLogger;
 import com.uaq.service.CreateAccountService;
+import com.uaq.service.GenerateOTPService;
 import com.uaq.service.PortalUtil;
 import com.uaq.service.RegistrationService;
 import com.uaq.util.StringUtil;
@@ -82,6 +83,9 @@ public class RegistrationController extends BaseController {
 	@Autowired
 	private CreateAccountService createAccountService;
 
+	@Autowired
+	private GenerateOTPService generateOTPService;
+
 	@RequestMapping(value = ViewPath.REGISTRATION_UAE_CITIZEN, method = RequestMethod.GET)
 	public String handleRegistrationRequest(HttpServletRequest request, ModelMap modelMap) {
 		RegistrationIndividualUAE registrationIndividualUAE = new RegistrationIndividualUAE();
@@ -103,14 +107,13 @@ public class RegistrationController extends BaseController {
 			modelMap.addAttribute(RESPONCE_KEY, messageSource.getMessage(SERVICE_ERROR_MESG_KEY, null, locale));
 			view = REGISTRATION_SUCCESS;
 		}
-		
-		
+
 		PageMetadataVO pageMetadataVO = new PageMetadataVO();
 		pageMetadataVO.setPageTitle(messageSource.getMessage("individualCitizenLbl", null, locale));
 		pageMetadataVO.setPageDescription(messageSource.getMessage("individualCitizenLbl", null, locale));
 		pageMetadataVO.setPageKeywords(messageSource.getMessage("individualCitizenLbl", null, locale));
 		modelMap.addAttribute(PAGE_META_DATA, pageMetadataVO);
-		
+
 		modelMap.addAttribute(PAGE_LABEL_REG, "individualCitizenLbl");
 		modelMap.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
 		return view;
@@ -185,22 +188,33 @@ public class RegistrationController extends BaseController {
 	// for walkin user
 	@RequestMapping(value = ViewPath.ACTIVATE_FORM, method = RequestMethod.POST)
 	public String submitActivationRequest(@ModelAttribute("activateFormCommand") ActivateFormCommand activateFormCommand, ModelMap modelMap, HttpServletRequest request,
-			RedirectAttributes redirectAttributes) {
-		String view = "activate.success";
+			RedirectAttributes redirectAttributes, BindingResult result) throws ServiceException, UAQException {
+		String view = "";
 		logger.info("Activate Form FOR Walkin User");
 		super.handleRequest(request, modelMap);
 		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
 
-		AccountDetailOutputVO accountInfo = (AccountDetailOutputVO) request.getSession().getAttribute(SESSION_ACCOUNT_INFO);
+		Boolean isValidResult = portalUtil.validateCaptcha(request.getSession().getId(), activateFormCommand.getCaptchaText(), result);
 
-		ActiveAccountInputVO inputVO = RegistrationDataMapper.setindDataToActivateAccountService(activateFormCommand, accountInfo);
-		logger.info("Input Vo after setting from Command=" + inputVO.toString());
+		if (isValidResult) {
+			view = "activate.success";
+			AccountDetailOutputVO accountInfo = (AccountDetailOutputVO) request.getSession().getAttribute(SESSION_ACCOUNT_INFO);
 
-		ActiveAccountOutputVO output = registrationService.activateAccount(inputVO);
-		if (SERVICE_SUCCESS.equals(output.getStatus())) {
-			logger.info("From acyivate account Service=" + output.toString());
-			modelMap.addAttribute("validateOTPCommand", new ValidateOTPCommand());
-			view = OTP_FORM;
+			ActiveAccountInputVO inputVO = RegistrationDataMapper.setindDataToActivateAccountService(activateFormCommand, accountInfo);
+			logger.info("Input Vo after setting from Command=" + inputVO.toString());
+
+			ActiveAccountOutputVO output = registrationService.activateAccount(inputVO);
+			if (SERVICE_SUCCESS.equals(output.getStatus())) {
+				logger.info("From acyivate account Service=" + output.toString());
+				modelMap.addAttribute("validateOTPCommand", new ValidateOTPCommand());
+				view = OTP_FORM;
+			}
+			modelMap.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getMessage_EN() : output.getMessage_AR());
+		} else {
+			modelMap.addAttribute("activateFormCommand", activateFormCommand);
+			portalUtil.emiratesDropDown(modelMap, languageCode);
+			portalUtil.nationalDropDown(modelMap, languageCode);
+			view = ACTIVE_ACCOUNT_FORM_SUBMIT;
 		}
 		Locale locale = new Locale(languageCode);
 		PageMetadataVO pageMetadataVO = new PageMetadataVO();
@@ -208,8 +222,7 @@ public class RegistrationController extends BaseController {
 		pageMetadataVO.setPageDescription(messageSource.getMessage("activateAcounttxt", null, locale));
 		pageMetadataVO.setPageKeywords(messageSource.getMessage("activateAcounttxt", null, locale));
 		modelMap.addAttribute(PAGE_META_DATA, pageMetadataVO);
-		
-		modelMap.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getMessage_EN() : output.getMessage_AR());
+
 		modelMap.addAttribute(PAGE_LABEL, "activateAcounttxt");
 		modelMap.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
 		return view;
@@ -235,13 +248,13 @@ public class RegistrationController extends BaseController {
 			view = REGISTRATION_SUCCESS;
 			modelMap.addAttribute(PAGE_LABEL_REG, "activateAcounttxt");
 		}
-		
+
 		PageMetadataVO pageMetadataVO = new PageMetadataVO();
 		pageMetadataVO.setPageTitle(messageSource.getMessage("activateAcounttxt", null, locale));
 		pageMetadataVO.setPageDescription(messageSource.getMessage("activateAcounttxt", null, locale));
 		pageMetadataVO.setPageKeywords(messageSource.getMessage("activateAcounttxt", null, locale));
 		modelMap.addAttribute(PAGE_META_DATA, pageMetadataVO);
-		
+
 		modelMap.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
 		modelMap.addAttribute("activation", new ActivationCommand());
 		return view;
@@ -302,7 +315,7 @@ public class RegistrationController extends BaseController {
 					if (accountInfo.getAccountStatusId().equals(ACCOUNT_CREATED)) {
 						logger.info(" Walk In User | activate form render|  accountInfo from Session=" + accountInfo.toString());
 						modelMap.addAttribute("activateFormCommand", RegistrationDataMapper.setAccountInfoToActivateFormCommand(accountInfo));
-						modelMap.addAttribute(REQUEST_PARAM_TYPE_OF_USER, accountInfo.getUserType());
+						modelMap.addAttribute("typeOfuser", accountInfo.getUserType());
 						String accountFOrmView = ACTIVE_ACCOUNT_FORM_SUBMIT;
 						try {
 							portalUtil.emiratesDropDown(modelMap, languageCode);
@@ -362,7 +375,7 @@ public class RegistrationController extends BaseController {
 			modelMap.addAttribute(RESPONCE_KEY, messageSource.getMessage(SERVICE_ERROR_MESG_KEY, null, locale));
 			view = ACTIVE_ACCOUNT_SUCESS;
 		}
-		
+
 		PageMetadataVO pageMetadataVO = new PageMetadataVO();
 		pageMetadataVO.setPageTitle(messageSource.getMessage("activateAcounttxt", null, locale));
 		pageMetadataVO.setPageDescription(messageSource.getMessage("activateAcounttxt", null, locale));
@@ -412,10 +425,11 @@ public class RegistrationController extends BaseController {
 				modelMap.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? outputmessage.getMessage_EN() : outputmessage.getMessage_AR());
 			}
 		}
-		//modelMap.addAttribute(RESPONCE_KEY, messageSource.getMessage("userdata.invalid", null, locale));
+		// modelMap.addAttribute(RESPONCE_KEY,
+		// messageSource.getMessage("userdata.invalid", null, locale));
 		modelMap.addAttribute(PAGE_LABEL, "otpvalidation");
 		modelMap.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
-		
+
 		PageMetadataVO pageMetadataVO = new PageMetadataVO();
 		pageMetadataVO.setPageTitle(messageSource.getMessage("otpvalidation", null, locale));
 		pageMetadataVO.setPageDescription(messageSource.getMessage("otpvalidation", null, locale));
@@ -441,7 +455,7 @@ public class RegistrationController extends BaseController {
 		pageMetadataVO.setPageDescription(messageSource.getMessage(pagable, null, locale));
 		pageMetadataVO.setPageKeywords(messageSource.getMessage(pagable, null, locale));
 		modelMap.addAttribute(PAGE_META_DATA, pageMetadataVO);
-		
+
 		return ACTIVE_ACCOUNT_SUCESS;
 	}
 
@@ -451,18 +465,29 @@ public class RegistrationController extends BaseController {
 
 		logger.info("AJAX Request for Generate OTP");
 
+		String otp = null;
+
 		AccountDetailOutputVO accountInfo = (AccountDetailOutputVO) request.getSession().getAttribute(SESSION_ACCOUNT_INFO);
-		logger.info("accountInfo from Session=" + accountInfo.toString());
-		GenerateOTPInputVO input = new GenerateOTPInputVO();
-		input.setOtp(request.getParameter("otp"));
-		input.setAccountId(accountInfo.getAccountId());
-		input.setMobile(accountInfo.getMobileNo());
-		input.setEmirateId(StringUtil.isEmpty(accountInfo.getEmirateID()) ? EMPTY_STRING : accountInfo.getEmirateID());
-		input.setPassportId(StringUtil.isEmpty(accountInfo.getPassportNo()) ? EMPTY_STRING : accountInfo.getPassportNo());
-		input.setTypeOfUser(accountInfo.getUserType());
-		input.setTraedLicenceNumber((accountInfo.getTradelicensetypeid()) == null ? EMPTY_STRING : accountInfo.getTradelicensetypeid().toString());
-		input.setEmirate(accountInfo.getEmirate());
-		String otp = registrationService.generateOTP(input);
+
+		if (accountInfo != null) {
+
+			logger.info("accountInfo from Session=" + accountInfo.toString());
+			GenerateOTPInputVO input = new GenerateOTPInputVO();
+			input.setOtp(request.getParameter("otp"));
+			input.setAccountId(accountInfo.getAccountId());
+			input.setMobile(accountInfo.getMobileNo());
+			input.setEmirateId(StringUtil.isEmpty(accountInfo.getEmirateID()) ? EMPTY_STRING : accountInfo.getEmirateID());
+			input.setPassportId(StringUtil.isEmpty(accountInfo.getPassportNo()) ? EMPTY_STRING : accountInfo.getPassportNo());
+			input.setTypeOfUser(accountInfo.getUserType());
+			input.setTraedLicenceNumber((accountInfo.getTreadLicenceNo()) == null ? EMPTY_STRING : accountInfo.getTreadLicenceNo().toString());
+			input.setEmirate(accountInfo.getEmirate());
+
+			try {
+				otp = generateOTPService.generateOTP(input);
+			} catch (Exception e) {
+				logger.error("Failed " + e.getMessage());
+			}
+		}
 
 		return otp;
 	}
@@ -475,7 +500,7 @@ public class RegistrationController extends BaseController {
 		modelMap.addAttribute("forgetUsernameCommand", new ForgetUsernameCommand());
 		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
 		Locale locale = new Locale(languageCode);
-		
+
 		PageMetadataVO pageMetadataVO = new PageMetadataVO();
 		pageMetadataVO.setPageTitle(messageSource.getMessage("header.forget.username", null, locale));
 		pageMetadataVO.setPageDescription(messageSource.getMessage("header.forget.username", null, locale));
@@ -915,7 +940,7 @@ public class RegistrationController extends BaseController {
 			modelMap.addAttribute(RESPONCE_KEY, messageSource.getMessage(SERVICE_ERROR_MESG_KEY, null, locale));
 			view = REGISTRATION_SUCCESS;
 		}
-		
+
 		PageMetadataVO pageMetadataVO = new PageMetadataVO();
 		pageMetadataVO.setPageTitle(messageSource.getMessage("individualResidentLbl", null, locale));
 		pageMetadataVO.setPageDescription(messageSource.getMessage("individualResidentLbl", null, locale));
@@ -997,7 +1022,7 @@ public class RegistrationController extends BaseController {
 			modelMap.addAttribute(RESPONCE_KEY, messageSource.getMessage(SERVICE_ERROR_MESG_KEY, null, locale));
 			view = REGISTRATION_SUCCESS;
 		}
-		
+
 		PageMetadataVO pageMetadataVO = new PageMetadataVO();
 		pageMetadataVO.setPageTitle(messageSource.getMessage("indivlVisitor", null, locale));
 		pageMetadataVO.setPageDescription(messageSource.getMessage("indivlVisitor", null, locale));
@@ -1064,7 +1089,7 @@ public class RegistrationController extends BaseController {
 	public String handleRegistrationLanding(HttpServletRequest request, ModelMap modelMap) {
 		super.handleRequest(request, modelMap);
 		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
-		Locale locale =new Locale(languageCode);
+		Locale locale = new Locale(languageCode);
 		modelMap.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
 		PageMetadataVO pageMetadataVO = new PageMetadataVO();
 		pageMetadataVO.setPageTitle(messageSource.getMessage("registration", null, locale));

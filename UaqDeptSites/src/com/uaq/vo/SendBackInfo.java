@@ -2,6 +2,8 @@ package com.uaq.vo;
 
 import java.util.Map;
 
+import com.uaq.common.PropertiesUtil;
+
 public class SendBackInfo {
 	private String reviewComment;
 	private Map<String, ServiceAttachment> reviewAttachments;
@@ -42,6 +44,7 @@ public class SendBackInfo {
 		private String fileName;
 		private String DID;
 		private String viewUrl;
+		private String attachmentId;
 
 		public String getDocId() {
 			return docId;
@@ -66,8 +69,18 @@ public class SendBackInfo {
 		public void setDID(String dID) {
 			DID = dID;
 		}
+		
+		public String getAttachmentId() {
+			return attachmentId;
+		}
+
+		public void setAttachmentId(String attachmentId) {
+			this.attachmentId = attachmentId;
+		}
 
 		public String getViewUrl() {
+			String ucmIP = PropertiesUtil.getProperty("ucm.ip");
+			viewUrl = viewUrl.replace("http://webcenter", "http://"+ucmIP);
 			return viewUrl;
 		}
 
@@ -80,8 +93,8 @@ public class SendBackInfo {
 			ATT_DOC_ID("docId"),
 			FILE_NAME("fileName"),
 			VIEWURL("viewUrl"),
-			UCM_DID("DID");
-
+			UCM_DID("DID"),
+			ATTACHMENT_ID("attachmentId");
 			private String memberName;
 
 			private ServiceAttachmentEnum(String memberName) {

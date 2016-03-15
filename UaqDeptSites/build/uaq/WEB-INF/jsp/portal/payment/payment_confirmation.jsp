@@ -79,7 +79,7 @@
 										<tbody>
 											<tr>
 												<td><spring:message code='purchase.payment.receipt'/></td>
-												<td>${inquiryPaymentResponse.retrievalRefNumber}</td>
+												<td>${inquiryPaymentResponse.receiptNumber}</td>
 											</tr>
 											<tr>
 												<td><spring:message code='purchase.date'/></td>

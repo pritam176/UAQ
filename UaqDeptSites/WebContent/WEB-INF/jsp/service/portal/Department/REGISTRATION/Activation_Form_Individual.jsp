@@ -23,6 +23,13 @@
 <c:set var ="enterDigit"><spring:message code="feedback.enter.ten.digit"/></c:set>
 <c:set var ="validemailMsg"><spring:message code="validemail"/></c:set>
 <c:set var ="emailMsg"><spring:message code="plzEmailAddress"/></c:set>
+<c:set var ="acceptMessgaelabel"><spring:message code="acceptMessgae"/></c:set>
+<c:set var ="usernamemax"><spring:message code="username.max"/></c:set>
+					<c:set var ="usernamemin"><spring:message code="username.min"/></c:set>
+					
+					<c:set var ="alphmsg"><spring:message code="alph.msg"/></c:set>
+					<c:set var ="passwordformatmsg"><spring:message code="password.format"/></c:set>
+
 <div class="container-fluid">
 	<div class="wrapper">
 		<!-- header -->
@@ -399,8 +406,9 @@
 														</div>
 														<div class="col-md-7">
 															<form:input path="address" id="address" name="address"
-																type="text" class="form-control" required="required"
-																data-msg-required="${addressReq}" maxlength="100" />
+																type="text" class="form-control " required="required"
+																data-msg-required="${addressReq}" maxlength="100"
+																 />
 														</div>
 													</div>
 													<!-- /text box -->
@@ -489,8 +497,13 @@
 													</div>
 													<div class="col-md-7">
 														<form:input path="userName" name="username" type="text"
-															class="form-control" required="required"
-															data-msg-required="${userName}" />
+															class="form-control " required="required"
+															data-msg-required="${userName}"
+															 data-rule-alphacheck="true" data-msg-alphacheck="${alphmsg}"
+			                                                    data-rule-maxlength="15"
+																data-rule-minlength="4" 
+																data-msg-maxlength="${usernamemax}" 
+																data-msg-minlength="${usernamemin}" />
 													</div>
 												</div>
 												<!-- /text box -->
@@ -512,7 +525,8 @@
 															data-msg-required="${password}" data-rule-maxlength="15"
 															data-rule-minlength="8"
 															data-msg-maxlength="${passwordMax}"
-															data-msg-minlength="${passwordMin}" />
+															data-msg-minlength="${passwordMin}"
+															data-rule-passwdweak="true" data-msg-passwdweak="${passwordformatmsg}" />
 													</div>
 												</div>
 												<!-- /text box -->
@@ -537,6 +551,65 @@
 											</div>
 										</div>
 									</div>
+									
+									 <!-- captcha part Starts here -->
+											
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                   <label for="verification" class="form-lbl mandatory_lbl"><spring:message
+														code="captcha.verification.code" /> </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+																<div class="col-md-4 col-sm-4 col-xs-4 remove-pad">
+																	<img src="captcha.html" alt="Captcha captchaimg"
+																		class="captcha captchaimg" />
+																</div>
+																<div class="col-md-8 col-sm-8 col-xs-8"
+																	style="padding-right: 0px;">
+																	<c:set var="captchaRequired"><spring:message code='feedback.form.field.required.captcha'/></c:set>
+																	<form:input path="captchaText" name="verification"
+																		id="verification" cssclass="form-control" 
+																		data-msg-required="${captchaRequired}"
+																		class="required form-control" type="text" 	/>
+																	<p>
+																		<label class="error error-captcha"><form:errors
+																				path="captchaText" /></label>
+																	</p>
+																</div>
+															</div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+									<!-- Terms and conditions -->
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+															<div class="col-md-6 remove-pad">
+																<!-- text box -->
+																<div class="form-group cf">
+																	<div class="col-md-5">
+																		<label for="termsandcondition" class="form-lbl mandatory_lbl"><spring:message code="acceptTerans"/></label>
+																	</div>
+																	<div class="col-md-7">
+																		
+																		<div class="checkbox inline-custom">
+																				<div class="terms-link"> <a href="javascript:void(0)" data-toggle="modal" data-target="#termsModal" ><spring:message code="termsAndCondition"/></a></div>
+																			<input type="checkbox" name="termsandcondition" id="termsandcondition1"  name="terms" value="" class="required"  data-msg-required="${acceptMessgaelabel}" />
+																			<label for="termsandcondition1" class="custom"></label>
+																			
+																		</div>
+																	</div>
+																</div>
+																<!-- /text box -->
+															</div>
+												</div>
+											</div>
+											<!-- /Terms and conditions-->
 
 									<div class="row">
 										<div class="col-md-12 remove-pad">
@@ -562,13 +635,53 @@
 		</div>
 	</div>
 </div>
+<!-- Modal -->
+	<div class="modal fade terms-model" id="termsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+		<button type="button" class="close pull-right close-btn" data-dismiss="modal">
+						<span class="glyphicon glyphicon-remove"></span>
+		</button>
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel"><spring:message code="termsAndCondition"/></h4>
+      </div>
+      <div class="modal-body">
+		<c:if test="${param.languageCode == 'en' }">
+			<%@include file="tearmscondition_EN.jsp"%>
+		</c:if>
+		<c:if test="${param.languageCode == 'ar' }">
+			<%@include file="tearmscondition_AR.jsp"%>
+		</c:if>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="link-btn close pull-right close-btn" data-dismiss="modal"><spring:message code='btn.close'/></button>
+      </div>
+    </div>
+  </div>
+</div>
+	
+<!-- Modal -->
 <!-- <script src="/js/dest/app.js"></script> -->
 <script src="/js/libs/jquery.validate.js"></script>
+<script type="text/javascript"src="/js/libs/jquery.mask.js"></script>
 
 <script type="text/javascript">
 	jQuery(function($) {
+		
+		$.validator.addMethod("alphacheck", function(value, element) {
+			return this.optional(element) || /^([a-zA-Z0-9._])+$/i.test(value);
+		});
+		 $.validator.addMethod("passwdweak", function(value, element) {
+				if(/^[a-z0-9\-\s]+$/i.test(value)){
+					return false;	
+				}else{
+					
+					return true;
+				}
+			});
 
-		$("#activateAccount").validate();
+
+		$("#activateAccount").validate({ignore: []});
 
 		//for disaable input
 		$("#fullNameHide").val($("#fullName").val());
@@ -580,5 +693,10 @@
 		$("#residency").prop('disabled', true);
 		$("#citizen").prop('disabled', true);
 		$("#emirates").prop('disabled', true);
+		
+		$("#verification").focus(function(){
+			
+				$(".error-captcha").html("");
+			});
 	});
 </script>

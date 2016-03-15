@@ -30,6 +30,8 @@ import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Reg
 import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.Supp_RegisterRenewReqType;
 import com.oracle.xmlns.UAQ_eGD_BusinessProcess.Supp_Registration_Renew.Supp_Registration_BPEL.UserDetailsPayload;
 import com.uaq.common.ApplicationConstants;
+import com.uaq.common.ServiceNameConstant;
+import com.uaq.dao.EGDServiceDAO;
 import com.uaq.logger.UAQLogger;
 import com.uaq.util.DateUtil;
 import com.uaq.util.StringUtil;
@@ -53,11 +55,24 @@ public class EGDRequestService {
 	@Autowired
 	private UCMCenterURLService uCMCenterURLService;
 
+	@Autowired
+	private EGDServiceDAO eGDServiceDAO;
+
 	private uaq.service.egd.model.UserContext uc = null;
 
 	private EGDMiddlewareService_Service service = null;
 	private EGDMiddlewareService_PortType port = null;
 	private EGDMiddlewareServicePortBindingStub stub = null;
+
+	private static final String NOT_SUPPLIER = "0";
+
+	private static final String ACTIVE_SUPPLIER = "1";
+
+	private static final String INACTIVE_SUPPLIER = "2";
+
+	private static final String SUSPENDED_SUPPLIER = "3";
+
+	private static final String REJECTED_SUPPLIER = "4";
 
 	public void createStub() {
 		uc = new UserContext();
@@ -105,14 +120,13 @@ public class EGDRequestService {
 		suppDetails.setUserCommnets(supplierDetails.getUserCommnets());
 		suppDetails.setOff_tel_num(supplierDetails.getOfficeNumber());
 		suppDetails.setSupplierCategory(supplierDetails.getSupplierCategory());
-		
-		
+
 		Arrays.sort(supplierDetails.getRegistrationsType());
 		String[] regType = Arrays.copyOf(supplierDetails.getRegistrationsType(), supplierDetails.getRegistrationsType().length, String[].class);
-		
+
 		suppDetails.setRegistrationType(StringUtils.join(regType, ","));
 
-		//String[] regType = supplierDetails.getRegistrationsType();
+		// String[] regType = supplierDetails.getRegistrationsType();
 		RegistrationTypeRecType[] registrationTypeList = new RegistrationTypeRecType[regType.length];
 		for (int i = 0; i < regType.length; i++) {
 			registrationTypeList[i] = new RegistrationTypeRecType();
@@ -143,7 +157,7 @@ public class EGDRequestService {
 		userDetails.setEmiratesId(userDeatilVO.getEmiratesId());
 		userDetails.setTradeLienceNo(userDeatilVO.getTradeLienceNo());
 		userDetails.setFamilyBookNo(userDeatilVO.getFamilyBookNo());
-		userDetails.setNationality_ID(StringUtil.isEmpty(userDeatilVO.getNationality()) ?new BigInteger("0"):new BigInteger(userDeatilVO.getNationality()));
+		userDetails.setNationality_ID(StringUtil.isEmpty(userDeatilVO.getNationality()) ? new BigInteger("0") : new BigInteger(userDeatilVO.getNationality()));
 		userDetails.setEmirate(userDeatilVO.getEmirate());
 		userDetails.setFirstName(userDeatilVO.getFirstName());
 		userDetails.setLastName(userDeatilVO.getLastName());
@@ -226,22 +240,25 @@ public class EGDRequestService {
 		suppDetails.setCertificateAttachemntid(supplierDetails.getCertificates());
 		suppDetails.setSupportiveAttachmentid("");
 
-		/*List<UserAttachmentsVO> userAttachmentList = supplierDetails.getUserAttacmentListVO();
-		// int i=attachmentList.length-2;
-		for (UserAttachmentsVO attachment : userAttachmentList) {
-			if (!EMIRATES_ID_FRONT.equals(attachment.getAttachmentType()) && !EMIRATES_ID_BACK.equals(attachment.getAttachmentType())) {
-				AttachmentRecPayload attachmentRecPayload = new AttachmentRecPayload();
-				attachmentRecPayload.setContentid(attachment.getContentId());
-				attachmentRecPayload.setUrl(attachment.getAttachmentUrl());
-				attachmentRecPayload.setFileExpiryDate("10/20/2017");
-				attachmentRecPayload.setFilename(attachment.getContentId() + " | " + attachment.getAttachmentName());
-				attachmentRecPayload.setIsMandatory("1");
-				attachmentRecPayload.setDocTypeId(attachment.getAttachmentType());
-
-				attachmentList[index] = attachmentRecPayload;
-				index++;
-			}
-		}*/
+		/*
+		 * List<UserAttachmentsVO> userAttachmentList =
+		 * supplierDetails.getUserAttacmentListVO(); // int
+		 * i=attachmentList.length-2; for (UserAttachmentsVO attachment :
+		 * userAttachmentList) { if
+		 * (!EMIRATES_ID_FRONT.equals(attachment.getAttachmentType()) &&
+		 * !EMIRATES_ID_BACK.equals(attachment.getAttachmentType())) {
+		 * AttachmentRecPayload attachmentRecPayload = new
+		 * AttachmentRecPayload();
+		 * attachmentRecPayload.setContentid(attachment.getContentId());
+		 * attachmentRecPayload.setUrl(attachment.getAttachmentUrl());
+		 * attachmentRecPayload.setFileExpiryDate("10/20/2017");
+		 * attachmentRecPayload.setFilename(attachment.getContentId() + " | " +
+		 * attachment.getAttachmentName());
+		 * attachmentRecPayload.setIsMandatory("1");
+		 * attachmentRecPayload.setDocTypeId(attachment.getAttachmentType());
+		 * 
+		 * attachmentList[index] = attachmentRecPayload; index++; } }
+		 */
 
 		processType.setSuppDetails(suppDetails);
 		processType.setCommonRequestBPM(commonRequestBPM);
@@ -268,6 +285,27 @@ public class EGDRequestService {
 
 		return outputVO;
 
+	}
+
+	public boolean isValidSupplier(String serviceId, String accountId) {
+		logger.enter("isValidSupplier");
+		boolean isValid = false;
+		
+		
+		
+		if (ServiceNameConstant.RENEW_SUPPLIER_REGISTRATION.equals(serviceId)) {
+			
+			 isValid = eGDServiceDAO.isExpired(accountId);
+			//isValid = (eGDServiceDAO.isCreated(accountId));
+			
+		}
+
+		if (ServiceNameConstant.NEW_SUPPLIER_REGISTRATION.equals(serviceId)) {
+			isValid = !(eGDServiceDAO.isCreated(accountId));
+		}
+		logger.debug("validSuppliterrequested | "+isValid);
+		logger.exit("isValidSupplier");
+		return isValid;
 	}
 
 }

@@ -12,6 +12,7 @@ import uaq.db.si.model.common.LpProCardReqDetailsViewSDO;
 import com.uaq.command.ServiceParamsCommand.FieldTypeEnum;
 import com.uaq.command.ServiceParamsCommand.ServiceField;
 import com.uaq.common.PropertiesUtil;
+import com.uaq.service.ServiceHandler.LookupTypeEnum;
 import com.uaq.vo.SendBackInfo;
 
 public class ProCardRenewerServiceHandler extends ProCardServiceHandler {
@@ -56,14 +57,15 @@ public class ProCardRenewerServiceHandler extends ProCardServiceHandler {
 		}
  
 		ServiceField f1 = new ServiceField("nameOfPro", "proCard.NameOfPro", cardDetails != null ? cardDetails.getProName().getValue() : null, true);
-		ServiceField f2 = new ServiceField("proIdNo", "proCard.ProIdNo", cardDetails != null ? cardDetails.getProIdNum().getValue() : null, true);
+		ServiceField f2 = new ServiceField("proIdNo", "proCard.ProIdNo", cardDetails != null ? cardDetails.getProIdNum().getValue() : null, true,20);
 		ServiceField f3 = new ServiceField("proIdExpiryDate", "proCard.ProIdExpiryDate", FieldTypeEnum.Text, true);
 		ServiceField f4 = new ServiceField("proNationality", "proCard.ProNationality", cardDetails != null ? nationality : null, true);
 		ServiceField f5 = new ServiceField("identityOfPro", "proCard.IdentityOfPro", FieldTypeEnum.File, phase == null);
 		ServiceField f6 = new ServiceField("proPhotograph", "proCard.ProPhotograph", FieldTypeEnum.File, phase == null);
 		f3.setFieldValue(proIdExpDate != null ? displayDateFormat.format(proIdExpDate) : null);
 		f4.setFieldType(FieldTypeEnum.Select);
-		f4.setFieldIdValue(cardDetails != null ? nationalityId : null);
+		f4.setFieldValue(cardDetails != null ? nationalityId : null);
+		f4.setFieldLkValues(lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.Nationality, languageCode, null));
 		f5.setPanelHeader("service.label.attachments");
 		f5.setDocType("16", "Identity_of_the_PRO");
 		f6.setDocType("17", "PRO_Photograph");

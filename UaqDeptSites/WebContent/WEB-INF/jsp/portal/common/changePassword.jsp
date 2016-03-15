@@ -11,11 +11,29 @@
 <c:set var="password"><spring:message code='plzPassword'/></c:set>
 					<c:set var="passwordMax"><spring:message code='passMax'/></c:set>
 					<c:set var="passwordMin"><spring:message code = 'passMin'/></c:set>
+					<c:set var ="passwordformatmsg"><spring:message code="password.format"/></c:set>
 
 
 		<div class="container-fluid">
 			<div class="wrapper">
 				<!-- content area -->
+				<div class="mainmenu">
+					<div class="col-md-12 hidden-xs hidden-sm">
+						<div class="mainmenu-wrap">
+							<ul class="no-list cf">
+								<li>
+									<a href="/${param.languageCode}/home.html"><img src="/img/home1.png" alt="Home UAQ">
+									</a>
+								</li>
+								<li class=""><a href="/${param.languageCode}/registrationlanding.html"><spring:message code="registration" /></a>
+								</li>
+								<li class="active"><a href="#"><spring:message code="label.change.password" /> </a>
+								</li>
+								
+							</ul>
+						</div>
+					</div>
+				</div>
 				<div class="content">
 					<div class="row">
 						<!-- right col -->
@@ -67,8 +85,12 @@
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
-				                                            <form:input path="password"  id="new_password" name="new_password" type="password" class="form-control required" required="required" data-msg-required="${password}" data-rule-maxlength="15" data-rule-minlength="8" data-msg-maxlength="${passwordMax}" data-msg-minlength="${passwordMin}"/>
-			                                                   <form:hidden id="username"  path="userName"  name="username"  value="${param.userName}"/> 
+				                                            <form:input path="password"  id="new_password" name="new_password" type="password" class="form-control required" required="required" data-msg-required="${password}"
+				                                             data-rule-maxlength="15" data-rule-minlength="8" 
+				                                             data-msg-maxlength="${passwordMax}" data-msg-minlength="${passwordMin}"
+				                                             data-rule-passwdweak="true" data-msg-passwdweak="${passwordformatmsg}"/>
+			                                                 <form:hidden id="username"  path="userName"  />
+			                                                 <form:hidden id="key"  path="key"  /> 
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -100,9 +122,8 @@
 			                                        	<div class="row">
 				                                            <div class="form-group submission">
 				                                                <div class="col-md-offset-5 col-md-7">
-				                                                <c:url var="actionUrl" value="${param.userName}">
-				                                                </c:url>
-				                                                    <input type="submit" class="btn"  value="Submit" id="forgot-btn1" /> 
+				                                               		
+				                                                    <input type="submit" class="btn"  value='<spring:message code="form.button.submit" />' id="forgot-btn1" /> 
 				                                                </div>
 				                                            </div>
 				                                        </div>
@@ -130,6 +151,15 @@
 	    <script>
 
 			jQuery(function($) { 
+				
+				$.validator.addMethod("passwdweak", function(value, element) {
+					if(/^[a-z0-9\-\s]+$/i.test(value)){
+						return false;	
+					}else{
+						
+						return true;
+					}
+				});
 
 			$("#changePassword").validate();
 

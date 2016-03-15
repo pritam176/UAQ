@@ -1,5 +1,6 @@
 package com.uaq.controller;
 
+import java.sql.Connection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uaq.common.ViewPath;
+import com.uaq.dao.DAOManager;
 import com.uaq.exception.UAQException;
 import com.uaq.logger.UAQLogger;
 import com.uaq.service.PurchaseService;
@@ -55,9 +57,11 @@ public class PaymentAutoUpdateController{
 		PaymentReportFilterVO paymentReportFilterVO = new PaymentReportFilterVO();
 		
 		String transactionId = null, responseMessage = "No Broken Transactions Found";		
-
+		DAOManager daoManager = new DAOManager();
 		try {
 			
+			Connection con = daoManager.getConnection();
+			Connection erpCon = daoManager.getERPConnection();
 			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
 			String currentDate = df.format(Calendar.getInstance().getTime());
 			
@@ -74,7 +78,7 @@ public class PaymentAutoUpdateController{
 			
 			logger.debug("From Date = " + paymentReportFilterVO.getStartDate() + " : To Date = " + paymentReportFilterVO.getEndDate());
 						
-			List<PaymentReportVO> payments = purchaseService.execute(paymentReportFilterVO);
+			List<PaymentReportVO> payments = purchaseService.execute(paymentReportFilterVO,con);
 
 			if(payments != null && !payments.isEmpty()){
 				
@@ -83,20 +87,23 @@ public class PaymentAutoUpdateController{
 				for (PaymentReportVO transaction : payments) {
 					
 					transactionId = transaction.getTransactinId();
-					result = purchaseService.autoUpdatePaymentTransaction(transactionId);
+					result = purchaseService.autoUpdatePaymentTransaction(transactionId,con,erpCon);
 					
 					logger.debug("autoupdate completed for transactionID = " + transactionId + " with status = " + result);
 					responseMessage = "AutoUpdate on all broken payment transactions performed successfully";
 				}
 			}
-		} catch (UAQException e) {
-			logger.error(e.getMessage());	
-			logger.debug("autoupdate failed transactionID = " + transactionId );
-			responseMessage = "autoupdate failed transactionID = " + transactionId;
+			daoManager.commit();
+			daoManager.erpCommit();
 		} catch (Exception e) {
+			daoManager.rollback();
+			daoManager.erpRollback();
 			logger.error(e.getMessage());
 			logger.debug("autoupdate failed transactionID = " + transactionId );
 			responseMessage = "autoupdate failed transactionID = " + transactionId;
+		}finally{
+			daoManager.closeConnection();
+			daoManager.closeERPConnection();
 		}
 		
 		logger.exit("PaymentAutoUpdateController doGet");

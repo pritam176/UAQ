@@ -71,11 +71,15 @@ public class PublicationsService implements BaseService<PublicationsVO, Publicat
 		publicationsList = publicationsDAO.execute(publicationsSearchCommand);
 		// fill in the image using its id
 		for (PublicationsVO publicationsVO : publicationsList) {
-			if (publicationsVO.getImageAssetId() != null) {
-				AssetBean assetBean = AssetUtil.getAssetDetail("egd", "Content_C", publicationsVO.getImageAssetId(), publicationsSearchCommand.getTicketId());
-
-				imageVO = (ImageVO) imageMapper.mapAssetToVO(assetBean);
-				publicationsVO.setImage(imageVO.getTeaserImage());
+			if (publicationsVO.getAssetId() != null) {
+				AssetBean assetBean = AssetUtil.getAssetDetail(publicationsSearchCommand.getSite(), "Content_C", publicationsVO.getAssetId(), publicationsSearchCommand.getTicketId());
+				
+				for (Attribute attribute : assetBean.getAttributes()) {
+					if (attribute.getName().equals("SelectFile") && attribute.getData().getBlobValue() != null) {
+						publicationsVO.setFile(AssetUtil.getBolbURL(attribute.getData().getBlobValue().getHref(), "application%2Fpdf"));
+					}
+				}
+				
 				// publicationsVO.setImage("/cs/Satellite?blobkey=id&blobwhere="
 				// + publicationsVO.getImage() + "&blobheader=" + "image%2Fjpeg"
 				// + "&blobcol=urldata&blobtable=MungoBlobs");
@@ -83,7 +87,6 @@ public class PublicationsService implements BaseService<PublicationsVO, Publicat
 				// + publicationsVO.getTeaserImage() + "&blobheader=" +
 				// "image%2Fjpeg" + "&blobcol=urldata&blobtable=MungoBlobs");
 			}
-			publicationsVO.setUrl(UrlTransliterationUtil.getTransliteratedString(publicationsVO.getName()));
 		}
 
 		int startRecord = publicationsSearchCommand.getStartRow();
@@ -172,7 +175,7 @@ public class PublicationsService implements BaseService<PublicationsVO, Publicat
 		PublicationsVO publicationsVO = null;
 		try {
 			NavigationVO navigation = contentReferneceDAO.findByPrimaryKey(navigationVO);
-			AssetBean assetBean = AssetUtil.getAssetDetail("egd", "Content_C", navigation.getAssetId(), navigationVO.getTicketId());
+			AssetBean assetBean = AssetUtil.getAssetDetail(navigationVO.getSite(), "Content_C", navigation.getAssetId(), navigationVO.getTicketId());
 			publicationsVO = getAssetDetail(assetBean);
 		} catch (UAQException e) {
 			// TODO Auto-generated catch block
@@ -198,30 +201,11 @@ public class PublicationsService implements BaseService<PublicationsVO, Publicat
 				publicationsVO.setTeaserTitle(attribute.getData().getStringValue());
 			}
 
-			else if (attribute.getName().equalsIgnoreCase("Image") && attribute.getData() != null) {
-				publicationsVO.setImage(AssetUtil.getBolbURL(attribute.getData().getBlobValue().getHref(), "image%2Fjpeg"));
+			else if (attribute.getName().equals("SelectFile") && attribute.getData().getBlobValue() != null) {
+				publicationsVO.setFile(AssetUtil.getBolbURL(attribute.getData().getBlobValue().getHref(), "application%2Fpdf"));
 			}
 
-			else if (attribute.getName().equalsIgnoreCase("TeaserImage") && attribute.getData() != null && attribute.getData().getBlobValue() != null) {
-				publicationsVO.setTeaserImage(AssetUtil.getBolbURL(attribute.getData().getBlobValue().getHref(), "image%2Fjpeg"));
-			}
-
-			else if (attribute.getName().equalsIgnoreCase("Body") && attribute.getData() != null) {
-				publicationsVO.setBody(attribute.getData().getStringValue());
-			}
-
-			else if (attribute.getName().equalsIgnoreCase("TeaserText") && attribute.getData() != null) {
-				publicationsVO.setTeaserText(attribute.getData().getStringValue());
-			}
-
-			else if (attribute.getName().equalsIgnoreCase("PostedDate") && attribute.getData() != null) {
-				Date date = new Date(attribute.getData().getDateValue().getTime());
-				publicationsVO.setDate(sdfout.format(date));
-			}
-
-			else if (attribute.getName().equalsIgnoreCase("Author") && attribute.getData() != null) {
-				publicationsVO.setAuthor(attribute.getData().getStringValue());
-			}
+			
 
 		}
 		return publicationsVO;

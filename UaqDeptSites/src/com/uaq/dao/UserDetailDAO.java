@@ -104,5 +104,71 @@ public class UserDetailDAO {
 		return vo;
 
 	}
+	
+	public AccountDetailTokenOutputVO getUserdetailByUsername(String username) {
+		logger.enter("getUserdetail");
+		AccountDetailTokenOutputVO vo = null;
+		String SQL = "SELECT UD.USER_NAME username, AD.ID accountId, AD.EMAIL_ADDRESS emailid, UD.lANGUAGE_ID languageid, UD.LOGINUSERNAME loginusername," +
+				"AD.EMIRATES_ID emirateId , AD.TYPE_OF_USER typeofuserid, AD.ADDRESSLINE1 address1, AD.EMIRATES_CODE emirateCode, AD.FIRST_NAME firstname," +
+				"AD.APPLICANTTYPEID applicantid,UD.MOBILE_NO mobileno,AD.PASSPORT_NO passportno,AD.NATIONALITY_ID nationalityid," +
+				"AD.POSTBOX postbox,AD.TRADE_LIENCE_NO tradeLicenno" +
+				" FROM USER_DETAILS UD JOIN ACCOUNT_DETAILS AD   ON AD.ID = UD.ACCOUNT_ID WHERE UD.USER_NAME = ? ";
+
+		logger.debug("query-" + SQL);
+
+		PreparedStatement ps = null;
+		try {
+			con = getConnection();
+			ps = con.prepareStatement(SQL);
+			ps.setString(1, username);
+
+			ResultSet resultset = ps.executeQuery();
+
+			while (resultset.next()) {
+				vo = new AccountDetailTokenOutputVO();
+				vo.setUserName(resultset.getString("username"));
+				vo.setAccountId(resultset.getString("accountId"));
+				vo.setEmailAddress(resultset.getString("emailid"));
+				vo.setLanguageId(resultset.getString("languageid"));
+				vo.setLoginusername(resultset.getString("loginusername"));
+				vo.setApplicanttypeid(resultset.getString("applicantid"));
+				vo.setMobileNo(resultset.getString("mobileno"));
+				vo.setPassportNo(resultset.getString("passportno"));
+				vo.setNationalityId(resultset.getString("nationalityid")==null?"":resultset.getString("nationalityid"));
+				vo.setPostbox(resultset.getString("postbox"));
+				vo.setTradeLienceNo(resultset.getString("tradeLicenno"));
+				vo.setTypeOfUser(resultset.getString("typeofuserid"));
+				vo.setEmiratesCode(resultset.getString("emirateCode")==null?"":resultset.getString("emirateCode"));
+				vo.setEmiratesId(resultset.getString("emirateId")==null?"":resultset.getString("emirateId"));
+				vo.setTradeLienceNo(resultset.getString("tradeLicenno")==null?"":resultset.getString("tradeLicenno"));
+				vo.setFirstName(resultset.getString("firstname"));
+			}
+
+		} catch (ClassNotFoundException e) {
+			logger.error(e.getMessage());
+		} catch (SQLException e) {
+			logger.error(e.getMessage());
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		logger.exit("getUserdetail");
+		return vo;
+
+	}
 
 }

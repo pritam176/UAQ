@@ -114,10 +114,11 @@ public class LostDocumentServiceHandler extends ServiceHandler {
 				inputParams.put("requestNumber", requestData.getRequestNumber());
 				inputParams.put("requestId", requestData.getRequestId());
 				inputParams.put("stepAction", "SUBMITTED");
-				inputParams.put("stepName", null);
+				inputParams.put("stepName", "BEFORE_APP_FEES");
 				inputParams.put("applicantId", accountDetails.getId());
 				inputParams.put("applicantName", accountDetails.getFirstName());
 				inputParams.put("amount", params.get("feeAmount"));
+				inputParams.put("status", "1");
 				WebServiceInvoker.sendSmsAndEMail(inputParams);
 			}
 			for (AttachmentInfo attachmentInfo : attachmentInfos) {
@@ -129,6 +130,28 @@ public class LostDocumentServiceHandler extends ServiceHandler {
 			if (phase.equals("Resubmit") || phase.equals("Step1")) {
 				inputParams.put("phase", phase);
 				resubmitService(inputParams);
+				if(phase.equals("Resubmit")){
+					inputParams.put("requestNumber", requestData.getRequestNumber());
+					inputParams.put("requestId", requestData.getRequestId());
+					inputParams.put("stepAction", "Submit AD");
+					inputParams.put("stepName", "RESUBMITED");
+					inputParams.put("applicantId", accountDetails.getId());
+					inputParams.put("applicantName", accountDetails.getFirstName());
+					inputParams.put("amount", params.get("feeAmount"));
+					inputParams.put("status", "15");
+					WebServiceInvoker.sendSmsAndEMail(inputParams);
+				}
+				else{
+					inputParams.put("requestNumber", requestData.getRequestNumber());
+					inputParams.put("requestId", requestData.getRequestId());
+					inputParams.put("stepAction", "RESUBMITTED");
+					inputParams.put("stepName", "RESUBMITED_AD");
+					inputParams.put("applicantId", accountDetails.getId());
+					inputParams.put("applicantName", accountDetails.getFirstName());
+					inputParams.put("amount", params.get("feeAmount"));
+					inputParams.put("status", "45");
+					WebServiceInvoker.sendSmsAndEMail(inputParams);
+				}
 			}
 			return requestData.getRequestNumber();
 		} catch (Exception e) {

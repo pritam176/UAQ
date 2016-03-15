@@ -10,6 +10,7 @@ import static com.uaq.common.TilesViewConstant.PORTAL_LOGIN_AGAIN;
 import static com.uaq.common.UAQURLConstant.MY_REQUEST_URL;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
@@ -31,6 +33,7 @@ import com.uaq.common.ApplicationConstants;
 import com.uaq.common.PaymentSessionUtil;
 import com.uaq.common.PropertiesUtil;
 import com.uaq.common.ViewPath;
+import com.uaq.dao.DAOManager;
 import com.uaq.exception.UAQException;
 import com.uaq.logger.UAQLogger;
 import com.uaq.payment.PayWebPaymentRequest;
@@ -124,11 +127,14 @@ public class PaymentReviewController extends BaseController {
 				PayWebPaymentRequest webPaymentRequest = null;
 				view = (isMobile == false) ? "payment.review" : "payment.review.mobile";
 				if ((null != purchaseId) && (!purchaseId.isEmpty())) {
+					DAOManager daoManager = new DAOManager();
 					try {
-						purchaseVo = purchaseService.execute(purchaseId);
+						Connection con = daoManager.getConnection();
+						Connection erpCon = daoManager.getERPConnection();
+						purchaseVo = purchaseService.execute(purchaseId,con,erpCon);
 						logger.debug("purchaseVo = " + purchaseVo);
 
-						PaymentServiceCode feeDetail = purchaseService.getFeeDetail(feeId);
+						PaymentServiceCode feeDetail = purchaseService.getFeeDetail(feeId,con);
 						
 						String calculateAmountFromService = sessionRequestDetail.getAmount();
 						
@@ -140,14 +146,14 @@ public class PaymentReviewController extends BaseController {
 							
 						}
 
-						PaymentServiceCode paymentServiceCode = purchaseService.getPaymentServiceCode(feeDetail.getServiceId());
+						PaymentServiceCode paymentServiceCode = purchaseService.getPaymentServiceCode(feeDetail.getServiceId(),con);
 						// only for testing. comment out on production. it leaks
 						// secret information to file log
 						logger.debug("paymentServiceCode = " + paymentServiceCode);
 						logger.debug("merchant account = " + paymentServiceCode.getMerchantAccount());
 
 						if (purchaseVo == null) {
-							Map<String, String> resultMap = savePurchase(paymentServiceCode, sessionRequestDetail,feeDetail);
+							Map<String, String> resultMap = savePurchase(paymentServiceCode, sessionRequestDetail,feeDetail,con);
 
 							logger.debug("saveServiceCodes result  = " + resultMap.toString());
 
@@ -202,30 +208,30 @@ public class PaymentReviewController extends BaseController {
 							service.setPrice(amount.toString());
 							
 							//Get Sequence Name for Service
-							String sequnceName = PropertiesUtil.getProperty("SEQ_"+serviceId);
-							
-							if(StringUtil.isEmpty(sequnceName)){
-								status = PAYMENT_STATUS_FAILURE;
-								logger.error("Null Sequence Name");
-								throw new Exception();
-							}
-							
-							String ENV_ID = PropertiesUtil.getProperty("ENV_ID");
-							
-							if(StringUtil.isEmpty(ENV_ID)){
-								status = PAYMENT_STATUS_FAILURE;
-								logger.error("Null tran id");
-								throw new Exception();
-							}
-							
-							
-							//Get Department  Name For Service
-							String departMent = "E"+ENV_ID+feeDetail.getDepartmentId();
-							
-							
-							String transactionId =departMent+"0000";
+//							String sequnceName = PropertiesUtil.getProperty("SEQ_"+serviceId);
+//							
+//							if(StringUtil.isEmpty(sequnceName)){
+//								status = PAYMENT_STATUS_FAILURE;
+//								logger.error("Null Sequence Name");
+//								throw new Exception();
+//							}
+//							
+//							String ENV_ID = PropertiesUtil.getProperty("ENV_ID");
+//							
+//							if(StringUtil.isEmpty(ENV_ID)){
+//								status = PAYMENT_STATUS_FAILURE;
+//								logger.error("Null tran id");
+//								throw new Exception();
+//							}
+//							
+//							
+//							//Get Department  Name For Service
+//							String departMent = "E"+ENV_ID+feeDetail.getDepartmentId();
+//							
+//							
+//							String transactionId =departMent+"0000";
 									
-							String sequenceID	=	paymentSequenceService.getSequnceNextValue(sequnceName);
+							String sequenceID	=	paymentSequenceService.getSequnceNextValue("TRANSACTION_ID_SEQ",con);
 							
 							if(StringUtil.isEmpty(sequenceID)){
 								logger.error("sequenceID is Null Null");
@@ -233,7 +239,7 @@ public class PaymentReviewController extends BaseController {
 								throw new Exception();
 							}
 							
-							transactionId +=sequenceID;
+							String transactionId = StringUtils.leftPad(sequenceID, 16, '0'); ;
 							
 
 							webPaymentRequest = PaymentUtil.fillWebPaymentRequest(service, description, request.getSession().getId(), purchaseId, languageCode, paymentType,
@@ -241,10 +247,10 @@ public class PaymentReviewController extends BaseController {
 
 							logger.debug(webPaymentRequest.toString());
 
-							result = purchaseService.savePaywebRequestTransaction(webPaymentRequest);
+							result = purchaseService.savePaywebRequestTransaction(webPaymentRequest,con);
 							logger.debug("savePaywebRequestTransaction result : " + result);
 
-							result = purchaseService.purchasePaymentInProgress(purchaseId, true);
+							result = purchaseService.purchasePaymentInProgress(purchaseId, true,con);
 							logger.debug("purchasePaymentInProgress result : " + result);
 
 							// model.addAttribute("generalFee",
@@ -252,9 +258,16 @@ public class PaymentReviewController extends BaseController {
 							model.addAttribute("serviceFee", feeDetail.getServiceFee());
 							model.addAttribute("totalAmount", amount);
 						}
+						daoManager.commit();
+						daoManager.erpCommit();
 					} catch (Exception e) {
+						daoManager.rollback();
+						daoManager.erpRollback();
 						logger.error(e.getMessage());
 						message = messageSource.getMessage("purchase.payment.trans.fail", null, locale);
+					}finally{
+						daoManager.closeConnection();
+						daoManager.closeERPConnection();
 					}
 				} else {
 					message = messageSource.getMessage("purchase.id.not.found", null, locale);
@@ -289,7 +302,7 @@ public class PaymentReviewController extends BaseController {
 		return view;
 	}
 
-	private Map<String, String> savePurchase(PaymentServiceCode paymentServiceCode, SessionRequestDetail sessionRequestDetail,PaymentServiceCode feeDetail) throws UnsupportedEncodingException, UAQException, SQLException {
+	private Map<String, String> savePurchase(PaymentServiceCode paymentServiceCode, SessionRequestDetail sessionRequestDetail,PaymentServiceCode feeDetail, Connection con) throws UnsupportedEncodingException, UAQException, SQLException {
 		logger.enter("savePurchase()");
 
 		String purchaseId = sessionRequestDetail.getPurchaseId();
@@ -297,6 +310,7 @@ public class PaymentReviewController extends BaseController {
 		// no need to save userType
 		String customerId = sessionRequestDetail.getCustomerId();
 		String customerName = sessionRequestDetail.getCustomerName();
+		String requestId = sessionRequestDetail.getRequestNo().split("-")[3];
 
 		boolean result = false;
 
@@ -314,7 +328,7 @@ public class PaymentReviewController extends BaseController {
 			// Double amount = feeDetail.getServiceFee() +
 			// purchaseService.getGeneralFee();
 			Double amount = feeDetail.getServiceFee();
-
+			purchaseVo.setRequestId(Long.parseLong(requestId));
 			purchaseVo.setPurchaseId(purchaseId);
 			purchaseVo.setPurchaseStatus(PURCHASE_STATUS_APPROVED);
 			purchaseVo.setFeeId(feeId);
@@ -334,7 +348,7 @@ public class PaymentReviewController extends BaseController {
 			purchaseServiceCodes.add(service);
 			purchaseVo.setPurchaseServiceCodes(purchaseServiceCodes);
 
-			result = purchaseService.savePurchaseTransaction(purchaseVo);
+			result = purchaseService.savePurchaseTransaction(purchaseVo,con);
 			if (result) {
 				resultMap.put("status", PAYMENT_STATUS_SUCCESS);
 				resultMap.put("message", messageSource.getMessage("purchase.approve.success", null, new Locale(languageCode)));
@@ -345,4 +359,5 @@ public class PaymentReviewController extends BaseController {
 
 		return resultMap;
 	}
+	
 }

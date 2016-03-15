@@ -17,6 +17,7 @@ import uaq.db.si.model.common.ApplicantRequestViewSDO;
 import uaq.db.si.model.common.AreaLookupsViewSDO;
 import uaq.db.si.model.common.EmirateLookupsViewSDO;
 import uaq.db.si.model.common.GrantLandReqViewSDO;
+import uaq.db.si.model.common.LandusageLookupsViewSDO;
 import uaq.db.si.model.common.LpLandCategoryViewSDO;
 import uaq.db.si.model.common.LpLandStatusLookupViewSDO;
 import uaq.db.si.model.common.LpLandTypeLookupViewSDO;
@@ -785,6 +786,38 @@ public class LPServiceLookUp {
 		lookupStatusReturnMap.put("en", lookupStatus_EN);
 		return lookupStatusReturnMap;
 	}
+	public Map<String, Map<String, String>> getHeirLandCatergoryListAR_EN() throws UAQException {
+		List<FilterCondition> conditions = new ArrayList<FilterCondition>();
+		conditions.add(new FilterCondition("UserPositionId", "=", "2"));
+		FindCriteria findCriteria = createFilterCriteria(conditions, null);
+		FindControl findControl = getFindControl();
+
+		service = new AppModuleService_Service();
+		stub = service.getAppModuleServiceSoapHttpPort();
+
+		List<LpLandCategoryViewSDO> lookupStatusList;
+		try {
+			lookupStatusList = stub.findLpLandCategoryView1(findCriteria, findControl);
+		} catch (Exception e) {
+			throw new UAQException("findLpLandCategoryView1 Service Execution Failed");
+		}
+
+		Map<String, Map<String, String>> lookupStatusReturnMap = new HashMap<String, Map<String, String>>();
+
+		Map<String, String> lookupStatus_EN = new HashMap<String, String>();
+		Map<String, String> lookupStatus_AR = new HashMap<String, String>();
+		if (lookupStatusList != null) {
+			for (int i = 0; i < lookupStatusList.size(); i++) {
+				LpLandCategoryViewSDO landStatus = lookupStatusList.get(i);
+				lookupStatus_EN.put(landStatus.getLandCategoryId().toString(), landStatus.getLandCategoryNameEn().getValue());
+				lookupStatus_AR.put(landStatus.getLandCategoryId().toString(), landStatus.getLandCategoryNameAr().getValue());
+			}
+		}
+
+		lookupStatusReturnMap.put("ar", lookupStatus_AR);
+		lookupStatusReturnMap.put("en", lookupStatus_EN);
+		return lookupStatusReturnMap;
+	}
 
 	public Map<String, Map<String, String>> getLostDocumentTypeListAR_EN() throws UAQException {
 		// TODO condition if needed
@@ -865,6 +898,66 @@ public class LPServiceLookUp {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public Map<String, String> getRejectedGrantLandRequestMap(String accountId) throws UAQException {
+		List<FilterCondition> conditions = new ArrayList<FilterCondition>();
+		conditions.add(new FilterCondition("OwnerId", "=", accountId));
+		conditions.add(new FilterCondition("Statusid", "=", "6"));
+		FindCriteria criteria = createFilterCriteria(conditions, null);
+		FindControl findControl = getFindControl();
+
+		List<GrantLandReqViewSDO> rejGrantLandReqList = null;
+		try {
+			service = new AppModuleService_Service();
+			stub = service.getAppModuleServiceSoapHttpPort();
+			rejGrantLandReqList = stub.findGrantLandReqView1(criteria, findControl);
+		} catch (Exception e) {
+			throw new UAQException("findGrantLandReqView1 Service Execution Failed");
+		}
+
+		Map<String, String> rejGrantLandReturnMap = new HashMap<String, String>();		
+		if (rejGrantLandReqList != null) {
+			for (int i = 0; i < rejGrantLandReqList.size(); i++) {
+				GrantLandReqViewSDO grantLand = rejGrantLandReqList.get(i);
+				rejGrantLandReturnMap.put(grantLand.getRequestNo().getValue(), grantLand.getRequestNo().getValue());
+			}
+		}
+
+		return rejGrantLandReturnMap;
+	}
+	
+	public Map<String, Map<String, String>> getLandUsageListAR_EN() throws UAQException {
+		List<FilterCondition> conditions = new ArrayList<FilterCondition>();
+		conditions.add(new FilterCondition("IsActive", "=", "1"));
+		conditions.add(new FilterCondition("IsDeleted", "<>", "1"));
+		FindCriteria findCriteria = createFilterCriteria(conditions, "LandusageEn");
+		FindControl findControl = getFindControl();
+
+		service = new AppModuleService_Service();
+		stub = service.getAppModuleServiceSoapHttpPort();
+
+		List<LandusageLookupsViewSDO> landUsageList;
+		try {
+			landUsageList = stub.findLandusageLookupsView1(findCriteria, findControl);
+		} catch (uaq.db.si.model.common.ServiceException e) {
+			throw new UAQException("findLandusageLookupsView1 Service Execution Failed");
+		}
+
+		Map<String, Map<String, String>> landUsageReturnMap = new HashMap<String, Map<String, String>>();
+		Map<String, String> landUsage_EN = new HashMap<String, String>();
+		Map<String, String> landUsage_AR = new HashMap<String, String>();
+		if (landUsageList != null) {
+			for (int i = 0; i < landUsageList.size(); i++) {
+				LandusageLookupsViewSDO landUsage = landUsageList.get(i);
+				landUsage_EN.put(landUsage.getLandusageId().toString(), landUsage.getLandusageEn().getValue());
+				landUsage_AR.put(landUsage.getLandusageId().toString(), landUsage.getLandusageAr().getValue());
+			}
+		}
+
+		landUsageReturnMap.put("ar", landUsage_AR);
+		landUsageReturnMap.put("en", landUsage_EN);
+		return landUsageReturnMap;
 	}
 
 }

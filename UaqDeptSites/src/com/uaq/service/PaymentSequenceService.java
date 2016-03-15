@@ -1,5 +1,8 @@
 package com.uaq.service;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import org.springframework.stereotype.Service;
 
 import com.uaq.dao.PaymentSequenceDAO;
@@ -13,9 +16,9 @@ public class PaymentSequenceService {
 	
 	public  PaymentSequenceDAO paymentSequenceDAO =new PaymentSequenceDAO();
 	
-	public String getSequnceNextValue(String sequenceName){
+	public String getSequnceNextValue(String sequenceName,Connection con) throws SQLException{
 		logger.debug("sequenceName-"+sequenceName);
-		return paymentSequenceDAO.getSequenceByDepartment(sequenceName);
+		return paymentSequenceDAO.getSequenceByDepartment(sequenceName,con);
 	}
 
 }

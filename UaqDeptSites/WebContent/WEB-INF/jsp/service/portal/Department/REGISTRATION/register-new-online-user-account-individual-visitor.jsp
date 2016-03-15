@@ -51,6 +51,12 @@
 					<c:set var ="validemailMsg"><spring:message code="validemail"/></c:set>
 					<c:set var ="confirmemailmsg"><spring:message code="confirm.email.failure"/></c:set>
 					<c:set var ="acceptMessgaelabel"><spring:message code="acceptMessgae"/></c:set>
+					
+					<c:set var ="usernamemax"><spring:message code="username.max"/></c:set>
+					<c:set var ="usernamemin"><spring:message code="username.min"/></c:set>
+					
+					<c:set var ="alphmsg"><spring:message code="alph.msg"/></c:set>
+					<c:set var ="passwordformatmsg"><spring:message code="password.format"/></c:set>
 				
 					<div class="row">
 						<!-- left col -->
@@ -231,7 +237,8 @@
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
-																<form:input path="address" id="address" name="address" type="text" class="form-control" required="required" data-msg-required="addressReq" maxlength="100"/>
+																<form:input path="address" id="address" name="address" type="text" class="form-control " required="required" data-msg-required="${addressReq}" maxlength="100"
+																/>
 			                                                </div>
 		                                            	</div>
 													
@@ -267,7 +274,7 @@
 				                                            </div>
 				                                            <div class="col-md-7">
 																
-																<form:input type="email" path="emailconfirm" id="emailconfirm" name="emailconfirm" class="form-control"   data-msg-required="${emailMsg}" data-msg-email="${validemailMsg}" equalto="#email" data-msg-equalto="${confirmemailmsg}" />
+																<form:input type="email" path="emailconfirm" id="emailconfirm" name="emailconfirm" class="form-control confirm-email"   data-msg-required="${emailMsg}" data-msg-email="${validemailMsg}" equalto="#email" data-msg-equalto="${confirmemailmsg}" />
 			                                                </div>
 		                                            	</div>
 													
@@ -291,7 +298,12 @@
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7"> 
-			                                                    <form:input path="userName" id="username" name="username" type="text" class="form-control" required="required" data-msg-required="${userName}"/>
+			                                                    <form:input path="userName" id="username" name="username" type="text" class="form-control  required" required="required" data-msg-required="${userName}"
+			                                                    data-rule-alphacheck="true" data-msg-alphacheck="${alphmsg}"
+			                                                    data-rule-maxlength="15"
+																data-rule-minlength="4" 
+																data-msg-maxlength="${usernamemax}" 
+																data-msg-minlength="${usernamemin}"/>
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -313,7 +325,8 @@
 																data-rule-maxlength="15" 
 																data-rule-minlength="8" 
 																data-msg-maxlength="${passwordMax}" 
-																data-msg-minlength="${passwordMin}" maxlength="15"/>
+																data-msg-minlength="${passwordMin}" 
+																data-rule-passwdweak="true" data-msg-passwdweak="${passwordformatmsg}"/>
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -485,7 +498,7 @@
 																<!-- text box -->
 																<div class="form-group cf">
 																	<div class="col-md-5">
-																		<label for="termsandcondition" class="form-lbl "><spring:message code="acceptTerans"/></label>
+																		<label for="termsandcondition" class="form-lbl mandatory_lbl"><spring:message code="acceptTerans"/></label>
 																	</div>
 																	<div class="col-md-7">
 																		
@@ -569,6 +582,19 @@
 	    <script>
 				
 			jQuery(function($) { 
+				
+				$.validator.addMethod("alphacheck", function(value, element) {
+					return this.optional(element) || /^([a-zA-Z0-9._])+$/i.test(value);
+				});
+				
+				 $.validator.addMethod("passwdweak", function(value, element) {
+						if(/^[a-z0-9\-\s]+$/i.test(value)){
+							return false;	
+						}else{
+							
+							return true;
+						}
+					});
 
 			$("#feedbak").validate({ignore: []});
 			

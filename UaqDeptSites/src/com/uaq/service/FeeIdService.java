@@ -21,6 +21,7 @@ import static com.uaq.common.ServiceNameConstant.NEW_REAL_ESTATE;
 import static com.uaq.common.ServiceNameConstant.NEW_SUPPLIER_REGISTRATION;
 import static com.uaq.common.ServiceNameConstant.RENEW_PRO_REQUEST;
 import static com.uaq.common.ServiceNameConstant.RENEW_REAL_ESTATE;
+import static com.uaq.common.ServiceNameConstant.GRANT_LAND_EXCEPTION_REQUEST;
 import static com.uaq.common.ServiceNameConstant.RENEW_SUPPLIER_REGISTRATION;
 import static com.uaq.common.StatusNameConstant.PROCEED_TO_APPLICATION_FEE_PAYMENT;
 import static com.uaq.common.StatusNameConstant.PROCEED_TO_SERVICE_FEE_PAYMENT;
@@ -29,6 +30,7 @@ import static com.uaq.common.WebServiceConstant.SOAP_LANDTYPE_ARGUMENT;
 import static com.uaq.common.WebServiceConstant.SOAP_REQUESTNO_ARGUMENT;
 import static com.uaq.common.WebServiceConstant.SOAP_SERVICEID_ARGUMENT;
 import static com.uaq.common.WebServiceConstant.SOAP_USERTYPE_ARGUMENT;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -255,39 +257,43 @@ public class FeeIdService {
 			break;
 		case ISSUE_NEW_PRO_REQUEST:
 			searchCriteriaMap = new HashMap<String, String>();
+			String procardTypeofUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
 			String procardrequestStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-			String procardpropertyFileKey = serviceId + UNDERSCORE + procardrequestStatus;
+			String procardpropertyFileKey = serviceId + UNDERSCORE + procardrequestStatus+ UNDERSCORE + procardTypeofUser;
 			String procardSerachCrieteria = PropertiesUtil.getProperty(procardpropertyFileKey);
 			keywords = procardSerachCrieteria.split(COMMA);
 			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, ISSUE_NEW_PRO_REQUEST);
 			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
-			// searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
+			 searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
 			break;
 
 		case RENEW_PRO_REQUEST:
 			searchCriteriaMap = new HashMap<String, String>();
+			String renewprocardTypeofUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
 			String renewprocardrequestStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-			String renewprocardFileKey = serviceId + UNDERSCORE + renewprocardrequestStatus;
+			String renewprocardFileKey = serviceId + UNDERSCORE + renewprocardrequestStatus+ UNDERSCORE + renewprocardTypeofUser;
 			String renewprocardFileCrieteria = PropertiesUtil.getProperty(renewprocardFileKey);
 			keywords = renewprocardFileCrieteria.split(COMMA);
 			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, RENEW_PRO_REQUEST);
 			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
-			// searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
+			 searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
 			break;
 		case LAND_PROPERTY_VALUTION_REQUEST:
 			searchCriteriaMap = new HashMap<String, String>();
 			String landPropertyStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
+			String landPropertyTypeofUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
 			// Get The OwnerType
 			
 			
 			String landPropertyFileKey = "";
 			String landPropertyFileCrieteria = "";
 			if (PROCEED_TO_APPLICATION_FEE_PAYMENT.equals(landPropertyStatus)) {
-				landPropertyFileKey = serviceId + UNDERSCORE + landPropertyStatus;
+				landPropertyFileKey = serviceId + UNDERSCORE + landPropertyStatus+ UNDERSCORE + landPropertyTypeofUser;
 				landPropertyFileCrieteria = PropertiesUtil.getProperty(landPropertyFileKey);
 				keywords = landPropertyFileCrieteria.split(COMMA);
 				searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, LAND_PROPERTY_VALUTION_REQUEST);
 				searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
+				searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
 			} else if (PROCEED_TO_SERVICE_FEE_PAYMENT.equals(landPropertyStatus)) {
 				LpValuationViewSDO lpValuation = lPServiceLookUp.getLPValudationRequestByRequestNumber(queryParamsMap.get(REQUEST_PARAM_REQUEST_NO));
 				String ownerType = String.valueOf(lpValuation.getLandCategory().getValue());
@@ -320,26 +326,35 @@ public class FeeIdService {
 		case NEW_REAL_ESTATE:
 			searchCriteriaMap = new HashMap<String, String>();
 			String realStateStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-			String realStatePropertyFileKey = serviceId + UNDERSCORE + realStateStatus;
+			String realStateTypeofUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
+			String realStatePropertyFileKey = serviceId + UNDERSCORE + realStateStatus+ UNDERSCORE + realStateTypeofUser;
 			String realStateCritera = PropertiesUtil.getProperty(realStatePropertyFileKey);
+			keywords = realStateCritera.split(COMMA);
 			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, NEW_REAL_ESTATE);
-			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, realStateCritera);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
+			searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
 			break;
 		case RENEW_REAL_ESTATE:
 			searchCriteriaMap = new HashMap<String, String>();
 			String renewRealStateStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-			String renewRealStatePropertyFileKey = serviceId + UNDERSCORE + renewRealStateStatus;
+			String renewRealStateTypeofUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
+			String renewRealStatePropertyFileKey = serviceId + UNDERSCORE + renewRealStateStatus+ UNDERSCORE + renewRealStateTypeofUser;
 			String renewRealStateCritera = PropertiesUtil.getProperty(renewRealStatePropertyFileKey);
+			keywords = renewRealStateCritera.split(COMMA);
 			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, RENEW_REAL_ESTATE);
-			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, renewRealStateCritera);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
+			searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
 			break;
 		case LOST_DOCUMENT:
 			searchCriteriaMap = new HashMap<String, String>();
 			String lostDocumentStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-			String lostDocumentPropertyFileKey = serviceId + UNDERSCORE + lostDocumentStatus;
+			String lostDocumentTypeofUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
+			String lostDocumentPropertyFileKey = serviceId + UNDERSCORE + lostDocumentStatus+ UNDERSCORE + lostDocumentTypeofUser;
 			String lostDocumentCritera = PropertiesUtil.getProperty(lostDocumentPropertyFileKey);
+			keywords = lostDocumentCritera.split(COMMA);
 			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, LOST_DOCUMENT);
-			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, lostDocumentCritera);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
+			searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
 			break;
 		case GRANT_LAND_REQUEST:
 			searchCriteriaMap = new HashMap<String, String>();
@@ -349,6 +364,17 @@ public class FeeIdService {
 			String grantLandSerachCrieteria = PropertiesUtil.getProperty(grantLandrequestpropertyFileKey);
 			keywords = grantLandSerachCrieteria.split(COMMA);
 			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, GRANT_LAND_REQUEST);
+			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
+			searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
+			break;
+		case GRANT_LAND_EXCEPTION_REQUEST:
+			searchCriteriaMap = new HashMap<String, String>();
+			String grantLandExceptionTypeofUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
+			String grantLandExceptionrequestSTatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
+			String grantLandExceptionrequestpropertyFileKey = serviceId + UNDERSCORE + grantLandExceptionrequestSTatus + UNDERSCORE + grantLandExceptionTypeofUser;
+			String grantLandExceptionSerachCrieteria = PropertiesUtil.getProperty(grantLandExceptionrequestpropertyFileKey);
+			keywords = grantLandExceptionSerachCrieteria.split(COMMA);
+			searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, GRANT_LAND_EXCEPTION_REQUEST);
 			searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
 			searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
 			break;

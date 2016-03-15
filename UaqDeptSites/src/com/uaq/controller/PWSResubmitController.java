@@ -70,17 +70,18 @@ public class PWSResubmitController extends BaseController {
 					AccountDetailTokenOutputVO accountDetailfromToken = portalUtil.getAccountDetailForMobile(logininfo);
 					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
 						UserDeatilVO user = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
-						viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						//viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
 						WasteContainerRequestInputVO wasteContainerRequestInputVO = PWSDataMapper.setcommandToVO(wasteContainerCommand);
 						wasteContainerRequestInputVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
 						// This will over written when success
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
 						viewname = DUPLICATE_REQUEST_MOBILE;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), wasteContainerCommand.getRequestNo(), wasteContainerCommand.getStatus())) {
-							
+							viewname = "service.errorpage.mobile";
 							WasteContainerRequestOutputVO output = pWSResubmitRequestService.reSubmitWasteContainor(user, wasteContainerRequestInputVO, wasteContainerCommand);
 							if (!output.getStatus().equals(SERVICE_FAILED)) {
-								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+								//viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+								viewname = MOBILE_THANKU_VIEW;
 								model.addAttribute("message", (languageCode.equals(LANG_ENGLISH)) ? output.getMessage_EN() : output.getMessage_AR());
 							}
 
@@ -102,7 +103,7 @@ public class PWSResubmitController extends BaseController {
 				if (portalUtil.validateToken(logininfo)) {
 					AccountDetailTokenOutputVO accountDetailfromToken = portalUtil.getAccountDetailForMobile(logininfo);
 					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
-						viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						
 						UserDeatilVO user = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
 						WasteContainerRequestInputVO wasteContainerRequestInputVO = PWSDataMapper.setcommandToVO(wasteContainerCommand);
 						wasteContainerRequestInputVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
@@ -110,7 +111,7 @@ public class PWSResubmitController extends BaseController {
 						model.addAttribute(RESPONCE_KEY, "request.invalid.data");
 						viewname = DUPLICATE_REQUEST;
 						if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), wasteContainerCommand.getRequestNo(), wasteContainerCommand.getStatus())) {
-							
+							viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
 							WasteContainerRequestOutputVO output = pWSResubmitRequestService.reSubmitWasteContainor(user, wasteContainerRequestInputVO, wasteContainerCommand);
 							if (!output.getStatus().equals(SERVICE_FAILED)) {
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;

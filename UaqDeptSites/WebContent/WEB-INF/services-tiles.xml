@@ -553,6 +553,10 @@
 	</definition>
 	
 
+	<definition name="thankyou.egd" extends="serviceBaseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/jsp/service/portal/Department/EGD/thankyou.jsp" />
+	</definition>
 	
 	
 	

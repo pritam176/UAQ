@@ -45,6 +45,19 @@ public class PurchaseVO implements Serializable {
 	private Date createdDate;
 	
 	private Date lastModifiedDate;
+	
+	private long requestId;
+	private String receiptNumber;
+
+	
+
+	public long getRequestId() {
+		return requestId;
+	}
+
+	public void setRequestId(long requestId) {
+		this.requestId = requestId;
+	}
 
 	/**
 	 * @return the purchaseId
@@ -227,6 +240,14 @@ public class PurchaseVO implements Serializable {
 	 */
 	public void setCustomerName(String customerName) {
 		this.customerName = customerName;
+	}
+
+	public String getReceiptNumber() {
+		return receiptNumber;
+	}
+
+	public void setReceiptNumber(String receiptNumber) {
+		this.receiptNumber = receiptNumber;
 	}
 	
 }

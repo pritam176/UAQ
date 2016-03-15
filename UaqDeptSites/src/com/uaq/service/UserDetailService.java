@@ -17,5 +17,10 @@ public class UserDetailService {
 		logger.debug("Account Id-"+accountId);
 		return userDetail.getUserdetail(accountId);
 	}
+	
+	public AccountDetailTokenOutputVO getUserdetailByUsername(String username) {
+		logger.debug("Username -"+username);
+		return userDetail.getUserdetailByUsername(username);
+	}
 
 }
