@@ -37,6 +37,10 @@ public class StatusNameConstant {
 	
 	public static final String LAND_ASSIGNED = "38";
 	
+	public static final String AFTER_APPLICANT_PAYMENT = "29";
+	
+	public static final String AFTER_SERVICE_PAYMENT = "30";
+	
 	public static final int REJECT = 6;
 
 	public static final int RESUBMIT = 5;

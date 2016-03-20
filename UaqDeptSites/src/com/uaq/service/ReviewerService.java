@@ -103,9 +103,9 @@ public class ReviewerService {
 				addLandRequest.setTransactionId(paymentTransactionDetailVO.getTransactionId());
 				addLandRequest.setTransationStatus(paymentTransactionDetailVO.getTransactionStatus());
 				addLandRequest.setTransationAmount(paymentTransactionDetailVO.getTransactionAmount());
-				if (status.equals(PROCEED_TO_REVEWER)) {
+				if (status.equals(AFTER_APPLICANT_PAYMENT)) {
 					landOutputVO = pSReSubmissionRequestService.reSubmitAddLand(user, addLandRequest);
-				} else if (status.equals(TO_ISSUE_SITE_PLAN_INICEATE)) {
+				} else if (status.equals(AFTER_SERVICE_PAYMENT)) {
 					landOutputVO = pSAfterServicePayment.servicePaymentAddlandRequest(user, addLandRequest);
 				}
 			} else {
@@ -202,7 +202,7 @@ public class ReviewerService {
 			params.put("requestNumber", requestNo);
 			params.put("serviceId", "" + ISSUE_NEW_PRO_REQUEST);
 
-			if (status.equals(PROCEED_TO_REVEWER)) {
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
 				notificationParams.put("stepAction", "Applicant Fee Paymant");
 				notificationParams.put("stepName", "AFTER_APP_FEES");
 				notificationParams.put("status", "29");
@@ -212,7 +212,7 @@ public class ReviewerService {
 				landOutputVO.setStatus_EN(message);
 				landOutputVO.setStatus_AR(message);
 			}
-			if (status.equals(PROCEED_TO_OPERATOR)) {
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
 				notificationParams.put("stepAction", "Service Fee Paymant");
 				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
 				notificationParams.put("status", "30");
@@ -236,7 +236,7 @@ public class ReviewerService {
 			params.put("requestNumber", requestNo);
 			params.put("serviceId", "" + ISSUE_NEW_PRO_REQUEST);
 
-			if (status.equals(PROCEED_TO_REVEWER)) {
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
 				notificationParams.put("stepAction", "Applicant Fee Paymant");
 				notificationParams.put("stepName", "AFTER_APP_FEES");
 				notificationParams.put("status", "29");
@@ -246,7 +246,7 @@ public class ReviewerService {
 				landOutputVO.setStatus_EN(message);
 				landOutputVO.setStatus_AR(message);
 			}
-			if (status.equals(PROCEED_TO_OPERATOR)) {
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
 				notificationParams.put("stepAction", "Service Fee Paymant");
 				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
 				notificationParams.put("status", "30");
@@ -270,7 +270,7 @@ public class ReviewerService {
 			params.put("requestNumber", requestNo);
 			params.put("serviceId", "" + LAND_PROPERTY_VALUTION_REQUEST);
 
-			if (status.equals(PROCEED_TO_REVEWER)) {
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
 				notificationParams.put("stepAction", "Applicant Fee Paymant");
 				notificationParams.put("stepName", "AFTER_APP_FEES");
 				notificationParams.put("status", "29");
@@ -280,7 +280,7 @@ public class ReviewerService {
 				landOutputVO.setStatus_EN(message);
 				landOutputVO.setStatus_AR(message);
 			}
-			if (status.equals(PROCEED_TO_OPERATOR)) {
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
 				notificationParams.put("stepAction", "Service Fee Paymant");
 				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
 				notificationParams.put("status", "30");
@@ -302,7 +302,7 @@ public class ReviewerService {
 			params.put("requestNumber", requestNo);
 			params.put("serviceId", "" + NEW_REAL_ESTATE);
 
-			if (status.equals(PROCEED_TO_REVEWER)) {
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
 				notificationParams.put("stepAction", "Applicant Fee Paymant");
 				notificationParams.put("stepName", "AFTER_APP_FEES");
 				notificationParams.put("status", "29");
@@ -312,7 +312,7 @@ public class ReviewerService {
 				landOutputVO.setStatus_EN(message);
 				landOutputVO.setStatus_AR(message);
 			}
-			if (status.equals(PROCEED_TO_OPERATOR)) {
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
 				notificationParams.put("stepAction", "Service Fee Paymant");
 				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
 				notificationParams.put("status", "30");
@@ -335,7 +335,7 @@ public class ReviewerService {
 			params.put("requestNumber", requestNo);
 			params.put("serviceId", "" + RENEW_REAL_ESTATE);
 
-			if (status.equals(PROCEED_TO_REVEWER)) {
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
 				notificationParams.put("stepAction", "Applicant Fee Paymant");
 				notificationParams.put("stepName", "AFTER_APP_FEES");
 				notificationParams.put("status", "29");
@@ -345,7 +345,7 @@ public class ReviewerService {
 				landOutputVO.setStatus_EN(message);
 				landOutputVO.setStatus_AR(message);
 			}
-			if (status.equals(PROCEED_TO_OPERATOR)) {
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
 				notificationParams.put("stepAction", "Service Fee Paymant");
 				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
 				notificationParams.put("status", "30");
@@ -367,7 +367,7 @@ public class ReviewerService {
 			params.put("requestNumber", requestNo);
 			params.put("serviceId", "" + GRANT_LAND_REQUEST);
 
-			if (status.equals(PROCEED_TO_REVEWER)) {
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
 				notificationParams.put("stepAction", "Applicant Fee Paymant");
 				notificationParams.put("stepName", "AFTER_APP_FEES");
 				notificationParams.put("status", "29");
@@ -377,7 +377,7 @@ public class ReviewerService {
 				landOutputVO.setStatus_EN(message);
 				landOutputVO.setStatus_AR(message);
 			}
-			if (status.equals(SERVICE_PAYMENT_SUCCESS)) {
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
 				notificationParams.put("stepAction", "Service Fee Paymant");
 				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
 				notificationParams.put("status", "30");
@@ -409,7 +409,7 @@ public class ReviewerService {
 //				landOutputVO.setStatus_EN(message);
 //				landOutputVO.setStatus_AR(message);
 //			}
-			if (status.equals(SERVICE_PAYMENT_SUCCESS)) {
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
 				notificationParams.put("stepAction", "Service Fee Paymant");
 				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
 				notificationParams.put("status", "30");
@@ -431,7 +431,7 @@ public class ReviewerService {
 			params.put("requestNumber", requestNo);
 			params.put("serviceId", "" + LOST_DOCUMENT);
 
-			if (status.equals(PROCEED_TO_REVEWER)) {
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
 				notificationParams.put("stepAction", "Applicant Fee Paymant");
 				notificationParams.put("stepName", "AFTER_APP_FEES");
 				notificationParams.put("status", "29");
@@ -441,7 +441,7 @@ public class ReviewerService {
 				landOutputVO.setStatus_EN(message);
 				landOutputVO.setStatus_AR(message);
 			}
-			if (status.equals(SERVICE_PAYMENT_SUCCESS)) {
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
 				notificationParams.put("stepAction", "Service Fee Paymant");
 				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
 				notificationParams.put("status", "30");

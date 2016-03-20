@@ -35,6 +35,7 @@ import com.uaq.controller.mapper.PortalDataMapper;
 import com.uaq.dao.ServicesDAO;
 import com.uaq.exception.UAQException;
 import com.uaq.logger.UAQLogger;
+import com.uaq.util.StringUtil;
 import com.uaq.vo.FileOutputVO;
 import com.uaq.vo.LandInputVO;
 import com.uaq.vo.LandOutputVO;
@@ -45,12 +46,13 @@ import com.uaq.vo.UserFamilyDetailsVO;
 import static com.uaq.common.ApplicationConstants.*;
 
 /**
- * Service class for Submitting Land Request on WSDL Calling. methods- 1-Add Land Request
- * 2-createLandValuationPropertyRequest 3-extensiongrandland 4-grandlandrequest
- * 5-landDemarcationRequest
+ * Service class for Submitting Land Request on WSDL Calling. methods- 1-Add
+ * Land Request 2-createLandValuationPropertyRequest 3-extensiongrandland
+ * 4-grandlandrequest 5-landDemarcationRequest
  * 
  * Jar Name-PSDepartmentSubmit.jar
- * WSDL-http://94.57.252.234:7001/UAQPSMiddlewareService/PSServiceMiddleLayerPort?WSDL
+ * WSDL-http://94.57.252.234:7001/UAQPSMiddlewareService
+ * /PSServiceMiddleLayerPort?WSDL
  * 
  * @author Pritam
  * 
@@ -63,7 +65,7 @@ public class PSRequestService {
 
 	@Autowired
 	private FileUploadService fileUploadService;
-	
+
 	@Autowired
 	@Qualifier("servicesDAO")
 	private ServicesDAO servicesDAO;
@@ -75,8 +77,6 @@ public class PSRequestService {
 	private PSServiceMiddleLayerService service = null;
 	private PSServiceMiddleLayer port = null;
 	private PSServiceMiddleLayerPortBindingStub stub = null;
-
-	
 
 	public void createStub() {
 		uc = new UserContext();
@@ -94,54 +94,54 @@ public class PSRequestService {
 
 	}
 
-	public Map<String, List<ServicesVO>> getServices(String locale) throws UAQException{
-		
+	public Map<String, List<ServicesVO>> getServices(String locale) throws UAQException {
+
 		Map<String, List<ServicesVO>> serviceMap = new HashMap<String, List<ServicesVO>>();
-		
+
 		ServicesVO servicesVO = null;
-		
+
 		List<ServicesVO> serviceList = servicesDAO.execute(locale);
-		servicesVO = getService("PlanningSurvey", locale,serviceList);
+		servicesVO = getService("PlanningSurvey", locale, serviceList);
 		serviceMap.put(servicesVO.getDepartmentName(), servicesVO.getServices());
-		servicesVO = getService("LandsProperties", locale,serviceList);
+		servicesVO = getService("LandsProperties", locale, serviceList);
 		serviceMap.put(servicesVO.getDepartmentName(), servicesVO.getServices());
-		servicesVO = getService("IndustrialCityAuthority", locale,serviceList);
+		servicesVO = getService("IndustrialCityAuthority", locale, serviceList);
 		serviceMap.put(servicesVO.getDepartmentName(), servicesVO.getServices());
-		servicesVO = getService("EGovernment", locale,serviceList);
+		servicesVO = getService("EGovernment", locale, serviceList);
 		serviceMap.put(servicesVO.getDepartmentName(), servicesVO.getServices());
-		servicesVO = getService("Municipality", locale,serviceList);
+		servicesVO = getService("Municipality", locale, serviceList);
 		serviceMap.put(servicesVO.getDepartmentName(), servicesVO.getServices());
-		servicesVO = getService("EconomicDevelopment", locale,serviceList);
+		servicesVO = getService("EconomicDevelopment", locale, serviceList);
 		serviceMap.put(servicesVO.getDepartmentName(), servicesVO.getServices());
-		servicesVO = getService("FalajMunicipality", locale,serviceList);
+		servicesVO = getService("FalajMunicipality", locale, serviceList);
 		serviceMap.put(servicesVO.getDepartmentName(), servicesVO.getServices());
-		servicesVO = getService("PublicWorksService", locale,serviceList);
+		servicesVO = getService("PublicWorksService", locale, serviceList);
 		serviceMap.put(servicesVO.getDepartmentName(), servicesVO.getServices());
-		
+
 		return serviceMap;
 	}
-	
-	public ServicesVO getService(String site,String locale,List<ServicesVO> serviceList){
-		ServicesVO service =null;
+
+	public ServicesVO getService(String site, String locale, List<ServicesVO> serviceList) {
+		ServicesVO service = null;
 		List<ServicesVO> servicesList = new ArrayList<ServicesVO>();
-		for(ServicesVO servicesVO : serviceList){
-			
-			if(servicesVO.getSite().equals(site)){
+		for (ServicesVO servicesVO : serviceList) {
+
+			if (servicesVO.getSite().equals(site)) {
 				service = new ServicesVO();
-				if(locale.equals(LANG_ENGLISH)){
+				if (locale.equals(LANG_ENGLISH)) {
 					service.setDepartmentName(servicesVO.getDepartmentNameEN());
 				}
-				if(locale.equals(LANG_ARABIC)){
+				if (locale.equals(LANG_ARABIC)) {
 					service.setDepartmentName(servicesVO.getDepartmentNameAR());
 				}
-				
+
 				servicesList.add(servicesVO);
 				service.setServices(servicesList);
 			}
 		}
 		return service;
 	}
-	
+
 	/**
 	 * 
 	 * 
@@ -154,8 +154,8 @@ public class PSRequestService {
 	 * 
 	 * 
 	 * @author Pritam
-	 * @throws ParseException 
-	 * @throws DatatypeConfigurationException 
+	 * @throws ParseException
+	 * @throws DatatypeConfigurationException
 	 * 
 	 */
 
@@ -184,11 +184,10 @@ public class PSRequestService {
 		userDetailsPayload.setAddress3(user.getAddress3());
 		userDetailsPayload.setPOBOX(user.getPOBOX());
 		userDetailsPayload.setDOB(user.getDOB());
-		
-		
-		if(user.getTypeOfUser().equals("1")){
-			userDetailsPayload.setApplicantTypeid(user.getApplicantTypeId());	
-		}else{
+
+		if (user.getTypeOfUser().equals("1")) {
+			userDetailsPayload.setApplicantTypeid(user.getApplicantTypeId());
+		} else {
 			userDetailsPayload.setApplicantTypeid("0");
 		}
 
@@ -233,15 +232,19 @@ public class PSRequestService {
 		input.setSubmittedDate(Calendar.getInstance());
 		input.setFrontDeskSubmitDate(new Date());
 
-		
-		
+		String did = "";
+		String name = "";
+		String ucmUrl = "";
+
 		String filename = landDemacreationVO.getSitePlanDocument();
-		logger.debug("File Name from Controller   |  " + filename);
-		String did = filename.split("-")[0];
-		String name = filename.split("-")[1];
-		logger.debug("File Did=" + name);
-		String ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
-		logger.debug("From WebCenter URL=" + ucmUrl);
+		if (!StringUtil.isEmpty(filename)) {
+			logger.debug("File Name from Controller   |  " + filename);
+			did = filename.split("-")[0];
+			name = filename.split("-")[1];
+			logger.debug("File Did=" + name);
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
+			logger.debug("From WebCenter URL=" + ucmUrl);
+		}
 
 		com.LandDemarcation.AttachmentRecPayload[] attachmentList = new com.LandDemarcation.AttachmentRecPayload[1];
 		attachmentList[0] = new com.LandDemarcation.AttachmentRecPayload();
@@ -317,14 +320,12 @@ public class PSRequestService {
 		userDetails.setAddress3(user.getAddress3());
 		userDetails.setPOBOX(user.getPOBOX());
 		userDetails.setDOB(user.getDOB());
-		
-		if(user.getTypeOfUser().equals("1")){
-			userDetails.setApplicanttypeid(user.getApplicantTypeId());	
-		}else{
+
+		if (user.getTypeOfUser().equals("1")) {
+			userDetails.setApplicanttypeid(user.getApplicantTypeId());
+		} else {
 			userDetails.setApplicanttypeid("0");
 		}
-		
-		
 
 		inputpayload.setUserDetails(userDetails);
 
@@ -341,7 +342,7 @@ public class PSRequestService {
 		// inputpayload.setAddLandReqID(landInputVO.getAddLandReqID());
 		inputpayload.setLanguageId(landInputVO.getLanguageId());
 		inputpayload.setSite_Plan_No(landInputVO.getSite_Plan_No());
-		//inputpayload.setSite_Plan_Date(portalUtil.toCalendar(landInputVO.getSitePlanDate()));
+		// inputpayload.setSite_Plan_Date(portalUtil.toCalendar(landInputVO.getSitePlanDate()));
 		inputpayload.setSite_Plan_Date(null);
 		inputpayload.setSec_Sector_Name(landInputVO.getSecSectorName() == null ? "" : landInputVO.getSecSectorName());
 		inputpayload.setSector_block(landInputVO.getSectorBlock());
@@ -353,7 +354,7 @@ public class PSRequestService {
 		inputpayload.setArea_Sub_Area(landInputVO.getAreaSubArea());
 		inputpayload.setArea_Plot_No(landInputVO.getAreaPlotNo());
 		inputpayload.setLand_Usage(landInputVO.getLandUsage());
-		//inputpayload.setGrant_Issuance_Date(portalUtil.toCalendar(landInputVO.getGrantIssuanceDate()));
+		// inputpayload.setGrant_Issuance_Date(portalUtil.toCalendar(landInputVO.getGrantIssuanceDate()));
 		inputpayload.setGrant_Issuance_Date(null);
 		inputpayload.setAssignedToUserName(landInputVO.getAssignedToUserName());
 		inputpayload.setSurveyor_Report(landInputVO.getSurveyo_Report());
@@ -361,7 +362,7 @@ public class PSRequestService {
 		inputpayload.setOwnerID(landInputVO.getOwnerID());
 		inputpayload.setOwner_Nationality_ID(landInputVO.getOwnerNationalityID());
 		inputpayload.setSurve_Report_DocId(landInputVO.getSurveReportDocId());
-		//inputpayload.setExtendedDate(portalUtil.toCalendar(landInputVO.getExtendedDate()));
+		// inputpayload.setExtendedDate(portalUtil.toCalendar(landInputVO.getExtendedDate()));
 		inputpayload.setExtendedDate(null);
 		inputpayload.setSupportiveAttachmentid(landInputVO.getSupportiveAttachmentid());
 		inputpayload.setSubmittedNOCId(landInputVO.getSubmitedNocID());
@@ -370,9 +371,8 @@ public class PSRequestService {
 		inputpayload.setLandValue(new BigInteger(landInputVO.getLandValue()));
 		inputpayload.setCommiteeRemarks(landInputVO.getCommiteeRemarks());
 		inputpayload.setTrueSitePlanDocId(landInputVO.getTrueSitePlanDocId());
-		
-		
-		PaymentDetailsPayload paymentDetails=new PaymentDetailsPayload();
+
+		PaymentDetailsPayload paymentDetails = new PaymentDetailsPayload();
 		paymentDetails.setApplicationPaymentDiscount("");
 		paymentDetails.setApplicationPaymentFees("");
 		paymentDetails.setApplicationPaymentId("");
@@ -384,22 +384,27 @@ public class PSRequestService {
 		inputpayload.setPaymentDetails(paymentDetails);
 
 		inputpayload.setArea_Name(landInputVO.getAreaName() == null ? "" : landInputVO.getAreaName());
-		
-		String filename = landInputVO.getSitePlanDocument();
-		logger.debug("File Name from Controller   |  " + filename);
-		String did = filename.split("-")[0];
-		String name = filename.split("-")[1];
-		logger.debug("File Did=" + name);
-		String ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
-		logger.debug("From WebCenter URL=" + ucmUrl);
 
+		String did = "";
+		String name = "";
+		String ucmUrl = "";
+
+		String filename = landInputVO.getSitePlanDocument();
+		if (!StringUtil.isEmpty(filename)) {
+			logger.debug("File Name from Controller   |  " + filename);
+			did = filename.split("-")[0];
+			name = filename.split("-")[1];
+			logger.debug("File Did=" + name);
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
+			logger.debug("From WebCenter URL=" + ucmUrl);
+		}
 		com.AddLandRequest.AttachmentRecPayload[] attachmentRecPayloads = new com.AddLandRequest.AttachmentRecPayload[1];
 		attachmentRecPayloads[0] = new com.AddLandRequest.AttachmentRecPayload();
 		attachmentRecPayloads[0].setContentid(did);
 		attachmentRecPayloads[0].setFilename(name);
 		attachmentRecPayloads[0].setUrl(ucmUrl);
 		attachmentRecPayloads[0].setIsMandatory("1");
-		
+
 		inputpayload.setAttachmentList(attachmentRecPayloads);
 
 		try {
@@ -435,18 +440,15 @@ public class PSRequestService {
 	 * 
 	 * 
 	 * @author Pritam
-	 * @throws ParseException 
-	 * @throws DatatypeConfigurationException 
+	 * @throws ParseException
+	 * @throws DatatypeConfigurationException
 	 * 
 	 */
 
 	public LandOutputVO extensionGrandLand(UserDeatilVO user, LandInputVO landInputVO) throws DatatypeConfigurationException, ParseException {
 
-		
 		LandOutputVO outputVO = new LandOutputVO();
 		createStub();
-
-		
 
 		com.ExtensionOfGrantLand.UserDetailsPayload userDetailsPayload = new com.ExtensionOfGrantLand.UserDetailsPayload();
 		userDetailsPayload.setUsername(user.getLoginUserName());
@@ -467,10 +469,10 @@ public class PSRequestService {
 		userDetailsPayload.setAddress3(user.getAddress3());
 		userDetailsPayload.setPOBOX(user.getPOBOX());
 		userDetailsPayload.setDOB(user.getDOB());
-		
-		if(user.getTypeOfUser().equals("1")){
-			userDetailsPayload.setApplicantTypeid(user.getApplicantTypeId());	
-		}else{
+
+		if (user.getTypeOfUser().equals("1")) {
+			userDetailsPayload.setApplicantTypeid(user.getApplicantTypeId());
+		} else {
 			userDetailsPayload.setApplicantTypeid("0");
 		}
 
@@ -485,7 +487,7 @@ public class PSRequestService {
 		input.setRequestID(landInputVO.getRequestID());
 		input.setRequestNo(landInputVO.getRequestNo());
 		input.setWorkflowId(landInputVO.getWorkflowId());
-		//input.setExtensionOfGrantLandId(landInputVO.getExtensionOfGrantLandId());
+		// input.setExtensionOfGrantLandId(landInputVO.getExtensionOfGrantLandId());
 		input.setLanguageId(landInputVO.getLanguageId());
 		input.setSite_Plan_No(landInputVO.getSite_Plan_No());
 		input.setSite_Plan_Date(PortalDataMapper.toCalendar(landInputVO.getSitePlanDate()));
@@ -502,7 +504,7 @@ public class PSRequestService {
 		input.setLand_Usage(landInputVO.getLandUsage());
 		input.setGrant_Issuance_Date(PortalDataMapper.fromMMDDYYtoCalendar(landInputVO.getGrantIssuanceDate()));
 		input.setGrantexpirydate(PortalDataMapper.fromMMDDYYtoCalendar(landInputVO.getGrantExpiryDate()));
-		
+
 		input.setLandDemarcationId("");
 		input.setFrontdesksubmitdate(new Date());
 		input.setOwnernationality_en("");
@@ -513,7 +515,7 @@ public class PSRequestService {
 		input.setSectorname_ar("");
 		input.setUserdecision(landInputVO.getUserDecesion());
 		input.setExtensionofgrantlandid("");
-		
+
 		input.setOwnerName(landInputVO.getOwnerName());
 		input.setOwnerID(landInputVO.getOwnerID());
 		input.setOwner_Nationality_ID(landInputVO.getOwnerNationalityID());
@@ -535,7 +537,7 @@ public class PSRequestService {
 		String ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
 		logger.debug("From WebCenter URL=" + ucmUrl);
 
-		//input.setSite_Plan_documentid(ucmUrl);
+		// input.setSite_Plan_documentid(ucmUrl);
 		com.ExtensionOfGrantLand.AttachmentRecPayload[] attachmentList = new com.ExtensionOfGrantLand.AttachmentRecPayload[1];
 		attachmentList[0] = new com.ExtensionOfGrantLand.AttachmentRecPayload();
 		attachmentList[0].setContentid(did);
@@ -547,8 +549,8 @@ public class PSRequestService {
 
 		input.setAttachmentList(attachmentList);
 		input.setUserDetails(userDetailsPayload);
-		
-		com.ExtensionOfGrantLand.PaymentDetailsPayload paymentDetails=new com.ExtensionOfGrantLand.PaymentDetailsPayload();
+
+		com.ExtensionOfGrantLand.PaymentDetailsPayload paymentDetails = new com.ExtensionOfGrantLand.PaymentDetailsPayload();
 		paymentDetails.setApplicationPaymentDiscount("");
 		paymentDetails.setApplicationPaymentFees("1234");
 		paymentDetails.setApplicationPaymentId("");
@@ -558,9 +560,9 @@ public class PSRequestService {
 		paymentDetails.setServicePaymentId("");
 		paymentDetails.setServicePaymentStatus("");
 		input.setPaymentDetails(paymentDetails);
-		
-		ActionLogRecPayload  actionLogList[] = new ActionLogRecPayload[1];
-		
+
+		ActionLogRecPayload actionLogList[] = new ActionLogRecPayload[1];
+
 		input.setActionLogList(actionLogList);
 
 		try {
@@ -577,7 +579,7 @@ public class PSRequestService {
 			} else {
 				logger.error("Failure  | stub.extensiongrandland(input, uc) return Null");
 				outputVO.setStatus(SERVICE_FAILED);
-				
+
 			}
 		} catch (RemoteException e) {
 			logger.error("Failure  |  " + e.getMessage());
@@ -599,7 +601,7 @@ public class PSRequestService {
 	 * @author Pritam
 	 * 
 	 */
-	public LandOutputVO grandLandRequest(UserDeatilVO userDeatilVO,UserFamilyDetailsVO user, LandInputVO inputVO) {
+	public LandOutputVO grandLandRequest(UserDeatilVO userDeatilVO, UserFamilyDetailsVO user, LandInputVO inputVO) {
 
 		createStub();
 
@@ -618,7 +620,7 @@ public class PSRequestService {
 		userFamilyDetails.setNationality(user.getNationality());
 		userFamilyDetails.setMobileNo(user.getMobileNo());
 		userFamilyDetails.setTradeLienceNo(user.getTradeLienceNo());
-		
+
 		userFamilyDetails.setAccountid(userDeatilVO.getAccountid());
 		userFamilyDetails.setAddress1(userDeatilVO.getAddress1());
 		userFamilyDetails.setAddress2(userDeatilVO.getAddress2());
@@ -633,12 +635,11 @@ public class PSRequestService {
 		userFamilyDetails.setMiddleName(userDeatilVO.getMiddleName());
 		userFamilyDetails.setMobileNo(userDeatilVO.getMobileNo());
 		userFamilyDetails.setPOBOX(userDeatilVO.getPOBOX());
-		
 
-//		inputpayload.setUserDetails(userFamilyDetails);
+		// inputpayload.setUserDetails(userFamilyDetails);
 
-		//inputpayload.setUserDetails(userFamilyDetails);
-	
+		// inputpayload.setUserDetails(userFamilyDetails);
+
 		inputpayload.setSourceType(inputVO.getSourceType());
 		inputpayload.setStatus(inputVO.getStatus());
 		inputpayload.setRequestNo(inputVO.getRequestNo());
@@ -666,16 +667,16 @@ public class PSRequestService {
 		inputpayload.setRulersCourtAcceptanceRemark("test");
 
 		org.example.www.AttachmentRecPayload[] attachmentRecPayloads = new org.example.www.AttachmentRecPayload[4];
-		
-		String ucmUrl="";
-		
-		FileOutputVO files=null;
+
+		String ucmUrl = "";
+
+		FileOutputVO files = null;
 
 		if (!(inputVO.getFamilyBook().isEmpty())) {
 
 			MultipartFile familyBook = inputVO.getFamilyBook();
 			files = fileUploadService.upLoadFile(familyBook);
-			ucmUrl=uCMCenterURLService.getWebCenterURLofFile(files.getDid());
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(files.getDid());
 			inputpayload.setFamilyBookDocId(Integer.parseInt(files.getDid()));
 			attachmentRecPayloads[0] = getURLofFIle(ucmUrl, "1", familyBook.getContentType(), familyBook.getOriginalFilename());
 
@@ -684,7 +685,7 @@ public class PSRequestService {
 		if (!(inputVO.getPropertyAccountDoc().isEmpty())) {
 			MultipartFile propertyAccountDoc = inputVO.getPropertyAccountDoc();
 			files = fileUploadService.upLoadFile(propertyAccountDoc);
-			ucmUrl=uCMCenterURLService.getWebCenterURLofFile(files.getDid());
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(files.getDid());
 			inputpayload.setPropertyAccountingDocId(Integer.parseInt(files.getDid()));
 			attachmentRecPayloads[1] = getURLofFIle(ucmUrl, "2", propertyAccountDoc.getContentType(), propertyAccountDoc.getOriginalFilename());
 		}
@@ -692,7 +693,7 @@ public class PSRequestService {
 		if (!(inputVO.getSpouceEmirateId().isEmpty())) {
 			MultipartFile spouceEmirateId = inputVO.getSpouceEmirateId();
 			files = fileUploadService.upLoadFile(spouceEmirateId);
-			ucmUrl=uCMCenterURLService.getWebCenterURLofFile(files.getDid());
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(files.getDid());
 			inputpayload.setSpousesEmiratesDocId(Integer.parseInt(files.getDid()));
 			attachmentRecPayloads[2] = getURLofFIle(ucmUrl, "3", spouceEmirateId.getContentType(), spouceEmirateId.getOriginalFilename());
 		}
@@ -700,7 +701,7 @@ public class PSRequestService {
 		if (!(inputVO.getSalaryCertificateDoc().isEmpty())) {
 			MultipartFile salaryCertificate = inputVO.getSalaryCertificateDoc();
 			files = fileUploadService.upLoadFile(salaryCertificate);
-			ucmUrl=uCMCenterURLService.getWebCenterURLofFile(files.getDid());
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(files.getDid());
 			inputpayload.setSalaryCertificateDocId(Integer.parseInt(files.getDid()));
 			attachmentRecPayloads[3] = getURLofFIle(ucmUrl, "4", salaryCertificate.getContentType(), salaryCertificate.getOriginalFilename());
 		}
@@ -711,24 +712,21 @@ public class PSRequestService {
 		userFamilyDetails.setAttachmentList(attachmentRecPayloads);
 		inputpayload.setUserDetails(userFamilyDetails);
 
-		/*try {
-			org.example.www.OutputPayload output = stub.submitGrandLandRequest(inputpayload, uc);
-			if (output != null) {
-				logger.info(output.getStatus_EN());
-				outputVO.setStatus(output.getStausFlag());
-				outputVO.setStatus_EN(output.getStatus_EN());
-				outputVO.setStatus_AR(output.getStatus_AR());
-				outputVO.setSatausId(output.getInputFields().getStatus());
-				outputVO.setServiceId(output.getInputFields().getServiceid());
-				outputVO.setRequestNo(output.getRequestNo());
-			} else {
-				logger.error("Failure | stub.grandlandrequest(inputpayload, uc); return null ");
-				outputVO.setStatus(SERVICE_FAILED);
-			}
-		} catch (RemoteException e) {
-			logger.error("Failure |  " + e.getMessage());
-			outputVO.setStatus(SERVICE_FAILED);
-		}*/
+		/*
+		 * try { org.example.www.OutputPayload output =
+		 * stub.submitGrandLandRequest(inputpayload, uc); if (output != null) {
+		 * logger.info(output.getStatus_EN());
+		 * outputVO.setStatus(output.getStausFlag());
+		 * outputVO.setStatus_EN(output.getStatus_EN());
+		 * outputVO.setStatus_AR(output.getStatus_AR());
+		 * outputVO.setSatausId(output.getInputFields().getStatus());
+		 * outputVO.setServiceId(output.getInputFields().getServiceid());
+		 * outputVO.setRequestNo(output.getRequestNo()); } else { logger.error(
+		 * "Failure | stub.grandlandrequest(inputpayload, uc); return null ");
+		 * outputVO.setStatus(SERVICE_FAILED); } } catch (RemoteException e) {
+		 * logger.error("Failure |  " + e.getMessage());
+		 * outputVO.setStatus(SERVICE_FAILED); }
+		 */
 		return outputVO;
 
 	}
@@ -774,8 +772,8 @@ public class PSRequestService {
 	 * 
 	 * 
 	 * @author Pritam
-	 * @throws ParseException 
-	 * @throws DatatypeConfigurationException 
+	 * @throws ParseException
+	 * @throws DatatypeConfigurationException
 	 * 
 	 */
 	public LandOutputVO issueSitePalnDocument(UserDeatilVO user, LandInputVO inputVO) throws DatatypeConfigurationException, ParseException {
@@ -804,6 +802,12 @@ public class PSRequestService {
 		userDetails.setAddress3(user.getAddress3());
 		userDetails.setPOBOX(user.getPOBOX());
 		userDetails.setDOB(user.getDOB());
+
+		if (user.getTypeOfUser().equals("1")) {
+			userDetails.setApplicanttypeid(user.getApplicantTypeId());
+		} else {
+			userDetails.setApplicanttypeid("0");
+		}
 
 		inputpayload.setUserDetails(userDetails);
 		inputpayload.setServiceType(inputVO.getServiceType());
@@ -850,14 +854,18 @@ public class PSRequestService {
 		inputpayload.setServiceFees(inputVO.getServiceFees());
 		inputpayload.setArea_Name(inputVO.getAreaName());
 
+		String did = "";
+		String name = "";
+		String ucmUrl = "";
 		String filename = inputVO.getSitePlanDocument();
-		logger.debug("File Name from Controller   |  " + filename);
-		String did = filename.split("-")[0];
-		String name = filename.split("-")[1];
-		logger.debug("File Did=" + name);
-		String ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
-		logger.debug("From WebCenter URL=" + ucmUrl);
-
+		if (!StringUtil.isEmpty(filename)) {
+			logger.debug("File Name from Controller   |  " + filename);
+			did = filename.split("-")[0];
+			name = filename.split("-")[1];
+			logger.debug("File Did=" + name);
+			ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
+			logger.debug("From WebCenter URL=" + ucmUrl);
+		}
 		IssueSitePlanDoc.AttachmentRecPayload[] attachmentRecPayloads = new IssueSitePlanDoc.AttachmentRecPayload[1];
 		attachmentRecPayloads[0] = new IssueSitePlanDoc.AttachmentRecPayload();
 		attachmentRecPayloads[0].setContentid(did);

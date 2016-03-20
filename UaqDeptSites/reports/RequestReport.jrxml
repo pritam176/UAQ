@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="GLRReport" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="0.7513148009015781"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_LOCALE" class="java.lang.String"/>
+	<parameter name="P_USER_NAME" class="java.lang.String"/>
+	<parameter name="P_ACCOUNT_ID" class="java.lang.String"/>
+	<parameter name="P_REQUEST_NO" class="java.lang.String"/>
+	<parameter name="IMG_PATH" class="java.lang.String"/>
+	<parameter name="P_SUBMIT_DATE" class="java.lang.String"/>
+	<parameter name="P_PROCESS_NAME" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT AC.FIRST_NAME||' '||AC.MIDDLE_NAME||' '||AC.LAST_NAME As FULL_NAME,USR.USER_NAME,USR.LOGINUSERNAME,
+usr.ACCOUNT_ID,ac.MOBILE_NO,
+ac.EMIRATES_ID,ac.EMAIL_ADDRESS,
+ac.POSTBOX,ac.TYPE_OF_USER,ac.APPLICANTTYPEID ,DECODE ($P{P_LOCALE},'ar',APPTYPE.APPLICANTTYPE_AR, APPTYPE.APPLICANTTYPE_EN)  APPLICANT_TYPE
+,ac.NATIONALITY_ID ,DECODE($P{P_LOCALE},'ar', NATION.NATIONALITYNAME_AR,NATION.NATIONALITYNAME_EN ) NATIONALITY ,
+DECODE($P{P_LOCALE},'ar',EM.EMIRATENAME_AR,EM.EMIRATENAME_EN)EMIRATE,AC.ADDRESSLINE1 address,TRADE_LIENCE_NO
+ FROM USER_DETAILS usr, ACCOUNT_DETAILS ac,APPLICANTTYPE_LOOKUPS appType
+ ,NATIONALITY_LOOKUPS nation ,EMIRATE_LOOKUPS em
+WHERE
+USR.ACCOUNT_ID=$P{P_ACCOUNT_ID}
+AND USR.USER_NAME=$P{P_USER_NAME}
+AND USR.ACCOUNT_ID=ac.ID
+AND AC.APPLICANTTYPEID=APPTYPE.APPLICANTTYPEID (+)
+AND AC.NATIONALITY_ID=NATION.NATIONALITY_ID (+)
+AND AC.EMIRATES_CODE=EM.EMIRATE_ID (+)]]>
+	</queryString>
+	<field name="FULL_NAME" class="java.lang.String"/>
+	<field name="USER_NAME" class="java.lang.String"/>
+	<field name="LOGINUSERNAME" class="java.lang.String"/>
+	<field name="ACCOUNT_ID" class="java.lang.String"/>
+	<field name="MOBILE_NO" class="java.lang.String"/>
+	<field name="EMIRATES_ID" class="java.lang.String"/>
+	<field name="EMAIL_ADDRESS" class="java.lang.String"/>
+	<field name="POSTBOX" class="java.math.BigDecimal"/>
+	<field name="TYPE_OF_USER" class="java.lang.String"/>
+	<field name="APPLICANTTYPEID" class="java.math.BigDecimal"/>
+	<field name="APPLICANT_TYPE" class="java.lang.String"/>
+	<field name="NATIONALITY_ID" class="java.math.BigDecimal"/>
+	<field name="NATIONALITY" class="java.lang.String"/>
+	<field name="EMIRATE" class="java.lang.String"/>
+	<field name="ADDRESS" class="java.lang.String"/>
+	<field name="TRADE_LIENCE_NO" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="123" splitType="Stretch">
+			<staticText>
+				<reportElement x="5" y="33" width="544" height="87" backcolor="#E8E3E3"/>
+				<box>
+					<pen lineWidth="1.0" lineColor="#999999"/>
+					<topPen lineWidth="1.0" lineColor="#999999"/>
+					<leftPen lineWidth="1.0" lineColor="#999999"/>
+					<bottomPen lineWidth="1.0" lineColor="#999999"/>
+					<rightPen lineWidth="1.0" lineColor="#999999"/>
+				</box>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="289" y="79" width="110" height="25" backcolor="#E8E3E3"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Submitted Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="5" y="5" width="544" height="25" forecolor="#FCFCFC" backcolor="#E20707"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SERVICE  ACKNOLEDGEMENT  RECEIPT]]></text>
+			</staticText>
+			<textField>
+				<reportElement mode="Transparent" x="406" y="50" width="138" height="25" forecolor="#000000" backcolor="#E8E3E3"/>
+				<box leftPadding="2">
+					<pen lineColor="#999999"/>
+					<topPen lineWidth="1.0" lineColor="#999999"/>
+					<leftPen lineWidth="1.0" lineColor="#999999"/>
+					<bottomPen lineWidth="1.0" lineColor="#999999"/>
+					<rightPen lineWidth="1.0" lineColor="#999999"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_REQUEST_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Transparent" x="406" y="79" width="138" height="25" forecolor="#000000" backcolor="#E8E3E3"/>
+				<box leftPadding="2">
+					<pen lineColor="#999999"/>
+					<topPen lineWidth="1.0" lineColor="#999999"/>
+					<leftPen lineWidth="1.0" lineColor="#999999"/>
+					<bottomPen lineWidth="1.0" lineColor="#999999"/>
+					<rightPen lineWidth="1.0" lineColor="#999999"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="12" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_SUBMIT_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="289" y="50" width="110" height="25" backcolor="#E8E3E3"/>
+				<box leftPadding="2"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Request Number]]></text>
+			</staticText>
+			<image>
+				<reportElement x="15" y="41" width="258" height="71"/>
+				<imageExpression class="java.lang.String"><![CDATA[$P{IMG_PATH}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<detail>
+		<band height="459" splitType="Stretch">
+			<componentElement>
+				<reportElement stretchType="RelativeToTallestObject" x="193" y="8" width="169" height="66"/>
+				<jr:Code39 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom" intercharGapWidth="1.5" wideFactor="3.0">
+					<jr:codeExpression><![CDATA[$P{P_REQUEST_NO}]]></jr:codeExpression>
+				</jr:Code39>
+			</componentElement>
+			<staticText>
+				<reportElement mode="Opaque" x="25" y="122" width="246" height="30" backcolor="#E8E3E3"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Account  ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="25" y="159" width="246" height="30" backcolor="#E8E3E3"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="25" y="197" width="246" height="30" backcolor="#E8E3E3"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nationality ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="25" y="234" width="246" height="30" backcolor="#E8E3E3"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Emirates Id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="25" y="274" width="246" height="30" backcolor="#E8E3E3"/>
+				<box leftPadding="5">
+					<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Applicant Type]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="283" y="159" width="247" height="30"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{FULL_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="283" y="197" width="247" height="30"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{NATIONALITY}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="283" y="234" width="247" height="30"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{EMIRATES_ID}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="283" y="274" width="247" height="30"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{APPLICANT_TYPE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="283" y="122" width="247" height="30" forecolor="#000000" backcolor="#FFFFFF"/>
+				<box leftPadding="5">
+					<topPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<leftPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<bottomPen lineWidth="1.0" lineColor="#CCCCCC"/>
+					<rightPen lineWidth="1.0" lineColor="#CCCCCC"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None" lineSpacing="Single" markup="none">
+					<font fontName="SansSerif" size="14" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfFontName="Helvetica" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ACCOUNT_ID}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="14" y="414" width="516" height="1" forecolor="#999999"/>
+			</line>
+			<staticText>
+				<reportElement mode="Transparent" x="15" y="389" width="189" height="20" forecolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ADDITIONAL NOTES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="418" width="519" height="20" forecolor="#666666" backcolor="#666666"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<text><![CDATA[This is subjective to Umm Al Quwain Government eServices and should not submit to any legal procedures.... ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="44" y="84" width="432" height="25"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{P_PROCESS_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -49,6 +49,10 @@ public class ProCardIssuerServiceHandler extends ProCardServiceHandler {
 		ServiceField f4 = new ServiceField("proNationality", "proCard.ProNationality", FieldTypeEnum.Select, true);
 		ServiceField f5 = new ServiceField("identityOfPro", "proCard.IdentityOfPro", FieldTypeEnum.File, phase == null);
 		ServiceField f6 = new ServiceField("proPhotograph", "proCard.ProPhotograph", FieldTypeEnum.File, phase == null);
+		ServiceField f7 = new ServiceField("proPassport", "proCard.ProPassport", FieldTypeEnum.File, phase == null);
+		ServiceField f8 = new ServiceField("proResidency", "proCard.ProResidency", FieldTypeEnum.File, phase == null);
+		ServiceField f9 = new ServiceField("proEID", "proCard.ProEID", FieldTypeEnum.File, phase == null);
+		ServiceField f10 = new ServiceField("proAuthorizationLetter", "proCard.ProAuthorizationLetter", FieldTypeEnum.File, phase == null);
 		f1.setFieldValue(cardDetails == null ? (String) initialParams.get(f1.getFieldName()) : cardDetails.getProName().getValue().toString());
 		f2.setFieldValue(cardDetails == null ? (String) initialParams.get(f2.getFieldName()) : cardDetails.getProIdNum().getValue().toString());
 		f3.setFieldValue(cardDetails == null ? (String) initialParams.get(f3.getFieldName()) : displayDateFormat.format(proIdExpDate));
@@ -58,6 +62,10 @@ public class ProCardIssuerServiceHandler extends ProCardServiceHandler {
 		f5.setPanelHeader("service.label.attachments");
 		f5.setDocType("16", "Identity_of_the_PRO");
 		f6.setDocType("17", "PRO_Photograph"); 
+		f7.setDocType("8", "Passport"); 
+		f8.setDocType("25", "Passport_Residency_Page"); 
+		f9.setDocType("9", "EmiratesID"); 
+		f10.setDocType("161", "authorization_letter"); 
 
 		serviceFields.add(f1);
 		serviceFields.add(f2);
@@ -65,9 +73,17 @@ public class ProCardIssuerServiceHandler extends ProCardServiceHandler {
 		serviceFields.add(f4);
 		serviceFields.add(f5);
 		serviceFields.add(f6);
+		serviceFields.add(f7);
+		serviceFields.add(f8);
+		serviceFields.add(f9);
+		serviceFields.add(f10);
 		if (sendBackInfo != null) {
 			f5.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f5.getDocTypeId()));
 			f6.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f6.getDocTypeId()));
+			f7.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f7.getDocTypeId()));
+			f8.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f8.getDocTypeId()));
+			f9.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f9.getDocTypeId()));
+			f10.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f10.getDocTypeId()));
 			getReviewerResponse(sendBackInfo, serviceFields);
 		}
 		return serviceFields;

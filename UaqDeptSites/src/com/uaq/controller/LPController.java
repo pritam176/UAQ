@@ -37,6 +37,7 @@ import com.uaq.common.PropertiesUtil;
 import com.uaq.common.TilesViewConstant;
 import com.uaq.common.UAQURLConstant;
 import com.uaq.common.ViewPath;
+import com.uaq.dao.DAOManager;
 import com.uaq.service.LandAndPropertyValuationServiceHandler;
 
 import com.uaq.service.FeeIdService;
@@ -80,10 +81,10 @@ public class LPController extends BaseController {
 	static {
 		Service s1 = new Service(403, "LP", "label.lp.newProCard", false, true, false);
 		Service s2 = new Service(404, "LP", "label.lp.renewProCard", false, true, false);
-		Service s3 = new Service(401, "LP", "label.lp.landProperty", true, false, false);
+		Service s3 = new Service(401, "LP", "label.lp.landProperty", true, true, false);
 		Service s4 = new Service(408, "LP", "label.lp.lostdocument", true, true, false);
-		Service s5 = new Service(406, "LP", "label.lp.newRealEstate", false, true, false);
-		Service s6 = new Service(407, "LP", "label.lp.renewRealEstate", false, true, false);
+		Service s5 = new Service(406, "LP", "label.lp.newRealEstate", true, false, false);
+		Service s6 = new Service(407, "LP", "label.lp.renewRealEstate", true, false, false);
 		Service s7 = new Service(305, "PS", "label.ps.grantlandreq", true, true, false);
 		Service s8 = new Service(306, "PS", "label.ps.extensiongrantland", true, true, true);
 		s1.setServiceHandler(new ProCardIssuerServiceHandler());
@@ -312,9 +313,11 @@ public class LPController extends BaseController {
 				} else if(!service.isInitiatableAfterSave()) {
 					modelMap.addAttribute("statusId", "33");
 				}
-				
-				String feeAmount = feeIdService.getAmountForService(""+service.getId(), service.isInitiatableAfterSave()?"18":"33", accountDetails.getTypeOfUser());
-				params.put("feeAmount", feeAmount);
+				DAOManager daoManager = new DAOManager();
+				Map<String,String> feeServiceMap = feeIdService.getServiceFee(null, ""+service.getId(), accountDetails.getTypeOfUser(), String.valueOf(accountDetails.getApplicanttypeid()), service.isInitiatableAfterSave()?"18":"33", daoManager.getConnection());
+				daoManager.closeConnection();
+				if(feeServiceMap!=null)
+					params.put("feeAmount", feeServiceMap.get("amount"));
 				String requestNumber = service.getHandlerClass().saveOrSubmitServiceRequestData(serviceForm.getServicePhase(), accountDetails, LPServiceLookUp, params, attachmentInfos);
 				
 				if (requestNumber == null)

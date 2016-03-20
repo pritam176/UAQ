@@ -206,6 +206,9 @@ public class ServiceParamsCommand {
 		private String requiredUpon_FieldName;
 		private String requiredUpon_FieldValue;
 		private int length = 100;
+		
+		private String mandatoryUpon_FieldName;
+		private String mandatoryUpon_FieldValue;
 
 		public ServiceField(String fieldName, String displayKey, FieldTypeEnum type, boolean required) {
 			this.fieldName = fieldName;
@@ -397,6 +400,11 @@ public class ServiceParamsCommand {
 			this.requiredUpon_FieldName = requiredUpon_FieldName;
 			this.requiredUpon_FieldValue = requiredUpon_FieldValue;
 		}
+		
+		public void setMandatoryCondition(String mandatoryUpon_FieldName, String mandatoryUpon_FieldValue) {
+			this.mandatoryUpon_FieldName = mandatoryUpon_FieldName;
+			this.mandatoryUpon_FieldValue = mandatoryUpon_FieldValue;
+		}
 
 		public int getLength() {
 			return length;
@@ -404,6 +412,22 @@ public class ServiceParamsCommand {
 
 		public void setLength(int length) {
 			this.length = length;
+		}
+
+		public String getMandatoryUpon_FieldName() {
+			return mandatoryUpon_FieldName;
+		}
+
+		public void setMandatoryUpon_FieldName(String mandatoryUpon_FieldName) {
+			this.mandatoryUpon_FieldName = mandatoryUpon_FieldName;
+		}
+
+		public String getMandatoryUpon_FieldValue() {
+			return mandatoryUpon_FieldValue;
+		}
+
+		public void setMandatoryUpon_FieldValue(String mandatoryUpon_FieldValue) {
+			this.mandatoryUpon_FieldValue = mandatoryUpon_FieldValue;
 		}
 
 	}

@@ -1,0 +1,524 @@
+package com.uaq.controller;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import uaq.db.si.model.common.AccountDetailsViewSDO;
+import uaq.db.si.model.common.ApplicantRequestViewSDO;
+
+import com.uaq.command.ServiceParamsCommand;
+import com.uaq.command.ServiceParamsCommand.SerivceParamsValidator;
+import com.uaq.command.ServiceParamsCommand.Service;
+import com.uaq.command.ServiceParamsCommand.ServiceAttachment;
+import com.uaq.command.ServiceParamsCommand.ServiceField;
+import com.uaq.common.ApplicationConstants;
+import com.uaq.common.PaymentSessionUtil;
+import com.uaq.common.PropertiesUtil;
+import com.uaq.common.TilesViewConstant;
+import com.uaq.common.UAQURLConstant;
+import com.uaq.common.ViewPath;
+import com.uaq.service.LandAndPropertyValuationServiceHandler;
+
+import com.uaq.service.FeeIdService;
+import com.uaq.service.GrantLandRequestServiceHandler;
+import com.uaq.service.LostDocumentServiceHandler;
+import com.uaq.service.PaymentService;
+import com.uaq.service.PortalUtil;
+import com.uaq.service.ProCardIssuerServiceHandler;
+import com.uaq.service.ProCardRenewerServiceHandler;
+import com.uaq.service.RealEstateOfficeIssuerServiceHandler;
+import com.uaq.service.RealEstateOfficeRenewerServiceHandler;
+import com.uaq.util.UCMUploader.AttachmentInfo;
+import com.uaq.vo.AccountDetailTokenInput;
+import com.uaq.vo.LoginOutputVO;
+import static com.uaq.common.ApplicationConstants.*;
+import static com.uaq.common.TilesViewConstant.*;
+import static com.uaq.common.UAQURLConstant.*;
+
+@Controller
+// @SessionAttributes("serviceName")
+public class LPController extends BaseController {
+
+	@Autowired
+	private PortalUtil portalUtil;
+	@Autowired
+	public MessageSource messageSource;
+	@Autowired
+	private com.uaq.service.LPServiceLookUp LPServiceLookUp;
+	
+	@Autowired
+	private FeeIdService feeIdService;
+
+	private Logger logger = Logger.getLogger(LPController.class);
+
+	public static final List<Service> services = new ArrayList<Service>();
+
+	static {
+		Service s1 = new Service(403, "LP", "NEW PRO CARD REQUEST", false, true);
+		Service s2 = new Service(404, "LP", "RENEW PRO CARD REQUEST", false, true);
+		Service s3 = new Service(401, "LP", "LAND AND PROPERTY VALUATION", true, false);
+		Service s4 = new Service(408, "LP", "LOST DOCUMENT", true, true);
+		Service s5 = new Service(406, "LP", "NEW REAL ESTATE OFFICE", false, true);
+		Service s6 = new Service(407, "LP", "RENEW REAL ESTATE OFFICE", false, true);
+		Service s7 = new Service(305, "PS", "GRANT LAND REQUEST", true, true);
+		s1.setServiceHandler(new ProCardIssuerServiceHandler());
+		s2.setServiceHandler(new ProCardRenewerServiceHandler());
+		s3.setServiceHandler(new LandAndPropertyValuationServiceHandler());
+		s4.setServiceHandler(new LostDocumentServiceHandler());
+		s5.setServiceHandler(new RealEstateOfficeIssuerServiceHandler());
+		s6.setServiceHandler(new RealEstateOfficeRenewerServiceHandler());
+		s7.setServiceHandler(new GrantLandRequestServiceHandler());
+		services.add(s1);
+		services.add(s2);
+		services.add(s3);
+		services.add(s4);
+		services.add(s5);
+		services.add(s6);
+		services.add(s7);
+	}
+
+	@RequestMapping("/uaq/welcome.html")
+	public String helloWorld(Model model) {
+		logger.info("This is an info log entry");
+		model.addAttribute("services", services);
+		return "welcome";
+	}
+
+	@RequestMapping(value = ViewPath.SHOW_SERVICE_PHASE_PAGE)
+	public String showServicePhasePage(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap, @ModelAttribute("serviceForm") ServiceParamsCommand serviceForm,
+			BindingResult result) {
+		// TODO uncomment this line
+		// super.handleRequest(request, modelMap);
+		super.handleRequest(request, modelMap);
+		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
+		LoginOutputVO logininfo = null;
+		String viewname = EMPTY_STRING;
+		String servicePhase = (String) request.getParameter("servicePhase");
+		String serviceIdString = request.getParameter("serviceId");
+
+		logger.debug("Requested Service-" + PaymentSessionUtil.getPageLable(serviceIdString));
+
+		// prepare initialParams to get current service phase fields
+		Map<String, Object> initialParams = new HashMap<String, Object>();
+		if (serviceForm != null && serviceForm.getParams() != null)
+			initialParams.putAll(serviceForm.getParams());
+
+		if (portalUtil.isMobile(request, response)) {
+			modelMap.addAttribute("isMobile", "true");
+			viewname = MOBILE_LOGIN_AGAIN;
+			if ("Resubmit".equals(servicePhase)) {
+				logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+			} else {
+				logininfo = portalUtil.getLoginDetailFromMobileRequest(request);
+				if (logininfo.getAcountId() != null) {
+					logger.debug("Account Id-" + logininfo.getAcountId() != null ? logininfo.getAcountId() : "No User");
+					request.getSession().setAttribute(SESSION_LOGIN_INFO_MOBILE, logininfo);
+				}
+			}
+			if (logininfo.getAcountId() == null) {
+				logger.debug("Re NEW ProCard");
+				logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+				logger.debug("Account Id-" + logininfo.getAcountId() != null ? logininfo.getAcountId() : "No User");
+			}
+
+			if (logininfo != null) {
+				logger.debug("Mobile User Detail- Account Id =" + logininfo.toString());
+				if (portalUtil.validateToken(logininfo)) {
+					request.getSession().setAttribute(SESSION_LOGIN_INFO_MOBILE, logininfo);
+					logger.info("Mobile    |    Token Validated  | LP Service");
+					viewname = "LPService.mobile";
+				}
+			}
+			if (viewname.equals(MOBILE_LOGIN_AGAIN)) {
+				request.getSession().invalidate();
+				logger.info("Mobile  | Failure    |  User Not Loged In   ");
+			}
+
+		} else {
+			modelMap.addAttribute("isMobile", "false");
+			viewname = PORTAL_LOGIN_AGAIN;
+			logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
+			if (logininfo != null) {
+				if (portalUtil.validateToken(logininfo)) {
+					logger.info("Desktop    |    Token Validated  | LPService");
+					viewname = "LPService";
+				}
+			}
+			if (viewname.equals(PORTAL_LOGIN_AGAIN)) {
+				logger.info("Desktop  |  Failure    |    User Not Loged In ");
+				request.getSession().invalidate();
+			}
+
+		}
+		// Get service Id & Phase from the request not from the serviceForm
+		// since it is not guaranteed to be sent every time
+		if (logininfo != null && logininfo.getAcountId() != null) {
+			int serviceId = Integer.parseInt(request.getParameter("serviceId"));
+			String requestNumber = (String) request.getParameter("requestNumber");
+			Service service = getService(serviceId);
+			AccountDetailsViewSDO accountDetails = LPServiceLookUp.getAccountDetails(logininfo.getAcountId());
+			initialParams.put("accountDetails", accountDetails);
+			initialParams.put("requestNumber", requestNumber);
+			initialParams.put("serviceId", serviceId);
+
+			try {
+				validatePrerequisites(modelMap, servicePhase, requestNumber, service, accountDetails);
+				List<ServiceField> serviceFields = service.getHandlerClass().getServicePreparationFields(servicePhase, LPServiceLookUp, languageCode, initialParams);
+				for (Iterator<ServiceField> iterator = serviceFields.iterator(); iterator.hasNext();) {
+					ServiceField serviceField = iterator.next();
+					if (serviceField.isNextPhaseField()) {
+						modelMap.addAttribute("hasNextPhase", true);
+						iterator.remove();
+						break;
+					}
+				}
+				modelMap.addAttribute("selectedService", service);
+				modelMap.addAttribute("servicePhase", servicePhase);
+				modelMap.addAttribute("requestNumber", requestNumber);
+				modelMap.addAttribute("fields", serviceFields);
+				if (!modelMap.containsAttribute("serviceForm")) {
+					modelMap.addAttribute("serviceForm", new ServiceParamsCommand());
+				}
+				// modelMap.addAttribute("pagelable", "label.lp.newProCard");
+
+			} catch (Exception e) {
+				logger.debug("Failed | " + e.getMessage());
+				viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + UAQURLConstant.THANKYOU_PAGE;
+				try {
+					modelMap.addAttribute("message", messageSource.getMessage(e.getMessage(), null, new Locale(languageCode)));
+				} catch (Exception ex) {
+					modelMap.addAttribute("message", e.getMessage());
+				}
+				viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + UAQURLConstant.THANKYOU_PAGE;
+			}
+
+		}
+		modelMap.addAttribute(PAGE_LABEL, PaymentSessionUtil.getPageLable(serviceIdString));
+		return viewname;
+	}
+
+	@RequestMapping(value = ViewPath.SUBMIT_SERVICE_PARAMS, method = RequestMethod.POST)
+	public String submitSevice(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap, @ModelAttribute("serviceForm") ServiceParamsCommand serviceForm, BindingResult result)
+			throws IllegalStateException, IOException {
+		// TODO uncomment this line
+		super.handleRequest(request, modelMap);
+		new SerivceParamsValidator().validate(serviceForm, result);
+		if (result.hasErrors()) {
+			modelMap.addAttribute("serviceForm", serviceForm);
+			return showServicePhasePage(request, response, modelMap, serviceForm, result);
+		}
+		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
+		LoginOutputVO loginInfo = null;
+
+		String viewname = EMPTY_STRING;
+		String serviceIdString = String.valueOf(serviceForm.getServiceId());
+		Service service = getService(serviceForm.getServiceId());
+		Map<String, String> params = serviceForm.getParams();
+		List<AttachmentInfo> attachmentInfos = new ArrayList<AttachmentInfo>();
+		Map<String, ServiceAttachment> attachmentsFiles = serviceForm.getFiles();
+		if (null != attachmentsFiles && attachmentsFiles.size() > 0) {
+			for (String fieldName : attachmentsFiles.keySet()) {
+				ServiceAttachment attachment = attachmentsFiles.get(fieldName);
+				String fileName = attachment.getAttachmentFile().getOriginalFilename();
+				if (!"".equalsIgnoreCase(fileName)) {
+					AttachmentInfo attachmentInfo = new AttachmentInfo();
+					attachmentInfo.setFieldName(fieldName);
+					attachmentInfo.setFileName(fileName);
+					attachmentInfo.setInputStream(attachment.getAttachmentFile().getInputStream());
+					attachmentInfo.setDocTypeId(attachment.getDocTypeId());
+					attachmentInfo.setAttachmentType(attachment.getDocTypeName());
+					attachmentInfos.add(attachmentInfo);
+				}
+			}
+		}
+		boolean tokenValid = false;
+		if (portalUtil.isMobile(request, response)) {
+			modelMap.addAttribute("isMobile", "true");
+			viewname = MOBILE_LOGIN_AGAIN;
+			loginInfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+			if (loginInfo != null) {
+				logger.debug("Mobile User Detail- Account Id =" + loginInfo.toString());
+				if (portalUtil.validateToken(loginInfo)) {
+					logger.info("Mobile    |    Token Validated  | LP Service");
+					tokenValid = true;
+					viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+				}
+			}
+			if (viewname.equals(MOBILE_LOGIN_AGAIN)) {
+				request.getSession().invalidate();
+				logger.info("Mobile  | Failure    |  User Not Loged In   ");
+			}
+
+		} else {
+			modelMap.addAttribute("isMobile", "false");
+			viewname = PORTAL_LOGIN_AGAIN;
+			loginInfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
+			if (loginInfo != null) {
+				if (portalUtil.validateToken(loginInfo)) {
+					logger.info("Desktop    |    Token Validated  | LPService");
+					tokenValid = true;
+					viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+				}
+			}
+			if (viewname.equals(PORTAL_LOGIN_AGAIN)) {
+				logger.info("Desktop  |  Failure    |    User Not Loged In ");
+				request.getSession().invalidate();
+			}
+
+		}
+
+		if (tokenValid && loginInfo != null && loginInfo.getAcountId() != null) {
+
+			try {
+				AccountDetailsViewSDO accountDetails = LPServiceLookUp.getAccountDetails(loginInfo.getAcountId());
+				validatePrerequisites(modelMap, serviceForm.getServicePhase(), serviceForm.getRequestNumber(), service, accountDetails);
+				params.put("serviceId", "" + service.getId());
+				params.put("serviceDept", service.getDept());
+				if (serviceForm.getServicePhase() != null && !serviceForm.getServicePhase().isEmpty()) {
+					params.put("requestNumber", serviceForm.getRequestNumber());
+				} else {
+					modelMap.addAttribute("statusId", "33");
+				}
+				
+				String feeAmount = feeIdService.getAmountForService(""+service.getId(), "33", accountDetails.getTypeOfUser());
+				params.put("feeAmount", feeAmount);
+				String requestNumber = service.getHandlerClass().saveOrSubmitServiceRequestData(serviceForm.getServicePhase(), accountDetails, LPServiceLookUp, params, attachmentInfos);
+				
+				if (requestNumber == null)
+					throw new Exception("error.general.networkError");
+				modelMap.addAttribute("messageId", "label.requestSavedSuccessfully");
+				modelMap.addAttribute("messageParams", requestNumber);
+				modelMap.addAttribute(ApplicationConstants.PAYMENT_URL_EXPRESSON, UAQURLConstant.PORTAL_PAYMENT_URL);
+				modelMap.addAttribute("requestNo", requestNumber);
+				modelMap.addAttribute("serviceId", service.getId());
+				modelMap.addAttribute(REQUEST_PARAM_TYPE_OF_USER, accountDetails.getTypeOfUser());
+				viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + ApplicationConstants.URL_SEPARATOR + languageCode + UAQURLConstant.THANKYOU_PAGE;
+			} catch (Exception e) {
+				logger.error("Failed :" + e.getMessage());
+				if(e.getMessage().equals("error.proCardId.exist"))
+					modelMap.addAttribute("statusId", null);
+					viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + ApplicationConstants.URL_SEPARATOR + languageCode + UAQURLConstant.THANKYOU_PAGE;
+				try {
+					modelMap.addAttribute("message", messageSource.getMessage(e.getMessage(), null, new Locale(languageCode)));
+				} catch (Exception ex) {
+					modelMap.addAttribute("message", e.getMessage());
+				}
+
+			}
+		}
+		modelMap.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
+		modelMap.addAttribute(PAGE_LABEL, PaymentSessionUtil.getPageLable(serviceIdString));
+		return viewname;
+	}
+
+	@RequestMapping(value = ViewPath.INITIATE_SERVICE_REQUEST)
+	public String initiateSevice(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap, @RequestParam("requestNo") String requestNumber) throws IllegalStateException,
+			IOException {
+		// TODO uncomment this line :
+		// http://localhost/en/initiateSevice.html?requestNumber=LP-003-16-000096
+		// super.handleRequest(request, modelMap);
+		String languageCode = request.getParameter("languageCode");
+		LoginOutputVO loginInfo = getLoginInfo(request);
+		String viewName = validateRequest(request, response, loginInfo);
+		if (viewName != null)
+			return viewName;
+		ApplicantRequestViewSDO applicantRequest = LPServiceLookUp.getApplicantRequestByRequestNumber(requestNumber);
+		String requestId = applicantRequest.getRequestId().toString();
+		int serviceId = applicantRequest.getServiceId().getValue().intValue();
+		Service service = getService(serviceId);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("requestId", requestId);
+		params.put("requestNumber", requestNumber);
+		params.put("serviceId", "" + service.getId());
+
+		try {
+			AccountDetailsViewSDO accountDetails = LPServiceLookUp.getAccountDetails(loginInfo.getAcountId());
+			validatePrerequisites(modelMap, "ApplicationPaymentDone", requestNumber, service, accountDetails);
+
+			service.getHandlerClass().issueServiceRequest(accountDetails, LPServiceLookUp, languageCode, params);
+			modelMap.addAttribute("messageId", "label.requestIssuedSuccessfully");
+			modelMap.addAttribute("messageParams", requestNumber);
+			modelMap.addAttribute("requestNo", requestNumber);
+			modelMap.addAttribute("isMobile", "true");
+			return "redirect:" + PropertiesUtil.getProperty("globalUrl") + ApplicationConstants.URL_SEPARATOR + languageCode + UAQURLConstant.THANKYOU_PAGE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return getViewName(request, "service.errorpage");
+		}
+	}
+
+	@RequestMapping(value = ViewPath.SERVICE_PAYMENT_COMPLETE)
+	public String paymentCompleted(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap, @RequestParam("requestNumber") String requestNumber) throws IllegalStateException,
+			IOException {
+		// TODO uncomment this line:
+		// http://localhost/en/paymentCompleted.html?requestNumber=LP-003-16-000096
+		// super.handleRequest(request, modelMap);
+		String languageCode = request.getParameter("languageCode");
+		LoginOutputVO loginInfo = getLoginInfo(request);
+		String viewName = validateRequest(request, response, loginInfo);
+		if (viewName != null)
+			return viewName;
+		ApplicantRequestViewSDO applicantRequest = LPServiceLookUp.getApplicantRequestByRequestNumber(requestNumber);
+		String requestId = applicantRequest.getRequestId().toString();
+		int serviceId = applicantRequest.getServiceId().getValue().intValue();
+		Service service = getService(serviceId);
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("requestId", requestId);
+		params.put("serviceId", "" + service.getId());
+		params.put("requestNumber", requestNumber);
+
+		try {
+			AccountDetailsViewSDO accountDetails = LPServiceLookUp.getAccountDetails(loginInfo.getAcountId());
+			validatePrerequisites(modelMap, "SevicePaymentDone", requestNumber, service, accountDetails);
+			service.getHandlerClass().proceedWithServiceAfterPayment(params);
+			modelMap.addAttribute("messageId", "label.paymentCompletedSuccessfully");
+			modelMap.addAttribute("messageParams", requestNumber);
+			modelMap.addAttribute("requestNo", requestNumber);
+			modelMap.addAttribute("isMobile", "true");
+			return "redirect:" + PropertiesUtil.getProperty("globalUrl") + ApplicationConstants.URL_SEPARATOR + languageCode + UAQURLConstant.THANKYOU_PAGE;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return getViewName(request, "service.errorpage");
+		}
+	}
+
+	private LoginOutputVO getLoginInfo(HttpServletRequest request) {
+		// TODO uncomment this line
+		// return (LoginOutputVO)request.getSession().getAttribute("logininfo");
+		LoginOutputVO loginInfo = new LoginOutputVO();
+		loginInfo.setAcountId("47102");
+		// loginInfo.setAcountId("6060");
+		return loginInfo;
+	}
+
+	private void validatePrerequisites(ModelMap modelMap, String servicePhase, String requestNumber, Service service, AccountDetailsViewSDO accountDetails) throws Exception {
+		// Prerequisite validation:
+		// check user is the owner,
+		// the card status,
+		// user_typeis allowed for this service
+		boolean isValid = true;
+		if (!((service.isAllowedForIndividual() && service.isAllowedForEstablishment()) || 
+				(service.isAllowedForIndividual() && accountDetails.getTypeOfUser().equals("1")) ||
+				(service.isAllowedForEstablishment() && accountDetails.getTypeOfUser().equals("2")))) {
+			modelMap.addAttribute("messageId", "error.service.notAuthorized");
+			isValid = false;
+		} else if (requestNumber != null && !requestNumber.isEmpty()) {
+			ApplicantRequestViewSDO applicantRequest = LPServiceLookUp.getApplicantRequestByRequestNumber(requestNumber);
+			if (!accountDetails.getUserDetailsView().get(0).getUserName().equals(applicantRequest.getUserName().getValue())) {
+				modelMap.addAttribute("messageId", "error.service.notAuthorized");
+				isValid = false;
+			} else {
+				if (servicePhase != null && !servicePhase.isEmpty()) {
+					if (servicePhase.equals("Resubmit") && applicantRequest.getStatusId().getValue() != null && !( applicantRequest.getStatusId().getValue().intValue() == 5 || applicantRequest.getStatusId().getValue().intValue() == 6)) {
+						modelMap.addAttribute("messageId", "error.service.invalidState");
+						isValid = false;
+					} else if (servicePhase.equals("ApplicationPaymentDone") && (applicantRequest.getStatusId().getValue() == null || applicantRequest.getStatusId().getValue().intValue() != 33)) {
+						modelMap.addAttribute("messageId", "error.service.invalidState");
+						isValid = false;
+					} else if (servicePhase.equals("SevicePaymentDone") && (applicantRequest.getStatusId().getValue() == null || applicantRequest.getStatusId().getValue().intValue() != 18)) {
+						modelMap.addAttribute("messageId", "error.service.invalidState");
+						isValid = false;
+					}
+				}
+			}
+		}
+		if (!isValid)
+			throw new Exception("Request Prerequisite validation didn't pass");
+	}
+
+	private String validateRequest(HttpServletRequest request, HttpServletResponse response, LoginOutputVO loginInfo) {
+		// TODO uncomment this line
+		// if (!portalUtil.isMobile(request, response)) {
+		if (portalUtil.isMobile(request, response)) {
+			logger.info("Failure    |    Page not allowed for Portal ");
+			request.getSession().invalidate();
+			return "service.errorpage.portal";
+		}
+		if (loginInfo == null) {
+			logger.info("Failure    |    User is Not Loged In ");
+			request.getSession().invalidate();
+			return "login.again.mobile";
+		}
+		if (!validateToken(loginInfo)) {
+			logger.info("Failure    |    Token Invalided ");
+			request.getSession().invalidate();
+			return "login.again.mobile";
+		}
+		return null;
+	}
+
+	public static Service getService(int serviceId) {
+		Service service = new Service();
+		service.setId(serviceId);
+		for (Iterator<Service> itr = services.iterator(); itr.hasNext();) {
+			Service tmpService = (Service) itr.next();
+			if (tmpService.equals(service)) {
+				service = tmpService;
+				break;
+			}
+		}
+		return service;
+	}
+
+	/**
+	 * This function will get the view name for mobile or desktop as per the
+	 * request
+	 * 
+	 * @param HttpServletRequest
+	 * @param String
+	 * @return String
+	 */
+	private String getViewName(HttpServletRequest request, String viewName) {
+		if (request.getHeader("User-Agent").indexOf("Mobile") != -1) {
+			viewName = viewName + ".mobile";
+			logger.info("Mobile Page Site Loaded" + viewName);
+		} else {
+			logger.info("Desktop Page Site Loaded" + viewName);
+		}
+		// TODO remove this line
+		viewName = viewName + ".mobile";
+		return viewName;
+
+	}
+
+	/**
+	 * Validate The Login Agnaist Token Return From Login
+	 * 
+	 * @param LoginOutputVO
+	 * @return boolean
+	 */
+	private boolean validateToken(LoginOutputVO logininfo) {
+		AccountDetailTokenInput accountDetailTokenInput = new AccountDetailTokenInput();
+		accountDetailTokenInput.setAcountId(logininfo.getAcountId());
+		accountDetailTokenInput.setCreatedDate(logininfo.getCreatedDate());
+		accountDetailTokenInput.setLastUpdatedDate(logininfo.getLastUpdatedDate());
+		accountDetailTokenInput.setStatus(logininfo.getStatus());
+		accountDetailTokenInput.setTokenCode(logininfo.getTokenCode());
+		accountDetailTokenInput.setTypeOfUser(logininfo.getTypeOfUser());
+		accountDetailTokenInput.setUsername(logininfo.getUsername());
+		// TODO uncomment this line
+		// return loginService.validateToken(accountDetailTokenInput);
+		return true;
+	}
+
+}

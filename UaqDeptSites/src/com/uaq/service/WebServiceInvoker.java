@@ -154,6 +154,7 @@ public class WebServiceInvoker {
 		attachmentData.add(new Param("downloadurl", attachmentInputParams.get("downloadurl")));
 		attachmentData.add(new Param("viewurl", attachmentInputParams.get("viewurl")));
 		attachmentData.add(new Param("ucmDid", attachmentInputParams.get("ucmDid")));
+		attachmentData.add(new Param("workflowHistoryId", attachmentInputParams.get("workflowHistoryId")));
 		List<Param> attachmentParams = new ArrayList<Param>();
 		attachmentParams.add(new Param("ServiceAttachments", null, attachmentData));
 		attachmentsParams.add(new Param("ServiceAttachmentsCollection", "http://xmlns.oracle.com/pcbpel/adapter/db/top/InsertAttachementService", attachmentParams));

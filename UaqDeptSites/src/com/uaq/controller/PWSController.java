@@ -21,12 +21,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.uaq.command.WasteContainerCommand;
 
 import com.uaq.common.PropertiesUtil;
+import com.uaq.common.ServiceNameConstant;
 import com.uaq.common.ViewPath;
 import com.uaq.controller.mapper.PWSDataMapper;
 import com.uaq.controller.mapper.PortalDataMapper;
 import com.uaq.logger.UAQLogger;
 import com.uaq.service.PWSRequestService;
 import com.uaq.service.PortalUtil;
+import com.uaq.service.ReportsService;
 import com.uaq.vo.AccountDetailTokenOutputVO;
 import com.uaq.vo.LoginOutputVO;
 import com.uaq.vo.PageMetadataVO;
@@ -158,6 +160,7 @@ public class PWSController extends BaseController {
 							model.addAttribute(ISMOBILE, "true");
 							model.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
 							view = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+							new ReportsService().generateRequestReport(ServiceNameConstant.NEW_WASTE_CONTAINER, outputVO.getRequestNo().split("-")[3], outputVO.getRequestNo(), userdeatilVO.getUsername(), userdeatilVO.getAccountid(),ServiceNameConstant.NEW_WASTE_CONTAINER_NAME);
 							// view = MOBILE_THANKU_VIEW;
 						}
 
@@ -190,6 +193,7 @@ public class PWSController extends BaseController {
 							model.addAttribute(ISMOBILE, "false");
 							model.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
 							view = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+							new ReportsService().generateRequestReport(ServiceNameConstant.NEW_WASTE_CONTAINER, outputVO.getRequestNo().split("-")[3], outputVO.getRequestNo(), userdeatilVO.getUsername(), userdeatilVO.getAccountid(),ServiceNameConstant.NEW_WASTE_CONTAINER_NAME);
 						}
 					}
 				}

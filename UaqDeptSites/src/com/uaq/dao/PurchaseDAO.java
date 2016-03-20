@@ -1200,8 +1200,8 @@ public class PurchaseDAO {
 		PreparedStatement ps = null;
 		String requestId = purchaseId.split("_")[0]; //discarding the _feeId part
 		
-		String sql = "select psl.STATE_ID_AFTER_SUCCESS, p.service_id from PaymentStatus_Lookups psl " +
-					 "join PURCHASE p on psl.fee_id = p.fee_id and p.purchase_id = ?";
+		String sql = "select decode(m.FEE_TYPE_CODE,'A001','29','30') status_id, p.service_id from PURCHASE p " +
+					 ", ESERVICE_FEE_MATRIX m where p.fee_id = m.fee_id and p.purchase_id = ?";
 		
 		
 			logger.debug("sql query = " + sql);
@@ -1402,5 +1402,41 @@ public class PurchaseDAO {
 			failedPurchaseMap.put(resultset.getString("PURCHASE_ID"), resultset.getString("TRANSACTION_NO"));
 		}
 		return failedPurchaseMap;
+	}
+	
+	public Map<String,String> getServiceFee(String serviceId, String feeTypeCode, String userType, String applicantType, String letter, String landType,Connection con) throws SQLException{
+		Map<String,String> serviceFeeMap = new HashMap<String,String>();	
+		logger.enter("getServiceFee");
+		
+		PreparedStatement ps = null;
+		String SQL= "select fee_id,amount\r\n" + 
+				"from eservice_fee_matrix\r\n" + 
+				"where service_id=?\r\n" + 
+				"and fee_type_code=?\r\n" + 
+				"and (user_type=? or user_type is null)\r\n" + 
+				"and (applicant_type_id=? or applicant_type_id is null)\r\n" + 
+				"and (letter=? or letter is null)\r\n" + 
+				"and (land_type=? or land_type is null)\r\n " +
+				"order by user_type nulls last,applicant_type_id nulls last,letter nulls last,land_type nulls last";
+		logger.debug("sql query = " + SQL);
+		
+		ps = con.prepareStatement(SQL); 
+		
+		ps.setString(1, serviceId);
+		ps.setString(2, feeTypeCode);
+		ps.setString(3, userType);
+		ps.setString(4, applicantType);
+		ps.setString(5, letter);
+		ps.setString(6, landType);
+					
+		ResultSet resultset = ps.executeQuery();
+		
+		if(resultset.next()){
+			serviceFeeMap.put("feeId", resultset.getString("fee_id"));
+			serviceFeeMap.put("amount", resultset.getString("amount"));
+			logger.debug("Service Fee for " + serviceId +" is : " + serviceFeeMap);
+		}
+		logger.exit("getServiceFee");
+		return serviceFeeMap;
 	}
 }

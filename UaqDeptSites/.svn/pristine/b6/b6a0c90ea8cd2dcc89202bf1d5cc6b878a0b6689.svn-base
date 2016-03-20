@@ -1,0 +1,199 @@
+package com.uaq.service;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import uaq.db.si.model.common.AccountDetailsViewSDO;
+import uaq.db.si.model.common.LpLostDocReplacementViewSDO;
+
+import com.uaq.command.ServiceParamsCommand.FieldTypeEnum;
+import com.uaq.command.ServiceParamsCommand.ServiceField;
+import com.uaq.common.PropertiesUtil;
+import com.uaq.vo.SendBackInfo;
+import com.uaq.service.WebServiceInvoker.RequestIdData;
+import com.uaq.util.UCMUploader;
+import com.uaq.util.UCMUploader.AttachmentInfo;
+
+public class LostDocumentServiceHandler extends ServiceHandler {
+
+	@Override
+	public List<ServiceField> getServicePreparationFields(String phase, LPServiceLookUp lookupServiceEN_AR, String languageCode, Map<String, Object> initialParams) throws Exception {
+		List<ServiceField> serviceFields = new ArrayList<ServiceField>();
+		LpLostDocReplacementViewSDO lpLostDocRequest = null;
+		SendBackInfo sendBackInfo = null;
+		String lostDocId = null;
+
+		if (phase != null && (phase.equals("Resubmit") || phase.equals("Step1"))) {
+			if (initialParams != null && initialParams.get("requestNumber") != null) {
+				String requestNumber = initialParams.get("requestNumber").toString();
+				lpLostDocRequest = lookupServiceEN_AR.getLpLostDocRequestByRequestNumber(requestNumber);
+				lostDocId = lpLostDocRequest.getLostDocId().getValue().toString();
+				sendBackInfo = WebServiceInvoker.getSendBackInfo(lpLostDocRequest.getReqId().toString());
+			}
+		}
+
+		if (initialParams == null)
+			initialParams = new HashMap<String, Object>();
+		boolean isStep1 = phase != null && phase.equals("Step1");
+
+		ServiceField f1 = new ServiceField("documenType", "ld.field.documenType", FieldTypeEnum.Select, phase == null);
+		ServiceField f2 = new ServiceField(isStep1 ? "" : "policeReport", "ld.field.policeReport", FieldTypeEnum.File, phase == null);
+		ServiceField f3 = new ServiceField(isStep1 ? "" : "lostDocumentCopy", "ld.field.lostDocumentCopy", FieldTypeEnum.File, phase == null);
+		ServiceField f4 = new ServiceField("adNewspaper", "ld.field.adNewspaper", FieldTypeEnum.File, true);
+
+		// In case of readOnly/ disabled I need to display lookup String value
+		// not Id value
+		Map<String, String> lostDocumentTypes = lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.LostDocumentType, languageCode, null);
+		f1.setFieldLkValues(lostDocumentTypes);
+		f1.setFieldValue(lpLostDocRequest == null ? (String) initialParams.get(f1.getFieldName()) : lostDocumentTypes.get(lostDocId));
+		f1.setDisabled(lpLostDocRequest != null);
+		f1.setFieldIdValue(lpLostDocRequest != null? lostDocId : null);
+
+		f2.setPanelHeader("service.label.attachments");
+		f2.setDocType("153", "PoliceLostReport");
+		f2.setDisabled(isStep1);
+
+		f3.setDocType("152", "CopyOfLostDoc");
+		f3.setInfoMessage("ld.field.lostDocumentCopyInfo");
+		f3.setDisabled(isStep1);
+
+		f4.setPanelHeader("label.lp.actions");
+		f4.setDocType("151", "AdNewsPaper");
+
+		serviceFields.add(f1);
+		serviceFields.add(f2);
+		serviceFields.add(f3);
+
+		if (isStep1) {
+			serviceFields.add(f4);
+		}
+
+		if (sendBackInfo != null) {
+			f2.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f2.getDocTypeId()));
+			f3.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f3.getDocTypeId()));
+			if (phase.equals("Step1")) {
+				getReviewerResponse(sendBackInfo, "ld.field.newspaperAdLetter", "150", serviceFields);
+			} else {
+				getReviewerResponse(sendBackInfo, serviceFields);
+			}
+		}
+
+		return serviceFields;
+	}
+
+	@Override
+	public String saveOrSubmitServiceRequestData(String phase, AccountDetailsViewSDO accountDetails, LPServiceLookUp lookupServiceEN_AR, Map<String, String> params, List<AttachmentInfo> attachmentInfos) throws Exception {
+		Map<String, Object> inputParams = new HashMap<String, Object>();
+		if (attachmentInfos.size() > 0 && !new UCMUploader().genericUploadAttachment(attachmentInfos))
+			return null;
+		try {
+			SimpleDateFormat wsDateFormatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+			inputParams.put("createdDate", wsDateFormatter.format(new Date()));
+			inputParams.put("serviceId", params.get("serviceId"));
+			inputParams.put("serviceDept", params.get("serviceDept"));
+			inputParams.put("accountDetails", accountDetails);
+			inputParams.put("phase", phase);
+			inputParams.putAll(params);
+
+			RequestIdData requestData;
+			if (phase != null && (phase.equals("Resubmit") || phase.equals("Step1"))) {
+				String requestNumber = params.get("requestNumber");
+				LpLostDocReplacementViewSDO lpLostDocRequest = lookupServiceEN_AR.getLpLostDocRequestByRequestNumber(requestNumber);
+				String requestId = lpLostDocRequest.getReqId().toString();
+				inputParams.put("requestId", requestId);
+				inputParams.put("documenType", lpLostDocRequest.getLostDocId().getValue().toString());
+				inputParams.put("stepAction", (phase.equals("Resubmit"))? "Resubmited" : "ADTobe reviewed");
+				WebServiceInvoker.updateLpLostDocumentRequest(inputParams);
+				requestData = new RequestIdData(requestId, requestNumber);
+			} else {
+				requestData = WebServiceInvoker.saveLpLostDocumentRequest(inputParams);
+				inputParams.put("requestNumber", requestData.getRequestNumber());
+				inputParams.put("requestId", requestData.getRequestId());
+				inputParams.put("stepAction", "SUBMITTED");
+				inputParams.put("stepName", "BEFORE_APP_FEES");
+				inputParams.put("applicantId", accountDetails.getId());
+				inputParams.put("applicantName", accountDetails.getFirstName());
+				inputParams.put("amount", params.get("feeAmount"));
+				inputParams.put("status", "1");
+				WebServiceInvoker.sendSmsAndEMail(inputParams);
+			}
+			for (AttachmentInfo attachmentInfo : attachmentInfos) {
+				attachmentInfo.setRequestId(requestData.getRequestId());
+				attachmentInfo.setServiceId(inputParams.get("serviceId").toString());
+			}
+			if (!new UCMUploader().genericSaveAttachmentToDB(attachmentInfos))
+				return null;
+			if (phase.equals("Resubmit") || phase.equals("Step1")) {
+				inputParams.put("phase", phase);
+				resubmitService(inputParams);
+				if(phase.equals("Resubmit")){
+					inputParams.put("requestNumber", requestData.getRequestNumber());
+					inputParams.put("requestId", requestData.getRequestId());
+					inputParams.put("stepAction", "Submit AD");
+					inputParams.put("stepName", "RESUBMITED");
+					inputParams.put("applicantId", accountDetails.getId());
+					inputParams.put("applicantName", accountDetails.getFirstName());
+					inputParams.put("amount", params.get("feeAmount"));
+					inputParams.put("status", "15");
+					WebServiceInvoker.sendSmsAndEMail(inputParams);
+				}
+				else{
+					inputParams.put("requestNumber", requestData.getRequestNumber());
+					inputParams.put("requestId", requestData.getRequestId());
+					inputParams.put("stepAction", "RESUBMITTED");
+					inputParams.put("stepName", "RESUBMITED_AD");
+					inputParams.put("applicantId", accountDetails.getId());
+					inputParams.put("applicantName", accountDetails.getFirstName());
+					inputParams.put("amount", params.get("feeAmount"));
+					inputParams.put("status", "45");
+					WebServiceInvoker.sendSmsAndEMail(inputParams);
+				}
+			}
+			return requestData.getRequestNumber();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public void issueServiceRequest(AccountDetailsViewSDO accountDetails, LPServiceLookUp lookupServiceEN_AR, String languageCode, Map<String, String> params) throws Exception {
+		Map<String, Object> inputParams = new HashMap<String, Object>();
+		try {
+			LpLostDocReplacementViewSDO lpLostDocRequest = lookupServiceEN_AR.getLpLostDocRequestByRequestNumber(params.get("requestNumber"));
+
+			inputParams.put("accountDetails", accountDetails);
+			inputParams.put("requestId", params.get("requestId"));
+			inputParams.put("requestNumber", params.get("requestNumber"));
+			inputParams.put("lostDocId", lpLostDocRequest.getLostDocId().getValue().toString());
+
+			WebServiceInvoker.issueLpLostDocumentProcess(inputParams);
+			System.out.println("Process initiated");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void proceedWithServiceAfterPayment(Map<String, String> params) throws Exception {
+		WebServiceInvoker.proceedWithLpServiceAfterPayment(PropertiesUtil.getProperty("SOA_URL_LP_LOSTDOC"), "payServiceFeesMessage", "requestNo", params.get("requestNumber"));
+	}
+
+	@Override
+	public String getPhaseActivityName(String phase) {
+		if (phase != null && phase.equals("Resubmit"))
+			return "ResubmitRequest";
+		return "SubmitADNewsPaper";
+	}
+
+	@Override
+	public String getResubmissionUser() {
+		return "lpuser";
+	}
+
+}

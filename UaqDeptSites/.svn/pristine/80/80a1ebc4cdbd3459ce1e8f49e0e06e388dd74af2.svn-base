@@ -1,0 +1,50 @@
+package com.uaq.schedulers;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.uaq.dao.DAOManager;
+import com.uaq.service.PaymentWorkFlowService;
+import com.uaq.service.ReviewerServiceBrokenTracaction;
+import com.uaq.service.UserDetailService;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+import com.uaq.vo.PaymentTransactionDetailVO;
+import com.uaq.vo.PaymentWorkFlowVO;
+
+
+public class BrokenTransactionsTasks {
+
+	private PaymentWorkFlowService paymentWorkFlowService;
+	private UserDetailService userDetailService;
+	public BrokenTransactionsTasks(){
+		paymentWorkFlowService = new PaymentWorkFlowService();
+		userDetailService = new UserDetailService();
+	}
+	
+	 public void initWorkflow() {
+		 DAOManager daoManager = new DAOManager();
+			try {
+				ReviewerServiceBrokenTracaction reviewerServiceBrokenTracaction = new ReviewerServiceBrokenTracaction();
+				List<PaymentWorkFlowVO> paymentWorkFlowVOList = paymentWorkFlowService.getPaymentWorkFlowVOList(daoManager.getConnection());
+				for(PaymentWorkFlowVO vo : paymentWorkFlowVOList){
+					PaymentTransactionDetailVO paymentTransactionDetailVO = new PaymentTransactionDetailVO();
+					paymentTransactionDetailVO.setRequestId(vo.getRequestId());
+					paymentTransactionDetailVO.setRequestNo(vo.getRequestNo());
+					paymentTransactionDetailVO.setServiceId(vo.getServiceId());
+					paymentTransactionDetailVO.setStatusId(vo.getStatusId());
+					paymentTransactionDetailVO.setTransactionAmount(vo.getEdiramFees());
+					paymentTransactionDetailVO.setTransactionId(vo.getTransactionId());
+					AccountDetailTokenOutputVO accountDetailfromToken = userDetailService.getUserdetailByUsername(vo.getUserName());
+					reviewerServiceBrokenTracaction.invokeRevierIneceator(accountDetailfromToken, paymentTransactionDetailVO);
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				daoManager.closeConnection();
+			}
+	 }
+}

@@ -29,6 +29,7 @@
 					
 					<c:set var ="alphmsg"><spring:message code="alph.msg"/></c:set>
 					<c:set var ="passwordformatmsg"><spring:message code="password.format"/></c:set>
+					<c:set var="enterWebsite"><spring:message code = 'plzWebsite'/></c:set>
 
 <div class="container-fluid">
 	<div class="wrapper">
@@ -421,9 +422,9 @@
 																	code="label.website" /> </label>
 														</div>
 														<div class="col-md-7">
-															<form:input path="website" type="url" id="website"
-																name="website" url="true" class="form-control"
-																data-msg-url="${enterWebsite}" />
+															<form:input path="website" type="text" id="website"
+																name="website" website="true" class="form-control"
+																data-msg-website="${enterWebsite}" />
 														</div>
 													</div>
 
@@ -667,6 +668,9 @@
 
 <script type="text/javascript">
 	jQuery(function($) {
+		
+		jQuery.validator.addMethod("website", function(value, element, param) { return this.optional(element) || /^(www\.)(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
+		}, jQuery.validator.messages.website);
 		
 		$.validator.addMethod("alphacheck", function(value, element) {
 			return this.optional(element) || /^([a-zA-Z0-9._])+$/i.test(value);

@@ -48,11 +48,11 @@
 														<!-- text box -->
 														<div class="form-group cf">
 			                                                <div class="col-md-5">
-			                                                    <label for="plan-number" class="form-lbl mandatory_lbl"><spring:message code="label.ps.siteplanNo" /> <span class="form-lbl-subtxt"> 	<%-- <spring:message code="label.ps.land.owned" /> --%></span>
+			                                                    <label for="plan-number" class="form-lbl "><spring:message code="label.ps.siteplanNo" /> <span class="form-lbl-subtxt"> 	<%-- <spring:message code="label.ps.land.owned" /> --%></span>
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
-																	<form:input id="plan-number" path="sitePlanNumber" type="text"  class="form-control required" data-msg-required="${siteplanReq}" data-mask="0000000000"/>
+																	<form:input id="plan-number" path="sitePlanNumber" type="text"  class="form-control " data-msg-required="${siteplanReq}" data-mask="0000000000"/>
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -290,12 +290,12 @@
 														<!-- text box -->
 		                                            	<div class="form-group cf">
 			                                                <div class="col-md-5">
-			                                                    <label  for="emiratesid-back" class="form-lbl mandatory_lbl"><spring:message code="label.ps.sitePlanDoc" />
+			                                                    <label  for="emiratesid-back" class="form-lbl "><spring:message code="label.ps.sitePlanDoc" />
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
 																<div class="input-group file-upload">
-																	<input type="text" class="form-control required" name="emiratesid-back" data-msg-required="${sitePlanDocReq}" readonly="readonly"/>
+																	<input type="text" class="form-control " name="emiratesid-back" data-msg-required="${sitePlanDocReq}" readonly="readonly"/>
 																	<span class="input-group-btn">
 																		<span class="btn btn-file">
 																			<spring:message code="file.browse" />&hellip; 

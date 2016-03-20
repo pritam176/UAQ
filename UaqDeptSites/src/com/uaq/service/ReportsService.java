@@ -1,0 +1,90 @@
+package com.uaq.service;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.jasperreports.engine.JRExporterParameter;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.engine.util.JRLoader;
+
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+
+
+import com.uaq.dao.DAOManager;
+import com.uaq.logger.UAQLogger;
+import com.uaq.util.UCMUploader;
+import com.uaq.util.UCMUploader.AttachmentInfo;
+
+public class ReportsService {
+	
+	
+	protected static UAQLogger logger = new UAQLogger(ReportsService.class);
+	public void generateRequestReport(String serviceId,String requestId,String requestNo,String username,String accountId, String serviceName) {
+		DAOManager daoManager = new DAOManager();
+        try {
+        	String reportName = "RequestReport";
+            Map<String,String> params = new HashMap<String, String>();
+            
+            logger.debug("Service Name -"+serviceName+" | "+"requestNo -"+requestNo +" | "+"accountId -"+accountId);
+                Date currentDate = new Date();
+                SimpleDateFormat dateFormat =
+                    new SimpleDateFormat("d-MM-yyyy");
+                String stringDate = dateFormat.format(currentDate);
+                Resource imageResource = new ClassPathResource("logo.png");
+                params.put("P_LOCALE", "en");
+                params.put("P_USER_NAME",username);
+                params.put("P_ACCOUNT_ID", accountId);
+                params.put("P_REQUEST_NO", requestNo);
+                params.put("P_SUBMIT_DATE", stringDate);
+                params.put("P_PROCESS_NAME", serviceName);
+                params.put("IMG_PATH", imageResource.getFile().getAbsolutePath());
+                Resource resource = new ClassPathResource(reportName + ".jasper");
+                
+                
+                ByteArrayOutputStream outputStream =
+                    new ByteArrayOutputStream();
+                JasperReport report =
+                    (JasperReport)JRLoader.loadObject(resource.getInputStream());
+                JasperPrint jasperPrint =
+                    JasperFillManager.fillReport(report, params,daoManager.getConnection());
+                JRPdfExporter pdfPage = new JRPdfExporter();
+                pdfPage.setParameter(JRExporterParameter.JASPER_PRINT,
+                                     jasperPrint);
+                pdfPage.setParameter(JRExporterParameter.OUTPUT_STREAM,
+                                     outputStream);
+                pdfPage.exportReport();
+                
+                String workflowHistoryId = new RequestService().getSubmitWorkFlowHistoryId(requestId, daoManager.getConnection());
+                List<AttachmentInfo> attachmentInfos = new ArrayList<UCMUploader.AttachmentInfo>();
+                AttachmentInfo attachmentInfo = new AttachmentInfo();
+				attachmentInfo.setFileName(requestNo + ".pdf");
+				attachmentInfo.setInputStream(new ByteArrayInputStream(outputStream.toByteArray()));
+				attachmentInfo.setDocTypeId("100");
+				attachmentInfo.setAttachmentType("Supportive_Attachment");
+				attachmentInfo.setRequestId(requestId);
+				attachmentInfo.setServiceId(serviceId);
+				attachmentInfo.setWorkflowHistoryId(workflowHistoryId);
+				attachmentInfos.add(attachmentInfo);
+				UCMUploader ucmUploader = new UCMUploader();
+				ucmUploader.genericUploadAttachment(attachmentInfos);
+				ucmUploader.genericSaveAttachmentToDB(attachmentInfos);
+                
+            
+        } catch (Exception e) {
+        	logger.error(e.getMessage());
+        }finally{
+        	daoManager.closeConnection();
+        }
+    }
+
+}

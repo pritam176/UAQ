@@ -62,6 +62,9 @@ public class ProCardRenewerServiceHandler extends ProCardServiceHandler {
 		ServiceField f4 = new ServiceField("proNationality", "proCard.ProNationality", cardDetails != null ? nationality : null, true);
 		ServiceField f5 = new ServiceField("identityOfPro", "proCard.IdentityOfPro", FieldTypeEnum.File, phase == null);
 		ServiceField f6 = new ServiceField("proPhotograph", "proCard.ProPhotograph", FieldTypeEnum.File, phase == null);
+		ServiceField f7 = new ServiceField("proPassport", "proCard.ProPassport", FieldTypeEnum.File, phase == null);
+		ServiceField f8 = new ServiceField("proResidency", "proCard.ProResidency", FieldTypeEnum.File, phase == null);
+		ServiceField f9 = new ServiceField("proAuthorizationLetter", "proCard.ProAuthorizationLetter", FieldTypeEnum.File, phase == null);
 		f3.setFieldValue(proIdExpDate != null ? displayDateFormat.format(proIdExpDate) : null);
 		f4.setFieldType(FieldTypeEnum.Select);
 		f4.setFieldValue(cardDetails != null ? nationalityId : null);
@@ -69,6 +72,9 @@ public class ProCardRenewerServiceHandler extends ProCardServiceHandler {
 		f5.setPanelHeader("service.label.attachments");
 		f5.setDocType("16", "Identity_of_the_PRO");
 		f6.setDocType("17", "PRO_Photograph");
+		f7.setDocType("8", "Passport"); 
+		f8.setDocType("25", "Passport_Residency_Page");
+		f9.setDocType("161", "authorization_letter"); 
 
 		serviceFields.add(f1);
 		serviceFields.add(f2);
@@ -76,9 +82,15 @@ public class ProCardRenewerServiceHandler extends ProCardServiceHandler {
 		serviceFields.add(f4);
 		serviceFields.add(f5);
 		serviceFields.add(f6);
+		serviceFields.add(f7);
+		serviceFields.add(f8);
+		serviceFields.add(f9);
 		if (sendBackInfo != null) {
 			f5.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f5.getDocTypeId()));
 			f6.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f6.getDocTypeId()));
+			f7.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f7.getDocTypeId()));
+			f8.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f8.getDocTypeId()));
+			f9.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f9.getDocTypeId()));
 			getReviewerResponse(sendBackInfo, serviceFields);
 		}
 		return serviceFields;

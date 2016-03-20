@@ -448,12 +448,12 @@
 										<!-- text box -->
 										<div class="form-group cf">
 											<div class="col-md-5">
-												<label for="trading_attach1" class="form-lbl mandatory_lbl"><spring:message
+												<label for="trading_attach1" class="form-lbl "><spring:message
 														code="label.egd.commerceMember" /></label>
 											</div>
 											<div class="col-md-7">
 												<div class="input-group file-upload">
-													<input type="text" class="form-control required"
+													<input type="text" class="form-control "
 														name="trading_attach1" readonly
 														data-msg-required="${commerceReq}" /> <span
 														class="input-group-btn"> 

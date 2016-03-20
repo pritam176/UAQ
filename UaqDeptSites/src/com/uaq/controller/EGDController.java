@@ -6,7 +6,7 @@ import static com.uaq.common.UAQURLConstant.*;
 import static com.uaq.common.ServiceNameConstant.*;
 
 import java.util.Locale;
-import java.util.Map;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,8 +30,9 @@ import com.uaq.controller.mapper.PortalDataMapper;
 import com.uaq.exception.UAQException;
 import com.uaq.logger.UAQLogger;
 import com.uaq.service.EGDRequestService;
-import com.uaq.service.LookupServiceEN_AR;
+
 import com.uaq.service.PortalUtil;
+import com.uaq.service.ReportsService;
 import com.uaq.util.StringUtil;
 import com.uaq.vo.AccountDetailTokenOutputVO;
 import com.uaq.vo.LandOutputVO;
@@ -210,6 +211,7 @@ public class EGDController extends BaseController {
 							model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
 							model.addAttribute(REQUEST_PARAM_TYPE_OF_USER, userDetails.getTypeOfUser());
 							viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+							new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), userDetails.getUsername(), userDetails.getAccountid(),supplierDetails.getServiceName_En());
 						}
 
 					}
@@ -246,6 +248,7 @@ public class EGDController extends BaseController {
 							model.addAttribute(REQUEST_PARAM_TYPE_OF_USER, userDetails.getTypeOfUser());
 							model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
 							viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+							new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), userDetails.getUsername(), userDetails.getAccountid(),supplierDetails.getServiceName_En());
 						}
 					}
 				}
@@ -403,6 +406,7 @@ public class EGDController extends BaseController {
 							model.addAttribute(REQUEST_PARAM_REQUEST_NO, output.getRequestNo());
 							viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
 							model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
+							new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), userDetails.getUsername(), userDetails.getAccountid(),"Re New Supplier Registration");
 						}
 					}
 				}
@@ -436,6 +440,7 @@ public class EGDController extends BaseController {
 							model.addAttribute(REQUEST_PARAM_SERVICE_ID, output.getServiceId());
 							model.addAttribute(REQUEST_PARAM_REQUEST_NO, output.getRequestNo());
 							model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
+							new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), userDetails.getUsername(), userDetails.getAccountid(),"Re New Supplier Registration");
 						}
 					}
 				}

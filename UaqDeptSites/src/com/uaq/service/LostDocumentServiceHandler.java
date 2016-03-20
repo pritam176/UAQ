@@ -120,6 +120,8 @@ public class LostDocumentServiceHandler extends ServiceHandler {
 				inputParams.put("amount", params.get("feeAmount"));
 				inputParams.put("status", "1");
 				WebServiceInvoker.sendSmsAndEMail(inputParams);
+				String serviceName = "Lost Document Replacement";
+				new ReportsService().generateRequestReport(params.get("serviceId"), requestData.getRequestId(), requestData.getRequestNumber(), accountDetails.getUserDetailsView().get(0).getUserName(), accountDetails.getId(),serviceName);
 			}
 			for (AttachmentInfo attachmentInfo : attachmentInfos) {
 				attachmentInfo.setRequestId(requestData.getRequestId());

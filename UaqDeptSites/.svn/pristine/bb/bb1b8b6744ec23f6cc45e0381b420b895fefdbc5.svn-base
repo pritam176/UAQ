@@ -1,0 +1,420 @@
+package com.uaq.controller;
+
+import static com.uaq.common.ApplicationConstants.LANG_ENGLISH;
+import static com.uaq.common.ApplicationConstants.PAGE_LABEL;
+import static com.uaq.common.ApplicationConstants.PAGE_META_DATA;
+import static com.uaq.common.ApplicationConstants.PARAM_LANGUAGE_CODE;
+import static com.uaq.common.ApplicationConstants.SESSION_LOGIN_INFO_PORTAL;
+import static com.uaq.common.ApplicationConstants.SPRING_REDIRECT;
+import static com.uaq.common.ApplicationConstants.UAQ_URL;
+import static com.uaq.common.ApplicationConstants.URL_SEPARATOR;
+import static com.uaq.common.TilesViewConstant.MOBILE_LOGIN_AGAIN;
+import static com.uaq.common.TilesViewConstant.MOBILE_PAYMENT_CONFIRNM;
+import static com.uaq.common.TilesViewConstant.PORTAL_LOGIN_AGAIN;
+import static com.uaq.common.TilesViewConstant.PORTAL_PAYMENT_CONFIRNM;
+import static com.uaq.common.UAQURLConstant.THANKYOU_PAYMENT_URL;
+import static com.uaq.payment.PaymentConstants.PAYMENT_METHOD_TYPE_GII_CO_BRANDED_MAG_STRIPE_CARD;
+import static com.uaq.payment.PaymentConstants.PAYMENT_METHOD_TYPE_GII_PLC_CHIP_CARD;
+import static com.uaq.payment.PaymentConstants.PAYMENT_METHOD_TYPE_GII_PLC_Mag_Stripe_Card;
+import static com.uaq.payment.PaymentConstants.PAYMENT_METHOD_TYPE_MASTERCARD;
+import static com.uaq.payment.PaymentConstants.PAYMENT_METHOD_TYPE_VISA;
+import static com.uaq.payment.PaymentConstants.RESPONSE_STATUS_SUCCESS;
+
+import java.io.UnsupportedEncodingException;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.uaq.common.ApplicationConstants;
+import com.uaq.common.PaymentSessionUtil;
+import com.uaq.common.PropertiesUtil;
+import com.uaq.common.ViewPath;
+import com.uaq.controller.mapper.PaymentDataMapper;
+import com.uaq.dao.DAOManager;
+import com.uaq.exception.UAQException;
+import com.uaq.logger.UAQLogger;
+import com.uaq.payment.InquiryPaymentResponse;
+import com.uaq.payment.MerchantAccount;
+import com.uaq.payment.PayWebPaymentResponse;
+import com.uaq.payment.PaymentConstants;
+import com.uaq.payment.PaymentStatus;
+import com.uaq.payment.PaymentUtil;
+import com.uaq.service.PaymentSequenceService;
+import com.uaq.service.PaymentServiceManager;
+import com.uaq.service.PaymentWorkFlowService;
+import com.uaq.service.PortalUtil;
+import com.uaq.service.PurchaseService;
+import com.uaq.service.ReviewerService;
+import com.uaq.service.UserDetailService;
+
+import com.uaq.util.StringUtil;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+import com.uaq.vo.LandOutputVO;
+import com.uaq.vo.LoginOutputVO;
+import com.uaq.vo.PageMetadataVO;
+import com.uaq.vo.PaymentTransactionDetailVO;
+import com.uaq.vo.PaymentWorkFlowVO;
+import com.uaq.vo.PurchaseVO;
+
+@Controller
+public class PaymentConfirmationController extends BaseController {
+
+	@Autowired
+	private PortalUtil portalUtil;
+
+	@Autowired
+	private ReviewerService reviewerService;
+
+	@Autowired
+	private PaymentWorkFlowService paymentWorkFlowService;
+	
+	@Autowired
+	private PaymentSequenceService paymentSequenceService;
+
+	private UserDetailService userDetailService = null;
+
+	private static transient UAQLogger logger = new UAQLogger(PaymentConfirmationController.class);
+
+	private static final String PURCHASE_STATUS_COMPLETED = "Completed";
+	private static final String PURCHASE_STATUS_FAILED = "Failed";
+	private static final String ERROR_PAGE = "error.page";
+	private static final String ERROR_PAGE_MOBILE = "error.page.mobile";
+	private static final String PAYMENT_STATUS_SUCCESS = "success";
+	private static final String PAYMENT_STATUS_FAILURE = "failure";
+
+	static final String PAYMENT_CONFIRMATION_PAGE = "payment_confirmation.jsp";
+
+	PaymentServiceManager paymentServiceManager = new PaymentServiceManager();
+	
+	PurchaseService purchaseService = new PurchaseService();
+
+	@RequestMapping(value = ViewPath.PAYMENT_CONFIRMATION, method = RequestMethod.POST)
+	public String handleRequest(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+
+		logger.enter("handleRequest POST");
+
+		super.handleRequest(request, model);
+
+		userDetailService = new UserDetailService();
+
+		boolean result = false;
+		PayWebPaymentResponse webPaymentResponse = null;
+		InquiryPaymentResponse inquiryPaymentResponse = null;
+		PaymentStatus paymentStatus = null;
+		String status = PAYMENT_STATUS_FAILURE;
+		String message = PURCHASE_STATUS_FAILED;
+		Double amount = 0.0;
+
+		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
+		languageCode = languageCode != null ? languageCode : ApplicationConstants.LANG_ENGLISH;
+
+		boolean isMobile = portalUtil.isMobile(request, response);
+
+		String view = (isMobile == false) ? PORTAL_LOGIN_AGAIN : MOBILE_LOGIN_AGAIN;
+		String pageLabel = "purchase.payment.review";
+		Locale locale = new Locale(languageCode);
+
+		LoginOutputVO logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
+		AccountDetailTokenOutputVO accountDetailTokenOutputVO = null;
+
+		if (logininfo != null) {
+			logger.debug(logininfo.toString());
+
+			logger.debug(" : isMobile = " + isMobile);
+			view = (isMobile == false) ? PORTAL_PAYMENT_CONFIRNM : MOBILE_PAYMENT_CONFIRNM;
+			DAOManager daoManager = new DAOManager();
+			try {
+				Connection con = daoManager.getConnection();
+				Connection erpCon = daoManager.getERPConnection();
+				String purchaseId = null;
+				String otherInfo = getAllRequestParameters(request);
+				logger.debug("Request all info : " + otherInfo);
+
+				String responsePUN = request.getParameter("Response.PUN");
+
+				logger.debug("responsePUN = " + responsePUN + " : Status = " + request.getParameter("Response.Status") + " : StatusMessage = " + request.getParameter("Response.StatusMessage"));
+
+				if ((responsePUN != null) && (!responsePUN.isEmpty())) {
+					purchaseId = purchaseService.getPurchaseIdForTransactionId(request.getParameter("Response.PUN"),con);
+
+					logger.debug("purchaseId = " + purchaseId);
+
+					request.setAttribute("purchaseId", purchaseId);
+
+					PurchaseVO purchaseVO = purchaseService.getPurchase(purchaseId,con);
+					MerchantAccount merchantAccount = purchaseService.getPaymentServiceCode(purchaseVO.getServiceId(),con).getMerchantAccount();
+
+					pageLabel = PaymentSessionUtil.getPageLable(purchaseVO.getServiceId());
+					String serviceName = messageSource.getMessage(pageLabel, null, locale);
+					model.addAttribute("ServiceName", serviceName);
+
+					webPaymentResponse = PaymentUtil.fillWebPaymentResponse(request, merchantAccount);
+
+					Cookie[] requestCookies = request.getCookies();
+
+					Map<String, String> cookies = new HashMap<String, String>();
+					if (requestCookies != null) {
+						for (Cookie c : requestCookies) {
+							cookies.put(c.getName(), c.getValue());
+							logger.info("cookies-" + c.getName() + "value-" + c.getValue());
+						}
+					}
+
+					/*if (cookies.get(responsePUN) == null ) {
+						
+						Cookie responsePUNCookie = new Cookie(responsePUN, "valid");
+						response.addCookie(responsePUNCookie);*/
+						logger.debug(webPaymentResponse.toString());
+						/*
+						 * try { webPaymentResponse.setStatusMessage(URLDecoder
+						 * .decode (webPaymentResponse.getStatusMessage(),
+						 * "UTF-8")); } catch (UnsupportedEncodingException e) {
+						 * webPaymentResponse
+						 * .setStatusMessage("Error in decoding message");
+						 * logger.error(e.getMessage()); }
+						 */
+						result = purchaseService.savePaywebPaymentTransaction(webPaymentResponse,con);
+						logger.debug("saveWebPaymentResponseTransaction :" + result);
+
+						// mark payment txn status in progress as completed
+						result = purchaseService.purchasePaymentInProgress(purchaseId.toString(), false,con);
+						logger.debug("PurchasePaymentInProgress :" + result);
+
+						amount = purchaseService.getGeneralFee(con);
+						logger.debug("generalFee -" + amount);
+
+						if (request.getParameter("Response.Status").equals(RESPONSE_STATUS_SUCCESS) && request.getParameter("Response.SecureHash").equals(webPaymentResponse.calculateSecureHash())) {
+
+							// mark purchase transaction as completed
+							result = purchaseService.updatePurchaseStatus(purchaseId.toString(), PURCHASE_STATUS_COMPLETED,con);
+							logger.debug("updatePurchaseStatus :" + result);
+
+							// update SOA table
+							paymentStatus = purchaseService.updateApplicantRequestTableStatus(purchaseId.toString(),con);
+							logger.debug("updateApplicantRequestTableStatus :" + paymentStatus.toString());
+
+							// update ERP table for eGD super entity general
+							// fee
+							// payment
+							// get eGD super entity fee
+
+							result = purchaseService.updateERPtable(amount, PaymentConstants.EGD_DEPT_ID, responsePUN, PaymentConstants.GENERAL_FEE_ID, purchaseVO.getCustomerId(),
+									purchaseVO.getCustomerName(), webPaymentResponse.getTransactionResponseDate(), webPaymentResponse.getConfirmationID(),erpCon);
+							logger.debug("updateERPtable for general fee :" + result);
+
+							// update ERP table for department fee payment
+							result = purchaseService.updateERPtable(webPaymentResponse.getService().getAmountWithFeesDecimal(), purchaseVO.getDepartmentId(), responsePUN, purchaseVO.getFeeId(),
+									purchaseVO.getCustomerId(), purchaseVO.getCustomerName(), webPaymentResponse.getTransactionResponseDate(), webPaymentResponse.getConfirmationID(),erpCon);
+							logger.debug("updateERPtable for department fee :" + result);
+
+							status = PAYMENT_STATUS_SUCCESS;
+							message = messageSource.getMessage("purchase.payment.success", null, locale);
+							
+							
+							accountDetailTokenOutputVO = userDetailService.getUserdetail(purchaseVO.getCustomerId());
+
+							PaymentWorkFlowVO paymentWorkFlowVO = PaymentDataMapper.setTranactionWorkFlowVO(paymentStatus, accountDetailTokenOutputVO, purchaseVO);
+
+							paymentWorkFlowVO.setTransactionId(webPaymentResponse.getTransactionId());
+							paymentWorkFlowVO.setEdiramFees(String.valueOf(webPaymentResponse.getTransactionAmountDecimal()));
+
+							boolean savePaymentWorkflow = paymentWorkFlowService.savePaymentWorkFlow(paymentWorkFlowVO,con);
+							logger.debug("status of workflowTabel insert=" + savePaymentWorkflow);
+							
+							daoManager.erpCommit();
+							//getSequence
+//							String receptSequnceName = PropertiesUtil.getProperty("REC_SEQ_"+paymentStatus.getServiceId());
+//							logger.debug("Sequnce Name -"+receptSequnceName);
+//							
+//							if(StringUtil.isEmpty(receptSequnceName)){
+//								logger.error("Null Sequence Name");
+//								throw new Exception();
+//							}
+//							String ENV_ID = PropertiesUtil.getProperty("ENV_ID");
+//							
+//							if(StringUtil.isEmpty(ENV_ID)){
+//								logger.error("Null tran id");
+//								throw new Exception();
+//							}
+//							String receptNo	=	paymentSequenceService.getSequnceNextValue(receptSequnceName,con);
+							
+							
+							purchaseService.updateReceptNo(purchaseId, "EXXXX", con);
+							daoManager.commit();
+							purchaseVO = purchaseService.getPurchase(purchaseId,con);
+							String receptNo = purchaseVO.getReceiptNumber();
+							logger.debug("Receipt Number -"+receptNo);
+							//purchaseService.updateReceptNoERP(responsePUN, receptNo, erpCon);
+							
+							daoManager.commit();
+							daoManager.erpCommit();
+							
+							if (savePaymentWorkflow) {
+								
+									PaymentTransactionDetailVO paymentTransactionDetailVO = PaymentDataMapper.setTranactionDetailVo(paymentStatus);
+									paymentTransactionDetailVO.setTransactionId(webPaymentResponse.getTransactionId());
+									paymentTransactionDetailVO.setTransactionAmount(String.valueOf(webPaymentResponse.getTransactionAmountDecimal()));
+										paymentTransactionDetailVO.setLanguageCode(languageCode);
+										try {
+											LandOutputVO landOutputVO = reviewerService.invokeRevierIneceator(accountDetailTokenOutputVO, paymentTransactionDetailVO);
+										logger.debug("Reviewer Status-" + landOutputVO.getStatus());
+										model.addAttribute("servicemessage", (languageCode.equals(LANG_ENGLISH)) ? landOutputVO.getStatus_EN() : landOutputVO.getStatus_AR());
+										if ("Success".equals(landOutputVO.getStatus())) {
+											logger.debug("delete workflowTabel for requestId=" + paymentWorkFlowVO.getRequestId());
+											boolean deletePaymentWorkflow = paymentWorkFlowService.deletePaymentWorkFLow(paymentWorkFlowVO,con);
+											logger.debug("status of workflowTabel Deletion=" + deletePaymentWorkflow);
+										} else {
+											logger.debug("update workflowTabel for requestId=" + paymentWorkFlowVO.getRequestId());
+											boolean updataPaymentWorkflow = paymentWorkFlowService.updatePaymentWorkFLow(paymentWorkFlowVO,con);
+											logger.debug("status of workflowTabel Updation=" + updataPaymentWorkflow);
+											model.addAttribute("servicemessage", messageSource.getMessage("reviewer.failed.again", null, locale));
+										}
+									} catch (Exception e) {
+										logger.error("Initiating BPM process " +paymentTransactionDetailVO.getRequestNo(), e);
+									}
+										
+
+									
+
+							}
+
+						} else {
+							status = PAYMENT_STATUS_FAILURE;
+							message = messageSource.getMessage("purchase.payment.trans.fail", null, locale); // default
+																												// message
+							model.addAttribute("servicemessage", messageSource.getMessage("purchase.payment.trans.fail", null, locale));
+							try {
+								String responseCodeMessage = messageSource.getMessage(request.getParameter("Response.Status"), null, locale);
+								message = responseCodeMessage != null && !responseCodeMessage.isEmpty() ? responseCodeMessage : message;
+							} catch (Exception e) {
+								logger.debug("key not found for translation. error code doesn't exist : " + request.getParameter("Response.Status"));
+							}
+							if (request.getParameter("Response.Status").equals("0000")) {
+								// secure hash not matched case although it
+								// was
+								// success status
+								webPaymentResponse.setStatus("SHCF");
+								webPaymentResponse.setOtherInfo("secure hash check failed");
+								message = messageSource.getMessage("payment.secure.hash.mismatch", null, locale);
+							}
+
+							logger.debug("secure hash match = ", Boolean.valueOf(request.getParameter("Response.SecureHash").equals(webPaymentResponse.calculateSecureHash())));
+							logger.debug("response message secure hash = ", request.getParameter("Response.SecureHash"));
+							logger.debug("our calculated secure hash = ", webPaymentResponse.calculateSecureHash());
+
+							result = purchaseService.updatePurchaseStatus(purchaseId.toString(), PURCHASE_STATUS_FAILED,con);
+
+							logger.debug("updatePhotoPurchaseStatus :" + result);
+						}
+
+						inquiryPaymentResponse = purchaseService.getPaymentDetails(webPaymentResponse.getConfirmationID(),con);
+
+						inquiryPaymentResponse.setPaymentMethodType(getPaymentMethodTypeDescription(inquiryPaymentResponse.getPaymentMethodType(), languageCode));
+
+						logger.debug("inquiryPaymentResponse payment details :" + inquiryPaymentResponse);
+						daoManager.commit();
+						daoManager.erpCommit();
+					
+				}
+				
+			} catch (Exception e) {
+				daoManager.rollback();
+				daoManager.erpRollback();
+				logger.error(e.getMessage());
+				message = messageSource.getMessage("purchase.payment.trans.fail", null, locale);
+				model.addAttribute("servicemessage", messageSource.getMessage("purchase.payment.trans.fail", null, locale));
+			}finally{
+				daoManager.closeConnection();
+				daoManager.closeERPConnection();
+			}
+
+			logger.debug("status = " + status + " : message = " + message);
+
+			if (inquiryPaymentResponse == null) {
+				view = (isMobile == false) ? ERROR_PAGE : ERROR_PAGE_MOBILE;
+			}
+			request.getSession().setAttribute("inquiryPaymentResponse", inquiryPaymentResponse);
+			model.addAttribute("inquiryPaymentResponse", inquiryPaymentResponse);
+			model.addAttribute("status", status);
+			model.addAttribute("message", message);
+			model.addAttribute("generalFee", amount);
+			
+
+			PageMetadataVO pageMetadataVO = new PageMetadataVO();
+			pageMetadataVO.setPageTitle(messageSource.getMessage(pageLabel, null, locale));
+			pageMetadataVO.setPageDescription(messageSource.getMessage(pageLabel, null, locale));
+			pageMetadataVO.setPageKeywords(messageSource.getMessage(pageLabel, null, locale));
+			model.addAttribute(PAGE_META_DATA, pageMetadataVO);
+			// model.addAttribute("ignore", "true");
+
+		} else {
+			logger.debug("Session Expire");
+		}
+		model.addAttribute(PAGE_LABEL, pageLabel);
+		model.addAttribute("view", view);
+		logger.exit("handleRequest POST");
+
+		return SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + URL_SEPARATOR + THANKYOU_PAYMENT_URL;
+	}
+
+	/**
+	 * This method is used to create payment method type description according
+	 * to the language
+	 * 
+	 * @param paymentMethodType
+	 * @param languageCode
+	 * @return
+	 */
+	private String getPaymentMethodTypeDescription(String paymentMethodType, String languageCode) throws UnsupportedEncodingException {
+
+		logger.enter("getPaymentMethodTypeDescription : paymentMethodType = " + paymentMethodType);
+
+		String result = null;
+		Locale locale = new Locale(languageCode);
+
+		// in response, we get the second part of the payment method type e.g 1
+		// instead of 1-1, so we have to split and take second part(start index
+		// is 0)
+		if (paymentMethodType.equals(PAYMENT_METHOD_TYPE_VISA.split("-")[1])) {
+			result = messageSource.getMessage("payment.method.type.visa", null, locale);
+		} else if (paymentMethodType.equals(PAYMENT_METHOD_TYPE_MASTERCARD.split("-")[1])) {
+			result = messageSource.getMessage("payment.method.type.mastercard", null, locale);
+		} else if (paymentMethodType.equals(PAYMENT_METHOD_TYPE_GII_PLC_Mag_Stripe_Card.split("-")[1])) {
+			result = messageSource.getMessage("payment.method.type.red", null, locale);
+		} else if (paymentMethodType.equals(PAYMENT_METHOD_TYPE_GII_CO_BRANDED_MAG_STRIPE_CARD.split("-")[1])) {
+			result = messageSource.getMessage("payment.method.type.blue", null, locale);
+		} else if (paymentMethodType.equals(PAYMENT_METHOD_TYPE_GII_PLC_CHIP_CARD.split("-")[1])) {
+			result = messageSource.getMessage("payment.method.type.gold", null, locale);
+		}
+
+		logger.exit("getPaymentMethodTypeDescription : result = " + result);
+
+		return result;
+	}
+
+	private String getAllRequestParameters(HttpServletRequest request) {
+
+		StringBuilder result = new StringBuilder();
+
+		@SuppressWarnings("unchecked")
+		Enumeration<String> params = request.getParameterNames();
+		while (params.hasMoreElements()) {
+			String paramName = (String) params.nextElement();
+			result.append("\n Parameter Name - " + paramName + ", Value - " + request.getParameter(paramName));
+		}
+		return result.toString();
+	}
+}

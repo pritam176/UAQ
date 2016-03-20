@@ -92,7 +92,8 @@
 												</c:choose>
 												
 												<!-- text box -->
-												<div id="serviceField-${status.index}" class="form-group cf <c:if test='${fields[status.index].notifierField}'>notifierFieldClass</c:if>" <c:if test="${fields[status.index].requiredUpon_FieldName != null}">${fields[status.index].requiredUpon_FieldName}='${fields[status.index].requiredUpon_FieldValue}'</c:if>>
+												<div id="serviceField-${status.index}" class="form-group cf <c:if test='${fields[status.index].notifierField}'>notifierFieldClass</c:if>" <c:if test="${fields[status.index].requiredUpon_FieldName != null}">${fields[status.index].requiredUpon_FieldName}='${fields[status.index].requiredUpon_FieldValue}'</c:if> 
+												<c:if test="${fields[status.index].mandatoryUpon_FieldName != null}">required_${fields[status.index].mandatoryUpon_FieldName}='${fields[status.index].mandatoryUpon_FieldValue}'</c:if>>
 													<div class="${labelDivClass}">
 														<label for="params['${fields[status.index].fieldName}']"  class="form-lbl ${fields[status.index].required?'mandatory_lbl':''}"><spring:message code="${fields[status.index].displayKey}"/>
 															<c:if test="${fields[status.index].infoMessage != null}">
@@ -160,7 +161,7 @@
 																    <c:if test="${fields[status.index].fieldName != null && fields[status.index].fieldName != '' && param.statusId != '6'}">
 																		<input name="files['${fields[status.index].fieldName}'].docTypeId" type="hidden" value="${fields[status.index].docTypeId}"/>
 																		<input name="files['${fields[status.index].fieldName}'].docTypeName" type="hidden" value="${fields[status.index].docTypeName}"/>
-																		<input type="text" class="form-control  other-form-file file-upload-option-view  <c:if test='${fields[status.index].attachmentValue == null}'>required</c:if>" name ="files['${fields[status.index].fieldName}'].attachmentFile"  data-msg-required="${fieldmsg}" readonly="readonly" />
+																		<input type="text" class="form-control  other-form-file file-upload-option-view  <c:if test='${fields[status.index].required == true}'>required</c:if>" name ="files['${fields[status.index].fieldName}'].attachmentFile"  data-msg-required="${fieldmsg}" readonly="readonly" />
 																		<span class="input-group-btn">
 																			<span class="btn btn-file">
 																				<spring:message code="file.browse" />&hellip; 

@@ -47,6 +47,7 @@ public class UCMUploader {
 					attachmentParams.put("ucmDid", attachment.getDocInfo().get("DID"));
 					attachmentParams.put("downloadurl", getNativeFileUrl(attachment.getDocInfo().get("DID")));
 					attachmentParams.put("viewurl", attachment.getDocInfo().get("DocUrl"));
+					attachmentParams.put("workflowHistoryId", attachment.getWorkflowHistoryId());
 					String attachmentId = WebServiceInvoker.uploadAttachmentToDatabase(attachmentParams);
 					attachment.setAttachmentId(attachmentId);
 				} catch (Exception e) {
@@ -76,6 +77,7 @@ public class UCMUploader {
 		//from service_attachments table
 		private String attachmentId;
 		private String fieldName;
+		private String workflowHistoryId;
 
 		public String getFilename() {
 			return fileName;
@@ -147,6 +149,14 @@ public class UCMUploader {
 		
 		public void setFieldName(String fieldName) {
 			this.fieldName = fieldName;
+		}
+
+		public String getWorkflowHistoryId() {
+			return workflowHistoryId;
+		}
+
+		public void setWorkflowHistoryId(String workflowHistoryId) {
+			this.workflowHistoryId = workflowHistoryId;
 		}
 
 	}

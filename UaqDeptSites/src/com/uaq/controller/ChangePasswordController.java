@@ -58,9 +58,10 @@ public class ChangePasswordController extends BaseController {
 	@RequestMapping(value = ViewPath.CHANGE_PASSWORD, method = RequestMethod.GET)
 	public String handleChangePassword(HttpServletRequest request, ModelMap model) {
 		super.handleRequest(request, model);
-		String view = "";
-		String key = request.getParameter("userName");
 		String languageCode = request.getParameter("languageCode");
+		String view = "redirect:" + PropertiesUtil.getProperty("uaq.url") + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+		String key = request.getParameter("userName");
+		
 		Locale locale = new Locale(languageCode);
 		model.addAttribute(ISMOBILE, "false");
 		try {
@@ -78,7 +79,7 @@ public class ChangePasswordController extends BaseController {
 			}
 
 		} catch (SQLException e) {
-			view = "redirect:" + PropertiesUtil.getProperty("uaq.url") + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+			
 			logger.error(e.getMessage());
 		}
 		model.addAttribute(PAGE_LABEL, "label.change.password");

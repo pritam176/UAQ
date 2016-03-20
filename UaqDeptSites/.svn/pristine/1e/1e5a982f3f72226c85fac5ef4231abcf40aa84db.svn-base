@@ -1,0 +1,52 @@
+package com.uaq.controller.mapper;
+
+import com.uaq.payment.PaymentStatus;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+import com.uaq.vo.PaymentTransactionDetailVO;
+import com.uaq.vo.PaymentWorkFlowVO;
+import com.uaq.vo.PurchaseVO;
+import static com.uaq.common.StatusNameConstant.*;
+import static com.uaq.common.ServiceNameConstant.*;
+
+public class PaymentDataMapper {
+
+	public static PaymentTransactionDetailVO setTranactionDetailVo(PaymentStatus paymentStatus) {
+		PaymentTransactionDetailVO vo = new PaymentTransactionDetailVO();
+		vo.setTransactionStatus("COMPLITED");
+		vo.setRequestNo(paymentStatus.getRequestNo());
+		vo.setServiceId(paymentStatus.getServiceId());
+		vo.setStatusId(paymentStatus.getStatusId());
+		vo.setRequestId(paymentStatus.getRequestId());
+		return vo;
+	}
+
+	public static PaymentWorkFlowVO setTranactionWorkFlowVO(PaymentStatus paymentStatus, AccountDetailTokenOutputVO accountDetailTokenOutputVO, PurchaseVO purchaseVO) {
+		PaymentWorkFlowVO workFlowVO = new PaymentWorkFlowVO();
+		String FEE_TYPE_CODE="A001";
+		workFlowVO.setRequestNo(paymentStatus.getRequestNo());
+		workFlowVO.setCreatedBy(accountDetailTokenOutputVO.getLoginusername());
+		workFlowVO.setModifiedBy(accountDetailTokenOutputVO.getLoginusername());
+		workFlowVO.setServiceId(paymentStatus.getServiceId());
+		workFlowVO.setStatusId(paymentStatus.getStatusId());
+		//workFlowVO.setTransactionId(purchaseVO.getPaymentTransaction()==null?"":purchaseVO.getPaymentTransaction().getTransactionId());
+		workFlowVO.setTransactionStatus("COMPLITED");
+		workFlowVO.setDepartmentCode(purchaseVO.getDepartmentId());
+		workFlowVO.setRequestId(paymentStatus.getRequestId());
+		workFlowVO.setRequestType("1");
+		workFlowVO.setUserName(accountDetailTokenOutputVO.getUserName());
+		
+		if(TO_ISSUE_SITE_PLAN_INICEATE.equals(paymentStatus.getStatusId())){
+			FEE_TYPE_CODE="S001";
+		}
+		if(ISSUE_TO_WHOME_IT_MAY_CERTIFICATE.equals(paymentStatus.getServiceId())){
+			FEE_TYPE_CODE="S001";
+		}
+		if(PROCEED_TO_OPERATOR.equals(paymentStatus.getServiceId())){
+			FEE_TYPE_CODE="S001";
+		}
+		
+		workFlowVO.setFeeId(FEE_TYPE_CODE);
+
+		return workFlowVO;
+	}
+}

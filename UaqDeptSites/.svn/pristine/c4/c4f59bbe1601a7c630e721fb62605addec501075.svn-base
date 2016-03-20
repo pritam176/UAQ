@@ -1,0 +1,120 @@
+package com.uaq.dao;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import com.uaq.common.PropertiesUtil;
+import com.uaq.logger.UAQLogger;
+
+public class DAOManager {
+	private static transient UAQLogger logger = new UAQLogger(DAOManager.class);
+	private static final String DB_DRIVER = PropertiesUtil
+			.getProperty("soa.jdbc.driverClassName");
+	private static final String DB_CONNECTION = PropertiesUtil
+			.getProperty("soa.jdbc.url");
+	private static final String DB_USER = PropertiesUtil
+			.getProperty("soa.jdbc.username");
+	private static final String DB_PASSWORD = PropertiesUtil
+			.getProperty("soa.jdbc.password");
+
+	private static final String DB_CONNECTION_ERP = PropertiesUtil
+			.getProperty("erp.jdbc.url");
+	private static final String DB_USER_ERP = PropertiesUtil
+			.getProperty("erp.jdbc.username");
+	private static final String DB_PASSWORD_ERP = PropertiesUtil
+			.getProperty("erp.jdbc.password");
+
+	public static DAOManager getInstance() {
+		return DAOManagerSingleton.INSTANCE.get();
+	}
+
+	private DAOManager() {
+
+	}
+
+	public Connection getConnection() throws SQLException {
+
+		if (this.con == null || this.con.isClosed()) {
+			try {
+				Class.forName(DB_DRIVER);
+			} catch (ClassNotFoundException e) {
+				logger.error(e.getMessage());
+			}
+
+			try {
+				con = DriverManager.getConnection(DB_CONNECTION, DB_USER,
+						DB_PASSWORD);
+				con.setAutoCommit(false);
+			} catch (SQLException e) {
+				throw e;
+			}
+		}
+		return con;
+	}
+
+	public void closeConnection() throws SQLException {
+		try {
+			if (this.con != null && !this.con.isClosed())
+				this.con.close();
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+
+	public Connection getERPConnection() throws SQLException {
+
+		if (this.erpCon == null || this.erpCon.isClosed()) {
+			try {
+				Class.forName(DB_DRIVER);
+			} catch (ClassNotFoundException e) {
+				logger.error(e.getMessage());
+			}
+
+			try {
+				erpCon = DriverManager.getConnection(DB_CONNECTION_ERP,
+						DB_USER_ERP, DB_PASSWORD_ERP);
+				erpCon.setAutoCommit(false);
+			} catch (SQLException e) {
+				throw e;
+			}
+		}
+		return erpCon;
+	}
+
+	public void closeERPConnection() throws SQLException {
+		try {
+			if (this.erpCon != null && !this.erpCon.isClosed())
+				this.erpCon.close();
+		} catch (SQLException e) {
+			throw e;
+		}
+	}
+
+	// Private\
+	private Connection con;
+	private Connection erpCon;
+
+	private static class DAOManagerSingleton {
+
+		public static ThreadLocal<DAOManager> INSTANCE;
+		static {
+			try {
+				INSTANCE = new ThreadLocal<DAOManager>() {
+					@Override
+					protected DAOManager initialValue() {
+						try {
+							return new DAOManager();
+						} catch (Exception e) {
+							return null;
+						}
+					}
+				};
+			} catch (Exception e) {
+				INSTANCE = null;
+			}
+
+		}
+	}
+
+}

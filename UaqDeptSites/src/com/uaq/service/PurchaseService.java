@@ -499,5 +499,8 @@ public class PurchaseService {
 	public Map<String,String> getAllFailedPurchase(Connection con) throws SQLException{
 		return purchaseDAO.getAllFailedPurchase(con);
 	}
+	public Map<String,String> getServiceFee(String serviceId, String feeTypeCode, String userType, String applicantType, String letter, String landType,Connection con) throws SQLException{
+		return purchaseDAO.getServiceFee(serviceId, feeTypeCode, userType, applicantType, letter, landType, con);
+	}
 
 }

@@ -48,29 +48,33 @@ public abstract class RealEstateOfficeServiceHandler extends ServiceHandler {
 		ServiceField f3 = new ServiceField("policeClearanceCertificate", "realEstate.policeClearanceCertificate", FieldTypeEnum.File, phase == null);
 		ServiceField f4 = new ServiceField("personalPicture", "realEstate.personalPicture", FieldTypeEnum.File, phase == null);
 		ServiceField f5 = new ServiceField("realStateTradeLicense", "realEstate.realStateTradeLicense", FieldTypeEnum.File, phase == null);
+		ServiceField f6 = new ServiceField("familyBook", "lvp.familyBook", FieldTypeEnum.File, phase == null);
 		f1.setFieldValue(realEstateOffice == null ? (String) initialParams.get(f1.getFieldName()) : realEstateOffice.getMdName().getValue().toString());
 		f2.setFieldValue(realEstateOffice == null ? (String) initialParams.get(f2.getFieldName()) : realEstateOffice.getMdAddress1().getValue().toString());
 		f3.setPanelHeader("service.label.attachments");
 		f3.setDocType("157", "policeClearanceCertificate");
 		f4.setDocType("158", "personalImage");
 		f5.setDocType("19", "tradeLicense");
+		f6.setDocType("20", "Family_book");
 
 		serviceFields.add(f1);
 		serviceFields.add(f2);
 		if (sendBackInfo != null) {
 			f3.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f3.getDocTypeId()));
 			f4.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f4.getDocTypeId()));
+			f6.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f6.getDocTypeId()));
 			if (phase != null && phase.equals("Step1")) {
 				f1.setDisabled(true);
 				f2.setDisabled(true);
 				f5.setRequired(true);
-				ServiceField f6 = new ServiceField("remarks", "realEstate.remarks", FieldTypeEnum.Text, false);
-				f6.setPanelHeader("service.label.attachments");
-				serviceFields.add(f6);
+				ServiceField f7 = new ServiceField("remarks", "realEstate.remarks", FieldTypeEnum.Text, false);
+				f7.setPanelHeader("service.label.attachments");
+				serviceFields.add(f7);
 				serviceFields.add(f5);
 			} else { // Resubmit
 				serviceFields.add(f3);
 				serviceFields.add(f4);
+				serviceFields.add(f6);
 				f5.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f5.getDocTypeId()));
 				if (serviceId == renewProcessServiceId) {
 					serviceFields.add(f5);
@@ -86,6 +90,7 @@ public abstract class RealEstateOfficeServiceHandler extends ServiceHandler {
 		} else {
 			serviceFields.add(f3);
 			serviceFields.add(f4);
+			serviceFields.add(f6);
 			if (serviceId == renewProcessServiceId) {
 				serviceFields.add(f5);
 			}
@@ -126,6 +131,10 @@ public abstract class RealEstateOfficeServiceHandler extends ServiceHandler {
 				inputParams.put("amount", params.get("feeAmount"));
 				inputParams.put("status", "1");
 				WebServiceInvoker.sendSmsAndEMail(inputParams);
+				String serviceName = "New Real Estate Office";
+				if("407".equals(params.get("serviceId")))
+					serviceName = "Renew Real Estate Office";
+				new ReportsService().generateRequestReport(params.get("serviceId"), requestData.getRequestId(), requestData.getRequestNumber(), accountDetails.getUserDetailsView().get(0).getUserName(), accountDetails.getId(),serviceName);
 			}
 			System.out.println("--------->  Request Id: " + requestData.getRequestId());
 			for (AttachmentInfo attachmentInfo : attachmentInfos) {

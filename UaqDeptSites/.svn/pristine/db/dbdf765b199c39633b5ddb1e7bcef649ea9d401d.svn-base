@@ -1,0 +1,168 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<c:set var ="paasmismath"><spring:message code="passwordMisMatch"/></c:set>
+<c:set var="password"><spring:message code='plzPassword'/></c:set>
+					<c:set var="passwordMax"><spring:message code='passMax'/></c:set>
+					<c:set var="passwordMin"><spring:message code = 'passMin'/></c:set>
+					<c:set var ="passwordformatmsg"><spring:message code="password.format"/></c:set>
+
+
+		<div class="container-fluid">
+			<div class="wrapper">
+				<!-- content area -->
+				<div class="mainmenu">
+					<div class="col-md-12 hidden-xs hidden-sm">
+						<div class="mainmenu-wrap">
+							<ul class="no-list cf">
+								<li>
+									<a href="/${param.languageCode}/home.html"><img src="/img/home1.png" alt="Home UAQ">
+									</a>
+								</li>
+								<li class=""><a href="/${param.languageCode}/registrationlanding.html"><spring:message code="registration" /></a>
+								</li>
+								<li class="active"><a href="#"><spring:message code="label.change.password" /> </a>
+								</li>
+								
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="content">
+					<div class="row">
+						<!-- right col -->
+						
+						<!-- right col -->
+						<!-- left col -->
+						<div class="col-xs-12 col-sm-9 col-md-9 main-left-col">
+							<!-- page title -->
+							<div class="page-title-wrap">
+								<div class="row">
+									<div class="col-xs-12 col-sm-9 col-md-10 title-txt">
+										<!-- sub page title 
+										<h4 class="page-title-sub">
+										MUNICIPALITY
+										</h4>-->
+										<!-- /sub page title -->
+										<!-- page title -->
+										<h2 class="page-title">
+										<spring:message code="label.change.password"></spring:message>
+										</h2>
+										<!-- /page title -->
+									</div>
+									<div class="hidden-xs show-sm col-md-2 title-icon">
+										<!-- <img src="img/icons/icon-uaq.png" alt="uaq"> -->
+									</div>
+								</div>
+							</div>
+							<!-- /page title -->
+							<div class="main-content-wrap">
+								
+								<div class="page-content-wrap">
+										<div class="form-content cf">
+										<%--  <form name="feedbak" id="feedbak" enctype="" method="POST" action="#" > --%>
+										<form:form id="changePassword" method="POST" action="changePassword.html" commandName="changePasswordCommand">
+										    <div class="row">
+												<div class="row"> 
+													<div class="col-md-12 remove-pad"><div class="form-group cf"><label class=" pull-right"></label> </div></div>
+												</div>
+											</div>
+										
+	                                        
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="new_password" class="form-lbl mandatory_lbl"><spring:message code="label.new.password"></spring:message>
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+				                                            <form:input path="password"  id="new_password" name="new_password" type="password" class="form-control required" required="required" data-msg-required="${password}"
+				                                             data-rule-maxlength="15" data-rule-minlength="8" 
+				                                             data-msg-maxlength="${passwordMax}" data-msg-minlength="${passwordMin}"
+				                                             data-rule-passwdweak="true" data-msg-passwdweak="${passwordformatmsg}"/>
+			                                                   <form:hidden id="username"  path="userName"  name="username"  value="${param.userName}"/> 
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											<div class="row">
+												<div class="col-md-12 remove-pad">
+													<div class="col-md-6 remove-pad">
+														<!-- text box -->
+		                                            	<div class="form-group cf">
+			                                                <div class="col-md-5">
+			                                                    <label for="renew_password" class="form-lbl mandatory_lbl"><spring:message code="label.reenter.password"></spring:message>
+			                                                    </label>
+				                                            </div>
+				                                            <div class="col-md-7">
+			                                                    <input id="renew_password" name="renew_password" type="password" equalto="#new_password"  data-msg-equalto="${paasmismath}" class="form-control" />
+			                                                </div>
+		                                            	</div>
+		                                        		<!-- /text box -->
+		                                        	</div>
+												</div>
+	                                        </div>
+											
+	                                        <div class="row">
+												<div class="col-md-12 remove-pad">
+		                                        	<div class="col-md-6 remove-pad">
+														<!-- submit button -->
+			                                        	<div class="row">
+				                                            <div class="form-group submission">
+				                                                <div class="col-md-offset-5 col-md-7">
+				                                                <c:url var="actionUrl" value="${param.userName}">
+				                                                </c:url>
+				                                                    <input type="submit" class="btn"  value="Submit" id="forgot-btn1" /> 
+				                                                </div>
+				                                            </div>
+				                                        </div>
+				                                        <!-- /submit button -->
+		                                        	</div>
+												</div>
+	                                        </div>
+										 </form:form>
+									</div>
+							</div>
+						</div>
+						<!-- /left col -->
+					</div>
+				</div>
+				<!-- /content area -->
+				<!-- footer -->
+			
+				<!-- /footer -->
+			</div>
+		</div>
+	</div>
+		<!-- script -->
+		
+		<script src="/js/libs/jquery.validate.js"></script>
+	    <script>
+
+			jQuery(function($) { 
+				
+				$.validator.addMethod("passwdweak", function(value, element) {
+					if(/^[a-z0-9\-\s]+$/i.test(value)){
+						return false;	
+					}else{
+						
+						return true;
+					}
+				});
+
+			$("#changePassword").validate();
+
+			});
+			
+	    </script>

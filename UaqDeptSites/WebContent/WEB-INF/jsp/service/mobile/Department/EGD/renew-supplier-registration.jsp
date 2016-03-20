@@ -364,11 +364,11 @@
 														<!-- text box -->
 		                                            	<div class="form-group cf">
 			                                                <div class="col-md-5">
-			                                                    <label for="trading_attach1" class="form-lbl mandatory_lbl"><spring:message code="label.egd.commerceMember" /></label>
+			                                                    <label for="trading_attach1" class="form-lbl "><spring:message code="label.egd.commerceMember" /></label>
 				                                            </div>
 				                                            <div class="col-md-7">
 			                                                    <div class="input-group file-upload">
-																	<input type="text" class="form-control required" name ="trading_attach1" data-msg-required="${commerceReq}"  readonly="readonly" />
+																	<input type="text" class="form-control " name ="trading_attach1" data-msg-required="${commerceReq}"  readonly="readonly" />
 																	<span class="input-group-btn">
 																		<span class="btn btn-file">
 																			<spring:message code="file.browse" />&hellip; 

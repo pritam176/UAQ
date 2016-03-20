@@ -28,6 +28,7 @@ import com.uaq.common.ApplicationConstants;
 import com.uaq.common.PaymentSessionUtil;
 import com.uaq.common.PropertiesUtil;
 import com.uaq.common.ViewPath;
+import com.uaq.dao.DAOManager;
 import com.uaq.logger.UAQLogger;
 import com.uaq.service.LPFindRequestService;
 
@@ -36,6 +37,7 @@ import com.uaq.service.LPServiceLookUp;
 import com.uaq.service.PSFindRequestService;
 import com.uaq.service.PaymentService;
 import com.uaq.service.PortalUtil;
+import com.uaq.service.PurchaseService;
 import com.uaq.util.StringUtil;
 import com.uaq.vo.AccountDetailTokenOutputVO;
 import com.uaq.vo.LPtoWhomeConcernVO;
@@ -67,6 +69,7 @@ public class PaymentController extends BaseController {
 	@Autowired
 	private FeeIdService feeIdService;
 
+	PurchaseService purchaseService = new PurchaseService();
 	/***
 	 * Handler Method for Proceed To Payment request & call the payment Review
 	 * Controller. URL-/uaq/myrequest.html
@@ -109,51 +112,11 @@ public class PaymentController extends BaseController {
 		logger.info("requestNo-" + requestNo + " serviceId - " + serviceId + " pagelable " + pagelable);
 
 		String paymentURL = SPRING_REDIRECT + PropertiesUtil.getProperty("globalUrl") + URL_SEPARATOR + languageCode + URL_SEPARATOR + PAYMENT_ACTION + URL_HTML_EXTENSION + QUESTION_MARK;
-
+		AccountDetailTokenOutputVO accountDetail = null;
+		DAOManager daoManager = new DAOManager();
 		try {
-			Map<String, String> paymentSearchCriteriaMap = feeIdService.getSearchCriteriaMap(serviceId, queryParamsMap);
-
-			if (paymentSearchCriteriaMap.isEmpty()) {
-				logger.info("paymentSearchCriteriaMap is empty for the service : " + serviceId);
-
-				
-
-			}
-			if (paymentSearchCriteriaMap.containsKey("calculatedAmountFromService")) {
-				calculatedAmountFromService = paymentSearchCriteriaMap.get("calculatedAmountFromService");
-				paymentSearchCriteriaMap.remove("calculatedAmountFromService");
-				sessionRequestDetail.setAmount(calculatedAmountFromService);
-			}
-
-			List<EserviceFeeMatrixViewSDO> paymentFeeIdList = paymentService.getPaymentFeeIdList(paymentSearchCriteriaMap);
-			String feeId = null;
-			if (paymentFeeIdList != null) {
-				for (EserviceFeeMatrixViewSDO obj : paymentFeeIdList) {
-					feeId = obj.getFeeId().getValue();
-				}
-				if (StringUtil.isEmpty(feeId)) {
-					throw new Exception("Fee ID Null");
-				}
-
-				if (statusId.equals(PROCEED_TO_APPLICATION_FEE_PAYMENT)) {
-					id = requestNo.split("-")[3] + UNDERSCORE + feeId;
-
-					// feTyp = "&feeType=" + APPLICATION_FEES
-					// +"&userType="+typeOfUser;
-				} else if (statusId.equals(PROCEED_TO_SERVICE_FEE_PAYMENT)) {
-					id = requestNo.split("-")[3] + UNDERSCORE + feeId;
-				}
-			}
-
-			sessionRequestDetail.setPurchaseId(id);
-			sessionRequestDetail.setFeeId(feeId);
-			sessionRequestDetail.setRequestNo(requestNo);
-			sessionRequestDetail.setLanguageCode(languageCode);
-			sessionRequestDetail.setPagelable(pagelable);
-			sessionRequestDetail.setServiceId(serviceId);
-			sessionRequestDetail.setStatusId(statusId);
-			sessionRequestDetail.setTypeOfUser(typeOfUser);
-
+			
+			
 			LoginOutputVO logininfo = null;
 			if (isMobile) {
 				viewname = MOBILE_LOGIN_AGAIN;
@@ -166,8 +129,8 @@ public class PaymentController extends BaseController {
 
 				if (logininfo != null) {
 					if (portalUtil.validateToken(logininfo)) {
-						AccountDetailTokenOutputVO accountDetailForMobile = portalUtil.getAccountDetailForMobile(logininfo);
-						if (accountDetailForMobile != null && accountDetailForMobile.getAccountId() != null) {
+						accountDetail = portalUtil.getAccountDetailForMobile(logininfo);
+						if (accountDetail != null && accountDetail.getAccountId() != null) {
 							logger.info("Mobile    |    Token Validated  | Redirecting Paynment Page");
 							model.addAttribute(RESPONCE_KEY, "request.invalid.data");
 							viewname = DUPLICATE_REQUEST_MOBILE;
@@ -175,8 +138,8 @@ public class PaymentController extends BaseController {
 								request.getSession().setAttribute(SESSION_LOGIN_INFO_PORTAL, logininfo);
 								viewname = paymentURL;
 								sessionRequestDetail.setMobile(true);
-								sessionRequestDetail.setCustomerId(accountDetailForMobile.getAccountId());
-								sessionRequestDetail.setCustomerName(accountDetailForMobile.getFirstName());
+								sessionRequestDetail.setCustomerId(accountDetail.getAccountId());
+								sessionRequestDetail.setCustomerName(accountDetail.getFirstName());
 								logger.info("view Name=" + viewname);
 							}
 
@@ -193,16 +156,16 @@ public class PaymentController extends BaseController {
 				logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
 				if (logininfo != null) {
 					if (portalUtil.validateToken(logininfo)) {
-						AccountDetailTokenOutputVO accountDetailfromToken = (AccountDetailTokenOutputVO) request.getSession().getAttribute(ApplicationConstants.SESSION_ACCOUNT_DETAIL_FROM_TOKEN);
-						if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
+						accountDetail = (AccountDetailTokenOutputVO) request.getSession().getAttribute(ApplicationConstants.SESSION_ACCOUNT_DETAIL_FROM_TOKEN);
+						if (accountDetail != null && accountDetail.getAccountId() != null) {
 							logger.info("Desktop    |    Token Validated  | Redirecting Paynment Page");
 							model.addAttribute(RESPONCE_KEY, "request.invalid.data");
 							viewname = DUPLICATE_REQUEST;
 							if (portalUtil.validateRequestForSubmission(logininfo.getUsername(), requestNo, statusId)) {
 								viewname = paymentURL;
 								sessionRequestDetail.setMobile(false);
-								sessionRequestDetail.setCustomerId(accountDetailfromToken.getAccountId());
-								sessionRequestDetail.setCustomerName(accountDetailfromToken.getFirstName());
+								sessionRequestDetail.setCustomerId(accountDetail.getAccountId());
+								sessionRequestDetail.setCustomerName(accountDetail.getFirstName());
 							}
 
 						}
@@ -214,11 +177,43 @@ public class PaymentController extends BaseController {
 				}
 
 			}
+			
+			Map<String, String> serviceFeeMap = feeIdService.getServiceFee(requestNo, serviceId,typeOfUser, accountDetail.getApplicanttypeid(), statusId, daoManager.getConnection());
+
+			if (serviceFeeMap.isEmpty()) {
+				logger.info("paymentSearchCriteriaMap is empty for the service : " + serviceId);
+
+				
+
+			}
+			if (serviceFeeMap.containsKey("calculatedAmountFromService")) {
+				calculatedAmountFromService = serviceFeeMap.get("calculatedAmountFromService");
+				serviceFeeMap.remove("calculatedAmountFromService");
+				sessionRequestDetail.setAmount(calculatedAmountFromService);
+			}
+
+			String feeId = serviceFeeMap.get("feeId");
+			if (StringUtil.isEmpty(feeId)) {
+					throw new Exception("Fee ID Null");
+				}
+			id = requestNo.split("-")[3] + UNDERSCORE + feeId;
+
+			sessionRequestDetail.setPurchaseId(id);
+			sessionRequestDetail.setFeeId(feeId);
+			sessionRequestDetail.setRequestNo(requestNo);
+			sessionRequestDetail.setLanguageCode(languageCode);
+			sessionRequestDetail.setPagelable(pagelable);
+			sessionRequestDetail.setServiceId(serviceId);
+			sessionRequestDetail.setStatusId(statusId);
+			sessionRequestDetail.setTypeOfUser(typeOfUser);
 			request.getSession().setAttribute(SESSION_PAYMENT_DETAIL, sessionRequestDetail);
 		} catch (Exception e) {
 			viewname = (isMobile == false) ? ERROR_PAGE : ERROR_PAGE_MOBILE;
 			model.addAttribute("message", messageSource.getMessage("payment.invalid.data", null, locale));
 			logger.debug("Invalid Payment  Data  |" + e.getMessage());
+		}
+		finally{
+			daoManager.closeConnection();
 		}
 		model.addAttribute(PAGE_LABEL, pagelable);
 		model.addAttribute(PAGE_META_DATA, pageMetadataVO);

@@ -1,0 +1,185 @@
+package com.uaq.service;
+
+import static com.uaq.common.ApplicationConstants.ESTABLISMENT_USER;
+import static com.uaq.common.ApplicationConstants.INDIVIDUAL_USER;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.SOAPBody;
+import javax.xml.soap.SOAPBodyElement;
+import javax.xml.soap.SOAPElement;
+import javax.xml.soap.SOAPEnvelope;
+import javax.xml.soap.SOAPException;
+import javax.xml.soap.SOAPMessage;
+import javax.xml.soap.SOAPPart;
+
+import org.springframework.stereotype.Service;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import com.uaq.common.PropertiesUtil;
+import com.uaq.logger.UAQLogger;
+import com.uaq.util.SOAPClient;
+import com.uaq.vo.AccountDetailInputVO;
+import com.uaq.vo.GenerateOTPInputVO;
+
+@Service("generateOTPService")
+public class GenerateOTPService {
+
+	protected static UAQLogger logger = new UAQLogger(GenerateOTPService.class);
+
+	public String generateOTP(GenerateOTPInputVO input) throws Exception {
+
+		MessageFactory messageFactory;
+
+		String otp = null;
+
+		messageFactory = MessageFactory.newInstance();
+		SOAPMessage requestMessage = messageFactory.createMessage();
+		SOAPPart soapPart = requestMessage.getSOAPPart();
+		SOAPEnvelope envelope = soapPart.getEnvelope();
+
+		String serverURI = "http://GenerateOTP";
+
+		envelope.addNamespaceDeclaration("get", serverURI);
+
+		SOAPElement Input = envelope.getBody().addChildElement("Input", "get");
+
+		SOAPElement typeOfUser = Input.addChildElement("TypeOfUser", "get");
+		SOAPElement accountId = Input.addChildElement("AccountId", "get");
+		SOAPElement IndividualREC = Input.addChildElement("IndividualREC", "get");
+		SOAPElement EstablishmentREC = Input.addChildElement("EstablishmentREC", "get");
+
+		// add parameter
+		typeOfUser.addTextNode(input.getTypeOfUser());
+		accountId.addTextNode(input.getAccountId());
+
+		if (INDIVIDUAL_USER.equals(input.getTypeOfUser())) {
+			SOAPElement mobileNo = IndividualREC.addChildElement("MobileNo", "get");
+			mobileNo.addTextNode(input.getMobile());
+			SOAPElement emiratesID = IndividualREC.addChildElement("EmiratesID", "get");
+			emiratesID.addTextNode(input.getEmirateId());
+			SOAPElement passportID = IndividualREC.addChildElement("PassportID", "get");
+			passportID.addTextNode(input.getPassportId());
+		}
+		if (ESTABLISMENT_USER.equals(input.getTypeOfUser())) {
+			SOAPElement mobileNo = EstablishmentREC.addChildElement("MobileNo", "get");
+			mobileNo.addTextNode(input.getMobile());
+			SOAPElement tradeLicenseNo = EstablishmentREC.addChildElement("TradeLicenseNo", "get");
+			tradeLicenseNo.addTextNode(input.getTraedLicenceNumber());
+			SOAPElement emiratesCode = EstablishmentREC.addChildElement("EmiratesCode", "get");
+			emiratesCode.addTextNode(input.getEmirate());
+		}
+
+		SOAPClient.printSOAPMessage(requestMessage);
+
+		SOAPMessage soapResponse = SOAPClient.callSOAPService(requestMessage, PropertiesUtil.getProperty("SOA_URL_GENRATE_OTP"));
+
+		Map<String, String> responceMap = SOAPClient.parseResponceMessage(soapResponse);
+
+		otp = responceMap.get("Status");
+		logger.debug(otp);
+
+		return otp;
+
+	}
+
+	/*public void getAccountDetail(AccountDetailInputVO input) throws Exception {
+
+		MessageFactory messageFactory;
+
+		String otp = null;
+
+		messageFactory = MessageFactory.newInstance();
+		SOAPMessage requestMessage = messageFactory.createMessage();
+		SOAPPart soapPart = requestMessage.getSOAPPart();
+		SOAPEnvelope envelope = soapPart.getEnvelope();
+
+		String serverURI = "http://GetAccountDetails";
+
+		envelope.addNamespaceDeclaration("get", serverURI);
+
+		SOAPElement Input = envelope.getBody().addChildElement("Input", "get");
+
+		SOAPElement typeOfUser = Input.addChildElement("TypeOfUser", "get");
+		typeOfUser.addTextNode(input.getTypeofUser());
+
+		SOAPElement IndividualREC = Input.addChildElement("IndividualREC", "get");
+		SOAPElement EstablishmentREC = Input.addChildElement("EstablishmentREC", "get");
+
+		if (INDIVIDUAL_USER.equals(input.getTypeofUser())) {
+			SOAPElement mobileNo = IndividualREC.addChildElement("MobileNo", "get");
+			mobileNo.addTextNode(input.getMobileNo());
+			SOAPElement emiratesID = IndividualREC.addChildElement("EmiratesID", "get");
+			emiratesID.addTextNode(input.getEmiratesID());
+			SOAPElement passportID = IndividualREC.addChildElement("PassportID", "get");
+			passportID.addTextNode(input.getPassportID());
+		}
+		if (ESTABLISMENT_USER.equals(input.getTypeofUser())) {
+			SOAPElement mobileNo = EstablishmentREC.addChildElement("MobileNo", "get");
+			mobileNo.addTextNode(input.getMobileNo());
+			SOAPElement tradeLicenseNo = EstablishmentREC.addChildElement("TradeLicenseNo", "get");
+			tradeLicenseNo.addTextNode(input.getTraedLicence());
+			SOAPElement emiratesCode = EstablishmentREC.addChildElement("EmiratesCode", "get");
+			emiratesCode.addTextNode("6");
+		}
+
+		SOAPClient.printSOAPMessage(requestMessage);
+
+		SOAPMessage soapResponse = SOAPClient.callSOAPService(requestMessage, "http://soa:8001/soa-infra/services/default/UAQ_REG_GetAccountDetails/getaccountdetailsbpel_client_ep?WSDL");
+
+		SOAPClient.printSOAPMessage(soapResponse);
+
+		Map<String, Object> responceMap = createMap(soapResponse.getSOAPBody());
+		for (Map.Entry entry : responceMap.entrySet()) {
+			System.out.println(entry.getKey() + ", " + entry.getValue());
+		}*/
+		// SOAPBody soapBody = soapResponse.getSOAPBody();
+		// System.out.println("+++++++ "+soapBody.getAttribute("Status"));
+		// java.util.Iterator iterator = soapBody.getChildElements();
+		// while(iterator.hasNext()){
+		// SOAPBodyElement UploadOutput = (SOAPBodyElement) iterator.next();
+		// System.out.println(UploadOutput.getValue());
+		// }
+
+		// java.util.Iterator iterator = soapBody.getChildElements();
+		// SOAPBodyElement UploadOutput = (SOAPBodyElement) iterator.next();
+		// Iterator uploadOutputIterator = UploadOutput.getChildElements();
+		// while (uploadOutputIterator.hasNext()) {
+		// SOAPBodyElement bodyElement = (SOAPBodyElement)
+		// uploadOutputIterator.next();
+		// responceMap.put(bodyElement.getLocalName(), bodyElement.getValue());
+		// if(bodyElement.getChildElements("AccountDetailsREC")){
+		// Iterator child =bodyElement.getChildElements();
+		// while (child.hasNext()) {
+		// responceMap.put(bodyElement.getLocalName(), bodyElement.getValue());
+		// }
+		// }
+		//
+		// for (Map.Entry entry : responceMap.entrySet()) {
+		// System.out.println(entry.getKey() + ", " + entry.getValue());
+		// }
+
+	//}
+
+	/*public Map<String, Object> createMap(Node node) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		if (node.getFirstChild().getNodeType() == Node.TEXT_NODE) {
+			map.put(node.getLocalName(), node.getTextContent());
+		}
+		else if (node.getFirstChild() != null && node.getFirstChild().getNodeType() == Node.ELEMENT_NODE) {
+			{
+				NodeList nodeList = node.getChildNodes();
+				for (int i = 0; i < nodeList.getLength(); i++) {
+					Node currentNode = nodeList.item(i);
+			
+				map.put(currentNode.getLocalName(),createMap(currentNode));
+				}
+			}
+			return map;
+	}*/
+
+}

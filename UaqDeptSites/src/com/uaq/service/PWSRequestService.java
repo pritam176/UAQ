@@ -156,6 +156,7 @@ public class PWSRequestService {
 			outputVO.setMessage_AR(output.getStatus_AR());
 			outputVO.setStatus(output.getStausFlag());
 			outputVO.setStatusId(output.getInputFields().getStatus());
+			outputVO.setRequestNo(output.getInputFields().getRequestNo());
 		} else {
 			outputVO.setStatus("Failed");
 			logger.info("stub.createWasteContainer(payload, uc); return NULL  | FAiled");

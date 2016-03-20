@@ -35,6 +35,7 @@ import com.uaq.service.LPRequestService;
 import com.uaq.service.LookupServiceEN_AR;
 import com.uaq.service.LpLookupService;
 import com.uaq.service.PortalUtil;
+import com.uaq.service.ReportsService;
 import com.uaq.vo.AccountDetailTokenOutputVO;
 import com.uaq.vo.LandOutputVO;
 import com.uaq.vo.LoginOutputVO;
@@ -165,6 +166,8 @@ public class LPTOWhomeEverController extends BaseController {
 							model.addAttribute(PAYMENT_URL_EXPRESSON, PORTAL_PAYMENT_URL);
 							model.addAttribute( REQUEST_PARAM_TYPE_OF_USER, userDetails.getTypeOfUser());
 							model.addAttribute( ISMOBILE, "true");
+							String serviceName = "Issue To Whom It May Concern Certificate";
+							new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), userDetails.getUsername(), userDetails.getAccountid(),serviceName);
 							viewname = SPRING_REDIRECT + PropertiesUtil.getProperty( UAQ_URL) +  URL_SEPARATOR + languageCode +  THANKYOU_PAGE;
 							//viewname = MOBILE_THANKU_VIEW;
 							logger.info("Success | Render the Thankyou page for DESKTOP");
@@ -205,6 +208,8 @@ public class LPTOWhomeEverController extends BaseController {
 							model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? output.getStatus_EN() : output.getStatus_AR());
 							model.addAttribute(PAYMENT_URL_EXPRESSON, PORTAL_PAYMENT_URL);
 							model.addAttribute( REQUEST_PARAM_TYPE_OF_USER, userDetails.getTypeOfUser());
+							String serviceName = "Issue To Whom It May Concern Certificate";
+							new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), userDetails.getUsername(), userDetails.getAccountid(),serviceName);
 							viewname = SPRING_REDIRECT + PropertiesUtil.getProperty( UAQ_URL) +  URL_SEPARATOR + languageCode +  THANKYOU_PAGE;
 							logger.info("Success | Render the Thankyou page for DESKTOP");
 

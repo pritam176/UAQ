@@ -32,6 +32,7 @@ import static com.uaq.common.WebServiceConstant.SOAP_SERVICEID_ARGUMENT;
 import static com.uaq.common.WebServiceConstant.SOAP_USERTYPE_ARGUMENT;
 
 
+import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,118 +69,61 @@ public class FeeIdService {
 	private LPServiceLookUp lPServiceLookUp;
 	
 	
+	PurchaseService purchaseService = new PurchaseService();
 	
 	
-	public String getAmountForService(String serviceId,String statusId,String typeOfUser) throws Exception{
-	Map<String, String> queryParamsMap = new HashMap<String, String>();
-	queryParamsMap.put(REQUEST_PARAM_SERVICE_ID, serviceId);
-	queryParamsMap.put(REQUEST_PARAM_STATUS_ID, statusId);
-	queryParamsMap.put(REQUEST_PARAM_TYPE_OF_USER, typeOfUser);
+	public Map<String,String> getServiceFee(String requestNo,String serviceId, String userType, String applicantType, String status, Connection con)throws Exception{
+		Map<String,String> serviceFeeMap = new HashMap<String,String>();
+		String feeTypeCode = "A001";
+		if("18".equals(status))
+				feeTypeCode = "S001";
+		ReSubmiisionInputVO inputVO = new ReSubmiisionInputVO();
+		switch (serviceId) {
+		
 
-	
-	List<EserviceFeeMatrixViewSDO> paymentFeeIdList = paymentService.getPaymentFeeIdList(getSearchCriteriaMap(serviceId,queryParamsMap));
-	String feeId ="";
-	String amount="";
-	if (paymentFeeIdList != null) {
-		for (EserviceFeeMatrixViewSDO obj : paymentFeeIdList) {
-			feeId = obj.getFeeId().getValue();
-			amount=String.valueOf(obj.getAmount().getValue());
+		case ISSUE_TO_WHOME_IT_MAY_CERTIFICATE:
+			
+			
+			inputVO.setAttributeName(SOAP_REQUESTNO_ARGUMENT);
+			inputVO.setAttributeValue(requestNo);
+			LPtoWhomeConcernVO lptoWhomeConcernVO = lFindRequestService.findLpToWhomConcernView1(inputVO, LANG_ENGLISH);
+			String letter = "Other";
+			int letterid = lptoWhomeConcernVO.getAddressedtoId().intValue();
+			if (letterid == 4 || letterid == 6 || letterid == 7 || letterid == 0 || letterid == 8 || letterid == 9 || letterid == 12 || letterid == 13 || letterid == 14) {
+				letter = "Charity";
+			} else if (letterid == 2 || letterid == 5) {
+				letter = "Social Affairs";
+			}
+			serviceFeeMap = purchaseService.getServiceFee(serviceId, feeTypeCode, userType, applicantType, letter, null, con);
+			break;
+		
+		
+		case LAND_PROPERTY_VALUTION_REQUEST:
+			String landType = null;
+			if(requestNo!=null){
+				LpValuationViewSDO lpValuation = lPServiceLookUp.getLPValudationRequestByRequestNumber(requestNo);
+				 landType = String.valueOf(lpValuation.getLandCategory().getValue());
+			}
+			
+				serviceFeeMap = purchaseService.getServiceFee(serviceId, feeTypeCode, userType, applicantType, null, landType, con);
+			break;
+		case EXTENTION_OF_GRANT_LAND_REQUEST:
+			serviceFeeMap = purchaseService.getServiceFee(serviceId, feeTypeCode, userType, applicantType, null, null, con);
+
+			inputVO = new ReSubmiisionInputVO();
+			inputVO.setAttributeName(SOAP_REQUESTNO_ARGUMENT);
+			inputVO.setAttributeValue(requestNo);
+			PSResubmissonOutputVO resubmitVO = pSFindRequestService.findExtentionGrandLandRequest(inputVO);
+			serviceFeeMap.put("calculatedAmountFromService", resubmitVO.getCreatedby());
+			break;
+		
+
+		default:
+			serviceFeeMap = purchaseService.getServiceFee(serviceId, feeTypeCode, userType, applicantType, null, null, con);
+
 		}
+		return serviceFeeMap;
 	}
-	if(StringUtil.isEmpty(amount)){
-		throw new Exception("No Value Return.Check your condition");
-	}
-	return amount;
-	}
-//		private Map<String, String> getSearchCriteriaMap(String serviceId, Map<String, String> queryParamsMap) throws Exception {
-//			Map<String, String> searchCriteriaMap = null;
-//			String keywords[]=null;
-//			String typeOfUser="";
-//			switch (serviceId) {
-//			
-//			case ISSUE_NEW_PRO_REQUEST:
-//				searchCriteriaMap = new HashMap<String, String>();
-//				String procardrequestStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-//				String procardpropertyFileKey = serviceId + UNDERSCORE + procardrequestStatus;
-//				String procardSerachCrieteria = PropertiesUtil.getProperty(procardpropertyFileKey);
-//				keywords = procardSerachCrieteria.split(COMMA);
-//				searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, ISSUE_NEW_PRO_REQUEST);
-//				searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
-//				// searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
-//				break;
-//
-//			case RENEW_PRO_REQUEST:
-//				searchCriteriaMap = new HashMap<String, String>();
-//				String renewprocardrequestStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-//				String renewprocardFileKey = serviceId + UNDERSCORE + renewprocardrequestStatus;
-//				String renewprocardFileCrieteria = PropertiesUtil.getProperty(renewprocardFileKey);
-//				keywords = renewprocardFileCrieteria.split(COMMA);
-//				searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, RENEW_PRO_REQUEST);
-//				searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
-//				// searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
-//				break;
-//			case LAND_PROPERTY_VALUTION_REQUEST:
-//				searchCriteriaMap = new HashMap<String, String>();
-//				String landPropertyStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-//				// Get The OwnerType
-//				
-//				
-//				String landPropertyFileKey = "";
-//				String landPropertyFileCrieteria = "";
-//				if (PROCEED_TO_APPLICATION_FEE_PAYMENT.equals(landPropertyStatus)) {
-//					landPropertyFileKey = serviceId + UNDERSCORE + landPropertyStatus;
-//					landPropertyFileCrieteria = PropertiesUtil.getProperty(landPropertyFileKey);
-//					keywords = landPropertyFileCrieteria.split(COMMA);
-//					searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, LAND_PROPERTY_VALUTION_REQUEST);
-//					searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
-//				} 
-//
-//				// searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
-//				break;
-//			
-//			case NEW_REAL_ESTATE:
-//				searchCriteriaMap = new HashMap<String, String>();
-//				String realStateStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-//				String realStatePropertyFileKey = serviceId + UNDERSCORE + realStateStatus;
-//				String realStateCritera = PropertiesUtil.getProperty(realStatePropertyFileKey);
-//				searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, NEW_REAL_ESTATE);
-//				searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, realStateCritera);
-//				break;
-//			case RENEW_REAL_ESTATE:
-//				searchCriteriaMap = new HashMap<String, String>();
-//				String renewRealStateStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-//				String renewRealStatePropertyFileKey = serviceId + UNDERSCORE + renewRealStateStatus;
-//				String renewRealStateCritera = PropertiesUtil.getProperty(renewRealStatePropertyFileKey);
-//				searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, RENEW_REAL_ESTATE);
-//				searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, renewRealStateCritera);
-//				break;
-//			case LOST_DOCUMENT:
-//				searchCriteriaMap = new HashMap<String, String>();
-//				String lostDocumentStatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-//				String lostDocumentPropertyFileKey = serviceId + UNDERSCORE + lostDocumentStatus;
-//				String lostDocumentCritera = PropertiesUtil.getProperty(lostDocumentPropertyFileKey);
-//				searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, LOST_DOCUMENT);
-//				searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, lostDocumentCritera);
-//				break;
-//			case GRANT_LAND_REQUEST:
-//				searchCriteriaMap = new HashMap<String, String>();
-//				String grantLandTypeofUser = queryParamsMap.get(REQUEST_PARAM_TYPE_OF_USER);
-//				String grantLandrequestSTatus = queryParamsMap.get(REQUEST_PARAM_STATUS_ID);
-//				String grantLandrequestpropertyFileKey = serviceId + UNDERSCORE + grantLandrequestSTatus + UNDERSCORE + grantLandTypeofUser;
-//				String grantLandSerachCrieteria = PropertiesUtil.getProperty(grantLandrequestpropertyFileKey);
-//				keywords = grantLandSerachCrieteria.split(COMMA);
-//				searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, GRANT_LAND_REQUEST);
-//				searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
-//				searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
-//				break;
-//
-//			default:
-//				searchCriteriaMap = new HashMap<String, String>();
-//
-//			}
-//
-//			return searchCriteriaMap;
-//		}
 	public Map<String, String> getSearchCriteriaMap(String serviceId, Map<String, String> queryParamsMap) throws Exception {
 		Map<String, String> searchCriteriaMap = null;
 
@@ -288,12 +232,12 @@ public class FeeIdService {
 			String landPropertyFileKey = "";
 			String landPropertyFileCrieteria = "";
 			if (PROCEED_TO_APPLICATION_FEE_PAYMENT.equals(landPropertyStatus)) {
-				landPropertyFileKey = serviceId + UNDERSCORE + landPropertyStatus+ UNDERSCORE + landPropertyTypeofUser;
+				landPropertyFileKey = serviceId + UNDERSCORE + landPropertyStatus;
 				landPropertyFileCrieteria = PropertiesUtil.getProperty(landPropertyFileKey);
-				keywords = landPropertyFileCrieteria.split(COMMA);
+//				keywords = landPropertyFileCrieteria.split(COMMA);
 				searchCriteriaMap.put(SOAP_SERVICEID_ARGUMENT, LAND_PROPERTY_VALUTION_REQUEST);
-				searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, keywords[0]);
-				searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
+				searchCriteriaMap.put(SOAP_FEETYPE_ARGUMENT, landPropertyFileCrieteria);
+//				searchCriteriaMap.put(SOAP_USERTYPE_ARGUMENT, keywords[1]);
 			} else if (PROCEED_TO_SERVICE_FEE_PAYMENT.equals(landPropertyStatus)) {
 				LpValuationViewSDO lpValuation = lPServiceLookUp.getLPValudationRequestByRequestNumber(queryParamsMap.get(REQUEST_PARAM_REQUEST_NO));
 				String ownerType = String.valueOf(lpValuation.getLandCategory().getValue());

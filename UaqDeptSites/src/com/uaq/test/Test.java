@@ -10,7 +10,7 @@ public class Test {
 	 * @param args
 	 * @throws Exception 
 	 */
-	public static void main(String[] args) throws Exception {
+	/*public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		
 		//FeeIdService fs=new FeeIdService();
@@ -24,6 +24,6 @@ public class Test {
 		gotp.getAccountDetail(input);
 		
 
-	}
+	}*/
 
 }

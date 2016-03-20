@@ -30,6 +30,7 @@ import com.uaq.controller.mapper.PortalDataMapper;
 import com.uaq.logger.UAQLogger;
 import com.uaq.service.PSRequestService;
 import com.uaq.service.PortalUtil;
+import com.uaq.service.ReportsService;
 import com.uaq.vo.AccountDetailTokenOutputVO;
 import com.uaq.vo.LandInputVO;
 import com.uaq.vo.LandOutputVO;
@@ -174,7 +175,7 @@ public class PSController extends BaseController {
 								model.addAttribute(PAYMENT_URL_EXPRESSON, MOBILE_PAYMENT_URL);
 								model.addAttribute(REQUEST_PARAM_TYPE_OF_USER, user.getTypeOfUser());
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) +  URL_SEPARATOR + languageCode +  THANKYOU_PAGE;
-								//viewname = MOBILE_THANKU_VIEW;
+								new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), user.getUsername(), user.getAccountid(),landInputVO.getServiceName());
 								logger.info("Success | Render the Thankyou page for MOBILE");
 							}
 						} catch (DatatypeConfigurationException e) {
@@ -219,6 +220,7 @@ public class PSController extends BaseController {
 								model.addAttribute(PAYMENT_URL_EXPRESSON, PORTAL_PAYMENT_URL);
 								model.addAttribute(REQUEST_PARAM_TYPE_OF_USER, user.getTypeOfUser());
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) +  URL_SEPARATOR + languageCode +  THANKYOU_PAGE;
+								new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), user.getUsername(), user.getAccountid(),landInputVO.getServiceName());
 								logger.info("Success | Redirect to Thankyou Controller");
 							}
 						} catch (DatatypeConfigurationException e) {
@@ -342,6 +344,7 @@ public class PSController extends BaseController {
 							model.addAttribute(PAYMENT_URL_EXPRESSON, MOBILE_PAYMENT_URL);
 							model.addAttribute(REQUEST_PARAM_TYPE_OF_USER, user.getTypeOfUser());
 							viewname = SPRING_REDIRECT + PropertiesUtil.getProperty( UAQ_URL) +  URL_SEPARATOR + languageCode +  THANKYOU_PAGE;
+							new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), user.getUsername(), user.getAccountid(),landInputVO.getServiceName());
 							logger.info("Success | Render the Thankyou page for MOBILE");
 						}
 					}
@@ -376,6 +379,7 @@ public class PSController extends BaseController {
 							model.addAttribute(PAYMENT_URL_EXPRESSON, PORTAL_PAYMENT_URL);
 							model.addAttribute(REQUEST_PARAM_TYPE_OF_USER, user.getTypeOfUser());
 							viewname = SPRING_REDIRECT + PropertiesUtil.getProperty( UAQ_URL) +  URL_SEPARATOR + languageCode +  THANKYOU_PAGE;
+							new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), user.getUsername(), user.getAccountid(),landInputVO.getServiceName());
 							logger.info("Success | Render the Thankyou page for DESKTOP");
 						}
 					}
@@ -499,6 +503,7 @@ public class PSController extends BaseController {
 								model.addAttribute(PAYMENT_URL_EXPRESSON, MOBILE_PAYMENT_URL);
 								model.addAttribute( REQUEST_PARAM_TYPE_OF_USER, user.getTypeOfUser());
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) +  URL_SEPARATOR + languageCode +  THANKYOU_PAGE;
+								new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), user.getUsername(), user.getAccountid(),IssueSitePlanInputVO.getServiceName());
 								logger.info("Success | Render the Thankyou page for MOBILE");
 							}
 						} catch (DatatypeConfigurationException e) {
@@ -539,6 +544,7 @@ public class PSController extends BaseController {
 								model.addAttribute(PAYMENT_URL_EXPRESSON, PORTAL_PAYMENT_URL);
 								model.addAttribute(REQUEST_PARAM_TYPE_OF_USER, user.getTypeOfUser());
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) +  URL_SEPARATOR + languageCode +  THANKYOU_PAGE;
+								new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), user.getUsername(), user.getAccountid(),landInputVO.getServiceName());
 								logger.info("Success | Render the Thankyou page for DESKTOP");
 							}
 						} catch (DatatypeConfigurationException e) {
@@ -668,6 +674,7 @@ public class PSController extends BaseController {
 								model.addAttribute(PAYMENT_URL_EXPRESSON, MOBILE_PAYMENT_URL);
 								model.addAttribute(REQUEST_PARAM_TYPE_OF_USER, user.getTypeOfUser());
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) +  URL_SEPARATOR + languageCode +  THANKYOU_PAGE;
+								new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), user.getUsername(), user.getAccountid(),landDemacreationVO.getServiceName());
 								logger.info("Success | Render the Thankyou page for MOBILE");
 							}
 						} catch (DatatypeConfigurationException e) {
@@ -711,6 +718,7 @@ public class PSController extends BaseController {
 								model.addAttribute(PAYMENT_URL_EXPRESSON, PORTAL_PAYMENT_URL);
 								model.addAttribute(REQUEST_PARAM_TYPE_OF_USER, user.getTypeOfUser());
 								viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) +  URL_SEPARATOR + languageCode +  THANKYOU_PAGE;
+								new ReportsService().generateRequestReport(output.getServiceId(), output.getRequestNo().split("-")[3], output.getRequestNo(), user.getUsername(), user.getAccountid(),landDemacreationVO.getServiceName());
 								logger.info("Success | Render the Thankyou page for MOBILE");
 							}
 						} catch (DatatypeConfigurationException e) {

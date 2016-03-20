@@ -22,7 +22,7 @@ public class PaymentDataMapper {
 
 	public static PaymentWorkFlowVO setTranactionWorkFlowVO(PaymentStatus paymentStatus, AccountDetailTokenOutputVO accountDetailTokenOutputVO, PurchaseVO purchaseVO) {
 		PaymentWorkFlowVO workFlowVO = new PaymentWorkFlowVO();
-		String FEE_TYPE_CODE="A001";
+		String FEE_TYPE_CODE="29".equals(paymentStatus.getStatusId())?"A001":"S001";
 		workFlowVO.setRequestNo(paymentStatus.getRequestNo());
 		workFlowVO.setCreatedBy(accountDetailTokenOutputVO.getLoginusername());
 		workFlowVO.setModifiedBy(accountDetailTokenOutputVO.getLoginusername());
@@ -35,15 +35,15 @@ public class PaymentDataMapper {
 		workFlowVO.setRequestType("1");
 		workFlowVO.setUserName(accountDetailTokenOutputVO.getUserName());
 		
-		if(TO_ISSUE_SITE_PLAN_INICEATE.equals(paymentStatus.getStatusId())){
-			FEE_TYPE_CODE="S001";
-		}
-		if(ISSUE_TO_WHOME_IT_MAY_CERTIFICATE.equals(paymentStatus.getServiceId())){
-			FEE_TYPE_CODE="S001";
-		}
-		if(PROCEED_TO_OPERATOR.equals(paymentStatus.getStatusId())){
-			FEE_TYPE_CODE="S001";
-		}
+//		if(TO_ISSUE_SITE_PLAN_INICEATE.equals(paymentStatus.getStatusId())){
+//			FEE_TYPE_CODE="S001";
+//		}
+//		if(ISSUE_TO_WHOME_IT_MAY_CERTIFICATE.equals(paymentStatus.getServiceId())){
+//			FEE_TYPE_CODE="S001";
+//		}
+//		if(PROCEED_TO_OPERATOR.equals(paymentStatus.getStatusId())){
+//			FEE_TYPE_CODE="S001";
+//		}
 		
 		workFlowVO.setFeeId(FEE_TYPE_CODE);
 

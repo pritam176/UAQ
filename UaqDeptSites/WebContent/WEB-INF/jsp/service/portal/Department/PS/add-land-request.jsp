@@ -91,14 +91,14 @@
 													<!-- text box -->
 													<div class="form-group cf">
 														<div class="col-md-5">
-															<label for="plan-number" class="form-lbl mandatory_lbl"><spring:message code="label.ps.siteplanNo" /> <span class="form-lbl-subtxt">
+															<label for="plan-number" class="form-lbl "><spring:message code="label.ps.siteplanNo" /> <span class="form-lbl-subtxt">
 																<%-- <spring:message code="label.ps.land.owned" /> --%>	</span>
 															</label>
 														</div>
 														<div class="col-md-7">
 															<form:input path="siteNumber" id="plan-number"
 																name="plan-number" type="text"
-																class="form-control required"  data-msg-required="${siteplanReq}"  data-mask="0000000000"/>
+																class="form-control "  data-msg-required="${siteplanReq}"  data-mask="0000000000"/>
 														</div>
 													</div>
 													<!-- /text box -->
@@ -357,12 +357,12 @@
 													<div class="form-group cf">
 														<div class="col-md-5">
 															<label for="emiratesid-back"
-																class="form-lbl mandatory_lbl"> <spring:message code="label.ps.sitePlanDoc" /> </label>
+																class="form-lbl "> <spring:message code="label.ps.sitePlanDoc" /> </label>
 														</div>
 														<div class="col-md-7">
 															<div class="input-group file-upload">
 																<input type="text"name ="sitePlanDocument" type="text"
-																	class="form-control required" name="sitePlanDocument" data-msg-required="${sitePlanDocReq}" readonly="readonly"/>
+																	class="form-control " name="sitePlanDocument" data-msg-required="${sitePlanDocReq}" readonly="readonly"/>
 																<span class="input-group-btn"> <span
 																	class="btn btn-file"> <spring:message code="file.browse" />&hellip; 
 																	<input	name="sitePlanDocument" id="sitePlanDocument" type="file" accept="image/jpg, image/JPG,image/JPEG, image/jpeg,image/jpeg,image/gif,image/png, application/pdf,image/x-eps, application/msword" error-size="${filesize}" error-extention="${fileextention}" error-failed="${fileerror}"/>

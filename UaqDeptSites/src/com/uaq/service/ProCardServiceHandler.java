@@ -68,6 +68,10 @@ public abstract class ProCardServiceHandler extends ServiceHandler {
 				inputParams.put("amount", params.get("feeAmount"));
 				inputParams.put("status", "1");
 				WebServiceInvoker.sendSmsAndEMail(inputParams);
+				String serviceName = "Issue New Card PRO Request";
+				if("404".equals(params.get("serviceId")))
+					serviceName = "Renew Card PRO Request";
+				new ReportsService().generateRequestReport(params.get("serviceId"), requestData.getRequestId(), requestData.getRequestNumber(), accountDetails.getUserDetailsView().get(0).getUserName(), accountDetails.getId(),serviceName);
 			}
 			System.out.println("--------->  Request Id: " + requestData.getRequestId());
 			for (AttachmentInfo attachmentInfo : attachmentInfos) {

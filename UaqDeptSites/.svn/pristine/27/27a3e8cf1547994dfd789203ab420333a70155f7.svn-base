@@ -1,0 +1,189 @@
+<%@page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ page language="java" import="java.util.*"%>
+
+<link href="${pageContext.request.contextPath}/resources/css/stylesheet.css" rel="stylesheet">
+
+<script type="text/javascript">
+               
+     function redirect() {		
+                     window.location = "smartuaq://";
+     }
+               
+</script>
+<style>
+	.alert-info-blue {
+	    background-color: #d9edf7;
+	    color: #31708f;
+	    padding: 12px 10px;
+	    text-align: center;
+	    font-weight: bold;
+	    font-size: 16px;
+	    margin-bottom: 20px;
+	}
+
+</style>
+
+<div class="container-fluid">
+	<div class="wrapper">
+		<div class="mainmenu">
+			<div class="col-md-12 hidden-xs hidden-sm">
+				<div class="mainmenu-wrap">
+					<ul class="no-list cf">
+						<li><a href="/${param.languageCode}/home.html"><img
+								src="/img/home1.png" alt="Home UAQ"> </a></li>
+						<li class="active"><a href="#"><spring:message code="${pagelable}"/></a></li>
+
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- content area -->
+		<div class="content">
+			<div class="row">
+				<!-- right col -->
+
+				<!-- right col -->
+				<!-- left col -->
+				<div class="col-xs-12 col-sm-9 col-md-9 main-left-col">
+					<!-- page title -->
+					<div class="page-title-wrap">
+						<div class="row">
+							<div class="col-xs-12 col-sm-9 col-md-10 title-txt">
+
+								<h2 class="page-title"><spring:message code='purchase.payment.review'/></h2>
+								<!-- /page title -->
+							</div>
+							<div class="hidden-xs show-sm col-md-2 title-icon">
+								<img src="/img/icons/icon-uaq.png" alt="uaq">
+							</div>
+						</div>
+					</div>
+					<!-- /page title -->
+					<div class="main-content-wrap">
+						<div class="row">
+							<div class="col-xs-12">
+								<div class="table-responsive payment-table">
+									<c:if test="${status == 'success'}">
+										<div class="success">${message}</div>
+									</c:if>	
+									<c:if test="${status == 'failure'}">
+										<div class="error">${message}</div>
+									</c:if>
+									<div class="alert-info-blue">${servicemessage}</div>
+									<form name='acd'>
+									<table class="table table-bordered table-hover ">
+										<tbody>
+											<tr>
+												<td><spring:message code='purchase.payment.receipt'/></td>
+												<td>${inquiryPaymentResponse.receiptNumber}</td>
+											</tr>
+											<tr>
+												<td><spring:message code='purchase.date'/></td>
+												<td>${inquiryPaymentResponse.transactionResponseDate}</td>
+											</tr>
+											<tr>
+												<c:set var="trasID" value="${fn:split(inquiryPaymentResponse.transactionId, ':')}" />
+												<td><spring:message code='purchase.payment.trans.id'/></td>
+												<td>${trasID[0]}</td>
+											</tr>
+											<tr>
+												<td><spring:message code='purchase.id'/></td>
+												<td>${inquiryPaymentResponse.referenceId}</td>
+											</tr>
+											
+											<tr>
+												<td><spring:message code='serviceName'/></td>
+												<td>${ServiceName}</td>
+											</tr>
+
+											<c:forEach
+												items="${inquiryPaymentResponse.purchaseCommandServices}"
+												var="purchaseCommandService">
+
+												<tr>
+													<td colspan="2" class="heading-intble"><spring:message code='purchase.payment.title'/></td>
+												</tr>
+
+												<tr>
+													<td><spring:message code='purchase.payment.quantity'/></td>
+													<td>${purchaseCommandService.quantity}</td>
+												</tr>
+
+												<tr>
+													<td><spring:message code='purchase.payment.owner.fees'/></td>
+													<td>${purchaseCommandService.ownerFeesDecimal} (<spring:message code='purchase.payment.currency'/>)</td>
+												</tr>
+
+												<tr>
+													<td><spring:message code='purchase.payment.service.amount'/></td>
+													<td >${purchaseCommandService.priceDecimal} (<spring:message code='purchase.payment.currency'/>)</td>
+												</tr>
+
+												<tr>
+													<td><spring:message code='purchase.payment.Amout.With.Fees'/></td>
+													<td>${purchaseCommandService.amountWithFeesDecimal} (<spring:message code='purchase.payment.currency'/>)</td>
+												</tr>
+
+												<tr>
+													<td><spring:message code='purchase.payment.Amout.Without.Fees'/></td>
+													<td>${purchaseCommandService.amountWithoutFeesDecimal} (<spring:message code='purchase.payment.currency'/>)</td>
+												</tr>
+
+											</c:forEach>
+								
+											<tr>
+												<td><spring:message code='purchase.payment.card.type'/></td>
+												<td>${inquiryPaymentResponse.paymentMethodType}</td>
+											</tr>
+											<tr>
+												<td><spring:message code='purchase.payment.collection.center.fees'/></td>
+												<td>${inquiryPaymentResponse.collectionCentreFeesDecimal} (<spring:message code='purchase.payment.currency'/>)</td>
+											</tr>
+											<tr>
+												<td><spring:message code='purchase.payment.edirham.fees'/></td>
+												<td>${inquiryPaymentResponse.eDirhamFeesDecimal} (<spring:message code='purchase.payment.currency'/>)
+												</td>
+											</tr>
+																		
+											<tr><td><spring:message code='labe.payment.general.fee' /></td>
+													<td>${generalFee}  (<spring:message code='purchase.payment.currency'/>)</td></tr>
+																		
+											<tr>
+												<td><spring:message code='purchase.payment.amount'/></td>
+												<td><strong>${inquiryPaymentResponse.amountDecimal}</strong> <strong>(<spring:message code='purchase.payment.currency'/>)
+												</strong></td>
+											</tr>
+											<tr>
+												<td><spring:message code='purchase.payment.total.amount'/></td>
+												<td><strong>${inquiryPaymentResponse.transactionAmountDecimal}</strong> <strong>(<spring:message code='purchase.payment.currency'/>)
+												</strong></td>
+											</tr>
+											
+											<tr>
+												<td class="removemob">&nbsp;</td>
+												<td>
+													<a href="${myRequestUrl}" class="link-btn hidden-sm hidden-xs"><spring:message code='btn.close'/> </a> 											 
+													<a href="#" class="link-btn hidden-lg hidden-md"  onclick="redirect();"><spring:message code='btn.close'/> </a>
+												</td>												
+											</tr>
+											
+											<tr>
+												<td class="removemob">&nbsp;</td>
+												<td><img src="/img/cards.png" alt="" class="payment-error-img"></td>
+											</tr>
+										</tbody>
+									</table>
+									</form>
+								</div><!-- /table-responsive -->
+							</div>		
+						</div> <!-- /row -->
+					</div> <!-- /main-contant-wrap -->
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -24,7 +24,7 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 	public List<ServiceField> getServicePreparationFields(String phase, LPServiceLookUp lookupServiceEN_AR, String languageCode, Map<String, Object> initialParams) throws Exception {
 		LpValuationViewSDO lpValuation = null;
 		SendBackInfo sendBackInfo = null;
-		String applicantPosition = null, landLocation = null,area = null,sector = null, subArea = null, subSector = null, ownerName = null, ownerNationality = null, ownerId = null, familyBookNumber = null;
+		String applicantPosition = null, landLocation = null,area = null,sector = null, subArea = null, subSector = null, ownerName = null, ownerNationality = null, ownerId = null, familyBookNumber = null,landType=null;
 		phase = (phase == null || phase.isEmpty()) ? null : phase;
 		if (phase != null && phase.equals("Resubmit")) {
 			if (initialParams != null && initialParams.get("requestNumber") != null) {
@@ -57,8 +57,8 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		ServiceField f18 = new ServiceField("ownerIdNumber", "lpv.ownerIdNumber", FieldTypeEnum.Text, false);
 		ServiceField f19 = new ServiceField("familyBookNumber", "lpv.familyBookNumber", FieldTypeEnum.Text, false);
 
-		ServiceField f20 = new ServiceField("ownershipCertificate", "lvp.ownershipCertificate", FieldTypeEnum.File, phase == null);
-		ServiceField f21 = new ServiceField("sitePlanDocument", "lvp.sitePlanDocument", FieldTypeEnum.File, phase == null);
+		ServiceField f20 = new ServiceField("ownershipCertificate", "lvp.ownershipCertificate", FieldTypeEnum.File, false);
+		ServiceField f21 = new ServiceField("sitePlanDocument", "lvp.sitePlanDocument", FieldTypeEnum.File, false);
 		ServiceField f22 = new ServiceField("identity", "lvp.identity", FieldTypeEnum.File, false);
 		ServiceField f23 = new ServiceField("familyBook", "lvp.familyBook", FieldTypeEnum.File, false);
 		ServiceField f24 = new ServiceField("ownerDeathCertificate", "lvp.ownerDeathCertificate", FieldTypeEnum.File, false);
@@ -89,7 +89,13 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		} else {
 			landLocation = "1";
 		}
-
+		
+		landType = lpValuation == null ? (String) initialParams.get(f3.getFieldName()) : lpValuation.getLandTypeId().getValue().toString();
+		if(landType!=null&& "2".equals(landType)){
+			f20.setRequired(true);
+			f21.setRequired(true);
+		}
+		
 		f1.setNotifierField(true);
 		f1.setFieldLkValues(lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.ApplicantPosition, languageCode, null));
 		f1.setFieldValue(applicantPosition);
@@ -101,6 +107,7 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		f3.setFieldLkValues(lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.LandType, languageCode, null));
 		f3.setFieldValue(lpValuation == null ? (String) initialParams.get(f3.getFieldName()) : lpValuation.getLandTypeId().getValue().toString());
 		f3.setInSameRow(true);
+		f3.setNotifierField(true);
 		f4.setFieldLkValues(lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.LandCategory, languageCode, null));
 		f4.setFieldValue(lpValuation == null ? (String) initialParams.get(f4.getFieldName()) : lpValuation.getLandCategory().getValue().toString());
 		f5.setDisabled(true);
@@ -122,7 +129,7 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		f10.setNextFieldInSameRow(true);
 		f11.setFieldValue(lpValuation == null ? (String) initialParams.get(f11.getFieldName()) : lpValuation.getPlotNumber().getValue().toString());
 		f11.setInSameRow(true);
-		f12.setFieldLkValues(lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.Area, languageCode, null));
+		f12.setFieldLkValues(lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.Sector, languageCode, null));
 		f12.setFieldValue(area);
 		f12.setNextFieldInSameRow(true);
 		f13.setFieldValue(subArea);
@@ -166,6 +173,8 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 		f17.setRequiredCondition("applicantPosition", "2");
 		f18.setRequiredCondition("applicantPosition", "2");
 		f19.setRequiredCondition("applicantPosition", "2");
+		f20.setMandatoryCondition("landType", "2");
+		f21.setMandatoryCondition("landType", "2");
 		if (phase == null) {
 			f22.setRequiredCondition("applicantPosition", "2");
 			f23.setRequiredCondition("applicantPosition", "2");
@@ -250,6 +259,8 @@ public class LandAndPropertyValuationServiceHandler extends ServiceHandler {
 				inputParams.put("amount", params.get("feeAmount"));
 				inputParams.put("status", "1");
 				WebServiceInvoker.sendSmsAndEMail(inputParams);
+				String serviceName = "Land and Propert Valuation Request";
+				new ReportsService().generateRequestReport(params.get("serviceId"), requestData.getRequestId(), requestData.getRequestNumber(), accountDetails.getUserDetailsView().get(0).getUserName(), accountDetails.getId(),serviceName);
 			}
 			System.out.println("--------->  Request Id: " + requestData.getRequestId());
 			for (AttachmentInfo attachmentInfo : attachmentInfos) {
