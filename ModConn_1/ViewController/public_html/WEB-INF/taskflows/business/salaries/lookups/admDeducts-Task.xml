@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="admDeducts-Task">
+    <default-activity id="__1">admDeductsMain</default-activity>
+    <managed-bean id="__14">
+      <managed-bean-name id="__13">admDeductsBean</managed-bean-name>
+      <managed-bean-class id="__15">com.mod.financial.view.managed.business.salaries.AdmDeducts</managed-bean-class>
+      <managed-bean-scope id="__12">view</managed-bean-scope>
+    </managed-bean>
+    <view id="admDeductsMain">
+      <page>/fragments/business/salaries/lookups/admDeductsMain.jsff</page>
+    </view>
+    <view id="admDeductsAddEdit">
+      <page>/fragments/business/salaries/lookups/admDeductsAddEdit.jsff</page>
+    </view>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">admDeductsMain</from-activity-id>
+      <control-flow-case id="__4">
+        <from-outcome id="__6">addEdit</from-outcome>
+        <to-activity-id id="__5">admDeductsAddEdit</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">admDeductsAddEdit</from-activity-id>
+      <control-flow-case id="__9">
+        <from-outcome id="__11">back</from-outcome>
+        <to-activity-id id="__10">admDeductsMain</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

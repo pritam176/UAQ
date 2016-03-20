@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="docsDetDistributionPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CommonModule.CommonLovVO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CommonLovVO1Iterator"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_SectionIdLov" id="SectionIdLov"/>
+    <attributeValues IterBinding="CommonLovVO1Iterator" id="SectionName">
+      <AttrNames>
+        <Item Value="SectionName"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_DocDest" id="DocDest"/>
+    <attributeValues IterBinding="CommonLovVO1Iterator" id="DocDestName">
+      <AttrNames>
+        <Item Value="DocDestName"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_SubjIdLov" id="SubjIdLov"/>
+    <attributeValues IterBinding="CommonLovVO1Iterator" id="SubjectName">
+      <AttrNames>
+        <Item Value="SubjectName"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callDistributeDetDocsFunction" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="callDistributeDetDocsFunction"
+                  IsViewObjectMethod="false" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.CorresModule"
+                  ReturnName="data.ModModuleDataControl.methodResults.callDistributeDetDocsFunction_ModModuleDataControl_dataProvider_Root_CorresModule_callDistributeDetDocsFunction_result">
+      <NamedData NDName="userId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="docRef" NDType="java.lang.String"/>
+      <NamedData NDName="recvDate" NDType="java.util.Date"/>
+      <NamedData NDName="docDate" NDType="java.util.Date"/>
+      <NamedData NDName="sectionId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="subjectId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="docDest" NDType="java.lang.String"/>
+      <NamedData NDName="lang" NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="callCancelDistributeDetDocsFunction"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="callCancelDistributeDetDocsFunction"
+                  IsViewObjectMethod="false" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.CorresModule"
+                  ReturnName="data.ModModuleDataControl.methodResults.callCancelDistributeDetDocsFunction_ModModuleDataControl_dataProvider_Root_CorresModule_callCancelDistributeDetDocsFunction_result">
+      <NamedData NDName="userId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="docRef" NDType="java.lang.String"/>
+      <NamedData NDName="recvDate" NDType="java.util.Date"/>
+      <NamedData NDName="docDate" NDType="java.util.Date"/>
+      <NamedData NDName="sectionId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="subjectId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="docDest" NDType="java.lang.String"/>
+      <NamedData NDName="lang" NDType="java.lang.String"/>
+    </methodAction>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_DocRef" id="DocRef"/>
+  </bindings>
+</pageDefinition>

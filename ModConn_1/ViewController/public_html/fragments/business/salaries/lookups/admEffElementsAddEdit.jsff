@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt4">
+    <f:facet name="Master">
+      <af:panelFormLayout id="pfl1" rows="5"
+                          binding="#{viewScope.admEffElementsBean.mainPF}">
+        <af:selectOneChoice value="#{bindings.EleRule.inputValue}"
+                            label="#{bindings.EleRule.label}" required="true"
+                            shortDesc="#{bindings.EleRule.hints.tooltip}"
+                            id="soc1" contentStyle="width:250px !important;"
+                            unselectedLabel="#{rs.SELECT_FROM_LIST}"
+                            autoSubmit="true"
+                            valueChangeListener="#{viewScope.admEffElementsBean.onElementRuleChange}"
+                            immediate="true">
+          <f:selectItems value="#{bindings.EleRule.items}" id="si2"/>
+        </af:selectOneChoice>
+        <af:inputListOfValues id="tableNameId"
+                              popupTitle="#{rs.common_label_search_select} #{bindings.TableName.hints.label}"
+                              value="#{bindings.TableName.inputValue}"
+                              label="#{bindings.TableName.hints.label}"
+                              model="#{bindings.TableName.listOfValuesModel}"
+                              required="#{bindings.TableName.hints.mandatory}"
+                              columns="#{bindings.TableName.hints.displayWidth}"
+                              shortDesc="#{bindings.TableName.hints.tooltip}"
+                              autoSubmit="true"
+                              contentStyle="width:250px !important;"
+                              disabled="#{bindings.EleRule1.inputValue == '3' or bindings.EleRule1.inputValue == '4'}">
+          <f:validator binding="#{bindings.TableName.validator}"/>
+        </af:inputListOfValues>
+        <af:inputText value="#{bindings.EleName.inputValue}"
+                      label="#{bindings.EleName.hints.label}"
+                      required="#{bindings.EleRule1.inputValue == '3' or bindings.EleRule1.inputValue == '4'}"
+                      columns="#{bindings.EleName.hints.displayWidth}"
+                      maximumLength="#{bindings.EleName.hints.precision}"
+                      shortDesc="#{bindings.EleName.hints.tooltip}" id="it2"
+                      contentStyle="width:250px !important;" autoSubmit="true"
+                      rendered="#{bindings.EleRule1.inputValue == '3' or bindings.EleRule1.inputValue == '4'}">
+          <f:validator binding="#{bindings.EleName.validator}"/>
+        </af:inputText>
+        <af:inputListOfValues id="eleNameId"
+                              popupTitle="#{rs.common_label_search_select} #{bindings.EleName.hints.label}"
+                              value="#{bindings.EleName.inputValue}"
+                              label="#{bindings.EleName.hints.label}"
+                              model="#{bindings.EleName.listOfValuesModel}"
+                              required="#{bindings.EleRule1.inputValue == '1' or bindings.EleRule1.inputValue == '2'}"
+                              columns="#{bindings.EleName.hints.displayWidth}"
+                              shortDesc="#{bindings.EleName.hints.tooltip}"
+                              contentStyle="width:250px !important;" autoSubmit="true"
+                              rendered="#{bindings.EleRule1.inputValue == null or bindings.EleRule1.inputValue == '1' or bindings.EleRule1.inputValue == '2'}" partialTriggers="tableNameId">
+          <f:validator binding="#{bindings.EleName.validator}"/>
+        </af:inputListOfValues>
+        <af:inputText value="#{bindings.EleLabel.inputValue}"
+                      label="#{bindings.EleLabel.hints.label}"
+                      required="#{bindings.EleLabel.hints.mandatory}"
+                      columns="#{bindings.EleLabel.hints.displayWidth}"
+                      maximumLength="#{bindings.EleLabel.hints.precision}"
+                      shortDesc="#{bindings.EleLabel.hints.tooltip}" id="it4"
+                      contentStyle="width:250px !important;" autoSubmit="true">
+          <f:validator binding="#{bindings.EleLabel.validator}"/>
+        </af:inputText>
+        <af:selectOneChoice value="#{bindings.EleType.inputValue}"
+                            label="#{bindings.EleType.label}"
+                            showRequired="true"
+                            shortDesc="#{bindings.EleType.hints.tooltip}"
+                            id="soc2" contentStyle="width:250px !important;"
+                            unselectedLabel="#{rs.SELECT_FROM_LIST}" partialTriggers="eleNameId" autoSubmit="true"
+                            required="true">
+          <f:selectItems value="#{bindings.EleType.items}" id="si1"/>
+        </af:selectOneChoice>
+        <af:inputText value="#{bindings.EleLen.inputValue}"
+                      label="#{bindings.EleLen.hints.label}" showRequired="true"
+                      columns="#{bindings.EleLen.hints.displayWidth}"
+                      maximumLength="#{bindings.EleLen.hints.precision}"
+                      shortDesc="#{bindings.EleLen.hints.tooltip}"
+                      partialTriggers="eleNameId" id="it3"
+                      contentStyle="width:250px !important;" autoSubmit="true"
+                      required="true">
+          <f:validator binding="#{bindings.EleLen.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.EleLen.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.EleDisp.inputValue}"
+                      label="#{bindings.EleDisp.hints.label}"
+                      showRequired="true"
+                      columns="#{bindings.EleDisp.hints.displayWidth}"
+                      maximumLength="#{bindings.EleDisp.hints.precision}"
+                      shortDesc="#{bindings.EleDisp.hints.tooltip}" id="it1"
+                      contentStyle="width:250px !important;" autoSubmit="true"
+                      required="true">
+          <f:validator binding="#{bindings.EleDisp.validator}"/>
+        </af:inputText>
+        <af:inputListOfValues id="lookupTableId"
+                              popupTitle="#{rs.common_label_search_select} #{bindings.LookupTable.hints.label}"
+                              value="#{bindings.LookupTable.inputValue}"
+                              label="#{bindings.LookupTable.hints.label}"
+                              model="#{bindings.LookupTable.listOfValuesModel}"
+                              required="#{bindings.LookupTable.hints.mandatory}"
+                              columns="#{bindings.LookupTable.hints.displayWidth}"
+                              shortDesc="#{bindings.LookupTable.hints.tooltip}"
+                              autoSubmit="true"
+                              contentStyle="width:250px !important;"
+                              disabled="#{bindings.EleRule1.inputValue == '3' or bindings.EleRule1.inputValue == '4'}">
+          <f:validator binding="#{bindings.LookupTable.validator}"/>
+        </af:inputListOfValues>
+        <af:inputListOfValues id="lookupFieldId"
+                              popupTitle="#{rs.common_label_search_select} #{bindings.LookupField.hints.label}"
+                              value="#{bindings.LookupField.inputValue}"
+                              label="#{bindings.LookupField.hints.label}"
+                              model="#{bindings.LookupField.listOfValuesModel}"
+                              required="#{bindings.LookupField.hints.mandatory}"
+                              columns="#{bindings.LookupField.hints.displayWidth}"
+                              shortDesc="#{bindings.LookupField.hints.tooltip}"
+                              contentStyle="width:250px !important;"
+                              disabled="#{bindings.EleRule1.inputValue == '3' or bindings.EleRule1.inputValue == '4'}" autoSubmit="true" partialTriggers="lookupTableId">
+          <f:validator binding="#{bindings.LookupField.validator}"/>
+        </af:inputListOfValues>
+        <af:inputText value="#{bindings.DispCode.inputValue}"
+                      label="#{bindings.DispCode.hints.label}"
+                      required="#{bindings.DispCode.hints.mandatory}"
+                      columns="#{bindings.DispCode.hints.displayWidth}"
+                      maximumLength="#{bindings.DispCode.hints.precision}"
+                      shortDesc="#{bindings.DispCode.hints.tooltip}" id="it5"
+                      contentStyle="width:250px !important;"
+                      rendered="#{bindings.EleRule1.inputValue == '3' or bindings.EleRule1.inputValue == '4'}" autoSubmit="true">
+          <f:validator binding="#{bindings.DispCode.validator}"/>
+        </af:inputText>
+        <af:inputListOfValues id="dispCodeId"
+                              popupTitle="#{rs.common_label_search_select} #{bindings.DispCode.hints.label}"
+                              value="#{bindings.DispCode.inputValue}"
+                              label="#{bindings.DispCode.hints.label}"
+                              model="#{bindings.DispCode.listOfValuesModel}"
+                              required="#{bindings.DispCode.hints.mandatory}"
+                              columns="#{bindings.DispCode.hints.displayWidth}"
+                              shortDesc="#{bindings.DispCode.hints.tooltip}"
+                              contentStyle="width:250px !important;"
+                              rendered="#{bindings.EleRule1.inputValue == null or bindings.EleRule1.inputValue == '1' or bindings.EleRule1.inputValue == '2'}" autoSubmit="true">
+          <f:validator binding="#{bindings.DispCode.validator}"/>
+        </af:inputListOfValues>
+      </af:panelFormLayout>
+    </f:facet>
+    <f:facet name="MasterToolbar">
+      <af:panelGroupLayout layout="horizontal" id="pgl12">
+        <af:commandButton actionListener="#{bindings.Commit.execute}"
+                          icon="/images/save.png"
+                          text="#{rs.common_button_save}" partialSubmit="true"
+                          id="cb4"/>
+        <af:spacer width="5px" id="s7"/>
+        <af:commandButton icon="/images/arrow_undo.png"
+                          actionListener="#{bindings.Rollback.execute}"
+                          action="back" text="#{rs.bankBranch_buttonBankBack}"
+                          immediate="true" id="cb6"/>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

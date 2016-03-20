@@ -1,0 +1,144 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+      <af:panelGroupLayout layout="vertical" id="pgl2"
+                           inlineStyle="height:125px !important;">
+        <af:query id="qryId1" headerText="#{rs.common_label_search}"
+                  disclosed="true" rows="2" maxColumns="3"
+                  value="#{bindings.CorDocMasterArchivingViewCriteriaQuery.queryDescriptor}"
+                  model="#{bindings.CorDocMasterArchivingViewCriteriaQuery.queryModel}"
+                  queryListener="#{bindings.CorDocMasterArchivingViewCriteriaQuery.processQuery}"
+                  queryOperationListener="#{bindings.CorDocMasterArchivingViewCriteriaQuery.processQueryOperation}"
+                  resultComponentId="::pc1:t1" saveQueryMode="hidden"
+                  modeChangeVisible="false"/>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="Result">
+      <af:table value="#{bindings.CorDocMasterArchivingView11.collectionModel}"
+                var="row"
+                rows="#{bindings.CorDocMasterArchivingView11.rangeSize}"
+                emptyText="#{rs.common_label_table_no_data}"
+                fetchSize="#{bindings.CorDocMasterArchivingView11.rangeSize}"
+                rowBandingInterval="0"
+                filterModel="#{bindings.CorDocMasterArchivingViewCriteriaQuery.queryDescriptor}"
+                queryListener="#{bindings.CorDocMasterArchivingViewCriteriaQuery.processQuery}"
+                filterVisible="true" varStatus="vs"
+                selectedRowKeys="#{bindings.CorDocMasterArchivingView11.collectionModel.selectedRow}"
+                selectionListener="#{bindings.CorDocMasterArchivingView11.collectionModel.makeCurrent}"
+                rowSelection="single" id="t1" columnStretching="column:c9">
+        <af:column sortProperty="#{bindings.CorDocMasterArchivingView11.hints.ArchNo.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterArchivingView11.hints.ArchNo.label}"
+                   id="c11" noWrap="false">
+          <af:inputText value="#{row.bindings.ArchNo.inputValue}"
+                        label="#{bindings.CorDocMasterArchivingView11.hints.ArchNo.label}"
+                        required="#{bindings.CorDocMasterArchivingView11.hints.ArchNo.mandatory}"
+                        columns="#{bindings.CorDocMasterArchivingView11.hints.ArchNo.displayWidth}"
+                        maximumLength="#{bindings.CorDocMasterArchivingView11.hints.ArchNo.precision}"
+                        shortDesc="#{bindings.CorDocMasterArchivingView11.hints.ArchNo.tooltip}"
+                        id="it5" disabled="false">
+            <f:validator binding="#{row.bindings.ArchNo.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.CorDocMasterArchivingView11.hints.ArchNo.format}"/>
+          </af:inputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterArchivingView11.hints.DocRef.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterArchivingView11.hints.DocRef.label}"
+                   id="c13" noWrap="false">
+          <af:inputText value="#{row.bindings.DocRef.inputValue}"
+                        label="#{bindings.CorDocMasterArchivingView11.hints.DocRef.label}"
+                        required="#{bindings.CorDocMasterArchivingView11.hints.DocRef.mandatory}"
+                        columns="#{bindings.CorDocMasterArchivingView11.hints.DocRef.displayWidth}"
+                        maximumLength="#{bindings.CorDocMasterArchivingView11.hints.DocRef.precision}"
+                        shortDesc="#{bindings.CorDocMasterArchivingView11.hints.DocRef.tooltip}"
+                        id="it7" disabled="true">
+            <f:validator binding="#{row.bindings.DocRef.validator}"/>
+          </af:inputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterArchivingView11.hints.DocYear.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterArchivingView11.hints.DocYear.label}"
+                   id="c14" noWrap="false" width="75">
+          <af:inputText value="#{row.bindings.DocYear.inputValue}"
+                        label="#{bindings.CorDocMasterArchivingView11.hints.DocYear.label}"
+                        required="#{bindings.CorDocMasterArchivingView11.hints.DocYear.mandatory}"
+                        columns="#{bindings.CorDocMasterArchivingView11.hints.DocYear.displayWidth}"
+                        maximumLength="#{bindings.CorDocMasterArchivingView11.hints.DocYear.precision}"
+                        shortDesc="#{bindings.CorDocMasterArchivingView11.hints.DocYear.tooltip}"
+                        id="it6" disabled="false">
+            <f:validator binding="#{row.bindings.DocYear.validator}"/>
+          </af:inputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterArchivingView11.hints.Name.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterArchivingView11.hints.Name.label}"
+                   id="c9" noWrap="false">
+          <af:inputText value="#{row.bindings.Name.inputValue}"
+                        label="#{bindings.CorDocMasterArchivingView11.hints.Name.label}"
+                        required="#{bindings.CorDocMasterArchivingView11.hints.Name.mandatory}"
+                        columns="#{bindings.CorDocMasterArchivingView11.hints.Name.displayWidth}"
+                        maximumLength="#{bindings.CorDocMasterArchivingView11.hints.Name.precision}"
+                        shortDesc="#{bindings.CorDocMasterArchivingView11.hints.Name.tooltip}"
+                        id="it8" disabled="true">
+            <f:validator binding="#{row.bindings.Name.validator}"/>
+          </af:inputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterArchivingView11.hints.SectionId.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterArchivingView11.hints.SectionId.label}"
+                   id="c8">
+          <af:inputListOfValues id="inputListOfValues1"
+                                popupTitle="#{rs.common_label_search_select} #{bindings.CorDocMasterArchivingView11.hints.SectionId.label}"
+                                value="#{row.bindings.SectionId.inputValue}"
+                                model="#{row.bindings.SectionId.listOfValuesModel}"
+                                required="#{bindings.CorDocMasterArchivingView11.hints.SectionId.mandatory}"
+                                columns="#{bindings.CorDocMasterArchivingView11.hints.SectionId.displayWidth}"
+                                shortDesc="#{bindings.CorDocMasterArchivingView11.hints.SectionId.tooltip}"
+                                disabled="true">
+            <f:validator binding="#{row.bindings.SectionId.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.CorDocMasterArchivingView11.hints.SectionId.format}"/>
+          </af:inputListOfValues>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterArchivingView11.hints.DocDest.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterArchivingView11.hints.DocDest.label}"
+                   id="c12" noWrap="false" width="195">
+          <af:selectOneChoice value="#{row.bindings.DocDest.inputValue}"
+                              label="#{row.bindings.DocDest.label}"
+                              required="#{bindings.CorDocMasterArchivingView11.hints.DocDest.mandatory}"
+                              shortDesc="#{bindings.CorDocMasterArchivingView11.hints.DocDest.tooltip}"
+                              id="soc4" disabled="true"
+                              contentStyle="width:190px !important;">
+            <f:selectItems value="#{row.bindings.DocDest.items}" id="si3"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterArchivingView11.hints.DocType.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterArchivingView11.hints.DocType.label}"
+                   id="c10" noWrap="false">
+          <af:selectOneChoice value="#{row.bindings.DocType.inputValue}"
+                              label="#{row.bindings.DocType.label}"
+                              required="#{bindings.CorDocMasterArchivingView11.hints.DocType.mandatory}"
+                              shortDesc="#{bindings.CorDocMasterArchivingView11.hints.DocType.tooltip}"
+                              id="soc3" disabled="true">
+            <f:selectItems value="#{row.bindings.DocType.items}" id="si4"/>
+          </af:selectOneChoice>
+        </af:column>
+      </af:table>
+    </f:facet>
+    <f:attribute name="Title" value="#{rs.DOCS_ARCHIVING}"/>
+    <f:facet name="ToolbarButton">
+      <af:panelGroupLayout layout="horizontal" halign="center" id="pgl12">
+        <af:commandButton actionListener="#{bindings.Commit.execute}"
+                          icon="/images/save.png"
+                          text="#{rs.common_button_save}" partialSubmit="true"
+                          id="saveBtn"/>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

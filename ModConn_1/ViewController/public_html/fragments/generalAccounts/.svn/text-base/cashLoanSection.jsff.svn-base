@@ -1,0 +1,277 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <af:panelSplitter id="ps1" styleClass="AFStretchWidth" splitterPosition="280"
+                    inlineStyle="height:509px;">
+    <f:facet name="first">
+      <af:panelCollection id="pc2">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar"/>
+        <f:facet name="statusbar"/>
+        <af:tree value="#{bindings.MasterAdmSectionsView.treeModel}" var="node"
+                 rowSelection="single" id="t1"
+                 selectionListener="#{cashLoanSectionBean.OnTreeSelection}"
+                 fetchSize="-1">
+          <f:facet name="nodeStamp">
+            <af:outputText value="#{node}" id="ot1"/>
+          </f:facet>
+        </af:tree>
+      </af:panelCollection>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelSplitter id="ps2" orientation="vertical" splitterPosition="215">
+        <f:facet name="first">
+          <af:panelBox text="PanelBox2" id="pb2">
+            <af:panelFormLayout id="pfl1" binding="#{cashLoanSectionBean.form}"
+                                rows="12" partialTriggers="ctb4">
+              <af:inputText value="#{bindings.Id.inputValue}"
+                            label="#{bindings.Id.hints.label}"
+                            required="#{bindings.Id.hints.mandatory}"
+                            columns="#{bindings.Id.hints.displayWidth}"
+                            maximumLength="#{bindings.Id.hints.precision}"
+                            shortDesc="#{bindings.Id.hints.tooltip}" id="it3"
+                            contentStyle="width:120px !important;">
+                <f:validator binding="#{bindings.Id.validator}"/>
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.Id.format}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.Name.inputValue}"
+                            label="#{bindings.Name.hints.label}"
+                            required="#{bindings.Name.hints.mandatory}"
+                            columns="#{bindings.Name.hints.displayWidth}"
+                            maximumLength="#{bindings.Name.hints.precision}"
+                            shortDesc="#{bindings.Name.hints.tooltip}" id="it5"
+                            contentStyle="width:200px !important;">
+                <f:validator binding="#{bindings.Name.validator}"/>
+              </af:inputText>
+              <af:panelLabelAndMessage label="#{bindings.SectionParent.hints.label}"
+                                       id="plam1">
+                <af:panelGroupLayout id="pgl1" layout="horizontal">
+                  <af:inputListOfValues id="sectionParentId"
+                                        popupTitle="Search and Select: #{bindings.SectionParent.hints.label}"
+                                        value="#{bindings.SectionParent.inputValue}"
+                                        model="#{bindings.SectionParent.listOfValuesModel}"
+                                        required="#{bindings.SectionParent.hints.mandatory}"
+                                        columns="#{bindings.SectionParent.hints.displayWidth}"
+                                        shortDesc="#{bindings.SectionParent.hints.tooltip}"
+                                        autoSubmit="true"
+                                        contentStyle="width:200px !important;">
+                    <f:validator binding="#{bindings.SectionParent.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.SectionParent.format}"/>
+                  </af:inputListOfValues>
+                  <af:inputText value="#{bindings.MasterSectionName.inputValue}"
+                                required="#{bindings.MasterSectionName.hints.mandatory}"
+                                columns="#{bindings.MasterSectionName.hints.displayWidth}"
+                                maximumLength="#{bindings.MasterSectionName.hints.precision}"
+                                shortDesc="#{bindings.MasterSectionName.hints.tooltip}"
+                                id="it7" partialTriggers="sectionParentId"
+                                contentStyle="width:200px !important;"
+                                disabled="true">
+                    <f:validator binding="#{bindings.MasterSectionName.validator}"/>
+                  </af:inputText>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:selectOneChoice value="#{bindings.SectionType.inputValue}"
+                                  label="#{bindings.SectionType.label}"
+                                  required="#{bindings.SectionType.hints.mandatory}"
+                                  shortDesc="#{bindings.SectionType.hints.tooltip}"
+                                  id="soc1"
+                                  contentStyle="width:200px !important;">
+                <f:selectItems value="#{bindings.SectionType.items}" id="si1"/>
+              </af:selectOneChoice>
+              <af:panelLabelAndMessage label="#{bindings.ProgId.hints.label}"
+                                       id="plam2">
+                <af:panelGroupLayout id="pgl2" layout="horizontal">
+                  <af:inputListOfValues id="progIdId"
+                                        popupTitle="Search and Select: #{bindings.ProgId.hints.label}"
+                                        value="#{bindings.ProgId.inputValue}"
+                                        model="#{bindings.ProgId.listOfValuesModel}"
+                                        required="#{bindings.ProgId.hints.mandatory}"
+                                        columns="#{bindings.ProgId.hints.displayWidth}"
+                                        shortDesc="#{bindings.ProgId.hints.tooltip}"
+                                        autoSubmit="true"
+                                        contentStyle="width:200px !important;">
+                    <f:validator binding="#{bindings.ProgId.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ProgId.format}"/>
+                  </af:inputListOfValues>
+                  <af:inputText value="#{bindings.BudgetProgramName.inputValue}"
+                                required="#{bindings.BudgetProgramName.hints.mandatory}"
+                                columns="#{bindings.BudgetProgramName.hints.displayWidth}"
+                                maximumLength="#{bindings.BudgetProgramName.hints.precision}"
+                                shortDesc="#{bindings.BudgetProgramName.hints.tooltip}"
+                                partialTriggers="progIdId" id="it1"
+                                contentStyle="width:200px !important;"
+                                disabled="true">
+                    <f:validator binding="#{bindings.BudgetProgramName.validator}"/>
+                  </af:inputText>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.MainAccountNo.hints.label}"
+                                       id="plam4">
+                <af:panelGroupLayout id="pgl4" layout="horizontal">
+                  <af:inputListOfValues id="mainAccountNoId"
+                                        popupTitle="Search and Select: #{bindings.MainAccountNo.hints.label}"
+                                        value="#{bindings.MainAccountNo.inputValue}"
+                                        model="#{bindings.MainAccountNo.listOfValuesModel}"
+                                        required="#{bindings.MainAccountNo.hints.mandatory}"
+                                        columns="#{bindings.MainAccountNo.hints.displayWidth}"
+                                        shortDesc="#{bindings.MainAccountNo.hints.tooltip}"
+                                        autoSubmit="true"
+                                        contentStyle="width:200px !important;">
+                    <f:validator binding="#{bindings.MainAccountNo.validator}"/>
+                  </af:inputListOfValues>
+                  <af:inputText value="#{bindings.MainAccountName.inputValue}"
+                                required="#{bindings.MainAccountName.hints.mandatory}"
+                                columns="#{bindings.MainAccountName.hints.displayWidth}"
+                                maximumLength="#{bindings.MainAccountName.hints.precision}"
+                                shortDesc="#{bindings.MainAccountName.hints.tooltip}"
+                                partialTriggers="mainAccountNoId" id="it6"
+                                contentStyle="width:200px !important;"
+                                disabled="true">
+                    <f:validator binding="#{bindings.MainAccountName.validator}"/>
+                  </af:inputText>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.SubAccountNo.hints.label}"
+                                       id="plam3">
+                <af:panelGroupLayout id="pgl3" layout="horizontal">
+                  <af:inputListOfValues id="subAccountNoId"
+                                        popupTitle="Search and Select: #{bindings.SubAccountNo.hints.label}"
+                                        value="#{bindings.SubAccountNo.inputValue}"
+                                        model="#{bindings.SubAccountNo.listOfValuesModel}"
+                                        required="#{bindings.SubAccountNo.hints.mandatory}"
+                                        columns="#{bindings.SubAccountNo.hints.displayWidth}"
+                                        shortDesc="#{bindings.SubAccountNo.hints.tooltip}"
+                                        autoSubmit="true"
+                                        contentStyle="width:200px !important;">
+                    <f:validator binding="#{bindings.SubAccountNo.validator}"/>
+                  </af:inputListOfValues>
+                  <af:inputText value="#{bindings.SubAccountName.inputValue}"
+                                required="#{bindings.SubAccountName.hints.mandatory}"
+                                columns="#{bindings.SubAccountName.hints.displayWidth}"
+                                maximumLength="#{bindings.SubAccountName.hints.precision}"
+                                shortDesc="#{bindings.SubAccountName.hints.tooltip}"
+                                partialTriggers="subAccountNoId" id="it4"
+                                contentStyle="width:200px !important;"
+                                disabled="true">
+                    <f:validator binding="#{bindings.SubAccountName.validator}"/>
+                  </af:inputText>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+            </af:panelFormLayout>
+            <f:facet name="toolbar">
+              <af:toolbar id="t5">
+                <af:commandToolbarButton actionListener="#{bindings.CreateInsert1.execute}"
+                                         disabled="#{!bindings.CreateInsert1.enabled}"
+                                         id="ctb4"
+                                         text="#{rs.common_button_new}"
+                                         icon="/images/add.png"/>
+                <af:commandToolbarButton actionListener="#{bindings.Commit.execute}"
+                                         id="ctb1" icon="/images/save.png"
+                                         text="#{rs.common_button_save}"/>
+                <af:commandToolbarButton actionListener="#{bindings.Rollback.execute}"
+                                         immediate="true" id="ctb2"
+                                         icon="/images/cancel.gif"
+                                         text="#{rs.common_button_cancel}">
+                  <af:resetActionListener/>
+                </af:commandToolbarButton>
+              </af:toolbar>
+            </f:facet>
+          </af:panelBox>
+        </f:facet>
+        <f:facet name="second">
+          <af:panelGroupLayout id="pgl6" layout="scroll" valign="middle"
+                               halign="center">
+            <af:panelBox text="PanelBox3" id="pb3">
+              <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                                  partialTriggers="::ctb4"
+                                  inlineStyle="height:335px;">
+                <f:facet name="menus"/>
+                <f:facet name="toolbar">
+                  <af:toolbar id="t4">
+                    <af:commandToolbarButton actionListener="#{bindings.CreateInsert.execute}"
+                                             disabled="#{!bindings.CreateInsert.enabled}"
+                                             id="ctb3" icon="/images/add.png"
+                                             text="#{rs.common_button_new}"/>
+                  </af:toolbar>
+                </f:facet>
+                <f:facet name="statusbar"/>
+                <af:table value="#{bindings.AccCashLoanSecView.collectionModel}"
+                          var="row"
+                          rows="#{bindings.AccCashLoanSecView.rangeSize}"
+                          emptyText="#{bindings.AccCashLoanSecView.viewable ? 'No data to display.' : 'Access Denied.'}"
+                          fetchSize="#{bindings.AccCashLoanSecView.rangeSize}"
+                          rowBandingInterval="0"
+                          selectedRowKeys="#{bindings.AccCashLoanSecView.collectionModel.selectedRow}"
+                          selectionListener="#{bindings.AccCashLoanSecView.collectionModel.makeCurrent}"
+                          rowSelection="single" id="t3"
+                          partialTriggers="::ctb3" columnStretching="last">
+                  <af:column sortProperty="#{bindings.AccCashLoanSecView.hints.SaccId.name}"
+                             sortable="true"
+                             headerText="#{bindings.AccCashLoanSecView.hints.SaccId.label}"
+                             id="c2" width="500">
+                    <af:panelGroupLayout id="pgl5">
+                      <af:inputListOfValues id="subAccountNo1Id"
+                                            popupTitle="Search and Select: #{bindings.SubAccountNo1.hints.label}"
+                                            value="#{bindings.SubAccountNo1.inputValue}"
+                                            label="#{bindings.SubAccountNo1.hints.label}"
+                                            model="#{bindings.SubAccountNo1.listOfValuesModel}"
+                                            required="#{bindings.SubAccountNo1.hints.mandatory}"
+                                            columns="#{bindings.SubAccountNo1.hints.displayWidth}"
+                                            shortDesc="#{bindings.SubAccountNo1.hints.tooltip}"
+                                            autoSubmit="true">
+                        <f:validator binding="#{bindings.SubAccountNo1.validator}"/>
+                      </af:inputListOfValues>
+                      <af:inputText value="#{row.bindings.SubAccountName.inputValue}"
+                                    label="#{bindings.AccCashLoanSecView.hints.SubAccountName.label}"
+                                    required="#{bindings.AccCashLoanSecView.hints.SubAccountName.mandatory}"
+                                    columns="#{bindings.AccCashLoanSecView.hints.SubAccountName.displayWidth}"
+                                    maximumLength="#{bindings.AccCashLoanSecView.hints.SubAccountName.precision}"
+                                    shortDesc="#{bindings.AccCashLoanSecView.hints.SubAccountName.tooltip}"
+                                    id="it9" readOnly="true"
+                                    partialTriggers="subAccountNo1Id">
+                        <f:validator binding="#{row.bindings.SubAccountName.validator}"/>
+                      </af:inputText>
+                    </af:panelGroupLayout>
+                  </af:column>
+                  <af:column sortProperty="#{bindings.AccCashLoanSecView.hints.LoanType.name}"
+                             sortable="true"
+                             headerText="#{bindings.AccCashLoanSecView.hints.LoanType.label}"
+                             id="c4" width="150">
+                    <af:selectOneChoice value="#{row.bindings.LoanType.inputValue}"
+                                        label="#{row.bindings.LoanType.label}"
+                                        required="#{bindings.AccCashLoanSecView.hints.LoanType.mandatory}"
+                                        shortDesc="#{bindings.AccCashLoanSecView.hints.LoanType.tooltip}"
+                                        id="soc2">
+                      <f:selectItems value="#{row.bindings.LoanType.items}"
+                                     id="si2"/>
+                    </af:selectOneChoice>
+                  </af:column>
+                  <af:column sortProperty="#{bindings.AccCashLoanSecView.hints.AllocValue.name}"
+                             sortable="true"
+                             headerText="#{bindings.AccCashLoanSecView.hints.AllocValue.label}"
+                             id="c1" width="150">
+                    <af:inputText value="#{row.bindings.AllocValue.inputValue}"
+                                  label="#{bindings.AccCashLoanSecView.hints.AllocValue.label}"
+                                  required="#{bindings.AccCashLoanSecView.hints.AllocValue.mandatory}"
+                                  columns="#{bindings.AccCashLoanSecView.hints.AllocValue.displayWidth}"
+                                  maximumLength="#{bindings.AccCashLoanSecView.hints.AllocValue.precision}"
+                                  shortDesc="#{bindings.AccCashLoanSecView.hints.AllocValue.tooltip}"
+                                  id="it2">
+                      <f:validator binding="#{row.bindings.AllocValue.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.AccCashLoanSecView.hints.AllocValue.format}"/>
+                    </af:inputText>
+                  </af:column>
+                </af:table>
+              </af:panelCollection>
+            </af:panelBox>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelSplitter>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>

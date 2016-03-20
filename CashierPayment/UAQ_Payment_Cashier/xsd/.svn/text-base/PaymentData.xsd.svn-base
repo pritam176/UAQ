@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            xmlns:pymnt="http://PaymentData"
+            targetNamespace="http://PaymentData" elementFormDefault="qualified">
+  <xsd:element name="Input" type="pymnt:InputPayload">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:element name="Output" type="pymnt:OutputPayload">
+    <xsd:annotation>
+      <xsd:documentation>A sample element</xsd:documentation>
+    </xsd:annotation>
+  </xsd:element>
+  <xsd:complexType name="OutputPayload">
+    <xsd:sequence>
+      <xsd:element name="PaymentStatus" type="xsd:string"/>
+      <xsd:element name="ErrorMsg" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="InputPayload">
+    <xsd:sequence>
+      <xsd:element name="UserDetails" type="pymnt:UserDetailsPayload"/>
+      <xsd:element name="RequestDetails" type="pymnt:RequestDetailsPayLoad"/>
+      <xsd:element name="PaymentDetails" type="pymnt:PaymentDetailsPayload"/>
+      <xsd:element name="POSDetails" type="pymnt:POSDetailsPayLoad"/>
+      <xsd:element name="AccountIdentityAttachmentList" minOccurs="0"
+                   type="pymnt:accountattachlistpayload"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="UserDetailsPayload">
+    <xsd:sequence>
+      <xsd:element name="Username" type="xsd:string"/>
+      <xsd:element name="TypeOfUser" type="xsd:string"/>
+      <xsd:element name="Accountid" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="MobileNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="EmailID" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="EmiratesId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="TradeLienceNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="FamilyBookNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="nationality" type="xsd:string"/>
+      <xsd:element name="Emirate" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="FirstName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="MiddleName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="LastName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="Address1" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="Address2" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="Address3" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="POBOX" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="DOB" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="applicanttypeid" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="applicanttype_en" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="applicanttype_ar" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="nationality_en" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="nationality_ar" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="emirate_en" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="emirate_ar" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="typeofuser_en" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="typeofuser_ar" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="PaymentDetailsPayload">
+    <xsd:sequence>
+      <xsd:element name="TotalAmount" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="GeneralAmount" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="ApplicationAmount" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="ServiceAmount" type="xsd:decimal" minOccurs="0"/>
+      <xsd:element name="specificDeptCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="GeneralDeptCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="SpecificFeeId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="GeneralFeeId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="PaymentMethod" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="DepartmentName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="ReceiptNumber" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="Imagelogopath" minOccurs="0" type="xsd:string"/>
+      
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="RequestDetailsPayLoad">
+    <xsd:sequence>
+      <xsd:element name="ServiceId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="ServiceName" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="RequestType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="RequestDate" type="xsd:date" minOccurs="0"/>
+      <xsd:element name="FeeTypeCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="UserType" type="xsd:string" minOccurs="0"
+                   default="xxempty"/>
+      <xsd:element name="Letter" type="xsd:string" nillable="true" minOccurs="0"
+                   default="xx"/>
+      <xsd:element name="RequestNumber" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="RequestStatus" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="cashierGrpName" minOccurs="0" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="POSDetailsPayLoad">
+    <xsd:sequence>
+      <xsd:element name="Amount" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="EcrIdNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="ServiceCode" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="TransactionType" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="TerminalNo" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="MerchantId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="PaymentId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="FeeId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CustomerId" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="CustomerName" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+  <xsd:complexType name="accountattachlistpayload">
+    <xsd:sequence>
+      <xsd:element name="accountAttachmentRec" type="pymnt:accountattachRec"
+                   minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="accountattachRec">
+    <xsd:sequence>
+      <xsd:element name="contentid" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="doctypeid" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="doctype_en" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="doctype_ar" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="viewurl" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="downloadurl" type="xsd:string" minOccurs="0"/>
+      <xsd:element name="filename" type="xsd:string" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  
+</xsd:schema>

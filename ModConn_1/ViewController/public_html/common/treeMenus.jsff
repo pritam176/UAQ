@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <af:panelAccordion id="pa1" partialTriggers="sdi1 sdi2">
+    <af:showDetailItem text="#{rs.common_label_tree}" id="sdi1"
+                       stretchChildren="first"
+                       disclosed="#{sessionScope.statusAccordion == 'fav'}">
+      <af:tree value="#{bindings.TreeMenusROView.treeModel}" var="node"
+               selectionListener="#{pageFlowScope.treeMenusFragBean.OnTreeSelection}"
+               rowSelection="single" id="t1"
+               binding="#{pageFlowScope.treeMenusFragBean.tree}">
+        <f:facet name="nodeStamp">
+          <af:commandLink id="ot1" clientComponent="true">
+            <af:image id="image2" source="/images/form.png"
+                      rendered="#{node.FormCommand!=null}"/>
+            <af:image id="image3" source="/images/system1.png"
+                      rendered="#{node.FormCommand==null}"/>
+            <af:commandLink text="#{userInfo.language =='ar' ? node.ArMenuTitle: node.EnMenuTitle }"
+                            id="cl2"
+                            action="#{pageFlowScope.treeMenusFragBean.processOpenMenu}"/>
+            <af:commandLink id="commandLink1"
+                            visible="#{node.MenuIdFav == null  &amp;&amp; node.ActionString != null  }"
+                            action="#{pageFlowScope.treeMenusFragBean.createAndSaveFav_action}">
+              <af:image source="/images/star4.png" id="image4"/>
+            </af:commandLink>
+            <af:commandLink id="commandLink2"
+                            visible="#{node.MenuIdFav != null &amp;&amp; node.ActionString != null  }"
+                            action="#{pageFlowScope.treeMenusFragBean.removeNodeFav}">
+              <af:image source="/images/star1.png" id="image5"/>
+            </af:commandLink>
+          </af:commandLink>
+        </f:facet>
+      </af:tree>
+      <af:setPropertyListener type="disclosure" from="#{'tree'}"
+                              to="#{sessionScope.statusAccordion}"/>
+    </af:showDetailItem>
+    <af:showDetailItem text="#{rs.common_label_fav}" id="sdi2"
+                       disclosed="#{sessionScope.statusAccordion == 'tree'}">
+      <af:tree id="t3" value="#{bindings.AdmUsersFavoritesView.treeModel}"
+               rowSelection="single"
+               inlineStyle="background-color:White; height:520px;"
+               selectionListener="#{pageFlowScope.treeMenusFragBean.OnUsersFav}"
+               var="row">
+        <f:facet name="nodeStamp">
+          <af:commandLink text="#{userInfo.language == 'ar' ? row.ArMenuTitle : row.EnMenuTitle}"
+                          id="cl1"
+                          inlineStyle="font-size:medium; font-family:Arial, Helvetica, sans-serif;"
+                          action="#{pageFlowScope.treeMenusFragBean.OnFavAction}"/>
+        </f:facet>
+      </af:tree>
+      <af:setPropertyListener type="disclosure" from="#{'fav'}"
+                              to="#{sessionScope.statusAccordion}"/>
+    </af:showDetailItem>
+  </af:panelAccordion>
+  <!--oracle-jdev-comment:preferred-managed-bean-name:treeMenusFragBean-->
+</jsp:root>

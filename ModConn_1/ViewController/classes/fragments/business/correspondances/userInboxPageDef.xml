@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="userInboxPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.UserInboxView1.variablesMap.P_USER_ID"
+                     Name="ExecuteWithParams_P_USER_ID" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.UserInboxView1.variablesMap.pDocDate"
+                     Name="ExecuteWithParams_pDocDate" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.UserInboxView1.variablesMap.pDocDest"
+                     Name="ExecuteWithParams_pDocDest" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.UserInboxView1.variablesMap.pDocRef"
+                     Name="ExecuteWithParams_pDocRef" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.UserInboxView1.variablesMap.pRcvDate"
+                     Name="ExecuteWithParams_pRcvDate" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.UserInboxView1.variablesMap.pSectionId"
+                     Name="ExecuteWithParams_pSectionId" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.UserInboxView1.variablesMap.pSubjId"
+                     Name="ExecuteWithParams_pSubjId" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.UserInboxView1.variablesMap.pLineStatus"
+                     Name="ExecuteWithParams_pLineStatus" IsQueriable="false"/>
+    </variableIterator>
+    <iterator Binds="Root.CorresModule.UserInboxView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="UserInboxView1Iterator"/>
+    <searchRegion Binds="UserInboxView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="UserInboxView1Query"/>
+    <iterator Binds="Root.CommonModule.CommonLovVO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CommonLovVO1Iterator"/>
+    <iterator Binds="CommonLovVO1" RangeSize="25"
+              DataControl="CommonModuleDataControl" id="CommonLovVO1Iterator1"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="UserInboxView1Iterator" id="UserInboxView11">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.up.UserInboxView"
+                      Name="UserInboxView110">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="DocNo"/>
+          <Item Value="DocRef"/>
+          <Item Value="RcvDate"/>
+          <Item Value="SubjName"/>
+          <Item Value="DocDetail"/>
+          <Item Value="LineStatus"/>
+          <Item Value="Id"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="UserInboxView1Iterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="P_USER_ID" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_P_USER_ID}"/>
+      <NamedData NDName="pDocDate" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_pDocDate}"/>
+      <NamedData NDName="pDocDest" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_pDocDest}"/>
+      <NamedData NDName="pDocRef" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_pDocRef}"/>
+      <NamedData NDName="pRcvDate" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_pRcvDate}"/>
+      <NamedData NDName="pSectionId" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_pSectionId}"/>
+      <NamedData NDName="pSubjId" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_pSubjId}"/>
+      <NamedData NDName="pLineStatus" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_pLineStatus}"/>
+    </action>
+    <attributeValues IterBinding="variables" id="P_USER_ID">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_P_USER_ID"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pDocDest">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pDocDest"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pDocRef">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pDocRef"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pSectionId">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pSectionId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pSubjId">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pSubjId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pLineStatus">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pLineStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_SectionIdLov" id="SectionIdLov"/>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_SubjIdLov" id="SubjIdLov"/>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator1"
+                  Uses="LOV_DocDest" id="DocDest"/>
+    <attributeValues IterBinding="variables" id="pDocDate">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pDocDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pRcvDate">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pRcvDate"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+  </bindings>
+</pageDefinition>

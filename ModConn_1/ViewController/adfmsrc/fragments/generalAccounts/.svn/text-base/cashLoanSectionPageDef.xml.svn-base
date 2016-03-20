@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="cashLoanSectionPageDef"
+                Package="fragments.generalAccounts">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.GeneralAccountsModule.MasterAdmSectionsView"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              id="AdmSectionsViewIterator"
+              Refresh="ifNeeded"/>
+    <iterator Binds="Root.GeneralAccountsModule.AdmSectionsView"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              id="AdmSectionsViewIterator1" Refresh="ifNeeded"/>
+    <iterator Binds="Root.GeneralAccountsModule.AccCashLoanSecView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccCashLoanSecViewIterator" Refresh="ifNeeded"
+              ChangeEventPolicy="ppr"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false" IterBinding="AdmSectionsViewIterator1"
+                  Uses="LOV_ProgId" id="ProgId"/>
+    <listOfValues StaticList="false" IterBinding="AdmSectionsViewIterator1"
+                  Uses="LOV_SubAccountNo" id="SubAccountNo"/>
+    <listOfValues StaticList="false" IterBinding="AdmSectionsViewIterator1"
+                  Uses="LOV_MainAccountNo" id="MainAccountNo"/>
+    <attributeValues IterBinding="AdmSectionsViewIterator1" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AdmSectionsViewIterator1" StaticList="false"
+          Uses="LOV_SectionType" id="SectionType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AdmSectionsViewIterator1" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmSectionsViewIterator1"
+                     id="MasterSectionName">
+      <AttrNames>
+        <Item Value="MasterSectionName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmSectionsViewIterator1"
+                     id="BudgetProgramName">
+      <AttrNames>
+        <Item Value="BudgetProgramName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmSectionsViewIterator1" id="SubAccountName">
+      <AttrNames>
+        <Item Value="SubAccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmSectionsViewIterator1"
+                     id="MainAccountName">
+      <AttrNames>
+        <Item Value="MainAccountName"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="AdmSectionsViewIterator" id="MasterAdmSectionsView">
+      <nodeDefinition DefName="com.mod.financial.model.generalAccounts.views.up.AdmSectionsView"
+                      Name="MasterAdmSectionsView0"
+                      TargetIterator="${bindings.AdmSectionsViewIterator1}">
+        <AttrNames>
+          <Item Value="Name"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="AdmSectionsView"/>
+        </Accessors>
+      </nodeDefinition>
+    </tree>
+    <listOfValues StaticList="false" IterBinding="AdmSectionsViewIterator1"
+                  Uses="LOV_SectionParent" id="SectionParent"/>
+    <tree IterBinding="AccCashLoanSecViewIterator" id="AccCashLoanSecView">
+      <nodeDefinition DefName="com.mod.financial.model.generalAccounts.views.up.AccCashLoanSecView"
+                      Name="AccCashLoanSecView0">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="SaccId"/>
+          <Item Value="LoanType"/>
+          <Item Value="AllocValue"/>
+          <Item Value="SubAccountName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <listOfValues StaticList="false" IterBinding="AccCashLoanSecViewIterator"
+                  Uses="LOV_SubAccountNo" id="SubAccountNo1"/>
+    <action IterBinding="AccCashLoanSecViewIterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="AdmSectionsViewIterator1" id="CreateInsert1"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+  </bindings>
+</pageDefinition>

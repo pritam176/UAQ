@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt4">
+    <f:facet name="Master">
+      <af:panelFormLayout id="pfl1" rows="4">
+        <af:selectOneChoice value="#{bindings.NationId.inputValue}"
+                            label="#{bindings.NationId.label}" required="true"
+                            unselectedLabel="#{rs.SELECT_FROM_LIST}"
+                            shortDesc="#{bindings.NationId.hints.tooltip}"
+                            id="soc1" contentStyle="width:200px !important;">
+          <f:selectItems value="#{bindings.NationId.items}" id="si2"/>
+        </af:selectOneChoice>
+        <af:inputText value="#{bindings.KwEmpRatio.inputValue}"
+                      label="#{bindings.KwEmpRatio.hints.label}"
+                      required="#{bindings.KwEmpRatio.hints.mandatory}"
+                      columns="#{bindings.KwEmpRatio.hints.displayWidth}"
+                      maximumLength="#{bindings.KwEmpRatio.hints.precision}"
+                      shortDesc="#{bindings.KwEmpRatio.hints.tooltip}" id="it3"
+                      contentStyle="width:200px !important;">
+          <f:validator binding="#{bindings.KwEmpRatio.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.KwEmpRatio.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.KwGovRatio.inputValue}"
+                      label="#{bindings.KwGovRatio.hints.label}"
+                      required="#{bindings.KwGovRatio.hints.mandatory}"
+                      columns="#{bindings.KwGovRatio.hints.displayWidth}"
+                      maximumLength="#{bindings.KwGovRatio.hints.precision}"
+                      shortDesc="#{bindings.KwGovRatio.hints.tooltip}" id="it1"
+                      contentStyle="width:200px !important;">
+          <f:validator binding="#{bindings.KwGovRatio.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.KwGovRatio.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.OtherEmpRatio.inputValue}"
+                      label="#{bindings.OtherEmpRatio.hints.label}"
+                      required="#{bindings.OtherEmpRatio.hints.mandatory}"
+                      columns="#{bindings.OtherEmpRatio.hints.displayWidth}"
+                      maximumLength="#{bindings.OtherEmpRatio.hints.precision}"
+                      shortDesc="#{bindings.OtherEmpRatio.hints.tooltip}"
+                      id="it4" contentStyle="width:200px !important;">
+          <f:validator binding="#{bindings.OtherEmpRatio.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.OtherEmpRatio.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.OtherGovRatio.inputValue}"
+                      label="#{bindings.OtherGovRatio.hints.label}"
+                      required="#{bindings.OtherGovRatio.hints.mandatory}"
+                      columns="#{bindings.OtherGovRatio.hints.displayWidth}"
+                      maximumLength="#{bindings.OtherGovRatio.hints.precision}"
+                      shortDesc="#{bindings.OtherGovRatio.hints.tooltip}"
+                      id="it2" contentStyle="width:200px !important;">
+          <f:validator binding="#{bindings.OtherGovRatio.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.OtherGovRatio.format}"/>
+        </af:inputText>
+        <af:inputDate value="#{bindings.RuleActiveFrom.inputValue}"
+                      label="#{bindings.RuleActiveFrom.hints.label}"
+                      required="#{bindings.RuleActiveFrom.hints.mandatory}"
+                      shortDesc="#{bindings.RuleActiveFrom.hints.tooltip}"
+                      id="id2" contentStyle="width:200px !important;"
+                      autoSubmit="true" partialTriggers="id1">
+          <f:validator binding="#{bindings.RuleActiveFrom.validator}"/>
+          <af:convertDateTime pattern="#{bindings.RuleActiveFrom.format}"/>
+        </af:inputDate>
+        <af:inputDate value="#{bindings.RuleActiveTill.inputValue}"
+                      label="#{bindings.RuleActiveTill.hints.label}"
+                      required="#{bindings.RuleActiveTill.hints.mandatory}"
+                      shortDesc="#{bindings.RuleActiveTill.hints.tooltip}"
+                      id="id1" contentStyle="width:200px !important;"
+                      autoSubmit="true" partialTriggers="id2">
+          <f:validator binding="#{bindings.RuleActiveTill.validator}"/>
+          <af:convertDateTime pattern="#{bindings.RuleActiveTill.format}"/>
+        </af:inputDate>
+        <af:selectOneChoice value="#{bindings.RuleActive.inputValue}"
+                            label="#{bindings.RuleActive.label}"
+                            shortDesc="#{bindings.RuleActive.hints.tooltip}"
+                            id="soc2" contentStyle="width:200px !important;"
+                            required="true"
+                            unselectedLabel="#{rs.SELECT_FROM_LIST}">
+          <f:selectItems value="#{bindings.RuleActive.items}" id="si1"/>
+        </af:selectOneChoice>
+      </af:panelFormLayout>
+    </f:facet>
+    <f:facet name="MasterToolbar">
+      <af:group id="g1">
+        <af:panelGroupLayout layout="horizontal" id="pgl12">
+          <af:commandButton actionListener="#{bindings.Commit.execute}"
+                            icon="/images/save.png"
+                            text="#{rs.common_button_save}" partialSubmit="true"
+                            id="cb4"/>
+          <af:spacer width="5px" id="s7"/>
+          <af:commandButton icon="/images/arrow_undo.png"
+                            actionListener="#{bindings.Rollback.execute}"
+                            action="back" text="#{rs.bankBranch_buttonBankBack}"
+                            immediate="true" id="cb6"/>
+        </af:panelGroupLayout>
+      </af:group>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

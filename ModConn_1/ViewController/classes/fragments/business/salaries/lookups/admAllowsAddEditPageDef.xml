@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admAllowsAddEditPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmAllowsView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmAllowsView1Iterator"/>
+  </executables>
+  <bindings>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <listOfValues StaticList="false" IterBinding="AdmAllowsView1Iterator"
+                  Uses="LOV_SubjectId" id="SubjectId"/>
+    <attributeValues IterBinding="AdmAllowsView1Iterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmAllowsView1Iterator" id="SubjName">
+      <AttrNames>
+        <Item Value="SubjName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmAllowsView1Iterator" id="IndemInclude">
+      <AttrNames>
+        <Item Value="IndemInclude"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AdmAllowsView1Iterator" StaticList="false"
+          Uses="LOV_InsurType" id="InsurType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AdmAllowsView1Iterator" id="LeaveInclude">
+      <AttrNames>
+        <Item Value="LeaveInclude"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmAllowsView1Iterator" id="Compensation">
+      <AttrNames>
+        <Item Value="Compensation"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmAllowsView1Iterator" id="PeriodToStop">
+      <AttrNames>
+        <Item Value="PeriodToStop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmAllowsView1Iterator" id="CreateUser">
+      <AttrNames>
+        <Item Value="CreateUser"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

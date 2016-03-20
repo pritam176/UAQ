@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="departments-Task">
+    <default-activity id="__1">departmentsFrag</default-activity>
+    <managed-bean id="__4">
+      <managed-bean-name id="__2">departmentsBean</managed-bean-name>
+      <managed-bean-class id="__3">com.mod.financial.view.managed.administration.DepartmentsBean</managed-bean-class>
+      <managed-bean-scope id="__5">request</managed-bean-scope>
+    </managed-bean>
+    <view id="departmentsFrag">
+      <page>/fragments/administration/departments.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

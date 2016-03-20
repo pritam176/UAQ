@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <view id="Home">
+    <page>/common/Home.jspx</page>
+    <redirect/>
+  </view>
+  <control-flow-rule id="__16">
+    <from-activity-id id="__15">*</from-activity-id>
+    <control-flow-case id="__17">
+      <from-outcome id="__19">home</from-outcome>
+      <to-activity-id id="__18">Home</to-activity-id>
+    </control-flow-case>
+  </control-flow-rule>
+  <managed-bean id="__4">
+    <managed-bean-name id="__3">loginBean</managed-bean-name>
+    <managed-bean-class id="__2">com.mod.financial.view.managed.common.Login</managed-bean-class>
+    <managed-bean-scope id="__1">request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__7">
+    <managed-bean-name id="__8">userInfo</managed-bean-name>
+    <managed-bean-class id="__5">com.mod.financial.view.utils.UserInfo</managed-bean-class>
+    <managed-bean-scope id="__6">session</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__9">
+    <managed-bean-name id="__11">logout</managed-bean-name>
+    <managed-bean-class id="__10">com.mod.financial.view.utils.Logout</managed-bean-class>
+    <managed-bean-scope id="__12">request</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__20">
+    <managed-bean-name id="__13">launcherBean</managed-bean-name>
+    <managed-bean-class id="__14">com.mod.financial.view.managed.common.Launcher</managed-bean-class>
+    <managed-bean-scope id="__21">view</managed-bean-scope>
+  </managed-bean>
+  <managed-bean id="__25">
+    <managed-bean-name id="__24">myAccountBean</managed-bean-name>
+    <managed-bean-class id="__23">com.mod.financial.view.managed.common.MyAccount</managed-bean-class>
+    <managed-bean-scope id="__22">pageFlow</managed-bean-scope>
+  </managed-bean>
+</adfc-config>

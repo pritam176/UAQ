@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admXLeavesAddEditPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmLeavesViewRO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmLeavesViewRO1Iterator"/>
+    <iterator Binds="Root.SalariesModule.AdmXleavesView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmXleavesView1Iterator"/>
+  </executables>
+  <bindings>
+    <list IterBinding="AdmLeavesViewRO1Iterator" ListOperMode="navigation"
+          ListIter="AdmLeavesViewRO1Iterator" id="AdmLeavesViewRO1"
+          DTSupportsMRU="true">
+      <AttrNames>
+        <Item Value="LeaveId"/>
+        <Item Value="LeaveName"/>
+      </AttrNames>
+    </list>
+    <action IterBinding="AdmXleavesView1Iterator" id="CreateWithParams"
+            RequiresUpdateModel="true" Action="createWithParams">
+      <NamedData NDName="CreateUser" NDType="java.lang.String"
+                 NDValue="#{userInfo.userName}"/>
+    </action>
+    <tree IterBinding="AdmXleavesView1Iterator" id="AdmXleavesView1">
+      <nodeDefinition DefName="com.mod.financial.model.salaries.views.up.AdmXleavesView"
+                      Name="AdmXleavesView10">
+        <AttrNames>
+          <Item Value="XleaveId"/>
+          <Item Value="LeaveName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AdmXleavesView1Iterator" id="LeaveName">
+      <AttrNames>
+        <Item Value="LeaveName"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmXleavesView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+  </bindings>
+</pageDefinition>

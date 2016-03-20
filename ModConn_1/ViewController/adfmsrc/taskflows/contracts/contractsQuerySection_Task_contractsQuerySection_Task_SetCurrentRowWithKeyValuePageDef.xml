@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="contractsQuerySection_Task_contractsQuerySection_Task_SetCurrentRowWithKeyValuePageDef"
+                Package="taskflows.contracts" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Root.ContractsModule.AccContractsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccContractsViewIterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AccContractsViewIterator"
+            id="setCurrentRowWithKeyValue" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDValue="#{pageFlowScope.selectedContractId}"
+                 NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

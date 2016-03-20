@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="banks-Task">
+    <default-activity id="__1">banksFrag</default-activity>
+    <transaction id="__22">
+      <new-transaction/>
+    </transaction>
+    <data-control-scope id="__23">
+      <isolated/>
+    </data-control-scope>
+    <managed-bean id="__14">
+      <managed-bean-name id="__13">banksBean</managed-bean-name>
+      <managed-bean-class id="__15">com.mod.financial.view.managed.administration.BanksBean</managed-bean-class>
+      <managed-bean-scope id="__12">request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__17">
+      <managed-bean-name id="__19">bankBranchesBean</managed-bean-name>
+      <managed-bean-class id="__16">com.mod.financial.view.managed.administration.BankBranchesBean</managed-bean-class>
+      <managed-bean-scope id="__18">request</managed-bean-scope>
+    </managed-bean>
+    <view id="banksFrag">
+      <page id="__20">/fragments/administration/banks.jsff</page>
+    </view>
+    <view id="bankBranchesFrag">
+      <page id="__21">/fragments/administration/bankBranches.jsff</page>
+    </view>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">banksFrag</from-activity-id>
+      <control-flow-case id="__4">
+        <from-outcome id="__6">branch</from-outcome>
+        <to-activity-id id="__5">bankBranchesFrag</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">bankBranchesFrag</from-activity-id>
+      <control-flow-case id="__9">
+        <from-outcome id="__11">back</from-outcome>
+        <to-activity-id id="__10">banksFrag</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

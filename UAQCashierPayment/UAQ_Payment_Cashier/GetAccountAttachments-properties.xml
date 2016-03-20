@@ -1,0 +1,31 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="ACCOUNTATTACHMENTS.ATTACHEMNTNAME:db_column_size">200</entry>
+   <entry key="ACCOUNTATTACHMENTS.ACCOUNTID:db_column_type">VARCHAR2</entry>
+   <entry key="ACCOUNTATTACHMENTS.URL:db_column_not_null">false</entry>
+   <entry key="ACCOUNTATTACHMENTS.ACCOUNTATTACHMENTID:db_column_precision">0</entry>
+   <entry key="ACCOUNTATTACHMENTS.ATTACHEMENTTYPE:db_column_not_null">false</entry>
+   <entry key="ACCOUNTATTACHMENTS.CONTENTID:db_column_size">200</entry>
+   <entry key="ACCOUNTATTACHMENTS.ATTACHEMENTTYPE:db_column_type">VARCHAR2</entry>
+   <entry key="ACCOUNTATTACHMENTS.URL:db_column_type">VARCHAR2</entry>
+   <entry key="ACCOUNTATTACHMENTS.ACCOUNTID:db_column_size">400</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="ACCOUNTATTACHMENTS.ATTACHEMNTNAME:db_column_not_null">false</entry>
+   <entry key="ACCOUNTATTACHMENTS.ACCOUNTATTACHMENTID:db_column_type">NUMBER</entry>
+   <entry key="ACCOUNTATTACHMENTS.ATTACHEMNTNAME:db_column_type">VARCHAR2</entry>
+   <entry key="ACCOUNTATTACHMENTS:db_column_5">ATTACHEMNTNAME</entry>
+   <entry key="ACCOUNTATTACHMENTS:db_column_4">ATTACHEMENTTYPE</entry>
+   <entry key="ACCOUNTATTACHMENTS:db_column_3">URL</entry>
+   <entry key="root_descriptor_alias">ACCOUNTATTACHMENTS</entry>
+   <entry key="ACCOUNTATTACHMENTS.ACCOUNTATTACHMENTID:db_column_not_null">true</entry>
+   <entry key="ACCOUNTATTACHMENTS:db_column_2">CONTENTID</entry>
+   <entry key="ACCOUNTATTACHMENTS.ATTACHEMENTTYPE:db_column_size">200</entry>
+   <entry key="ACCOUNTATTACHMENTS:db_column_1">ACCOUNTID</entry>
+   <entry key="ACCOUNTATTACHMENTS.CONTENTID:db_column_not_null">false</entry>
+   <entry key="ACCOUNTATTACHMENTS:db_column_0">ACCOUNTATTACHMENTID</entry>
+   <entry key="ACCOUNTATTACHMENTS.ACCOUNTID:db_column_not_null">false</entry>
+   <entry key="ACCOUNTATTACHMENTS.CONTENTID:db_column_type">VARCHAR2</entry>
+   <entry key="ACCOUNTATTACHMENTS.URL:db_column_size">200</entry>
+   <entry key="ACCOUNTATTACHMENTS:db_table_type">TABLE</entry>
+</properties>

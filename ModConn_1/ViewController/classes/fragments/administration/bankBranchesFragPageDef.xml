@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="bankBranchesFragPageDef"
+                Package="fragments.administration">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.AdministrationModule.AdmBanksBranchesView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmBanksBranchesViewIterator"/>
+    <iterator Binds="Root.AdministrationModule.AdmBanksView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmBanksViewIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmBanksBranchesViewIterator" id="AdmBanksBranchesView">
+      <nodeDefinition DefName="com.mod.financial.model.administration.views.up.AdmBanksView"
+                      Name="AdmBanksBranchesView0">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="BankName"/>
+          <Item Value="BankParent"/>
+          <Item Value="CreateDate"/>
+          <Item Value="CreateUser"/>
+          <Item Value="Status"/>
+          <Item Value="LastChangeDate"/>
+          <Item Value="LastChangeUser"/>
+          <Item Value="SectionId"/>
+          <Item Value="AccId"/>
+          <Item Value="SaccId"/>
+          <Item Value="CenteralAccountNo"/>
+          <Item Value="SwiftCode"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AdmBanksViewIterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmBanksViewIterator" id="BankName">
+      <AttrNames>
+        <Item Value="BankName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmBanksViewIterator" id="AccId">
+      <AttrNames>
+        <Item Value="AccId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmBanksViewIterator" id="SaccId">
+      <AttrNames>
+        <Item Value="SaccId"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmBanksBranchesViewIterator" id="CreateInsert"
+            InstanceName="ModModuleDataControl.Root.AdministrationModule.AdmBanksBranchesView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="AdmBanksBranchesViewIterator" id="Delete"
+            InstanceName="ModModuleDataControl.Root.AdministrationModule.AdmBanksBranchesView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="ModModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <attributeValues IterBinding="AdmBanksBranchesViewIterator" id="Id1">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmBanksBranchesViewIterator" id="BankName1">
+      <AttrNames>
+        <Item Value="BankName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmBanksBranchesViewIterator" id="AccId1">
+      <AttrNames>
+        <Item Value="AccId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmBanksBranchesViewIterator" id="SaccId1">
+      <AttrNames>
+        <Item Value="SaccId"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Rollback" DataControl="ModModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

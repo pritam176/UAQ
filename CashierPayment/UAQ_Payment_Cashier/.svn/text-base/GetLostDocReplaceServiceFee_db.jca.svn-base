@@ -1,0 +1,13 @@
+<adapter-config name="GetLostDocReplaceServiceFee" adapter="Database Adapter" wsdlLocation="GetLostDocReplaceServiceFee.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/uaqsoa_db" UIConnectionName="DevelopmentDB" adapterRef=""/>
+  <endpoint-interaction portType="GetLostDocReplaceServiceFee_ptt" operation="GetLostDocReplaceServiceFee">
+    <interaction-spec className="oracle.tip.adapter.db.DBPureSQLInteractionSpec">
+      <property name="SqlString" value="select sum(amount) amount from eservice_fee_matrix where service_id=#serviceid and fee_type_code=#feecode"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+    <input/>
+    <output/>
+  </endpoint-interaction>
+
+</adapter-config>

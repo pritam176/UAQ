@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/model
+END
+IPOSService.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/model/IPOSService.java
+END
+POSServiceImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/model/POSServiceImpl.java
+END

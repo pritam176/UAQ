@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="inbox-Task">
+    <default-activity id="__14">inboxFrag</default-activity>
+    <data-control-scope id="__6">
+      <isolated/>
+    </data-control-scope>
+    <managed-bean id="__1">
+      <managed-bean-name id="__4">inboxBean</managed-bean-name>
+      <managed-bean-class id="__2">com.mod.financial.view.managed.common.Inbox</managed-bean-class>
+      <managed-bean-scope id="__3">view</managed-bean-scope>
+    </managed-bean>
+<view id="inboxFrag">
+      <page id="__5">/fragments/correspondance/myTasks.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

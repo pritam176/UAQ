@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admEffElementsMainPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmEffElementsView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmEffElementsView1Iterator"/>
+    <searchRegion Binds="AdmEffElementsView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AdmEffElementsView1Query"/>
+    <searchRegion Criteria="AdmEffElementsViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmEffElementsView1Iterator"
+                  id="AdmEffElementsViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmEffElementsView1Iterator" id="AdmEffElementsView1">
+      <nodeDefinition DefName="com.mod.financial.model.salaries.views.up.AdmEffElementsView"
+                      Name="AdmEffElementsView10">
+        <AttrNames>
+          <Item Value="TableName"/>
+          <Item Value="EleName"/>
+          <Item Value="EleRule"/>
+          <Item Value="EleLabel"/>
+          <Item Value="EleType"/>
+          <Item Value="EleLen"/>
+          <Item Value="EleDisp"/>
+          <Item Value="LookupTable"/>
+          <Item Value="LookupField"/>
+          <Item Value="DispCode"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="AdmEffElementsView1Iterator" id="CreateWithParams"
+            RequiresUpdateModel="true" Action="createWithParams"/>
+    <attributeValues IterBinding="AdmEffElementsView1Iterator" id="TableName">
+      <AttrNames>
+        <Item Value="TableName"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmEffElementsView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+  </bindings>
+</pageDefinition>

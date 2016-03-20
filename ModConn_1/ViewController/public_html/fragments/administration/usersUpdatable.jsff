@@ -1,0 +1,224 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:tr="http://myfaces.apache.org/trinidad">
+  <af:panelHeader text="#{rs.UserUpdatable_title}" id="ph1">
+    <f:facet name="context"/>
+    <f:facet name="menuBar"/>
+    <f:facet name="toolbar">
+      <af:toolbar id="t1">
+        <af:commandToolbarButton
+                                 id="ctb1" icon="/images/save.png" text="#{rs.common_button_save}"
+                                 actionListener="#{bindings.Commit.execute}"/>
+        <af:commandToolbarButton
+                                 immediate="true" id="ctb2"
+                                 icon="/images/cancel.gif"
+                                 action="#{usersUpdatableBean.cancel_action}"
+                                 text="#{rs.common_button_cancel}">
+          <af:resetActionListener/>
+        </af:commandToolbarButton>
+        <af:commandToolbarButton id="ctb3"
+                                 icon="/images/arrow_undo.png"
+                                 text="#{rs.bankBranch_buttonBankBack}"
+                                 action="#{usersUpdatableBean.back_action}"/>
+      </af:toolbar>
+    </f:facet>
+    <f:facet name="legend"/>
+    <f:facet name="info"/>
+    <af:spacer width="10" height="10" id="s18"/>
+    <af:panelFormLayout id="pfl2" rows="7" maxColumns="3" labelWidth="150"
+                        fieldWidth="200" labelAlignment="start">
+      <af:inputText value="#{bindings.Id.inputValue}"
+                    label="#{bindings.Id.hints.label}"
+                    required="#{bindings.Id.hints.mandatory}"
+                    columns="25"
+                    maximumLength="#{bindings.Id.hints.precision}"
+                    shortDesc="#{bindings.Id.hints.tooltip}" id="it8">
+        <f:validator binding="#{bindings.Id.validator}"/>
+        <af:convertNumber groupingUsed="false" pattern="#{bindings.Id.format}"/>
+      </af:inputText>
+      <af:spacer width="10" height="10" id="s1"/>
+      <af:inputText value="#{bindings.LogName.inputValue}"
+                    label="#{bindings.LogName.hints.label}"
+                    required="#{bindings.LogName.hints.mandatory}" columns="25"
+                    maximumLength="#{bindings.LogName.hints.precision}"
+                    shortDesc="#{bindings.LogName.hints.tooltip}" id="it7">
+        <f:validator binding="#{bindings.LogName.validator}"/>
+      </af:inputText>
+      <af:spacer width="10" height="10" id="s20"/>
+      <af:panelLabelAndMessage label="#{bindings.OrgId.hints.label}" id="plam1">
+        <af:panelGroupLayout id="pgl3" layout="horizontal">
+          <af:inputText value="#{bindings.OrgId.inputValue}"
+                        required="#{bindings.OrgId.hints.mandatory}" columns="5"
+                        maximumLength="#{bindings.OrgId.hints.precision}"
+                        shortDesc="#{bindings.OrgId.hints.tooltip}"
+                        partialTriggers="orgNameId" id="it2" autoSubmit="true">
+            <f:validator binding="#{bindings.OrgId.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.OrgId.format}"/>
+          </af:inputText>
+          <af:inputListOfValues id="orgNameId"
+                                popupTitle="Search and Select: #{bindings.OrgName.hints.label}"
+                                value="#{bindings.OrgName.inputValue}"
+                                model="#{bindings.OrgName.listOfValuesModel}"
+                                required="#{bindings.OrgName.hints.mandatory}"
+                                columns="25"
+                                shortDesc="#{bindings.OrgName.hints.tooltip}"
+                                partialTriggers="it2" autoSubmit="true">
+            <f:validator binding="#{bindings.OrgName.validator}"/>
+          </af:inputListOfValues>
+        </af:panelGroupLayout>
+      </af:panelLabelAndMessage>
+      <af:spacer width="10" height="10" id="s2"/>
+      <af:inputText value="#{bindings.Name.inputValue}"
+                    label="#{bindings.Name.hints.label}"
+                    required="#{bindings.Name.hints.mandatory}"
+                    columns="25"
+                    maximumLength="#{bindings.Name.hints.precision}"
+                    shortDesc="#{bindings.Name.hints.tooltip}" id="it15">
+        <f:validator binding="#{bindings.Name.validator}"/>
+      </af:inputText>
+      <af:spacer width="10" height="10" id="s3"/>
+      <af:selectBooleanCheckbox value="#{bindings.UserStatus.inputValue}"
+                                label="#{bindings.UserStatus.label}"
+                                shortDesc="#{bindings.UserStatus.hints.tooltip}"
+                                id="sbc1"/>
+      <af:spacer width="10" height="10" id="s5"/>
+      <af:panelLabelAndMessage label="#{bindings.UserDept.hints.label}"
+                               id="plam2">
+        <af:panelGroupLayout id="pgl2" layout="horizontal">
+          <af:inputText value="#{bindings.UserDept.inputValue}"
+                        required="#{bindings.UserDept.hints.mandatory}"
+                        columns="5"
+                        maximumLength="#{bindings.UserDept.hints.precision}"
+                        shortDesc="#{bindings.UserDept.hints.tooltip}" id="it13"
+                        autoSubmit="true">
+            <f:validator binding="#{bindings.UserDept.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.UserDept.format}"/>
+          </af:inputText>
+          <af:inputListOfValues id="deptNameId"
+                                popupTitle="Search and Select: #{bindings.DeptName.hints.label}"
+                                value="#{bindings.DeptName.inputValue}"
+                                model="#{bindings.DeptName.listOfValuesModel}"
+                                required="#{bindings.DeptName.hints.mandatory}"
+                                columns="25"
+                                shortDesc="#{bindings.DeptName.hints.tooltip}"
+                                autoSubmit="true" partialTriggers="it13">
+            <f:validator binding="#{bindings.DeptName.validator}"/>
+          </af:inputListOfValues>
+        </af:panelGroupLayout>
+      </af:panelLabelAndMessage>
+      <af:spacer width="10" height="10" id="s6"/>
+      <af:inputDate value="#{bindings.LogFrom.inputValue}"
+                    label="#{bindings.LogFrom.hints.label}"
+                    required="#{bindings.LogFrom.hints.mandatory}"
+                    shortDesc="#{bindings.LogFrom.hints.tooltip}" id="id1"
+                    columns="25">
+        <f:validator binding="#{bindings.LogFrom.validator}"/>
+        <af:convertDateTime pattern="#{bindings.LogFrom.format}"/>
+      </af:inputDate>
+      <af:spacer width="10" height="10" id="s7"/>
+      <af:inputText value="#{bindings.Pwd.inputValue}"
+                    label="#{bindings.Pwd.hints.label}"
+                    required="#{bindings.Pwd.hints.mandatory}"
+                    columns="25"
+                    maximumLength="#{bindings.Pwd.hints.precision}"
+                    shortDesc="#{bindings.Pwd.hints.tooltip}" id="it14">
+        <f:validator binding="#{bindings.Pwd.validator}"/>
+      </af:inputText>
+      <af:spacer width="10" height="10" id="s8"/>
+      <af:inputText value="#{bindings.Email.inputValue}"
+                    label="#{bindings.Email.hints.label}"
+                    required="#{bindings.Email.hints.mandatory}"
+                    columns="25"
+                    maximumLength="#{bindings.Email.hints.precision}"
+                    shortDesc="#{bindings.Email.hints.tooltip}" id="it1">
+        <f:validator binding="#{bindings.Email.validator}"/>
+      </af:inputText>
+      <af:spacer width="10" height="10" id="s15"/>
+      <af:inputText value="#{bindings.CivilCardNo.inputValue}"
+                    label="#{bindings.CivilCardNo.hints.label}"
+                    required="#{bindings.CivilCardNo.hints.mandatory}"
+                    columns="25"
+                    maximumLength="#{bindings.CivilCardNo.hints.precision}"
+                    shortDesc="#{bindings.CivilCardNo.hints.tooltip}" id="it5">
+        <f:validator binding="#{bindings.CivilCardNo.validator}"/>
+        <af:convertNumber groupingUsed="false"
+                          pattern="#{bindings.CivilCardNo.format}"/>
+      </af:inputText>
+      <af:spacer width="10" height="10" id="s10"/>
+      <af:inputText value="#{bindings.JobDesc.inputValue}"
+                    label="#{bindings.JobDesc.hints.label}"
+                    required="#{bindings.JobDesc.hints.mandatory}"
+                    columns="25"
+                    maximumLength="#{bindings.JobDesc.hints.precision}"
+                    shortDesc="#{bindings.JobDesc.hints.tooltip}" id="it17">
+        <f:validator binding="#{bindings.JobDesc.validator}"/>
+      </af:inputText>
+      <af:spacer width="10" height="10" id="s13"/>
+      <af:inputDate value="#{bindings.ExpiryDate.inputValue}"
+                    label="#{bindings.ExpiryDate.hints.label}"
+                    required="#{bindings.ExpiryDate.hints.mandatory}"
+                    shortDesc="#{bindings.ExpiryDate.hints.tooltip}" id="id3"
+                    columns="25">
+        <f:validator binding="#{bindings.ExpiryDate.validator}"/>
+        <af:convertDateTime pattern="#{bindings.ExpiryDate.format}"/>
+      </af:inputDate>
+      <af:spacer width="10" height="10" id="s4"/>
+      <af:inputDate value="#{bindings.LogTo.inputValue}"
+                    label="#{bindings.LogTo.hints.label}"
+                    required="#{bindings.LogTo.hints.mandatory}"
+                    shortDesc="#{bindings.LogTo.hints.tooltip}" id="id5"
+                    columns="25">
+        <f:validator binding="#{bindings.LogTo.validator}"/>
+        <af:convertDateTime pattern="#{bindings.LogTo.format}"/>
+      </af:inputDate>
+      <af:spacer width="10" height="10" id="s12"/>
+      <af:inputDate value="#{bindings.PwdExpDate.inputValue}"
+                    label="#{bindings.PwdExpDate.hints.label}"
+                    required="#{bindings.PwdExpDate.hints.mandatory}"
+                    shortDesc="#{bindings.PwdExpDate.hints.tooltip}" id="id6"
+                    columns="25">
+        <f:validator binding="#{bindings.PwdExpDate.validator}"/>
+        <af:convertDateTime pattern="#{bindings.PwdExpDate.format}"/>
+      </af:inputDate>
+      <af:spacer width="10" height="10" id="s16"/>
+      <af:selectOneChoice value="#{bindings.DeptNo.inputValue}"
+                          label="#{bindings.DeptNo.label}"
+                          required="#{bindings.DeptNo.hints.mandatory}"
+                          shortDesc="#{bindings.DeptNo.hints.tooltip}"
+                          id="soc1">
+        <f:selectItems value="#{bindings.DeptNo.items}" id="si2"/>
+      </af:selectOneChoice>
+      <af:spacer width="10" height="10" id="s11"/>
+      <af:selectOneChoice value="#{bindings.ContractType.inputValue}"
+                          label="#{bindings.ContractType.label}"
+                          required="#{bindings.ContractType.hints.mandatory}"
+                          shortDesc="#{bindings.ContractType.hints.tooltip}"
+                          id="soc2">
+        <f:selectItems value="#{bindings.ContractType.items}" id="si1"/>
+      </af:selectOneChoice>
+      <af:spacer width="10" height="10" id="s17"/>
+      <af:inputText value="#{bindings.JobNo.inputValue}"
+                    label="#{bindings.JobNo.hints.label}"
+                    required="#{bindings.JobNo.hints.mandatory}"
+                    columns="25"
+                    maximumLength="#{bindings.JobNo.hints.precision}"
+                    shortDesc="#{bindings.JobNo.hints.tooltip}" id="it3">
+        <f:validator binding="#{bindings.JobNo.validator}"/>
+        <af:convertNumber groupingUsed="false"
+                          pattern="#{bindings.JobNo.format}"/>
+      </af:inputText>
+      <af:spacer width="10" height="10" id="s19"/>
+      <af:inputText value="#{bindings.Machine.inputValue}"
+                    label="#{bindings.Machine.hints.label}"
+                    required="#{bindings.Machine.hints.mandatory}" columns="25"
+                    maximumLength="#{bindings.Machine.hints.precision}"
+                    shortDesc="#{bindings.Machine.hints.tooltip}" id="it4">
+        <f:validator binding="#{bindings.Machine.validator}"/>
+      </af:inputText>
+    </af:panelFormLayout>
+  </af:panelHeader>
+</jsp:root>

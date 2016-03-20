@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="generalReport_Task_generalReport_Task_fillComponentsReportmethodPageDef"
+                Package="taskflows.generalReport" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="AdmReportsView1Iterator"
+              Binds="Root.ReportsModule.AdmReportsView1"
+              DataControl="ModModuleDataControl" RangeSize="25"/>
+    <iterator id="AdmReportsItemsView2Iterator"
+              Binds="Root.ReportsModule.AdmReportsItemsView2"
+              DataControl="ModModuleDataControl" RangeSize="-1"/>
+  </executables>
+  <bindings/>
+</pageDefinition>

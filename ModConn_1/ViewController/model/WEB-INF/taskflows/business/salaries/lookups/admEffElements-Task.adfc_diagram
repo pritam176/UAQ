@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">admEffElementsMain</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admEffElementsMain.jsff</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admEffElementsMain&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">218.39648</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">47.023438</property>
+   </View>
+   <View
+      id="View3">
+      <property
+         name="activityId">admEffElementsAddEdit</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admEffElementsAddEdit.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admEffElementsAddEdit&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">214.69531</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">453.0332</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="View2"
+      to="View3">
+      <property
+         name="fromOutcome">addEdit</property>
+      <property
+         name="sdm:polyPoints">R46,88.02344,214.5459,411.99323,210.84473,L46</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase5"
+      from="View3"
+      to="View2">
+      <property
+         name="fromOutcome">back</property>
+      <property
+         name="sdm:polyPoints">L54,412.0332,217.84473,88.063416,221.5459,R54</property>
+   </ControlFlowCase>
+</SDM>

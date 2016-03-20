@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="addEditDirectDocPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CorresModule.CorDirectDocsView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDirectDocsView1Iterator"/>
+    <iterator Binds="Root.CorresModule.CorDocDetailView3"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDocDetailView3Iterator"/>
+    <searchRegion Binds="CorDocDetailView3Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="CorDocDetailView3Query"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="CorDirectDocsView1Iterator" id="DocNo">
+      <AttrNames>
+        <Item Value="DocNo"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="CorDirectDocsView1Iterator"
+                  Uses="LOV_SectionId" id="SectionId"/>
+    <attributeValues IterBinding="CorDirectDocsView1Iterator" id="DocDate">
+      <AttrNames>
+        <Item Value="DocDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDirectDocsView1Iterator" id="NoPage">
+      <AttrNames>
+        <Item Value="NoPage"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CorDirectDocsView1Iterator" StaticList="false"
+          Uses="LOV_DocDest" id="DocDest" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="CorDirectDocsView1Iterator" id="SheetNo">
+      <AttrNames>
+        <Item Value="SheetNo"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="CorDirectDocsView1Iterator"
+                  Uses="LOV_DocRef" id="DocRef"/>
+    <attributeValues IterBinding="CorDirectDocsView1Iterator" id="RcvDate">
+      <AttrNames>
+        <Item Value="RcvDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDirectDocsView1Iterator" id="DocTitle">
+      <AttrNames>
+        <Item Value="DocTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="CorDirectDocsView1Iterator"
+                  Uses="LOV_SubjId" id="SubjId"/>
+    <listOfValues StaticList="false" IterBinding="CorDirectDocsView1Iterator"
+                  Uses="LOV_RefId" id="RefId"/>
+    <attributeValues IterBinding="CorDirectDocsView1Iterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <tree IterBinding="CorDocDetailView3Iterator" id="CorDocDetailView3">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.up.CorDocDetailView"
+                      Name="CorDocDetailView30">
+        <AttrNames>
+          <Item Value="LineNo"/>
+          <Item Value="UserId"/>
+          <Item Value="UserName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="CorDocDetailView3Iterator" id="CreateWithParams"
+            RequiresUpdateModel="true" Action="createWithParams">
+      <NamedData NDName="HdId" NDType="java.lang.String"
+                 NDValue="#{bindings.Id.inputValue}"/>
+    </action>
+    <attributeValues IterBinding="CorDirectDocsView1Iterator" id="SubjName">
+      <AttrNames>
+        <Item Value="SubjName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDirectDocsView1Iterator" id="SectionName">
+      <AttrNames>
+        <Item Value="SectionName"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

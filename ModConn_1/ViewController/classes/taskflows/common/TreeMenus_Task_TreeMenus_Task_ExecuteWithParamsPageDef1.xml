@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="TreeMenus_Task_TreeMenus_Task_ExecuteWithParamsPageDef1"
+                Package="taskflows.common" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Root.SecurityModule.TreeMenusROView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="TreeMenusROViewIterator" Refresh="never"/>
+  </executables>
+  <bindings>
+    <action IterBinding="TreeMenusROViewIterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="bindUserId" NDValue="#{userInfo.userId}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </action>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="myAccountFragPageDef"
+                Package="common">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SecurityModule.AdmUsersView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmUsersViewIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="Pwd">
+      <AttrNames>
+        <Item Value="Pwd"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="Theme">
+      <AttrNames>
+        <Item Value="Theme"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="Language">
+      <AttrNames>
+        <Item Value="Language"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" DataControl="ModModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+  </bindings>
+</pageDefinition>

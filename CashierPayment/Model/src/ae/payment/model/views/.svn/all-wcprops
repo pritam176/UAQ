@@ -1,0 +1,71 @@
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views
+END
+XxUaqEserviceIntegTblView.xml
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views/XxUaqEserviceIntegTblView.xml
+END
+PosPaymentView.xml
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views/PosPaymentView.xml
+END
+BrokenTransactionsViewImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views/BrokenTransactionsViewImpl.java
+END
+EServicesMatrixView.xml
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views/EServicesMatrixView.xml
+END
+BrokenTransactionsViewRowImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views/BrokenTransactionsViewRowImpl.java
+END
+PaymentServiceCodeViewRowImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views/PaymentServiceCodeViewRowImpl.java
+END
+BrokenTransactionsView.xml
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views/BrokenTransactionsView.xml
+END
+PosPaymentTransactionView.xml
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views/PosPaymentTransactionView.xml
+END
+PaymentServiceCodeView.xml
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views/PaymentServiceCodeView.xml
+END
+CashierPaymentDetailsView.xml
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views/CashierPaymentDetailsView.xml
+END
+EServicesMatrixViewRowImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/UAQ/!svn/ver/7244/Development/EServices/SharedServices/CashierPayment/Model/src/ae/payment/model/views/EServicesMatrixViewRowImpl.java
+END

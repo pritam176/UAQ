@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <display-name>MODLookupTemplate</display-name>
+        <facet>
+          <facet-name>Query</facet-name>
+        </facet>
+        <facet>
+          <facet-name>Result</facet-name>
+        </facet>
+        <facet>
+          <facet-name>
+            ToolbarButton
+          </facet-name>
+        </facet>
+        <facet>
+          <facet-name>
+            Popup
+          </facet-name>
+        </facet>
+        <attribute>
+          <attribute-name>
+            Title
+          </attribute-name>
+          <attribute-class>
+            java.lang.String
+          </attribute-class>
+        </attribute>
+      </component>
+    </af:xmlContent>
+      <af:panelBox text="#{attrs.Title} " id="pb1" disclosed="true">
+        <f:facet name="toolbar"/>
+        <af:facetRef facetName="Query"/>
+      </af:panelBox>
+      <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                          inlineStyle="height:370px;" >
+        <f:facet name="menus"/>
+        <f:facet name="toolbar">
+          <af:toolbar id="pt_t1">
+            <af:panelGroupLayout id="pt_pgl1">
+              <af:facetRef facetName="ToolbarButton"/>
+            </af:panelGroupLayout>
+          </af:toolbar>
+        </f:facet>
+        <f:facet name="statusbar"/>
+        <af:facetRef facetName="Result"/>
+        <af:facetRef facetName="Popup"/>
+      </af:panelCollection>
+  </af:pageTemplateDef>
+</jsp:root>

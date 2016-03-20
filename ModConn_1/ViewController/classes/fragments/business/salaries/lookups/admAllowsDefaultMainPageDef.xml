@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admAllowsDefaultMainPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmJoinsView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmJoinsView1Iterator"/>
+    <searchRegion Binds="AdmJoinsView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AdmJoinsView1Query"/>
+    <searchRegion Criteria="AdmJoinsViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmJoinsView1Iterator" id="AdmJoinsViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmJoinsView1Iterator" id="AdmJoinsView11">
+      <nodeDefinition DefName="com.mod.financial.model.salaries.views.up.AdmJoinsView"
+                      Name="AdmJoinsView110">
+        <AttrNames>
+          <Item Value="JoinId"/>
+          <Item Value="Name"/>
+          <Item Value="CreateDate"/>
+          <Item Value="Id"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

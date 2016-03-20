@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/MOD/!svn/ver/489/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups
+END
+admAllowLeaves-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/MOD/!svn/ver/494/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admAllowLeaves-Task.xml
+END
+admLeaveBalanceRule-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/MOD/!svn/ver/518/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admLeaveBalanceRule-Task.xml
+END
+admXLeaves-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/MOD/!svn/ver/522/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admXLeaves-Task.xml
+END
+admIndemRule-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/MOD/!svn/ver/507/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admIndemRule-Task.xml
+END
+admDeducts-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/MOD/!svn/ver/462/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admDeducts-Task.xml
+END
+admLeaves-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/MOD/!svn/ver/463/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admLeaves-Task.xml
+END
+admAllowsTypes-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/MOD/!svn/ver/547/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admAllowsTypes-Task.xml
+END
+admAllows-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn/MOD/!svn/ver/451/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admAllows-Task.xml
+END
+admEffElements-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/MOD/!svn/ver/503/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admEffElements-Task.xml
+END
+admGulfInsuredAllows-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/MOD/!svn/ver/555/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admGulfInsuredAllows-Task.xml
+END
+admInsuranceRates.xml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/MOD/!svn/ver/568/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admInsuranceRates.xml
+END
+admAllowsDefault-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/MOD/!svn/ver/494/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admAllowsDefault-Task.xml
+END
+admLeavesElements-Task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/MOD/!svn/ver/524/mod/ViewController/public_html/WEB-INF/taskflows/business/salaries/lookups/admLeavesElements-Task.xml
+END

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="cashLoanSection-Task">
+    <default-activity id="__1">cashLoanSection</default-activity>
+    <managed-bean id="__3">
+      <managed-bean-name id="__2">cashLoanSectionBean</managed-bean-name>
+      <managed-bean-class id="__5">com.mod.financial.view.managed.accounts.CashLoanSection</managed-bean-class>
+      <managed-bean-scope id="__4">request</managed-bean-scope>
+    </managed-bean>
+    <view id="cashLoanSection">
+      <page>/fragments/generalAccounts/cashLoanSection.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

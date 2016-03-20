@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+      <af:panelGroupLayout layout="vertical" id="pgl1" halign="center">
+        <af:query id="qryId2" headerText="#{rs.common_label_search}"
+                  disclosed="true" rows="1" maxColumns="2"
+                  value="#{bindings.AdmInsuranceRatesViewCriteriaQuery.queryDescriptor}"
+                  model="#{bindings.AdmInsuranceRatesViewCriteriaQuery.queryModel}"
+                  queryListener="#{bindings.AdmInsuranceRatesViewCriteriaQuery.processQuery}"
+                  queryOperationListener="#{bindings.AdmInsuranceRatesViewCriteriaQuery.processQueryOperation}"
+                  resultComponentId="::pc1:t1" saveQueryMode="hidden"
+                  modeChangeVisible="false"/>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="Result">
+      <af:table value="#{bindings.AdmInsuranceRatesView1.collectionModel}"
+                var="row" rows="#{bindings.AdmInsuranceRatesView1.rangeSize}"
+                emptyText="#{bindings.AdmInsuranceRatesView1.viewable ? 'No data to display.' : 'Access Denied.'}"
+                fetchSize="#{bindings.AdmInsuranceRatesView1.rangeSize}"
+                rowBandingInterval="0"
+                filterModel="#{bindings.AdmInsuranceRatesView1Query.queryDescriptor}"
+                queryListener="#{bindings.AdmInsuranceRatesView1Query.processQuery}"
+                filterVisible="true" varStatus="vs"
+                selectedRowKeys="#{bindings.AdmInsuranceRatesView1.collectionModel.selectedRow}"
+                selectionListener="#{bindings.AdmInsuranceRatesView1.collectionModel.makeCurrent}"
+                rowSelection="single" id="t1" styleClass="AFStretchWidth"
+                partialTriggers="::ctb2 ::cb1" columnStretching="column:c1">
+        <af:column width="45" align="center"
+                   headerText="#{rs.common_label_serial}" id="c12"
+                   noWrap="false">
+          <af:outputText value="#{vs.index + 1}" id="ot6"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmInsuranceRatesView1.hints.NationId.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmInsuranceRatesView1.hints.NationId.label}"
+                   id="c1" noWrap="false" align="center">
+          <af:selectOneChoice value="#{row.bindings.NationId.inputValue}"
+                              label="#{row.bindings.NationId.label}"
+                              required="#{bindings.AdmInsuranceRatesView1.hints.NationId.mandatory}"
+                              shortDesc="#{bindings.AdmInsuranceRatesView1.hints.NationId.tooltip}"
+                              id="soc2" disabled="true">
+            <f:selectItems value="#{row.bindings.NationId.items}" id="si1"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmInsuranceRatesView1.hints.KwEmpRatio.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmInsuranceRatesView1.hints.KwEmpRatio.label}"
+                   id="c16" noWrap="false" align="center">
+          <af:inputText value="#{row.bindings.KwEmpRatio.inputValue}"
+                        label="#{bindings.AdmInsuranceRatesView1.hints.KwEmpRatio.label}"
+                        required="#{bindings.AdmInsuranceRatesView1.hints.KwEmpRatio.mandatory}"
+                        columns="#{bindings.AdmInsuranceRatesView1.hints.KwEmpRatio.displayWidth}"
+                        maximumLength="#{bindings.AdmInsuranceRatesView1.hints.KwEmpRatio.precision}"
+                        shortDesc="#{bindings.AdmInsuranceRatesView1.hints.KwEmpRatio.tooltip}"
+                        id="it1" disabled="true">
+            <f:validator binding="#{row.bindings.KwEmpRatio.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmInsuranceRatesView1.hints.KwEmpRatio.format}"/>
+          </af:inputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmInsuranceRatesView1.hints.KwGovRatio.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmInsuranceRatesView1.hints.KwGovRatio.label}"
+                   id="c17" noWrap="false" align="center">
+          <af:inputText value="#{row.bindings.KwGovRatio.inputValue}"
+                        label="#{bindings.AdmInsuranceRatesView1.hints.KwGovRatio.label}"
+                        required="#{bindings.AdmInsuranceRatesView1.hints.KwGovRatio.mandatory}"
+                        columns="#{bindings.AdmInsuranceRatesView1.hints.KwGovRatio.displayWidth}"
+                        maximumLength="#{bindings.AdmInsuranceRatesView1.hints.KwGovRatio.precision}"
+                        shortDesc="#{bindings.AdmInsuranceRatesView1.hints.KwGovRatio.tooltip}"
+                        id="it4" disabled="true">
+            <f:validator binding="#{row.bindings.KwGovRatio.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmInsuranceRatesView1.hints.KwGovRatio.format}"/>
+          </af:inputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmInsuranceRatesView1.hints.OtherEmpRatio.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmInsuranceRatesView1.hints.OtherEmpRatio.label}"
+                   id="c7" noWrap="false" align="center">
+          <af:inputText value="#{row.bindings.OtherEmpRatio.inputValue}"
+                        label="#{bindings.AdmInsuranceRatesView1.hints.OtherEmpRatio.label}"
+                        required="#{bindings.AdmInsuranceRatesView1.hints.OtherEmpRatio.mandatory}"
+                        columns="#{bindings.AdmInsuranceRatesView1.hints.OtherEmpRatio.displayWidth}"
+                        maximumLength="#{bindings.AdmInsuranceRatesView1.hints.OtherEmpRatio.precision}"
+                        shortDesc="#{bindings.AdmInsuranceRatesView1.hints.OtherEmpRatio.tooltip}"
+                        id="it2" disabled="true">
+            <f:validator binding="#{row.bindings.OtherEmpRatio.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmInsuranceRatesView1.hints.OtherEmpRatio.format}"/>
+          </af:inputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmInsuranceRatesView1.hints.OtherGovRatio.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmInsuranceRatesView1.hints.OtherGovRatio.label}"
+                   id="c9" noWrap="false" align="center">
+          <af:inputText value="#{row.bindings.OtherGovRatio.inputValue}"
+                        label="#{bindings.AdmInsuranceRatesView1.hints.OtherGovRatio.label}"
+                        required="#{bindings.AdmInsuranceRatesView1.hints.OtherGovRatio.mandatory}"
+                        columns="#{bindings.AdmInsuranceRatesView1.hints.OtherGovRatio.displayWidth}"
+                        maximumLength="#{bindings.AdmInsuranceRatesView1.hints.OtherGovRatio.precision}"
+                        shortDesc="#{bindings.AdmInsuranceRatesView1.hints.OtherGovRatio.tooltip}"
+                        id="it3" disabled="true">
+            <f:validator binding="#{row.bindings.OtherGovRatio.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmInsuranceRatesView1.hints.OtherGovRatio.format}"/>
+          </af:inputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmInsuranceRatesView1.hints.RuleActiveFrom.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmInsuranceRatesView1.hints.RuleActiveFrom.label}"
+                   id="c10" noWrap="false" align="center">
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.RuleActiveFrom}" id="id5"/>
+          </f:facet>
+          <af:outputText value="#{row.bindings.RuleActiveFrom.inputValue}"
+                         shortDesc="#{bindings.AdmInsuranceRatesView1.hints.RuleActiveFrom.tooltip}"
+                         id="id2">
+            <af:convertDateTime pattern="#{bindings.AdmInsuranceRatesView1.hints.RuleActiveFrom.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmInsuranceRatesView1.hints.RuleActiveTill.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmInsuranceRatesView1.hints.RuleActiveTill.label}"
+                   id="c5" noWrap="false" align="center">
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.RuleActiveTill}" id="id6"/>
+          </f:facet>
+          <af:outputText value="#{row.bindings.RuleActiveTill.inputValue}"
+                         shortDesc="#{bindings.AdmInsuranceRatesView1.hints.RuleActiveTill.tooltip}"
+                         id="id1">
+            <af:convertDateTime pattern="#{bindings.AdmInsuranceRatesView1.hints.RuleActiveTill.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmInsuranceRatesView1.hints.RuleActive.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmInsuranceRatesView1.hints.RuleActive.label}"
+                   id="c4" noWrap="false" align="center">
+          <af:selectOneChoice value="#{row.bindings.RuleActive.inputValue}"
+                              label="#{row.bindings.RuleActive.label}"
+                              required="#{bindings.AdmInsuranceRatesView1.hints.RuleActive.mandatory}"
+                              shortDesc="#{bindings.AdmInsuranceRatesView1.hints.RuleActive.tooltip}"
+                              id="soc1" disabled="true">
+            <f:selectItems value="#{row.bindings.RuleActive.items}" id="si2"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column id="c6" width="35" align="center" noWrap="false">
+          <af:commandLink id="cl1" action="addEdit">
+            <af:image source="/images/edit.png" id="i1"/>
+          </af:commandLink>
+        </af:column>
+        <af:column id="c2" width="35" align="center" rendered="true"
+                   noWrap="false">
+          <af:commandLink id="commandLink1">
+            <af:image source="/images/delete.gif" id="image1"/>
+            <af:showPopupBehavior popupId="::p2"/>
+          </af:commandLink>
+        </af:column>
+      </af:table>
+    </f:facet>
+    <f:facet name="Popup">
+      <af:popup id="p2" contentDelivery="lazyUncached">
+        <af:dialog id="d2" title="#{rs.adm_insur_rate_dialog_deleteTitle}"
+                   closeIconVisible="false" type="none">
+          <af:panelGroupLayout id="pg" layout="horizontal">
+            <af:outputText value="#{rs['common_delete_Message']}"
+                           id="outputText1"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:spacer width="5" height="10" id="s2"/>
+            <af:outputText value=" ?" id="outputText3"
+                           inlineStyle="color:Red; font-size:small;"/>
+          </af:panelGroupLayout>
+          <af:spacer height="5px" id="s1"/>
+          <af:commandButton actionListener="#{bindings.Delete.execute}"
+                            text="#{rs.ok}" id="cb1"
+                            action="#{bindings.Commit.execute}"/>
+          <af:spacer width="5px" id="s3"/>
+          <af:commandButton text="#{rs.common_button_cancel}" id="cb2"/>
+        </af:dialog>
+      </af:popup>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:toolbar id="t3">
+        <af:commandToolbarButton icon="/images/add.png" id="ctb2"
+                                 actionListener="#{bindings.CreateWithParams.execute}"
+                                 action="addEdit"></af:commandToolbarButton>
+      </af:toolbar>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

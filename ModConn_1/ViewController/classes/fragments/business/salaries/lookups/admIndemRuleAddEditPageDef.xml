@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admIndemRuleAddEditPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmIndemRuleView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmIndemRuleView1Iterator"/>
+  </executables>
+  <bindings>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <attributeValues IterBinding="AdmIndemRuleView1Iterator" id="First5Years">
+      <AttrNames>
+        <Item Value="First5Years"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmIndemRuleView1Iterator" id="Sec5Years">
+      <AttrNames>
+        <Item Value="Sec5Years"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmIndemRuleView1Iterator" id="ExtraYears">
+      <AttrNames>
+        <Item Value="ExtraYears"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="AdmIndemRuleView1Iterator"
+                  Uses="LOV_Id" id="Id"/>
+    <attributeValues IterBinding="AdmIndemRuleView1Iterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

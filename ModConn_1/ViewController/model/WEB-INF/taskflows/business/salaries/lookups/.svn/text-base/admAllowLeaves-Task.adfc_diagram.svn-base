@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">admAllowLeavesMain</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admAllowLeavesMain.jsff</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admAllowLeavesMain&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">199.57812</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">195.3623</property>
+   </View>
+   <View
+      id="View3">
+      <property
+         name="activityId">admAllowLeavesAddEdit</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admAllowLeavesAddEdit.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admAllowLeavesAddEdit&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">199.79883</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">524.3721</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="View2"
+      to="View3">
+      <property
+         name="fromOutcome">addEdit</property>
+      <property
+         name="sdm:polyPoints">R46,236.36543,195.72754,483.37207,195.94824,L46</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase5"
+      from="View3"
+      to="View2">
+      <property
+         name="fromOutcome">back</property>
+      <property
+         name="sdm:polyPoints">L54,483.36896,202.94824,236.3623,202.72754,R54</property>
+   </ControlFlowCase>
+</SDM>

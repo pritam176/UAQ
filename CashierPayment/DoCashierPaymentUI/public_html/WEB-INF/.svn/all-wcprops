@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/public_html/WEB-INF
+END
+faces-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/public_html/WEB-INF/faces-config.xml
+END
+trinidad-skins.xml
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/public_html/WEB-INF/trinidad-skins.xml
+END
+weblogic.xml
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/public_html/WEB-INF/weblogic.xml
+END
+trinidad-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/public_html/WEB-INF/trinidad-config.xml
+END
+adfc-config.xml
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/public_html/WEB-INF/adfc-config.xml
+END
+DoCashierPayment_TaskFlow.xml
+K 25
+svn:wc:ra_dav:version-url
+V 143
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/public_html/WEB-INF/DoCashierPayment_TaskFlow.xml
+END
+web.xml
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/public_html/WEB-INF/web.xml
+END

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="menusPageDef"
+                Package="fragments.administration">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SecurityModule.AdmMenusROView"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              id="AdmMenusROViewIterator"/>
+    <iterator Binds="Root.SecurityModule.AdmMenusView"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              id="AdmMenusViewIterator" ChangeEventPolicy="ppr"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmMenusROViewIterator" id="AdmMenusROView">
+      <nodeDefinition DefName="com.mod.financial.model.security.views.ro.AdmMenusROView"
+                      Name="AdmMenusROView0">
+        <AttrNames>
+          <Item Value="EnMenuTitle"/>
+          <Item Value="ArMenuTitle"/>
+          <Item Value="PMenuId"/>
+          <Item Value="MenuId"/>
+          <Item Value="ParentTitleName"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="MenuIdAdmMenusROView"/>
+        </Accessors>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="AdmMenusViewIterator" id="setCurrentRowWithKeyValue"
+            InstanceName="ModModuleDataControl.Root.SecurityModule.AdmMenusView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDType="java.lang.String"/>
+    </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <action IterBinding="AdmMenusViewIterator"
+            id="CreateInsertMenu"
+            InstanceName="ModModuleDataControl.Root.SecurityModule.AdmMenusView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <attributeValues IterBinding="AdmMenusROViewIterator" id="MenuId">
+      <AttrNames>
+        <Item Value="MenuId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmMenusROViewIterator" id="PMenuId1"
+                     ChangeEventPolicy="ppr">
+      <AttrNames>
+        <Item Value="PMenuId"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmMenusROViewIterator" id="ExecuteTreeMenu"
+            InstanceName="ModModuleDataControl.Root.SecurityModule.AdmMenusROView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="iteratorExecute"/>
+    <action IterBinding="AdmMenusROViewIterator" id="setCurrentRowWithKeyValue1"
+            InstanceName="ModModuleDataControl.Root.SecurityModule.AdmMenusROView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="AdmMenusViewIterator" id="MenuId1">
+      <AttrNames>
+        <Item Value="MenuId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmMenusROViewIterator" id="ArMenuTitle1">
+      <AttrNames>
+        <Item Value="ArMenuTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmMenusROViewIterator" id="EnMenuTitle1">
+      <AttrNames>
+        <Item Value="EnMenuTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmMenusViewIterator" id="PMenuId2">
+      <AttrNames>
+        <Item Value="PMenuId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmMenusViewIterator" id="ParentTitleName2">
+      <AttrNames>
+        <Item Value="ParentTitleName"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="AdmMenusViewIterator"
+                  Uses="LOV_ParentTitleName" id="ParentTitleName"/>
+    <attributeValues IterBinding="AdmMenusViewIterator" id="MenuName">
+      <AttrNames>
+        <Item Value="MenuName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmMenusViewIterator" id="MenuNo">
+      <AttrNames>
+        <Item Value="MenuNo"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AdmMenusViewIterator" StaticList="false"
+          Uses="LOV_NodeType" id="NodeType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AdmMenusViewIterator" id="ArMenuTitle">
+      <AttrNames>
+        <Item Value="ArMenuTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmMenusViewIterator" id="EnMenuTitle">
+      <AttrNames>
+        <Item Value="EnMenuTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmMenusViewIterator" id="Notes">
+      <AttrNames>
+        <Item Value="Notes"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmMenusViewIterator" id="ShowOrder">
+      <AttrNames>
+        <Item Value="ShowOrder"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AdmMenusViewIterator" StaticList="true" id="Active">
+      <AttrNames>
+        <Item Value="Active"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <action IterBinding="AdmMenusViewIterator" id="Delete"
+            InstanceName="ModModuleDataControl.Root.SecurityModule.AdmMenusView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+  </bindings>
+</pageDefinition>

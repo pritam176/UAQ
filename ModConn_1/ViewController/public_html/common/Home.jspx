@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view beforePhase="#{viewScope.launcherBean.openInbox}">
+    <af:document id="d1">
+      <af:messages id="m1"/>
+      <af:resource type="javascript" source="js/mod-functions.js"/>
+    <af:clientListener method="preventBack" type="load"/> 
+      <af:form id="f1">
+        <af:pageTemplate viewId="/oracle/ui/pattern/dynamicShell/dynamicTabShell.jspx"
+                         value="#{bindings.pageTemplateBinding}" id="pt1">
+          <f:facet name="copyright"/>
+          <f:facet name="about"/>
+          <f:facet name="navigation">
+            <af:region value="#{bindings.TreeMenusTask1.regionModel}" id="r1"/>
+          </f:facet>
+          <f:facet name="globalLinks">
+              <af:navigationPane hint="buttons" id="ptnp2">
+                <af:commandNavigationItem text="#{rs.common_label_myTasks}"
+                                          icon="/images/MyTasks.png"
+                                          action="#{viewScope.launcherBean.onInbox}"
+                                          id="cni2" immediate="true"/>
+                <af:commandNavigationItem
+                                          id="cni4"
+                                          text="#{rs.common_label_fav}"
+                                          action="#{viewScope.launcherBean.open_Favorites}"
+                                          icon="/images/fav.png"
+                                          immediate="true"/>
+                <af:commandNavigationItem text="#{rs.common_link_myAccount}"
+                                          id="cni1" icon="/images/MyAccount.png"
+                                          action="#{viewScope.launcherBean.onMyAccount}" immediate="true"/>
+                <af:commandNavigationItem text="#{rs.common_link_signOut}"
+                                          id="commandNavigationItem2"
+                                          icon="/images/logout.gif"
+                                          action="#{logout.logout_action}"
+                                          immediate="true"/>
+              </af:navigationPane>
+          </f:facet>
+          <f:facet name="status">
+            <af:outputText value="#{userInfo.name}" id="ot3"
+                           inlineStyle="#{userInfo.themeName == 'skyros' ?  'color:White' : 'color:Navy'} ; font-size:12px; font-weight:bold;"
+                           />
+          </f:facet>
+          <f:facet name="globalToolbar"/>
+          <f:facet name="globalSearch"/>
+          <f:facet name="globalTabs">
+            <af:navigationPane id="np1">
+              <af:commandNavigationItem id="cni3"
+                                        text="#{rs.common_label_applicationName}"
+                                        selected="true"/>
+            </af:navigationPane>
+          </f:facet>
+          <f:facet name="innerToolbar">
+            <af:toolbar id="t1">
+              <af:commandToolbarButton text="تفاصيل الشاشة" id="ctb1"
+                                       action="#{viewScope.launcherBean.displayDetailMenu_action}"/>
+            </af:toolbar>
+          </f:facet>
+          <f:attribute name="brandingTitle"
+                       value="#{rs.common_label_applicationName}"/>
+          <f:attribute name="statusWidth" value="100px"/>
+          <f:attribute name="legalAreaPosition" value="0"/>
+          <f:attribute name="navSplitterPosition" value="300"/>
+          <f:attribute name="logoImagePath"
+                       value="/images/mod_logo_small_new.png"/>
+          <f:attribute name="headerSplitterPosition" value="38"/>
+          <f:attribute name="globalAreaSplitterPosition" value="0"/>
+          <f:facet name="welcome"/>
+        </af:pageTemplate>
+      </af:form>
+      <af:popup id="formPathPopup" contentDelivery="lazyUncached">
+        <af:dialog id="d2" title="" type="ok">
+          <af:panelFormLayout>
+            <af:outputText value="#{rs.common_message_formPath}"
+                           inlineStyle="color:Red; font-family:'Times New Roman', 'Arial Black', times, Serif; font-size:large;"/>
+          </af:panelFormLayout>
+        </af:dialog>
+      </af:popup>
+      <af:clientListener type="load" method="clientMethodCall"/>
+      <af:serverListener type="customEvent"
+                         method="#{viewScope.launcherBean.refresh}"/>
+      <af:popup id="detailMenuPoup" contentDelivery="lazyUncached">
+        <af:dialog id="d3" type="ok">
+          <af:panelFormLayout id="pfl1" rows="4">
+            <af:panelLabelAndMessage label="#{bindings.MenuId.hints.label}"
+                                     id="plam3">
+              <af:outputText value="#{bindings.MenuId.inputValue}" id="ot1">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.MenuId.format}"/>
+              </af:outputText>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="#{bindings.MenuName.hints.label}"
+                                     id="plam6">
+              <af:outputText value="#{bindings.MenuName.inputValue}" id="ot4"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="#{bindings.MenuNo.hints.label}"
+                                     id="plam5">
+              <af:outputText value="#{bindings.MenuNo.inputValue}" id="ot5"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="#{bindings.ArMenuTitle.hints.label}"
+                                     id="plam1">
+              <af:outputText value="#{bindings.ArMenuTitle.inputValue}"
+                             id="ot6"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="#{bindings.EnMenuTitle.hints.label}"
+                                     id="plam4">
+              <af:outputText value="#{bindings.EnMenuTitle.inputValue}"
+                             id="ot7"/>
+            </af:panelLabelAndMessage>
+            <af:panelLabelAndMessage label="#{bindings.ParentTitleName.hints.label}"
+                                     id="plam2">
+              <af:outputText value="#{bindings.ParentTitleName.inputValue}"
+                             id="ot2"/>
+            </af:panelLabelAndMessage>
+          </af:panelFormLayout>
+        </af:dialog>
+      </af:popup>
+    </af:document>
+  </f:view>
+  <!--oracle-jdev-comment:preferred-managed-bean-name:launcherBean-->
+</jsp:root>
+
+
+

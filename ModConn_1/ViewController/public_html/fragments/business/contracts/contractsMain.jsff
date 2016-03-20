@@ -1,0 +1,173 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+      <af:panelGroupLayout layout="vertical" id="pgl2">
+        <af:query id="qryId1" headerText="#{rs.common_label_search}"
+                  disclosed="true" rows="1" maxColumns="3"
+                  value="#{bindings.AccContractsViewCriteriaQuery.queryDescriptor}"
+                  model="#{bindings.AccContractsViewCriteriaQuery.queryModel}"
+                  queryListener="#{bindings.AccContractsViewCriteriaQuery.processQuery}"
+                  queryOperationListener="#{bindings.AccContractsViewCriteriaQuery.processQueryOperation}"
+                  resultComponentId="::pc1:contT1"
+                  modeChangeVisible="false"/>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="Result">
+      <af:table value="#{bindings.AccContractsView.collectionModel}" var="row"
+                rows="#{bindings.AccContractsView.rangeSize}"
+                emptyText="#{rs.common_label_table_no_data}"
+                fetchSize="#{bindings.AccContractsView.rangeSize}"
+                rowBandingInterval="0"
+                selectedRowKeys="#{bindings.AccContractsView.collectionModel.selectedRow}"
+                selectionListener="#{bindings.AccContractsView.collectionModel.makeCurrent}"
+                rowSelection="single" id="contT1" partialTriggers="::cb1"
+                columnStretching="column:c24">
+        <af:column sortProperty="#{bindings.AccContractsView.hints.ContractNo.name}"
+                   sortable="true"
+                   headerText="#{bindings.AccContractsView.hints.ContractNo.label}"
+                   id="c7" width="80" noWrap="false">
+          <af:outputText value="#{row.ContractNo}" id="ot17"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AccContractsView.hints.ContractDesc.name}"
+                   sortable="true"
+                   headerText="#{bindings.AccContractsView.hints.ContractDesc.label}"
+                   id="c24" noWrap="false">
+          <af:outputText value="#{row.ContractDesc}" id="ot9"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AccContractsView.hints.MainType.name}"
+                   sortable="true"
+                   headerText="#{bindings.AccContractsView.hints.MainType.label}"
+                   id="c16" width="75" noWrap="false">
+          <af:selectOneChoice value="#{row.bindings.MainType.inputValue}"
+                              label="#{row.bindings.MainType.label}"
+                              required="#{bindings.AccContractsView.hints.MainType.mandatory}"
+                              shortDesc="#{bindings.AccContractsView.hints.MainType.tooltip}"
+                              id="soc1" disabled="true">
+            <f:selectItems value="#{row.bindings.MainType.items}" id="si1"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.AccContractsView.hints.ContractedSection.name}"
+                   sortable="true"
+                   headerText="#{bindings.AccContractsView.hints.ContractedSection.label}"
+                   id="c18" width="110" noWrap="false">
+          <af:outputText value="#{row.ContractedSection}" id="ot26">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AccContractsView.hints.ContractedSection.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AccContractsView.hints.ReqSection.name}"
+                   sortable="true"
+                   headerText="#{bindings.AccContractsView.hints.ReqSection.label}"
+                   id="c15" width="110" noWrap="false">
+          <af:outputText value="#{row.ReqSection}" id="ot27">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AccContractsView.hints.ReqSection.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column headerText="#{bindings.AccContractsView.hints.CurrName.label}"
+                   id="c4" width="75" noWrap="false">
+          <af:outputText value="#{row.CurrName}" id="ot2"/>
+        </af:column>
+        <af:column headerText="#{bindings.AccContractsView.hints.Symbol.label}"
+                   id="c5" width="50" noWrap="false">
+          <af:outputText value="#{row.Symbol}" id="ot3"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AccContractsView.hints.ContractDate.name}"
+                   sortable="true"
+                   headerText="#{bindings.AccContractsView.hints.ContractDate.label}"
+                   id="c13" width="75" noWrap="false">
+          <af:outputText value="#{row.ContractDate}" id="ot33">
+            <af:convertDateTime pattern="#{bindings.AccContractsView.hints.ContractDate.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AccContractsView.hints.ContractValue.name}"
+                   sortable="true"
+                   headerText="#{bindings.AccContractsView.hints.ContractValue.label}"
+                   id="c11" width="75" noWrap="false">
+          <af:outputText value="#{row.ContractValue}" id="ot11">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AccContractsView.hints.ContractValue.format}"/>
+            <f:converter converterId="javax.faces.Number"/>
+          </af:outputText>
+        </af:column>
+        <af:column headerText="#{bindings.AccContractsView.hints.ContractLocalValue.label}"
+                   id="c3">
+          <af:outputText value="#{row.ContractLocalValue}" id="ot1">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AccContractsView.hints.ContractLocalValue.format}"/>
+            <f:converter converterId="javax.faces.Number"/>
+          </af:outputText>
+        </af:column>
+        <af:column headerText="#{bindings.AccContractsView.hints.Flags.label}"
+                   id="c6" rendered="false">
+          <af:outputText value="#{row.Flags}" id="ot4">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AccContractsView.hints.Flags.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column headerText="#{bindings.AccContractsView.hints.ChkAdvancPay.label}"
+                   id="c8" rendered="false">
+          <af:outputText value="#{row.ChkAdvancPay}" id="ot5">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AccContractsView.hints.ChkAdvancPay.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column headerText="#{bindings.AccContractsView.hints.ChkContNoLgs.label}"
+                   id="c9" rendered="false">
+          <af:outputText value="#{row.ChkContNoLgs}" id="ot6">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AccContractsView.hints.ChkContNoLgs.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column id="c1" width="25" align="center"
+                   rendered="#{pageFlowScope.pageTypeFlag!='pays'}">
+          <af:commandLink id="editCl" action="addEditContract">
+            <af:image source="/images/edit.png" id="i1"/>
+            <f:setPropertyActionListener target="#{pageFlowScope.selectedContractId}"
+                                         value="#{row.Id}"/>
+          </af:commandLink>
+        </af:column>
+        <af:column id="c2" width="25" align="center"
+                   rendered="#{pageFlowScope.pageTypeFlag!='pays'}">
+          <af:commandLink id="commandLink1">
+            <af:image source="/images/delete.gif" id="image1"/>
+            <af:showPopupBehavior popupId="::p2"/>
+          </af:commandLink>
+        </af:column>
+        <af:column id="c10" align="center" width="40"
+                   rendered="#{pageFlowScope.pageTypeFlag=='pays'}">
+          <af:commandImageLink text="Pays" id="cil1"
+                               action="pays"/>
+        </af:column>
+      </af:table>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:commandToolbarButton actionListener="#{bindings.InsertContract.execute}"
+                               icon="/images/add.png" id="cb1"
+                               action="addEditContract"
+                               rendered="#{pageFlowScope.pageTypeFlag=='all'}"/>
+    </f:facet>
+    <f:attribute name="Title" value="#{rs.contracts_panelHeader_title}"/>
+    <f:facet name="Popup">
+      <af:popup id="p2">
+        <af:dialog id="d2" title="#{rs['banks_dialog_deleteTitle']}"
+                   dialogListener="#{contractsBean.deleteServicesDialogListener}"
+                   closeIconVisible="false">
+          <af:panelGroupLayout id="pg" layout="horizontal">
+            <af:outputText value="#{rs['common_delete_Message']}"
+                           id="outputText1"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:spacer width="5" height="10" id="s2"/>
+            <af:outputText value="#{bindings.ContractNo.inputValue}" id="ot20"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:outputText value=" ?" id="outputText3"
+                           inlineStyle="color:Red; font-size:small;"/>
+          </af:panelGroupLayout>
+        </af:dialog>
+      </af:popup>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

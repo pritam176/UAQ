@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <af:pageTemplateDef var="attrs">
+    <af:xmlContent>
+      <component xmlns="http://xmlns.oracle.com/adf/faces/rich/component">
+        <display-name>MODTemplateNoTabs</display-name>
+        <facet>
+          <facet-name>main</facet-name>
+        </facet>
+      </component>
+    </af:xmlContent>
+    <af:panelStretchLayout topHeight="60px" id="pt_psl1"
+                           inlineStyle='background-image:url("../images/background.png");'>
+      <f:facet name="top">
+        <af:panelStretchLayout id="pt_psl2" topHeight="0" bottomHeight="0"
+                               startWidth="100px" endWidth="200px"
+                               rendered="false">
+          <f:facet name="center">
+            <af:panelGroupLayout id="pt_pgl2" halign="center" layout="vertical"
+                                 valign="middle" landmark="banner">
+              <af:spacer width="10" height="15" id="pt_s1"/>
+              <af:outputText id="pt_ot1"
+                             inlineStyle="font-size:xx-large; color:White; font-family:'Times New Roman', 'Arial Black', times, Serif; font-style:italic; font-weight:600;"
+                             value="#{rs.common_label_applicationName}"/>
+            </af:panelGroupLayout>
+          </f:facet>
+          <f:facet name="start"/>
+          <f:facet name="end"/>
+        </af:panelStretchLayout>
+      </f:facet>
+      <f:facet name="center">
+        <af:decorativeBox id="db1" topHeight="25px">
+          <f:facet name="center">
+            <af:panelSplitter id="ps1" splitterPosition="22"
+                              orientation="vertical">
+              <f:facet name="first"/>
+              <f:facet name="second">
+                <af:facetRef facetName="main"/>
+              </f:facet>
+            </af:panelSplitter>
+          </f:facet>
+          <f:facet name="top"/>
+        </af:decorativeBox>
+      </f:facet>
+    </af:panelStretchLayout>
+  </af:pageTemplateDef>
+</jsp:root>

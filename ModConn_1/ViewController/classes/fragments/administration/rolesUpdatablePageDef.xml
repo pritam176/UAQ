@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="rolesUpdatablePageDef"
+                Package="fragments.administration">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variable Name="NodeType" Type="java.lang.String"/>
+    </variableIterator>
+    <iterator Binds="Root.SecurityModule.AdmRolesView"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              id="AdmRolesViewIterator" ChangeEventPolicy="ppr"/>
+    <iterator id="AdmRolesProgsViewIterator"
+              Binds="Root.SecurityModule.AdmRolesProgsView"
+              DataControl="ModModuleDataControl" RangeSize="-1"/>
+    <iterator id="AllMenusByNodeTypeROViewIterator"
+              Binds="Root.SecurityModule.AllMenusByNodeTypeROView"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              ChangeEventPolicy="ppr" Refresh="ifNeeded"/>
+    <iterator id="NodeTypesAdmLookupViewIterator"
+              Binds="Root.SecurityModule.NodeTypesAdmLookupView"
+              DataControl="ModModuleDataControl" RangeSize="-1"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="AdmRolesViewIterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmRolesViewIterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <list StaticList="false" IterBinding="variables"
+          ListIter="NodeTypesAdmLookupViewIterator" id="NodeType"
+          NullValueId="${adfBundle['oracle.javatools.resourcebundle.SystemBundle']['NULL_VALUE_RESID']}"
+          NullValueFlag="start">
+      <AttrNames>
+        <Item Value="NodeType"/>
+      </AttrNames>
+      <ListAttrNames>
+        <Item Value="Code"/>
+      </ListAttrNames>
+      <ListDisplayAttrNames>
+        <Item Value="Name"/>
+      </ListDisplayAttrNames>
+    </list>
+    <action IterBinding="AllMenusByNodeTypeROViewIterator"
+            id="ExecuteRolesWithNodeType"
+            InstanceName="ModModuleDataControl.Root.SecurityModule.AllMenusByNodeTypeROView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="bindUserId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="bindNodeType" NDValue="" NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="variables" id="NodeTypeAttr">
+      <AttrNames>
+        <Item Value="NodeType"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="AdmRolesProgsViewIterator" id="AdmRolesProgsView">
+      <nodeDefinition DefName="com.mod.financial.model.security.views.up.AdmRolesProgsView"
+                      Name="AdmRolesProgsView0"
+                      TargetIterator="${bindings.AdmRolesProgsViewIterator}">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="CreateDate"/>
+          <Item Value="CreateUser"/>
+          <Item Value="LastChangeDate"/>
+          <Item Value="LastChangeUser"/>
+          <Item Value="ProgId"/>
+          <Item Value="RoleId"/>
+          <Item Value="Status"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+  </bindings>
+</pageDefinition>

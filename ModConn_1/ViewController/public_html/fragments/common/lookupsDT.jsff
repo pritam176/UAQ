@@ -1,0 +1,271 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelGroupLayout id="pgl1" layout="vertical">
+    <af:panelHeader text="#{rs.lookup_detail_title}" id="ph1">
+      <f:facet name="context"/>
+      <f:facet name="menuBar"/>
+      <f:facet name="toolbar">
+        <af:toolbar id="t1">
+          <af:commandToolbarButton text="#{rs.bankBranch_buttonBankBack}" id="ctb1"
+                                   icon="/images/arrow_undo.png"
+                                   action="toMaster"/>
+        </af:toolbar>
+      </f:facet>
+      <f:facet name="legend"/>
+      <f:facet name="info"/>
+      <af:showDetail disclosed="true" id="sd1" disclosedText="#{rs.lookup_detail_master_title}"
+                     undisclosedText="#{rs.lookup_detail_master_title}">
+        <af:panelFormLayout id="pfl1" rows="4">
+          <af:panelLabelAndMessage label="#{bindings.Id.hints.label}"
+                                   id="plam1">
+            <af:outputText value="#{bindings.Id.inputValue}" id="ot5">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.Id.format}"/>
+            </af:outputText>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage label="#{bindings.Name.hints.label}"
+                                   id="plam5">
+            <af:outputText value="#{bindings.Name.inputValue}" id="ot7"/>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage label="#{bindings.Status.hints.label}"
+                                   id="plam8">
+            <af:outputText value="#{bindings.Status.inputValue}" id="ot1">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.Status.format}"/>
+            </af:outputText>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage label="#{bindings.ArTitle.hints.label}"
+                                   id="plam6">
+            <af:outputText value="#{bindings.ArTitle.inputValue}" id="ot3"/>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage label="#{bindings.EnTitle.hints.label}"
+                                   id="plam2">
+            <af:outputText value="#{bindings.EnTitle.inputValue}" id="ot8"/>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage label="#{bindings.Noets.hints.label}"
+                                   id="plam7">
+            <af:outputText value="#{bindings.Noets.inputValue}" id="ot6"/>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage label="#{bindings.CreatedBy.hints.label}"
+                                   id="plam3">
+            <af:outputText value="#{bindings.CreatedBy.inputValue}" id="ot2"/>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage label="#{bindings.CreatedDate.hints.label}"
+                                   id="plam4">
+            <af:outputText value="#{bindings.CreatedDate.inputValue}" id="ot4">
+              <af:convertDateTime pattern="#{bindings.CreatedDate.format}"/>
+            </af:outputText>
+          </af:panelLabelAndMessage>
+        </af:panelFormLayout>
+      </af:showDetail>
+      <af:showDetail disclosed="true" id="sd2"
+                     disclosedText="#{rs.lookup_detail_detail_title}">
+        <af:panelCollection id="pc1" styleClass="AFStretchWidth"
+                            inlineStyle="height:380px;">
+          <f:facet name="menus"/>
+          <f:facet name="toolbar">
+            <af:toolbar id="t3">
+              <af:commandToolbarButton id="ctb2"
+                                       icon="/images/add.png"
+                                       action="#{backingBeanScope.backing_fragments_common_lookupsDT.createNew}"
+                                       shortDesc="#{rs.common_button_new}">
+                
+              </af:commandToolbarButton>
+            </af:toolbar>
+          </f:facet>
+          <f:facet name="statusbar"/>
+          <af:table value="#{bindings.AdmLookupDtView.collectionModel}"
+                    var="row" rows="#{bindings.AdmLookupDtView.rangeSize}"
+                    emptyText="#{rs.common_label_table_no_data}"
+                    fetchSize="#{bindings.AdmLookupDtView.rangeSize}"
+                    rowBandingInterval="0"
+                    selectedRowKeys="#{bindings.AdmLookupDtView.collectionModel.selectedRow}"
+                    selectionListener="#{bindings.AdmLookupDtView.collectionModel.makeCurrent}"
+                    rowSelection="single" id="t2" columnStretching="column:c2"
+                    binding="#{backingBeanScope.backing_fragments_common_lookupsDT.detailTable}">
+            <af:column sortProperty="#{bindings.AdmLookupDtView.hints.Id.name}"
+                       sortable="true"
+                       headerText="#{bindings.AdmLookupDtView.hints.Id.label}"
+                       id="c6" width="40">
+              <af:outputText value="#{row.Id}" id="ot9">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.AdmLookupDtView.hints.Id.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.AdmLookupDtView.hints.HdId.name}"
+                       sortable="true"
+                       headerText="#{bindings.AdmLookupDtView.hints.HdId.label}"
+                       id="c8" width="40">
+              <af:outputText value="#{row.HdId}" id="ot15">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.AdmLookupDtView.hints.HdId.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.AdmLookupDtView.hints.Code.name}"
+                       sortable="true"
+                       headerText="#{bindings.AdmLookupDtView.hints.Code.label}"
+                       id="c7" width="80">
+              <af:outputText value="#{row.Code}" id="ot10"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.AdmLookupDtView.hints.Name.name}"
+                       sortable="true"
+                       headerText="#{bindings.AdmLookupDtView.hints.Name.label}"
+                       id="c3" width="120">
+              <af:outputText value="#{row.Name}" id="ot16"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.AdmLookupDtView.hints.Status.name}"
+                       sortable="true"
+                       headerText="#{bindings.AdmLookupDtView.hints.Status.label}"
+                       id="c4" width="80">
+              <af:selectOneChoice value="#{row.bindings.Status.inputValue}"
+                                  label="#{row.bindings.Status.label}"
+                                  required="#{bindings.AdmLookupDtView.hints.Status.mandatory}"
+                                  shortDesc="#{bindings.AdmLookupDtView.hints.Status.tooltip}"
+                                  id="soc2" disabled="true">
+                <f:selectItems value="#{row.bindings.Status.items}" id="si2"/>
+              </af:selectOneChoice>
+            </af:column>
+            <af:column sortProperty="#{bindings.AdmLookupDtView.hints.ArTitle.name}"
+                       sortable="true"
+                       headerText="#{bindings.AdmLookupDtView.hints.ArTitle.label}"
+                       id="c1" width="120">
+              <af:outputText value="#{row.ArTitle}" id="ot12"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.AdmLookupDtView.hints.EnTitle.name}"
+                       sortable="true"
+                       headerText="#{bindings.AdmLookupDtView.hints.EnTitle.label}"
+                       id="c5" width="120">
+              <af:outputText value="#{row.EnTitle}" id="ot13"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.AdmLookupDtView.hints.Noets.name}"
+                       sortable="true"
+                       headerText="#{bindings.AdmLookupDtView.hints.Noets.label}"
+                       id="c2">
+              <af:outputText value="#{row.Noets}" id="ot11"/>
+            </af:column>
+            <af:column id="c9" width="50" align="center">
+              <af:panelGroupLayout id="pgl2" layout="horizontal">
+                <af:commandLink id="cl1" shortDesc="#{rs.common_button_edit}">
+                  <af:image source="/images/edit.png" id="i1"/>
+                  <af:showPopupBehavior popupId=":::p1"/>
+                </af:commandLink>
+                <af:commandLink id="cl2" shortDesc="#{rs.common_button_delete}">
+                  <af:image source="/images/delete.gif" id="i2"/>
+                  <af:showPopupBehavior popupId=":::p2"/>
+                </af:commandLink>
+                <f:facet name="separator">
+                  <af:spacer width="10" height="10" id="s1"/>
+                </f:facet>
+              </af:panelGroupLayout>
+            </af:column>
+          </af:table>
+        </af:panelCollection>
+      </af:showDetail>
+    </af:panelHeader>
+    <af:popup id="p1"
+              binding="#{backingBeanScope.backing_fragments_common_lookupsDT.formPopup}"
+              popupCanceledListener="#{backingBeanScope.backing_fragments_common_lookupsDT.cancelListener}"
+              contentDelivery="immediate">
+      <af:dialog id="d1"
+                 dialogListener="#{backingBeanScope.backing_fragments_common_lookupsDT.saveListener}"
+                 closeIconVisible="false">
+        <af:panelFormLayout id="pfl2">
+          <af:inputText value="#{bindings.Id1.inputValue}"
+                        label="#{bindings.Id1.hints.label}"
+                        required="#{bindings.Id1.hints.mandatory}"
+                        columns="#{bindings.Id1.hints.displayWidth}"
+                        maximumLength="#{bindings.Id1.hints.precision}"
+                        shortDesc="#{bindings.Id1.hints.tooltip}" id="it3">
+            <f:validator binding="#{bindings.Id1.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.Id1.format}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.HdId.inputValue}"
+                        label="#{bindings.HdId.hints.label}"
+                        required="#{bindings.HdId.hints.mandatory}"
+                        columns="#{bindings.HdId.hints.displayWidth}"
+                        maximumLength="#{bindings.HdId.hints.precision}"
+                        shortDesc="#{bindings.HdId.hints.tooltip}" id="it5">
+            <f:validator binding="#{bindings.HdId.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.HdId.format}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.Code.inputValue}"
+                        label="#{bindings.Code.hints.label}"
+                        required="#{bindings.Code.hints.mandatory}"
+                        columns="#{bindings.Code.hints.displayWidth}"
+                        maximumLength="#{bindings.Code.hints.precision}"
+                        shortDesc="#{bindings.Code.hints.tooltip}" id="it6">
+            <f:validator binding="#{bindings.Code.validator}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.Name1.inputValue}"
+                        label="#{bindings.Name1.hints.label}"
+                        required="#{bindings.Name1.hints.mandatory}"
+                        columns="#{bindings.Name1.hints.displayWidth}"
+                        maximumLength="#{bindings.Name1.hints.precision}"
+                        shortDesc="#{bindings.Name1.hints.tooltip}" id="it4">
+            <f:validator binding="#{bindings.Name1.validator}"/>
+          </af:inputText>
+          <af:selectOneChoice value="#{bindings.Status1.inputValue}"
+                              label="#{bindings.Status1.label}"
+                              required="#{bindings.Status1.hints.mandatory}"
+                              shortDesc="#{bindings.Status1.hints.tooltip}"
+                              id="soc1">
+            <f:selectItems value="#{bindings.Status1.items}" id="si1"/>
+          </af:selectOneChoice>
+          <af:inputText value="#{bindings.ArTitle1.inputValue}"
+                        label="#{bindings.ArTitle1.hints.label}"
+                        required="#{bindings.ArTitle1.hints.mandatory}"
+                        columns="#{bindings.ArTitle1.hints.displayWidth}"
+                        maximumLength="#{bindings.ArTitle1.hints.precision}"
+                        shortDesc="#{bindings.ArTitle1.hints.tooltip}" id="it7">
+            <f:validator binding="#{bindings.ArTitle1.validator}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.EnTitle1.inputValue}"
+                        label="#{bindings.EnTitle1.hints.label}"
+                        required="#{bindings.EnTitle1.hints.mandatory}"
+                        columns="#{bindings.EnTitle1.hints.displayWidth}"
+                        maximumLength="#{bindings.EnTitle1.hints.precision}"
+                        shortDesc="#{bindings.EnTitle1.hints.tooltip}" id="it8">
+            <f:validator binding="#{bindings.EnTitle1.validator}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.Noets1.inputValue}"
+                        label="#{bindings.Noets1.hints.label}"
+                        required="#{bindings.Noets1.hints.mandatory}"
+                        columns="#{bindings.Noets1.hints.displayWidth}"
+                        maximumLength="#{bindings.Noets1.hints.precision}"
+                        shortDesc="#{bindings.Noets1.hints.tooltip}" id="it2">
+            <f:validator binding="#{bindings.Noets1.validator}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.CreatedBy1.inputValue}"
+                        label="#{bindings.CreatedBy1.hints.label}"
+                        required="#{bindings.CreatedBy1.hints.mandatory}"
+                        columns="#{bindings.CreatedBy1.hints.displayWidth}"
+                        maximumLength="#{bindings.CreatedBy1.hints.precision}"
+                        shortDesc="#{bindings.CreatedBy1.hints.tooltip}"
+                        id="it1">
+            <f:validator binding="#{bindings.CreatedBy1.validator}"/>
+          </af:inputText>
+          <af:inputDate value="#{bindings.CreatedDate1.inputValue}"
+                        label="#{bindings.CreatedDate1.hints.label}"
+                        required="#{bindings.CreatedDate1.hints.mandatory}"
+                        shortDesc="#{bindings.CreatedDate1.hints.tooltip}"
+                        id="id1">
+            <f:validator binding="#{bindings.CreatedDate1.validator}"/>
+            <af:convertDateTime pattern="#{bindings.CreatedDate1.format}"/>
+          </af:inputDate>
+        </af:panelFormLayout>
+      </af:dialog>
+    </af:popup>
+    <af:popup id="p2"
+              binding="#{backingBeanScope.backing_fragments_common_lookupsDT.deletePopup}"
+              contentDelivery="immediate">
+      <af:dialog id="d2"
+                 dialogListener="#{backingBeanScope.backing_fragments_common_lookupsDT.deleteListener}">
+        <af:outputText value="#{rs['common_delete_Message']} #{bindings.Name1.inputValue}?" id="ot17"/>
+      </af:dialog>
+    </af:popup>
+  </af:panelGroupLayout>
+</jsp:root>

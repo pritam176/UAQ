@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SOAConfigPlan xmlns:jca="http://platform.integration.oracle/blocks/adapter/fw/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:orawsp="http://schemas.oracle.com/ws/2006/01/policy" xmlns:edl="http://schemas.oracle.com/events/edl" xmlns="http://schemas.oracle.com/soa/configplan">
+   <composite name="UAQ_Payment_Cashier">
+      <!--Add search and replace rules for the import section of a composite
+	Example:
+	<searchReplace>
+		<search>http://my-dev-server</search>
+		<replace>http://my-test-server</replace>
+	<searchReplace>
+	<searchReplace>
+		<search>8888</search>
+		<replace>8889</replace>
+	<searchReplace>-->
+      <import>
+         <searchReplace>
+            <search/>
+            <replace/>
+         </searchReplace>
+      </import>
+      <service name="CachierProcess.service">
+         <binding type="ws">
+            <attribute name="port">
+               <replace>http://xmlns.oracle.com/bpmn/bpmnProcess/CachierProcess#wsdl.endpoint(CachierProcess.service/CachierProcessPort)</replace>
+            </attribute>
+         </binding>
+         <callback>
+            <binding type="ws">
+               <attribute name="port">
+                  <replace>http://xmlns.oracle.com/bpmn/bpmnProcess/CachierProcess#wsdl.endpoint(CachierProcess.service/CachierProcessPortTypeCallBack_pt)</replace>
+               </attribute>
+            </binding>
+         </callback>
+      </service>
+      <property name="productVersion">
+         <replace>11.1.1.7.0</replace>
+      </property>
+      <!--Add search and replace rules for the component properties
+	For components and service/reference bindings, you can add policy references.
+	Example:
+	<component name="*">
+		<wsp:PolicyReference orawsp:category="management" orawsp:status="enabled" URI="oracle/log_policy"/>
+	</component>-->
+      <!--Add search and replace rules for the reference properties
+	Example:
+	<searchReplace>
+		<search>http://my-dev-server</search>
+		<replace>http://my-test-server</replace>
+	<searchReplace>
+	<searchReplace>
+		<search>8888
+		<replace>8889</replace>
+	<searchReplace>
+	or provide a new replace value like:
+	<replace>http://my-new-server:8889/myservice</replace>-->
+      <reference name="Cashier_Payment_Details_Service">
+         <property name="jca.retry.count">
+            <replace>4</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="Fee_Matrix_Service">
+         <property name="jca.retry.count">
+            <replace>4</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="Fee_Matrix_Letter_Service">
+         <property name="jca.retry.count">
+            <replace>4</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="Fee_Matrix_UserType_Service">
+         <property name="jca.retry.count">
+            <replace>4</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="Fee_Matrix_All_service">
+         <property name="jca.retry.count">
+            <replace>4</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="ERP_Finance">
+         <property name="jca.retry.count">
+            <replace>4</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="GetLookUpsFrmDB">
+         <property name="jca.retry.count">
+            <replace>4</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+      <reference name="GetAccountAttachments">
+         <property name="jca.retry.count">
+            <replace>4</replace>
+         </property>
+         <property name="jca.retry.interval">
+            <replace>1</replace>
+         </property>
+         <property name="jca.retry.backoff">
+            <replace>2</replace>
+         </property>
+         <property name="jca.retry.maxInterval">
+            <replace>120</replace>
+         </property>
+         <binding type="jca"/>
+      </reference>
+   </composite>
+   <!--To configure monitor.config: 
+	<property name="enabled"><replace>true</replace></property>
+	<property name="dataObjectsFolder"><searchReplace><search>mydev</search><replace>myproduction</replace></searchReplace></property>
+	
+	sample properties to configure for adapter: 
+	<jca:property name="QueueName"><replace>medmq1</replace></jca:property>
+	
+	To add search and replace rules for wsdls, xsd and jca files
+	Example:
+	<searchReplace>
+		<search>http://my-dev-server</search>
+		<replace>http://my-test-server</replace>
+	<searchReplace>
+	<searchReplace>
+		<search>8888</search>
+		<replace>8889</replace>
+	<searchReplace>
+	-->
+   <wsdlAndSchema name="businessCatalog/PaymentModule/PaymentInput.wsdl|CachierProcess.wsdl|Cashier_Payment_Details_Service.wsdl|Cashier_Payment_Details_Service_db.jca|ERP_Finance.wsdl|ERP_Finance_db.jca|Fee_Matrix_All_service.wsdl|Fee_Matrix_All_service_db.jca|Fee_Matrix_Letter_Service.wsdl|Fee_Matrix_Letter_Service_db.jca|Fee_Matrix_Service.wsdl|Fee_Matrix_Service_db.jca|Fee_Matrix_UserType_Service.wsdl|Fee_Matrix_UserType_Service_db.jca|GetAccountAttachments.wsdl|GetAccountAttachments_db.jca|GetLookUpsFrmDB.wsdl|GetLookUpsFrmDB_db.jca|project_properties.wsdl|xsd/Applicant_Request_Service_table.xsd|xsd/Cashier_Payment_Details_Service_table.xsd|xsd/DoCashierPaymentPayload.xsd|xsd/DoCashierPaymentWorkflowTask.xsd|xsd/ERP_Finance_Service_table.xsd|xsd/ERP_Finance_table.xsd|xsd/Fee_Matrix_All_service_table.xsd|xsd/Fee_Matrix_Letter_Service_table.xsd|xsd/Fee_Matrix_Service_table.xsd|xsd/Fee_Matrix_UserType_Service_table.xsd|xsd/GetAccountAttachments_table.xsd|xsd/GetLookUpsFrmDB.xsd|xsd/Humantask1Payload.xsd|xsd/Humantask1WorkflowTask.xsd|xsd/Issue_SitePlan_Doc_Req_Service_table.xsd|xsd/PaymentData.xsd|xsd/PrintInvoicePayload.xsd|xsd/PrintInvoiceWorkflowTask.xsd|xsd/ServicePayment_Service_table.xsd|xsd/TaskStateMachine.xsd">
+      <searchReplace>
+         <search/>
+         <replace/>
+      </searchReplace>
+   </wsdlAndSchema>
+</SOAConfigPlan>

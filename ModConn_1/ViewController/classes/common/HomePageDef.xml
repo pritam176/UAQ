@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="HomePageDef" Package="common">
+   <parameters/>
+   <executables>
+      <variableIterator id="variables"/>
+      <page path="oracle.ui.pattern.dynamicShell.model.dynamicTabShellDefinition"
+            id="pageTemplateBinding" Refresh="ifNeeded"/>
+      <taskFlow id="TreeMenusTask1"
+                taskFlowId="/WEB-INF/taskflows/common/TreeMenus-Task.xml#TreeMenus-Task"
+                activation="deferred"
+                xmlns="http://xmlns.oracle.com/adf/controller/binding"
+                Refresh="ifNeeded"
+                RefreshCondition="#{data.com_mod_financial_view_myFavoritesPageDef.Commit.invoke}">
+         <parameters>
+            <parameter id="tabContext" value="#{viewScope.tabContext}"/>
+         </parameters>
+          
+      </taskFlow>
+      <iterator id="AdmMenusROViewIterator"
+                Binds="Root.SecurityModule.DetailMenuAdmMenusROView"
+                DataControl="ModModuleDataControl" RangeSize="25"
+                Refresh="always"/>
+   </executables>
+   <bindings>
+      <action IterBinding="AdmMenusROViewIterator" id="ExecuteWithParams"
+              InstanceName="ModModuleDataControl.Root.SecurityModule.AdmMenusROView"
+              DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+              Action="executeWithParams">
+         <NamedData NDName="bindLang" NDType="java.lang.String"/>
+         <NamedData NDName="bindMenuId" NDValue=""
+                    NDType="oracle.jbo.domain.Number"/>
+      </action>
+      <attributeValues IterBinding="AdmMenusROViewIterator" id="MenuId">
+         <AttrNames>
+            <Item Value="MenuId"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="AdmMenusROViewIterator" id="MenuName">
+         <AttrNames>
+            <Item Value="MenuName"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="AdmMenusROViewIterator" id="MenuNo">
+         <AttrNames>
+            <Item Value="MenuNo"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="AdmMenusROViewIterator" id="ArMenuTitle">
+         <AttrNames>
+            <Item Value="ArMenuTitle"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="AdmMenusROViewIterator" id="EnMenuTitle">
+         <AttrNames>
+            <Item Value="EnMenuTitle"/>
+         </AttrNames>
+      </attributeValues>
+      <attributeValues IterBinding="AdmMenusROViewIterator"
+                       id="ParentTitleName">
+         <AttrNames>
+            <Item Value="ParentTitleName"/>
+         </AttrNames>
+      </attributeValues>
+   </bindings>
+</pageDefinition>

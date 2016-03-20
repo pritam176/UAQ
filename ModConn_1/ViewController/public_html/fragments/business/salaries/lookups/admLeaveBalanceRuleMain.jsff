@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+      <af:group id="g1">
+        <af:panelGroupLayout layout="vertical" id="pgl1" halign="center">
+            <af:query id="qryId2" headerText="#{rs.common_label_search}"
+                    disclosed="true" rows="1" maxColumns="2"
+                      value="#{bindings.AdmLeaveBalanceRuleViewCriteriaQuery.queryDescriptor}"
+                      model="#{bindings.AdmLeaveBalanceRuleViewCriteriaQuery.queryModel}"
+                      queryListener="#{bindings.AdmLeaveBalanceRuleViewCriteriaQuery.processQuery}"
+                      queryOperationListener="#{bindings.AdmLeaveBalanceRuleViewCriteriaQuery.processQueryOperation}"
+                    resultComponentId="::pc1:t1" saveQueryMode="hidden"
+                    modeChangeVisible="false"/>
+        </af:panelGroupLayout>
+      </af:group>
+    </f:facet>
+    <f:facet name="Result">
+        <af:table value="#{bindings.AdmLeaveBalanceRuleView1.collectionModel}"
+                  var="row"
+                  rows="#{bindings.AdmLeaveBalanceRuleView1.rangeSize}"
+                  emptyText="#{rs.common_label_table_no_data}"
+                  fetchSize="#{bindings.AdmLeaveBalanceRuleView1.rangeSize}"
+                  rowBandingInterval="0"
+                  filterModel="#{bindings.AdmLeaveBalanceRuleViewCriteriaQuery.queryDescriptor}"
+                  queryListener="#{bindings.AdmLeaveBalanceRuleViewCriteriaQuery.processQuery}"
+                  filterVisible="true" varStatus="vs"
+                  selectedRowKeys="#{bindings.AdmLeaveBalanceRuleView1.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.AdmLeaveBalanceRuleView1.collectionModel.makeCurrent}"
+                  rowSelection="single"  styleClass="AFStretchWidth"
+                  partialTriggers="::ctb2 ::cb1" columnStretching="column:c10"
+                  id="t1">
+          <af:column width="45" align="center"
+                     headerText="#{rs.common_label_serial}" id="c12"
+                     noWrap="false">
+            <af:outputText value="#{vs.index + 1}" id="ot6"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeaveBalanceRuleView1.hints.JoinId.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeaveBalanceRuleView1.hints.JoinId.label}"
+                     id="c1" align="center">
+            <af:inputListOfValues id="joinIdId"
+                                  popupTitle="Search and Select: #{bindings.AdmLeaveBalanceRuleView1.hints.JoinId.label}"
+                                  value="#{row.bindings.JoinId.inputValue}"
+                                  model="#{row.bindings.JoinId.listOfValuesModel}"
+                                  required="#{bindings.AdmLeaveBalanceRuleView1.hints.JoinId.mandatory}"
+                                  columns="#{bindings.AdmLeaveBalanceRuleView1.hints.JoinId.displayWidth}"
+                                  shortDesc="#{bindings.AdmLeaveBalanceRuleView1.hints.JoinId.tooltip}" disabled="true">
+              <f:validator binding="#{row.bindings.JoinId.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.AdmLeaveBalanceRuleView1.hints.JoinId.format}"/>
+            </af:inputListOfValues>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeaveBalanceRuleView1.hints.JoinName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeaveBalanceRuleView1.hints.JoinName.label}"
+                     id="c10" align="center">
+            <af:outputText value="#{row.JoinName}" id="ot2"/>
+          </af:column>
+        <af:column headerText="#{bindings.AdmLeaveBalanceRuleView1.hints.OverAge.label}"
+                   id="c3" align="center" width="120">
+          <af:selectOneChoice value="#{row.bindings.OverAge.inputValue}"
+                              label="#{row.bindings.OverAge.label}"
+                              required="#{bindings.AdmLeaveBalanceRuleView1.hints.OverAge.mandatory}"
+                              shortDesc="#{bindings.AdmLeaveBalanceRuleView1.hints.OverAge.tooltip}"
+                              id="soc1" disabled="true">
+            <f:selectItems value="#{row.bindings.OverAge.items}" id="si1"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmLeaveBalanceRuleView1.hints.DaysPerYear.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeaveBalanceRuleView1.hints.DaysPerYear.label}"
+                     id="c5" align="center">
+            <af:outputText value="#{row.DaysPerYear}" id="ot4">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.AdmLeaveBalanceRuleView1.hints.DaysPerYear.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeaveBalanceRuleView1.hints.MaxBalance.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeaveBalanceRuleView1.hints.MaxBalance.label}"
+                     id="c7" align="center">
+            <af:outputText value="#{row.MaxBalance}" id="ot3">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.AdmLeaveBalanceRuleView1.hints.MaxBalance.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeaveBalanceRuleView1.hints.CreateDate.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeaveBalanceRuleView1.hints.CreateDate.label}"
+                     id="c9" align="center">
+            <f:facet name="filter">
+              <af:inputDate value="#{vs.filterCriteria.CreateDate}" id="id1"/>
+            </f:facet>
+            <af:outputText value="#{row.bindings.CreateDate.inputValue}"
+                          shortDesc="#{bindings.AdmLeaveBalanceRuleView1.hints.CreateDate.tooltip}"
+                          id="id2">
+              <af:convertDateTime pattern="#{bindings.AdmLeaveBalanceRuleView1.hints.CreateDate.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column id="c6" width="35" align="center" noWrap="false">
+            <af:commandLink id="cl1" action="addEdit">
+              <af:image source="/images/edit.png" id="i1"/>
+            </af:commandLink>
+          </af:column>
+          <af:column id="c2" width="35" align="center" rendered="true"
+                     noWrap="false">
+            <af:commandLink id="commandLink1">
+              <af:image source="/images/delete.gif" id="image1"/>
+              <af:showPopupBehavior popupId="::p2"/>
+            </af:commandLink>
+          </af:column>
+        </af:table>
+    </f:facet>
+    <f:facet name="Popup">
+      <af:popup id="p2" contentDelivery="lazyUncached">
+        <af:dialog id="d2" title="#{rs.adm_indem_rule_dialog_deleteTitle}"
+                   closeIconVisible="false" type="none">
+          <af:panelGroupLayout id="pg" layout="horizontal">
+            <af:outputText value="#{rs['common_delete_Message']}"
+                           id="outputText1"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:spacer width="5" height="10" id="s2"/>
+            <af:outputText value="#{bindings.JoinName.inputValue}" id="ot20"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:outputText value=" ?" id="outputText3"
+                           inlineStyle="color:Red; font-size:small;"/>
+          </af:panelGroupLayout>
+          <af:spacer height="5px" id="s1"/>
+          <af:commandButton actionListener="#{bindings.Delete.execute}"
+                            text="#{rs.ok}" id="cb1"
+                            action="#{bindings.Commit.execute}"/>
+          <af:spacer width="5px" id="s3"/>
+          <af:commandButton text="#{rs.common_button_cancel}" id="cb2"/>
+        </af:dialog>
+      </af:popup>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:toolbar id="t3">
+        <af:commandToolbarButton icon="/images/add.png" id="ctb2"
+                                 actionListener="#{bindings.CreateWithParams.execute}"
+                                 action="addEdit"></af:commandToolbarButton>
+      </af:toolbar>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

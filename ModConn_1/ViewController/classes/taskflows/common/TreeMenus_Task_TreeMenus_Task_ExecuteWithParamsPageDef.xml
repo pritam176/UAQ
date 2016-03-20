@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="TreeMenus_Task_TreeMenus_Task_ExecuteWithParamsPageDef"
+                Package="taskflows.common" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Root.CommonModule.AdmUsersFavoritesView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmUsersFavoritesViewIterator" Refresh="always"
+              ChangeEventPolicy="ppr"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AdmUsersFavoritesViewIterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="bindUserId" NDValue="#{userInfo.userId}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </action>
+  </bindings>
+</pageDefinition>

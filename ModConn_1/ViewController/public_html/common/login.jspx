@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:trh="http://myfaces.apache.org/trinidad/html">
+   <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+   <f:view>
+      <af:document id="d1">
+      <af:clientListener method="preventBack" type="click"/>
+      <af:resource type="javascript">
+        function preventBack() {
+            window.history.forward();
+        }
+        setTimeout("preventBack()", 0);
+        window.onunload = function () {
+            null
+        };
+      </af:resource>
+         <af:form id="f1" defaultCommand="pt1:commandButton1">
+            <af:pageTemplate viewId="/templates/MODTemplateNoTabs.jspx"
+                             id="pt1">
+               <f:facet name="main">
+                  <af:panelGroupLayout id="panelGroupLayout1" halign="center"
+                                       valign="middle" layout="vertical">
+                     <trh:tableLayout borderWidth="0" id="tableLayout1"
+                                      inlineStyle="width:100%; height:100%;">
+                        <trh:rowLayout id="rowLayout1"
+                                       inlineStyle="width:100%; height:30%;">
+                           <af:spacer width="10" height="100" id="spacer1"/>
+                        </trh:rowLayout>
+                        <trh:rowLayout id="rowLayout2">
+                           <trh:cellFormat id="cellFormat1" halign="end"
+                                           height="width:30%"/>
+                           <trh:cellFormat id="cellFormat2" halign="center"
+                                           inlineStyle="width : 40%;padding-top:120px">
+                              <af:panelBox text="#{rs.common_button_login}"
+                                           id="panelBox1" background="light"
+                                           showDisclosure="false"
+                                           showHeader="never"
+                                           styleClass="mod_login_box"
+                                           inlineStyle="width:500px;">
+                                 
+                       <af:outputText value="#{rs.common_button_login}" styleClass="login_title"/><af:spacer width="10" height="15" id="s1"/>
+                                 
+                                 
+                                 <f:facet name="toolbar"/>
+                                 <af:panelGridLayout id="pgl1">
+                                    <af:gridRow marginTop="5px"
+                                                marginBottom="5px" height="auto"
+                                                id="gr1">
+                                       <af:gridCell marginStart="5px"
+                                                    width="25%" id="gc2"
+                                                    valign="middle"
+                                                    halign="center">
+                                          <af:panelGroupLayout id="pgl2"
+                                                               layout="vertical">
+                                             <af:image source="/images/mod_logo_new.png"
+                                                       id="image1"
+                                                       inlineStyle="width:112.0px; height:125px;margin-top: -15px;"/>
+                                             <af:outputText value="#{rs.common_label_applicationName}"
+                                                            id="ot1"
+                                                            inlineStyle="font-size:18px; font-family:Arial; font-weight:bold; color:#787A37;"/>
+                                          </af:panelGroupLayout>
+                                       </af:gridCell>
+                                       <af:gridCell marginStart="5px"
+                                                    marginEnd="5px" width="75%"
+                                                    id="gc1">
+                                          <af:panelFormLayout id="panelFormLayout1"
+                                                              inlineStyle="white-space: nowrap;">
+                                             <af:inputText value="#{bindings.UserId.inputValue}"
+                                                           label="#{rs.common_label_username}"
+                                                           columns="#{bindings.UserId.hints.displayWidth}"
+                                                           maximumLength="#{bindings.UserId.hints.precision}"
+                                                           shortDesc="#{bindings.UserId.hints.tooltip}"
+                                                           id="inputText1"
+                                                           required="true"
+                                                           contentStyle="width:243px !important;  border: 1px solid #7f9db9;height: 25px !important;margin: 3px 2px !important;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px;">
+                                                <f:validator binding="#{bindings.UserId.validator}"/>
+                                             </af:inputText>
+                                             <af:inputText value="#{bindings.Password.inputValue}"
+                                                           label="#{rs.common_label_password}"
+                                                           columns="#{bindings.Password.hints.displayWidth}"
+                                                           maximumLength="#{bindings.Password.hints.precision}"
+                                                           shortDesc="#{bindings.Password.hints.tooltip}"
+                                                           id="inputText2"
+                                                           required="true"
+                                                           secret="true"
+                                                           contentStyle="width:243px !important;  border: 1px solid #7f9db9;height: 25px !important;margin: 3px 2px !important;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px;">
+                                                <f:validator binding="#{bindings.Password.validator}"/>
+                                             </af:inputText>
+                                             <af:selectOneChoice label="#{rs.myAccount_language}"
+                                                                 id="selectOneChoice1"
+                                                                 value="#{loginBean.lang}"
+                                                                 contentStyle="width:250px !important;  border: 1px solid #7f9db9;height: 28px !important;margin: 3px 2px !important;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 5px;"
+                                                                 autoSubmit="true">
+                                                <af:selectItem label="#{rs.ARABIC_LANG}"
+                                                               value="ar"
+                                                               id="selectItem10"/>
+                                                <af:selectItem label="#{rs.ENGLISH_LANG}"
+                                                               value="en"
+                                                               id="selectItem11"/>
+                                             </af:selectOneChoice>
+                                             <af:spacer width="10" height="10"
+                                                        id="spacer2"/>
+                                             <f:facet name="footer">
+                                                <af:panelGroupLayout id="panelGroupLayout2"
+                                                                     layout="horizontal">
+                                                   <af:spacer width="243"
+                                                              height="10"
+                                                              id="spacer3"/>
+                                                   <af:commandButton id="commandButton1"
+                                                                     action="#{loginBean.login_action}"
+                                                                     text="#{rs.common_button_login}"
+                                                                     inlineStyle="background: linear-gradient(to bottom, #a7cfdf 0%,#23538a 100%) !important;border: 1px solid #2e6da4 !important;border-radius: 4px !important;color: #fff !important;cursor: pointer;display: block;font-family: Arial,Helvetica,sans-serif !important;font-size: 15px !important;font-weight: bold !important;height: 35px;padding: 6px 12px !important;text-align: center !important;white-space: nowrap !important;width: 100px;margin-bottom: 10px;text-shadow: 0 1px 0 #ccc;">
+                                                      <af:setActionListener from="#{'Sucess'}"
+                                                                            to="#{pageFlowScope.userLogin}"/>
+                                                   </af:commandButton>
+                                                </af:panelGroupLayout>
+                                             </f:facet>
+                                          </af:panelFormLayout>
+                                       </af:gridCell>
+                                    </af:gridRow>
+                                 </af:panelGridLayout>
+                              </af:panelBox>
+                           </trh:cellFormat>
+                           <trh:cellFormat id="cellFormat3" halign="start"
+                                           inlineStyle="width:30%"/>
+                        </trh:rowLayout>
+                     </trh:tableLayout>
+                  </af:panelGroupLayout>
+               </f:facet>
+            </af:pageTemplate>
+         </af:form>
+      </af:document>
+   </f:view>
+   <!--oracle-jdev-comment:preferred-managed-bean-name:loginBean-->
+</jsp:root>

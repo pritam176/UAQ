@@ -1,0 +1,16 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/GetLostDocReplaceServiceFee" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/GetLostDocReplaceServiceFee" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="GetLostDocReplaceServiceFeeInput" type="GetLostDocReplaceServiceFeeInput"/>
+   <xs:complexType name="GetLostDocReplaceServiceFeeInput">
+      <xs:sequence>
+         <xs:element name="serviceid" type="xs:string" nillable="true"/>
+         <xs:element name="feecode" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="GetLostDocReplaceServiceFeeOutput" type="GetLostDocReplaceServiceFeeOutput"/>
+   <xs:complexType name="GetLostDocReplaceServiceFeeOutput">
+      <xs:sequence>
+         <xs:element name="amount" type="xs:decimal" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

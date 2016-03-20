@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="rolesPageDef"
+                Package="fragments.administration">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SecurityModule.AdmRolesView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmRolesViewIterator"/>
+    <searchRegion Criteria="AdmRolesViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmRolesViewIterator" id="AdmRolesViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmRolesViewIterator" id="AdmRolesView">
+      <nodeDefinition DefName="com.mod.financial.model.security.views.up.AdmRolesView"
+                      Name="AdmRolesView0">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="Name"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="AdmRolesViewIterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

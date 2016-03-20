@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="banksFragPageDef"
+                Package="fragments.administration">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.AdministrationModule.AdmBanksView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmBanksViewIterator" ChangeEventPolicy="ppr"/>
+    <searchRegion Criteria="AdmBanksSearchViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmBanksViewIterator"
+                  id="AdmBanksSearchViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmBanksViewIterator" id="AdmBanksView">
+      <nodeDefinition DefName="com.mod.financial.model.administration.views.up.AdmBanksView"
+                      Name="AdmBanksView0">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="BankName"/>
+          <Item Value="SectionId"/>
+          <Item Value="AccId"/>
+          <Item Value="SaccId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AdmBanksViewIterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmBanksViewIterator" id="BankName">
+      <AttrNames>
+        <Item Value="BankName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmBanksViewIterator" id="SectionId">
+      <AttrNames>
+        <Item Value="SectionId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmBanksViewIterator" id="AccId">
+      <AttrNames>
+        <Item Value="AccId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmBanksViewIterator" id="SaccId">
+      <AttrNames>
+        <Item Value="SaccId"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmBanksViewIterator" id="CreateInsert"
+            InstanceName="ModModuleDataControl.Root.AdministrationModule.AdmBanksView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action id="Commit" DataControl="ModModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="ModModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <action IterBinding="AdmBanksViewIterator" id="Delete"
+            InstanceName="ModModuleDataControl.Root.AdministrationModule.AdmBanksView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+  </bindings>
+</pageDefinition>

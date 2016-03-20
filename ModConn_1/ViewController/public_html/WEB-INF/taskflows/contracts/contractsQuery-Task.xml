@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="contractsQuery-Task">
+    <default-activity id="__14">initQuery</default-activity>
+    <data-control-scope id="__3">
+      <isolated/>
+    </data-control-scope>
+    <input-parameter-definition id="__47">
+      <name id="__46">pageTypeFlag</name>
+      <value>#{pageFlowScope.pageTypeFlag}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__49">
+      <name id="__48">tabContext</name>
+      <value>#{pageFlowScope.tabContext}</value>
+      <class>oracle.ui.pattern.dynamicShell.TabContext</class>
+    </input-parameter-definition>
+    <managed-bean id="__7">
+      <managed-bean-name id="__5">contractsBean</managed-bean-name>
+      <managed-bean-class id="__6">com.mod.financial.view.managed.business.contracts.Contracts</managed-bean-class>
+      <managed-bean-scope id="__4">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <method-call id="initQuery">
+      <method id="__1">#{pageFlowScope.contractsBean.initQuery}</method>
+      <outcome id="__43">
+        <fixed-outcome id="__2">go</fixed-outcome>
+      </outcome>
+    </method-call>
+    <view id="contractsMain">
+      <page id="__8">/fragments/business/contracts/contractsMain.jsff</page>
+    </view>
+    <view id="addEditContract">
+      <page id="__9">/fragments/business/contracts/addEditContract.jsff</page>
+    </view>
+    <method-call id="Rollback">
+      <method id="__11">#{bindings.Rollback.execute}</method>
+      <outcome id="__16">
+        <fixed-outcome id="__10">Rollback</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="SetCurrentRowWithKeyValue">
+      <method id="__13">#{bindings.setCurrentRowWithKeyValue.execute}</method>
+      <outcome id="__25">
+        <fixed-outcome id="__12">setCurrentRowWithKeyValue</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__15">
+      <from-activity-id id="__17">initQuery</from-activity-id>
+      <control-flow-case id="__19">
+        <from-outcome id="__18">go</from-outcome>
+        <to-activity-id id="__20">contractsMain</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__21">
+      <from-activity-id id="__22">contractsMain</from-activity-id>
+      <control-flow-case id="__24">
+        <from-outcome id="__26">addEditContract</from-outcome>
+        <to-activity-id id="__23">addEditContract</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__27">
+      <from-activity-id id="__28">addEditContract</from-activity-id>
+      <control-flow-case id="__30">
+        <from-outcome id="__31">back</from-outcome>
+        <to-activity-id id="__29">contractsMain</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__32">
+        <from-outcome id="__34">cancel</from-outcome>
+        <to-activity-id id="__33">Rollback</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__35">
+      <from-activity-id id="__36">Rollback</from-activity-id>
+      <control-flow-case id="__39">
+        <from-outcome id="__38">Rollback</from-outcome>
+        <to-activity-id id="__37">SetCurrentRowWithKeyValue</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__40">
+      <from-activity-id id="__41">SetCurrentRowWithKeyValue</from-activity-id>
+      <control-flow-case id="__45">
+        <from-outcome id="__42">setCurrentRowWithKeyValue</from-outcome>
+        <to-activity-id id="__44">addEditContract</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

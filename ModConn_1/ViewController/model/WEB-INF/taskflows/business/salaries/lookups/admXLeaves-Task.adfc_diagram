@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">admXLeavesMain</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admXLeavesMain.jsff</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admXLeavesMain&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">214.79883</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">197.02637</property>
+   </View>
+   <View
+      id="View3">
+      <property
+         name="activityId">admXLeavesAddEdit</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admXLeavesAddEdit.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admXLeavesAddEdit&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">213.79883</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">495.03613</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="View2"
+      to="View3">
+      <property
+         name="fromOutcome">addEdit</property>
+      <property
+         name="sdm:polyPoints">R46,238.02637,210.94824,454.01993,209.94824,L46</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase5"
+      from="View3"
+      to="View2">
+      <property
+         name="fromOutcome">back</property>
+      <property
+         name="sdm:polyPoints">L54,454.03613,216.94824,238.04257,217.94824,R54</property>
+   </ControlFlowCase>
+</SDM>

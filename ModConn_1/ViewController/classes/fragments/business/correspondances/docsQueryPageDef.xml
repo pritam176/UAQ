@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="docsQueryPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CorresModule.CorDocMasterQueryViewRo1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDocMasterQueryViewRo1Iterator" ChangeEventPolicy="ppr"/>
+    <searchRegion Binds="CorDocMasterQueryViewRo1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="CorDocMasterQueryViewRo1Query"/>
+<searchRegion Criteria="CorDocMasterQueryViewRoCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="CorDocMasterQueryViewRo1Iterator"
+                  id="CorDocMasterQueryViewRoCriteriaQuery"/>
+    <iterator Binds="Root.CorresModule.CorDocStatusView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDocStatusView1Iterator" ChangeEventPolicy="ppr"/>
+    <searchRegion Binds="CorDocStatusView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="CorDocStatusView1Query"/>
+    <iterator Binds="Root.CorresModule.CorDocAttachView2"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDocAttachView2Iterator" ChangeEventPolicy="ppr"/>
+    <searchRegion Binds="CorDocAttachView2Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="CorDocAttachView2Query"/>
+    <iterator Binds="Root.CorresModule.CorDocDetailView2"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDocDetailView2Iterator" ChangeEventPolicy="ppr"/>
+    <searchRegion Binds="CorDocDetailView2Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="CorDocDetailView2Query"/>
+    <iterator Binds="Root.CorresModule.CorNotesView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorNotesView1Iterator" ChangeEventPolicy="ppr"/>
+    <searchRegion Binds="CorNotesView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="CorNotesView1Query"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="CorDocStatusView1Iterator" id="CorDocStatusView1">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.ro.CorDocStatusView"
+                      Name="CorDocStatusView10">
+        <AttrNames>
+          <Item Value="DocStatus"/>
+          <Item Value="StatusDate"/>
+          <Item Value="UserId"/>
+          <Item Value="Name"/>
+          <Item Value="Name1"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="CorDocMasterQueryViewRo1Iterator"
+                     id="DocDate">
+      <AttrNames>
+        <Item Value="DocDate"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CorDocMasterQueryViewRo1Iterator" StaticList="false"
+          Uses="LOV_DocDest" id="DocDest" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="CorDocMasterQueryViewRo1Iterator" id="DocNo">
+      <AttrNames>
+        <Item Value="DocNo"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CorDocMasterQueryViewRo1Iterator" StaticList="false"
+          Uses="LOV_DocPri" id="DocPri" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="CorDocMasterQueryViewRo1Iterator" id="DocRef">
+      <AttrNames>
+        <Item Value="DocRef"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CorDocMasterQueryViewRo1Iterator" StaticList="false"
+          Uses="LOV_DocStatus" id="DocStatus" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="CorDocMasterQueryViewRo1Iterator"
+                     id="DocTitle">
+      <AttrNames>
+        <Item Value="DocTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CorDocMasterQueryViewRo1Iterator" StaticList="false"
+          Uses="LOV_DocType" id="DocType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="CorDocMasterQueryViewRo1Iterator"
+                     id="RcvDate">
+      <AttrNames>
+        <Item Value="RcvDate"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false"
+                  IterBinding="CorDocMasterQueryViewRo1Iterator"
+                  Uses="LOV_SectionId" id="SectionId"/>
+    <attributeValues IterBinding="CorDocMasterQueryViewRo1Iterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="CorDocMasterQueryViewRo1Iterator" id="First"
+            RequiresUpdateModel="true" Action="first"/>
+    <action IterBinding="CorDocMasterQueryViewRo1Iterator" id="Previous"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action IterBinding="CorDocMasterQueryViewRo1Iterator" id="Next"
+            RequiresUpdateModel="true" Action="next"/>
+    <action IterBinding="CorDocMasterQueryViewRo1Iterator" id="Last"
+            RequiresUpdateModel="true" Action="last"/>
+    <attributeValues IterBinding="CorDocMasterQueryViewRo1Iterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="CorDocAttachView2Iterator" id="CorDocAttachView2">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.up.CorDocAttachView"
+                      Name="CorDocAttachView20">
+        <AttrNames>
+          <Item Value="AttachNo"/>
+          <Item Value="AttachDesc"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="CorDocDetailView2Iterator" id="CorDocDetailView2">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.up.CorDocDetailView"
+                      Name="CorDocDetailView20">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="HdId"/>
+          <Item Value="LineNo"/>
+          <Item Value="JoinId"/>
+          <Item Value="EmpNo"/>
+          <Item Value="ProgId"/>
+          <Item Value="AccId"/>
+          <Item Value="UserId"/>
+          <Item Value="LineStatus"/>
+          <Item Value="CreateDate"/>
+          <Item Value="CreateUser"/>
+          <Item Value="Status"/>
+          <Item Value="LastChangeDate"/>
+          <Item Value="LastChangeUser"/>
+          <Item Value="CountryId"/>
+          <Item Value="EmpId"/>
+          <Item Value="StatusDate"/>
+          <Item Value="Processed"/>
+          <Item Value="UserName"/>
+          <Item Value="AccName"/>
+          <Item Value="CountryName"/>
+          <Item Value="JoinName"/>
+          <Item Value="ProgName"/>
+          <Item Value="EmpName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="CorNotesView1Iterator" id="CorNotesView1">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.ro.CorNotesView"
+                      Name="CorNotesView10">
+        <AttrNames>
+          <Item Value="NoteNo"/>
+          <Item Value="NoteDate"/>
+          <Item Value="Note"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="CorDocMasterQueryViewRo1Iterator"
+          id="CorDocMasterQueryViewRo1">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.ro.CorDocMasterQueryViewRo"
+                      Name="CorDocMasterQueryViewRo10">
+        <AttrNames>
+          <Item Value="AnsReq"/>
+          <Item Value="ArchNo"/>
+          <Item Value="ArchiveType"/>
+          <Item Value="CreateDate"/>
+          <Item Value="CreateUser"/>
+          <Item Value="DocDate"/>
+          <Item Value="DocDest"/>
+          <Item Value="DocNo"/>
+          <Item Value="DocPri"/>
+          <Item Value="DocRef"/>
+          <Item Value="DocStatus"/>
+          <Item Value="DocTitle"/>
+          <Item Value="DocType"/>
+          <Item Value="Id"/>
+          <Item Value="LastChangeDate"/>
+          <Item Value="LastChangeUser"/>
+          <Item Value="NoPage"/>
+          <Item Value="OrgId"/>
+          <Item Value="OsectionId"/>
+          <Item Value="OutDocDest"/>
+          <Item Value="OutSubjDetail"/>
+          <Item Value="RcvDate"/>
+          <Item Value="ReceivedBy"/>
+          <Item Value="RefId"/>
+          <Item Value="SectionId"/>
+          <Item Value="SheetNo"/>
+          <Item Value="Status"/>
+          <Item Value="SubjId"/>
+          <Item Value="WhoDest"/>
+          <Item Value="Name"/>
+          <Item Value="Id1"/>
+          <Item Value="Name1"/>
+          <Item Value="SubjName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="CorDocMasterQueryViewRo1Iterator" id="AnsReq1"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="AnsReq"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+  </bindings>
+</pageDefinition>

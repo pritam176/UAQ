@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/exception
+END
+DAOException.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/exception/DAOException.java
+END
+UAQException.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/exception/UAQException.java
+END
+UAQFaultCode.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/exception/UAQFaultCode.java
+END

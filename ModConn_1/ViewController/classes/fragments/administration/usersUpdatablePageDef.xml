@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="usersUpdatablePageDef"
+                Package="fragments.administration">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.AdministrationModule.AdmUsersView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmUsersViewIterator" ChangeEventPolicy="ppr"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false" IterBinding="AdmUsersViewIterator"
+                  Uses="LOV_DeptName" id="DeptName"/>
+    <listOfValues StaticList="false" IterBinding="AdmUsersViewIterator"
+                  Uses="LOV_OrgName" id="OrgName"/>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="OrgId">
+      <AttrNames>
+        <Item Value="OrgId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="LogName">
+      <AttrNames>
+        <Item Value="LogName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AdmUsersViewIterator" StaticList="false"
+          Uses="LOV_DeptNo" id="DeptNo" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="Pwd">
+      <AttrNames>
+        <Item Value="Pwd"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="Machine">
+      <AttrNames>
+        <Item Value="Machine"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="PwdExpDate">
+      <AttrNames>
+        <Item Value="PwdExpDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="LogFrom">
+      <AttrNames>
+        <Item Value="LogFrom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="LogTo">
+      <AttrNames>
+        <Item Value="LogTo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="ExpiryDate">
+      <AttrNames>
+        <Item Value="ExpiryDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="Email">
+      <AttrNames>
+        <Item Value="Email"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="JobNo">
+      <AttrNames>
+        <Item Value="JobNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="CivilCardNo">
+      <AttrNames>
+        <Item Value="CivilCardNo"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AdmUsersViewIterator" StaticList="false"
+          Uses="LOV_ContractType" id="ContractType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="JobDesc">
+      <AttrNames>
+        <Item Value="JobDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersViewIterator" id="UserDept">
+      <AttrNames>
+        <Item Value="UserDept"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AdmUsersViewIterator" StaticList="false"
+            Uses="LOV_UserStatus" id="UserStatus" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="UserStatus"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="A"/>
+        <Item Value="S"/>
+      </ValueList>
+    </button>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+  </bindings>
+</pageDefinition>

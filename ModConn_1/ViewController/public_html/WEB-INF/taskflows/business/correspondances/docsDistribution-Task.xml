@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="docsDistribution-Task">
+    <default-activity id="__1">docsDistribution</default-activity>
+    <managed-bean id="__2">
+      <managed-bean-name id="__5">docsDistributionBean</managed-bean-name>
+      <managed-bean-class id="__4">com.mod.financial.view.managed.business.correspondances.DocsDistribution</managed-bean-class>
+      <managed-bean-scope id="__3">view</managed-bean-scope>
+    </managed-bean>
+    <view id="docsDistribution">
+      <page>/fragments/business/correspondances/docsDistribution.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

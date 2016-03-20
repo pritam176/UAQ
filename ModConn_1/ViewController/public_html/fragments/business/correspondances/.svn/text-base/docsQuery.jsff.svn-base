@@ -1,0 +1,142 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+    <af:query id="qryId2" headerText="#{rs.common_label_search}"
+              disclosed="true" rows="3" maxColumns="4"
+              value="#{bindings.CorDocMasterQueryViewRoCriteriaQuery.queryDescriptor}"
+              model="#{bindings.CorDocMasterQueryViewRoCriteriaQuery.queryModel}"
+              queryListener="#{bindings.CorDocMasterQueryViewRoCriteriaQuery.processQuery}"
+              queryOperationListener="#{bindings.CorDocMasterQueryViewRoCriteriaQuery.processQueryOperation}"
+              saveQueryMode="hidden" modeChangeVisible="false"
+              resultComponentId="::pc1:t1"/>
+              </f:facet>
+    <f:facet name="Result">
+    <af:table value="#{bindings.CorDocMasterQueryViewRo1.collectionModel}"
+                var="row" rows="#{bindings.CorDocMasterQueryViewRo1.rangeSize}"
+                emptyText="#{rs.common_label_table_no_data}"
+                fetchSize="#{bindings.CorDocMasterQueryViewRo1.rangeSize}"
+                rowBandingInterval="0"
+                filterModel="#{bindings.CorDocMasterQueryViewRo1Query.queryDescriptor}"
+                queryListener="#{bindings.CorDocMasterQueryViewRo1Query.processQuery}"
+                filterVisible="true" varStatus="vs"
+                selectedRowKeys="#{bindings.CorDocMasterQueryViewRo1.collectionModel.selectedRow}"
+                selectionListener="#{bindings.CorDocMasterQueryViewRo1.collectionModel.makeCurrent}"
+                rowSelection="single" id="t1" styleClass="AFStretchWidth" columnStretching="column:c13" inlineStyle="height:300px !important;">
+        <af:column sortProperty="#{bindings.CorDocMasterQueryViewRo1.hints.DocRef.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterQueryViewRo1.hints.DocRef.label}"
+                   id="c9" noWrap="false" width="75">
+          <af:outputText value="#{row.bindings.DocRef.inputValue}"
+                         shortDesc="#{bindings.CorDocMasterQueryViewRo1.hints.DocRef.tooltip}"
+                         id="it17"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterQueryViewRo1.hints.DocTitle.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterQueryViewRo1.hints.DocTitle.label}"
+                   id="c13" noWrap="false">
+          <af:outputText value="#{row.bindings.DocTitle.inputValue}"
+                         shortDesc="#{bindings.CorDocMasterQueryViewRo1.hints.DocTitle.tooltip}"
+                         id="it3"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterQueryViewRo1.hints.DocDate.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterQueryViewRo1.hints.DocDate.label}"
+                   id="c6" noWrap="false" width="75">
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.DocDate}" id="id3"/>
+          </f:facet>
+          <af:outputText value="#{row.bindings.DocDate.inputValue}"
+                        shortDesc="#{bindings.CorDocMasterQueryViewRo1.hints.DocDate.tooltip}"
+                        id="id1">
+            <af:convertDateTime pattern="#{bindings.CorDocMasterQueryViewRo1.hints.DocDate.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterQueryViewRo1.hints.Name.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterQueryViewRo1.hints.DocDest.label}"
+                   id="c19" noWrap="false">
+        <af:outputText value="#{row.Name}" id="ot1"/>
+      </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterQueryViewRo1.hints.DocPri.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterQueryViewRo1.hints.DocPri.label}"
+                   id="c18" noWrap="false" width="75">
+          <af:selectOneChoice value="#{row.bindings.DocPri.inputValue}"
+                              label="#{row.bindings.DocPri.label}"
+                              required="#{bindings.CorDocMasterQueryViewRo1.hints.DocPri.mandatory}"
+                              shortDesc="#{bindings.CorDocMasterQueryViewRo1.hints.DocPri.tooltip}"
+                              id="soc2" disabled="true">
+            <f:selectItems value="#{row.bindings.DocPri.items}" id="si2"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterQueryViewRo1.hints.DocStatus.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterQueryViewRo1.hints.DocStatus.label}"
+                   id="c8" noWrap="false" width="90">
+          <af:selectOneChoice value="#{row.bindings.DocStatus.inputValue}"
+                              label="#{row.bindings.DocStatus.label}"
+                              required="#{bindings.CorDocMasterQueryViewRo1.hints.DocStatus.mandatory}"
+                              shortDesc="#{bindings.CorDocMasterQueryViewRo1.hints.DocStatus.tooltip}"
+                              id="soc1" disabled="true">
+            <f:selectItems value="#{row.bindings.DocStatus.items}" id="si1"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterQueryViewRo1.hints.DocType.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterQueryViewRo1.hints.DocType.label}"
+                   id="c16" noWrap="false" width="75">
+          <af:selectOneChoice value="#{row.bindings.DocType.inputValue}"
+                              label="#{row.bindings.DocType.label}"
+                              required="#{bindings.CorDocMasterQueryViewRo1.hints.DocType.mandatory}"
+                              shortDesc="#{bindings.CorDocMasterQueryViewRo1.hints.DocType.tooltip}"
+                              id="soc5" disabled="true">
+            <f:selectItems value="#{row.bindings.DocType.items}" id="si3"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterQueryViewRo1.hints.RcvDate.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterQueryViewRo1.hints.RcvDate.label}"
+                   id="c17" noWrap="false" width="75">
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.RcvDate}" id="id2"/>
+          </f:facet>
+          <af:outputText value="#{row.bindings.RcvDate.inputValue}"
+                        shortDesc="#{bindings.CorDocMasterQueryViewRo1.hints.RcvDate.tooltip}"
+                        id="id4">
+            <af:convertDateTime pattern="#{bindings.CorDocMasterQueryViewRo1.hints.RcvDate.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterQueryViewRo1.hints.SectionId.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterQueryViewRo1.hints.SectionId.label}"
+                   id="c28" noWrap="false" width="130">
+          <af:outputText id="sectionIdId"
+                                value="#{row.bindings.Name1.inputValue}"
+                                shortDesc="#{bindings.CorDocMasterQueryViewRo1.hints.Name1.tooltip}">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.CorDocMasterQueryViewRo1.hints.Name1.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDocMasterQueryViewRo1.hints.SubjName.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDocMasterQueryViewRo1.hints.SubjName.label}"
+                   id="c1" noWrap="false" width="130">
+          <af:outputText id="SubjName"
+                                value="#{row.bindings.SubjName.inputValue}"
+                                shortDesc="#{bindings.CorDocMasterQueryViewRo1.hints.SubjName.tooltip}">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.CorDocMasterQueryViewRo1.hints.SubjName.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column id="c11" width="25" align="center">
+          <af:commandLink id="editCl" action="goToDocDetails">
+            <af:image source="/images/edit.png" id="i1"/>
+          </af:commandLink>
+        </af:column>
+      </af:table>
+      </f:facet>
+      </af:pageTemplate>
+</jsp:root>

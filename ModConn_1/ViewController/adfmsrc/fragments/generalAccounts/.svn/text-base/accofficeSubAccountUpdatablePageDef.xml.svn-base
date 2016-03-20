@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="accofficeSubAccountUpdatablePageDef"
+                Package="fragments.generalAccounts">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.GeneralAccountsModule.AccOfficesView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccOfficesViewIterator"/>
+    <iterator Binds="Root.GeneralAccountsModule.AccOfficeSubAccountsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccOfficeSubAccountsViewIterator"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false" IterBinding="AccOfficesViewIterator"
+                  Uses="LOV_CountryId" id="CountryId"/>
+    <listOfValues StaticList="false" IterBinding="AccOfficesViewIterator"
+                  Uses="LOV_SectionId" id="SectionId"/>
+    <listOfValues StaticList="false" IterBinding="AccOfficesViewIterator"
+                  Uses="LOV_UserId" id="UserId"/>
+    <attributeValues IterBinding="AccOfficesViewIterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccOfficesViewIterator" id="OfficeName">
+      <AttrNames>
+        <Item Value="OfficeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccOfficesViewIterator" id="SectionName">
+      <AttrNames>
+        <Item Value="SectionName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccOfficesViewIterator" id="UserName">
+      <AttrNames>
+        <Item Value="UserName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccOfficesViewIterator" id="CountryName">
+      <AttrNames>
+        <Item Value="CountryName"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="AccOfficeSubAccountsViewIterator"
+          id="AccOfficeSubAccountsView">
+      <nodeDefinition DefName="com.mod.financial.model.generalAccounts.views.up.AccOfficeSubAccountsView"
+                      Name="AccOfficeSubAccountsView0">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="CurrId"/>
+          <Item Value="CurrName"/>
+          <Item Value="SaccNo"/>
+          <Item Value="SaccName"/>
+          <Item Value="PayType"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="AccOfficeSubAccountsViewIterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+  </bindings>
+</pageDefinition>

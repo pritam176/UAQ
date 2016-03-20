@@ -1,0 +1,171 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+      <af:panelHeader text="#{rs.common_label_search}" id="ph1">
+        <af:panelGroupLayout layout="vertical" id="pgl2"
+                             inlineStyle="height:65px !important;"
+                             halign="center" partialTriggers="soc1">
+          <af:selectOneChoice value="#{bindings.CheckStatus.inputValue}"
+                              label="#{bindings.CheckStatus.label}"
+                              required="#{bindings.CheckStatus.hints.mandatory}"
+                              shortDesc="#{bindings.CheckStatus.hints.tooltip}"
+                              id="soc1" autoSubmit="true"
+                              contentStyle="width:150px !important;">
+            <f:selectItems value="#{bindings.CheckStatus.items}" id="si1"/>
+          </af:selectOneChoice>
+          <af:spacer height="5px" id="s2"/>
+          <af:panelGroupLayout id="pgl1">
+            <af:commandButton actionListener="#{bindings.ExecuteWithParams.execute}"
+                              text="#{rs.common_label_search}" id="cb1">
+              <f:setPropertyActionListener target="#{bindings.pCheckStatus.inputValue}"
+                                           value="#{bindings.CheckStatus1.inputValue}"/>
+            </af:commandButton>
+            <af:spacer width="5px" id="s1"/>
+            <af:commandButton text="#{rs.common_label_reassign}" id="cb2">
+              <f:setPropertyActionListener target="#{bindings.CheckStatus.inputValue}"
+                                           value=""/>
+              <f:setPropertyActionListener target="#{bindings.pCheckStatus.inputValue}"
+                                           value=""/>
+            </af:commandButton>
+          </af:panelGroupLayout>
+        </af:panelGroupLayout>
+      </af:panelHeader>
+    </f:facet>
+    <f:facet name="Result">
+        <af:table value="#{bindings.AccPaymentFormDeliveryViewRO1.collectionModel}"
+                  var="row"
+                  rows="#{bindings.AccPaymentFormDeliveryViewRO1.rangeSize}"
+                  emptyText="#{rs.common_label_table_no_data}"
+                  fetchSize="#{bindings.AccPaymentFormDeliveryViewRO1.rangeSize}"
+                  rowBandingInterval="0"
+                  filterModel="#{bindings.AccPaymentFormDeliveryViewRO1Query.queryDescriptor}"
+                  queryListener="#{bindings.AccPaymentFormDeliveryViewRO1Query.processQuery}"
+                  filterVisible="true" varStatus="vs"
+                  selectedRowKeys="#{bindings.AccPaymentFormDeliveryViewRO1.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.AccPaymentFormDeliveryViewRO1.collectionModel.makeCurrent}"
+                  rowSelection="single" id="t1"
+                  partialTriggers="cancelChkSbc dlevChkSbc cb3 :::cb1"
+                  styleClass="AFStretchWidth" columnStretching="column:c2">
+          <af:column sortable="false" headerText="#{rs.common_label_serial}"
+                     width="38" align="center" id="c17">
+            <af:outputText value="#{vs.index + 1}" id="ot6"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DirectUserName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DirectUser.label}"
+                     id="c33" noWrap="false" width="110">
+            <af:outputText value="#{row.bindings.DirectUserName.inputValue}"
+                           shortDesc="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DirectUserName.tooltip}"
+                           id="it23"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CheckDate.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CheckDate.label}"
+                     id="c22" width="80" align="center" noWrap="false">
+            <f:facet name="filter">
+              <af:inputDate value="#{vs.filterCriteria.CheckDate}" id="id9"/>
+            </f:facet>
+            <af:outputText value="#{row.bindings.CheckDate.inputValue}"
+                           shortDesc="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CheckDate.tooltip}"
+                           id="id2">
+              <af:convertDateTime pattern="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CheckDate.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AccPaymentFormDeliveryViewRO1.hints.SheetId.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AccPaymentFormDeliveryViewRO1.hints.SheetId.label}"
+                     id="c9" width="50" align="center" noWrap="false">
+            <af:outputText value="#{row.bindings.SheetId.inputValue}"
+                           shortDesc="#{bindings.AccPaymentFormDeliveryViewRO1.hints.SheetId.tooltip}"
+                           id="it9"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AccPaymentFormDeliveryViewRO1.hints.SheetStatus.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AccPaymentFormDeliveryViewRO1.hints.SheetStatus.label}"
+                     id="c1" width="70" align="center" noWrap="false">
+            <af:outputText value="#{row.bindings.SheetStatus.inputValue}"
+                           shortDesc="#{bindings.AccPaymentFormDeliveryViewRO1.hints.SheetStatus.tooltip}"
+                           id="ot1"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DueToName1.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DueToName1.label}"
+                     id="c2" noWrap="false" width="110">
+            <af:outputText value="#{row.bindings.DueToName1.inputValue}"
+                           shortDesc="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DueToName1.tooltip}"
+                           id="ot2"/>
+          </af:column>
+        <af:column headerText="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DlevCheck.label}"
+                     id="c5" width="30" align="center" noWrap="false">
+            <af:selectBooleanCheckbox value="#{row.bindings.DlevCheck.inputValue}"
+                                      label="#{row.bindings.DlevCheck.label}"
+                                      shortDesc="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DlevCheck.tooltip}"
+                                      id="dlevChkSbc" autoSubmit="true"
+                                      partialTriggers="cancelChkSbc"
+                                      valueChangeListener="#{viewScope.accPaymentFormDelBean.onDlevCheckChange}"/>
+          </af:column>
+          <af:column headerText="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CancelChk.label}"
+                     id="c4" width="30" align="center" noWrap="false">
+            <af:selectBooleanCheckbox value="#{row.bindings.CancelChk.inputValue}"
+                                      label="#{row.bindings.CancelChk.label}"
+                                      shortDesc="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CancelChk.tooltip}"
+                                      id="cancelChkSbc" autoSubmit="true"
+                                      partialTriggers="dlevChkSbc"
+                                      valueChangeListener="#{viewScope.accPaymentFormDelBean.onCancelChkChange}"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DlevUserName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DlevUser.label}"
+                     id="c3" noWrap="false" width="110">
+            <af:outputText value="#{row.bindings.DlevUserName.inputValue}"
+                           shortDesc="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DlevUserName.tooltip}"
+                           id="it3"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DlevDate.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DlevDate.label}"
+                     id="c30" width="80" noWrap="false" align="center">
+            <f:facet name="filter">
+              <af:inputDate value="#{vs.filterCriteria.DlevDate}" id="id1"/>
+            </f:facet>
+            <af:outputText value="#{row.bindings.DlevDate.inputValue}"
+                           shortDesc="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DlevDate.tooltip}"
+                           id="id12">
+              <af:convertDateTime pattern="#{bindings.AccPaymentFormDeliveryViewRO1.hints.DlevDate.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CancelUserName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CancelDlevUser.label}"
+                     id="c21" noWrap="false" width="110">
+            <af:outputText value="#{row.bindings.CancelUserName.inputValue}"
+                           shortDesc="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CancelUserName.tooltip}"
+                           id="it5"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CancelDlevDate.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CancelDlevDate.label}"
+                     id="c12" width="60" noWrap="false">
+            <f:facet name="filter">
+              <af:inputDate value="#{vs.filterCriteria.CancelDlevDate}"
+                            id="id3"/>
+            </f:facet>
+            <af:outputText value="#{row.bindings.CancelDlevDate.inputValue}"
+                           shortDesc="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CancelDlevDate.tooltip}"
+                           id="id6">
+              <af:convertDateTime pattern="#{bindings.AccPaymentFormDeliveryViewRO1.hints.CancelDlevDate.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column width="30" id="c32">
+            <af:commandImageLink id="cb3" icon="/images/exec.png"
+                                 inlineStyle="width:15px; height:15px;"
+                                 windowHeight="15" windowWidth="15"
+                                 action="#{viewScope.accPaymentFormDelBean.executeAccPaymentFormDelivery}"/>
+          </af:column>
+        </af:table>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

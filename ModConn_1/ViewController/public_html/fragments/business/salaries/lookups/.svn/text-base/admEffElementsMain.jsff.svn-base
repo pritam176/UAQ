@@ -1,0 +1,152 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+      <af:panelGroupLayout layout="vertical" id="pgl1" halign="center">
+        <af:query id="qryId2" headerText="#{rs.common_label_search}"
+                  disclosed="true" rows="1" maxColumns="2"
+                  value="#{bindings.AdmEffElementsViewCriteriaQuery.queryDescriptor}"
+                  model="#{bindings.AdmEffElementsViewCriteriaQuery.queryModel}"
+                  queryListener="#{bindings.AdmEffElementsViewCriteriaQuery.processQuery}"
+                  queryOperationListener="#{bindings.AdmEffElementsViewCriteriaQuery.processQueryOperation}"
+                  resultComponentId="::pc1:t1" saveQueryMode="hidden"
+                  modeChangeVisible="false"/>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="Result">
+      <af:table value="#{bindings.AdmEffElementsView1.collectionModel}"
+                var="row" rows="#{bindings.AdmEffElementsView1.rangeSize}"
+                emptyText="#{rs.common_label_table_no_data}"
+                fetchSize="#{bindings.AdmEffElementsView1.rangeSize}"
+                rowBandingInterval="0"
+                filterModel="#{bindings.AdmEffElementsView1Query.queryDescriptor}"
+                queryListener="#{bindings.AdmEffElementsView1Query.processQuery}"
+                filterVisible="true" varStatus="vs"
+                selectedRowKeys="#{bindings.AdmEffElementsView1.collectionModel.selectedRow}"
+                selectionListener="#{bindings.AdmEffElementsView1.collectionModel.makeCurrent}"
+                rowSelection="single" id="t1" styleClass="AFStretchWidth"
+                partialTriggers="::ctb2 ::cb1" columnStretching="column:c1">
+        <af:column width="45" align="center"
+                   headerText="#{rs.common_label_serial}" id="c12"
+                   noWrap="false">
+          <af:outputText value="#{vs.index + 1}" id="ot6"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmEffElementsView1.hints.TableName.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmEffElementsView1.hints.TableName.label}"
+                   id="c1" noWrap="false">
+          <af:outputText id="tableNameId"
+                                value="#{row.bindings.TableName.inputValue}"
+                                shortDesc="#{bindings.AdmEffElementsView1.hints.TableName.tooltip}"
+                                >
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmEffElementsView1.hints.EleName.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmEffElementsView1.hints.EleName.label}"
+                   id="c13" noWrap="false" width="135">
+          <af:outputText id="eleNameId"
+                                value="#{row.bindings.EleName.inputValue}"
+                                shortDesc="#{bindings.AdmEffElementsView1.hints.EleName.tooltip}">
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmEffElementsView1.hints.EleRule.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmEffElementsView1.hints.EleRule.label}"
+                   id="c14" noWrap="false" width="150">
+          <af:selectOneChoice value="#{row.bindings.EleRule.inputValue}"
+                              label="#{row.bindings.EleRule.label}"
+                              required="#{bindings.AdmEffElementsView1.hints.EleRule.mandatory}"
+                              shortDesc="#{bindings.AdmEffElementsView1.hints.EleRule.tooltip}"
+                              id="soc2" disabled="true">
+            <f:selectItems value="#{row.bindings.EleRule.items}" id="si2"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmEffElementsView1.hints.EleLabel.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmEffElementsView1.hints.EleLabel.label}"
+                   id="c11" noWrap="false">
+          <af:outputText value="#{row.bindings.EleLabel.inputValue}"
+                        shortDesc="#{bindings.AdmEffElementsView1.hints.EleLabel.tooltip}"
+                        id="it1">
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmEffElementsView1.hints.EleType.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmEffElementsView1.hints.EleType.label}"
+                   id="c15" noWrap="false">
+          <af:selectOneChoice value="#{row.bindings.EleType.inputValue}"
+                              label="#{row.bindings.EleType.label}"
+                              required="#{bindings.AdmEffElementsView1.hints.EleType.mandatory}"
+                              shortDesc="#{bindings.AdmEffElementsView1.hints.EleType.tooltip}"
+                              id="soc1" disabled="true">
+            <f:selectItems value="#{row.bindings.EleType.items}" id="si1"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmEffElementsView1.hints.LookupTable.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmEffElementsView1.hints.LookupTable.label}"
+                   id="c3" noWrap="false" width="130">
+          <af:outputText id="lookupTableId"
+                                value="#{row.bindings.LookupTable.inputValue}"
+                                shortDesc="#{bindings.AdmEffElementsView1.hints.LookupTable.tooltip}"
+                                >
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmEffElementsView1.hints.LookupField.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmEffElementsView1.hints.LookupField.label}"
+                   id="c8" noWrap="false" width="135">
+          <af:outputText id="lookupFieldId"
+                                value="#{row.bindings.LookupField.inputValue}"
+                                shortDesc="#{bindings.AdmEffElementsView1.hints.LookupField.tooltip}">
+          </af:outputText>
+        </af:column>
+        <af:column id="c6" width="35" align="center" noWrap="false">
+          <af:commandLink id="cl1" action="addEdit">
+            <af:image source="/images/edit.png" id="i1"/>
+          </af:commandLink>
+        </af:column>
+            <af:column id="c2" width="35" align="center" rendered="true"
+                       noWrap="false">
+              <af:commandLink id="commandLink1">
+                <af:image source="/images/delete.gif" id="image1"/>
+                <af:showPopupBehavior popupId="::p2"/>
+              </af:commandLink>
+            </af:column>
+      </af:table>
+    </f:facet>
+    
+    <f:facet name="Popup">
+      <af:popup id="p2" contentDelivery="lazyUncached">
+        <af:dialog id="d2" title="#{rs.eff_elements_dialog_deleteTitle}"
+                   closeIconVisible="false" type="none">
+          <af:panelGroupLayout id="pg" layout="horizontal">
+            <af:outputText value="#{rs['common_delete_Message']}"
+                           id="outputText1"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:spacer width="5" height="10" id="s2"/>
+            <af:outputText value="#{bindings.TableName.inputValue}" id="ot20"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:outputText value=" ?" id="outputText3"
+                           inlineStyle="color:Red; font-size:small;"/>
+          </af:panelGroupLayout>
+          <af:spacer height="5px" id="s1"/>
+          <af:commandButton actionListener="#{bindings.Delete.execute}"
+                            text="#{rs.ok}" id="cb1" action="#{bindings.Commit.execute}"/>
+                            <af:spacer width="5px" id="s3"/>
+          <af:commandButton text="#{rs.common_button_cancel}" id="cb2" />
+        </af:dialog>
+      </af:popup>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:toolbar id="t3">
+        <af:commandToolbarButton icon="/images/add.png" id="ctb2"
+                                 actionListener="#{bindings.CreateWithParams.execute}"
+                                 action="addEdit"></af:commandToolbarButton>
+      </af:toolbar>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

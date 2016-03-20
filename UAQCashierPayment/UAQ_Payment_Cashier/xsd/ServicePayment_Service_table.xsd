@@ -1,0 +1,79 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/ServicePayment_Service" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/ServicePayment_Service" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="ServiceLookupsCollection" type="ServiceLookupsCollection"/>
+   <xs:complexType name="ServiceLookupsCollection">
+      <xs:sequence>
+         <xs:element name="ServiceLookups" type="ServiceLookups" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="ServiceLookups">
+      <xs:sequence>
+         <xs:element name="serviceId" type="xs:decimal"/>
+         <xs:element name="serviceNameEn" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="serviceNameAr" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="serviceDesEn" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="serviceDesAr" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="serviceStepsEn" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="serviceStepsAr" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="departmentId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="edhiramServiceCode" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="appFeeDiscounts" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="appFees" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="isPaymentRequired" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="serviceFee" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="servFeeDiscounts" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="appFeesDiscountEstablish" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="appFeesEstablish" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="servFeesDiscountEstablish" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="serviceFeesEstablish" type="xs:decimal" minOccurs="0" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="ServicePayment_ServiceSelect_inp_serviceidInputParameters" type="ServicePayment_ServiceSelect_inp_serviceid"/>
+   <xs:complexType name="ServicePayment_ServiceSelect_inp_serviceid">
+      <xs:sequence>
+         <xs:element name="inp_serviceid" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

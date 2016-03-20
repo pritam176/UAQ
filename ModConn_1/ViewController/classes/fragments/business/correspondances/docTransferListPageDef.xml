@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="docTransferListPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CorresModule.UserInboxView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="UserInboxView1Iterator"/>
+    <iterator Binds="Root.CorresModule.AccSpcDocMainView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccSpcDocMainView1Iterator"/>
+    <searchRegion Binds="AccSpcDocMainView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AccSpcDocMainView1Query"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="AnsReq">
+      <AttrNames>
+        <Item Value="AnsReq"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="DocDate">
+      <AttrNames>
+        <Item Value="DocDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="DocNo">
+      <AttrNames>
+        <Item Value="DocNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="DocRef">
+      <AttrNames>
+        <Item Value="DocRef"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="DocTitle">
+      <AttrNames>
+        <Item Value="DocTitle"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="NoPage">
+      <AttrNames>
+        <Item Value="NoPage"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="RcvDate">
+      <AttrNames>
+        <Item Value="RcvDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="SubjName">
+      <AttrNames>
+        <Item Value="SubjName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="UserInboxView1Iterator" StaticList="false"
+          Uses="LOV_LineStatus" id="LineStatus" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="DocDetail">
+      <AttrNames>
+        <Item Value="DocDetail"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="AccSpcDocMainView1Iterator" id="AccSpcDocMainView1">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.up.AccSpcDocMainView"
+                      Name="AccSpcDocMainView10">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="OrgId"/>
+          <Item Value="FiscalYear1"/>
+          <Item Value="FiscalYear2"/>
+          <Item Value="DocSerial"/>
+          <Item Value="DocDate"/>
+          <Item Value="DocType"/>
+          <Item Value="DocDesc"/>
+          <Item Value="CurrId"/>
+          <Item Value="ExRate1"/>
+          <Item Value="ExRate2"/>
+          <Item Value="DocId"/>
+          <Item Value="DocStatus"/>
+          <Item Value="CreditAcc"/>
+          <Item Value="OdocId"/>
+          <Item Value="ExpShtNo"/>
+          <Item Value="TransferType"/>
+          <Item Value="SaccNo"/>
+          <Item Value="CountryId"/>
+          <Item Value="AccountNo"/>
+          <Item Value="AddExpNo"/>
+          <Item Value="FinalShtNo"/>
+          <Item Value="CreateDate"/>
+          <Item Value="CreateUser"/>
+          <Item Value="Status"/>
+          <Item Value="LastChangeDate"/>
+          <Item Value="LastChangeUser"/>
+          <Item Value="DueToName"/>
+          <Item Value="DueToBank"/>
+          <Item Value="PReference"/>
+          <Item Value="PAccountNo"/>
+          <Item Value="PFrom"/>
+          <Item Value="PTo"/>
+          <Item Value="PAddressedBank"/>
+          <Item Value="PCopies"/>
+          <Item Value="PSign"/>
+          <Item Value="PTafk"/>
+          <Item Value="AllocId"/>
+          <Item Value="AllocId2"/>
+          <Item Value="Src"/>
+          <Item Value="PayAccountType"/>
+          <Item Value="PaymentFrom"/>
+          <Item Value="PaymentActionType"/>
+          <Item Value="AccOfficeId"/>
+          <Item Value="PaymentMonth"/>
+          <Item Value="FromDate"/>
+          <Item Value="ToDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="UserInboxView1Iterator" StaticList="false"
+          Uses="LOV_DocType" id="DocType" DTSupportsMRU="true"/>
+    <action IterBinding="AccSpcDocMainView1Iterator" id="InsertAccAspDocMain"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

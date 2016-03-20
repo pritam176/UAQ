@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="subAccountsUpdatablePageDef"
+                Package="fragments.generalAccounts">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.GeneralAccountsModule.AccSubAccountsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccSubAccountsViewIterator"
+              Refresh="always"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false" IterBinding="AccSubAccountsViewIterator"
+                  Uses="LOV_BankId" id="BankId"/>
+    <attributeValues IterBinding="AccSubAccountsViewIterator" id="SaccNo">
+      <AttrNames>
+        <Item Value="SaccNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSubAccountsViewIterator" id="SaccName">
+      <AttrNames>
+        <Item Value="SaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccSubAccountsViewIterator" StaticList="false"
+          Uses="LOV_SaccType" id="SaccType" DTSupportsMRU="false"/>
+    <list IterBinding="AccSubAccountsViewIterator" StaticList="false"
+          Uses="LOV_SaccStatus" id="SaccStatus" DTSupportsMRU="false"/>
+    <list IterBinding="AccSubAccountsViewIterator" StaticList="false"
+          Uses="LOV_SaccLevel" id="SaccLevel" DTSupportsMRU="false"/>
+    <list IterBinding="AccSubAccountsViewIterator" StaticList="false"
+          Uses="LOV_SaccNature" id="SaccNature" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AccSubAccountsViewIterator" id="AccName">
+      <AttrNames>
+        <Item Value="AccName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSubAccountsViewIterator"
+                     id="ParentAccName">
+      <AttrNames>
+        <Item Value="ParentAccName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSubAccountsViewIterator" id="BankName">
+      <AttrNames>
+        <Item Value="BankName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSubAccountsViewIterator" id="BankNumber">
+      <AttrNames>
+        <Item Value="BankNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="AccSubAccountsViewIterator"
+                  Uses="LOV_ParentAccNo" id="ParentAccNo"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <listOfValues StaticList="false" Uses="LOV_AccNo1"
+                  IterBinding="AccSubAccountsViewIterator" id="AccNo1"/>
+    <attributeValues IterBinding="AccSubAccountsViewIterator"
+                     id="ConvertDebitUser">
+      <AttrNames>
+        <Item Value="ConvertDebitUser"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AccSubAccountsViewIterator" id="TConvertDebit"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="TConvertDebit"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+  </bindings>
+</pageDefinition>

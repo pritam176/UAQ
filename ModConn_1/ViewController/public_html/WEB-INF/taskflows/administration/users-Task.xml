@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="users-Task">
+    <default-activity id="__1">usersSearch</default-activity>
+    <managed-bean id="__24">
+      <managed-bean-name id="__21">usersUpdatableBean</managed-bean-name>
+      <managed-bean-class id="__23">com.mod.financial.view.managed.administration.UsersUpdatable</managed-bean-class>
+      <managed-bean-scope id="__22">request</managed-bean-scope>
+    </managed-bean>
+    <view id="usersSearch">
+      <page>/fragments/administration/usersSearch.jsff</page>
+    </view>
+    <view id="usersUpdatable">
+      <page>/fragments/administration/usersUpdatable.jsff</page>
+    </view>
+    <method-call id="CreateInsertUsers">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__2">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__3">
+      <from-activity-id id="__4">usersSearch</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome id="__7">add</from-outcome>
+        <to-activity-id id="__6">CreateInsertUsers</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__13">
+        <from-outcome id="__15">update</from-outcome>
+        <to-activity-id id="__14">usersUpdatable</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__8">
+      <from-activity-id id="__9">CreateInsertUsers</from-activity-id>
+      <control-flow-case id="__10">
+        <from-outcome id="__12">CreateInsert</from-outcome>
+        <to-activity-id id="__11">usersUpdatable</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__16">
+      <from-activity-id id="__17">usersUpdatable</from-activity-id>
+      <control-flow-case id="__19">
+        <from-outcome id="__20">back</from-outcome>
+        <to-activity-id id="__18">usersSearch</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

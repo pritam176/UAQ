@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/MOD/!svn/ver/539/mod/ViewController/adfmsrc/taskflows/contracts
+END
+contracts_Task_contracts_Task_SetCurrentRowWithKeyValuePageDef.xml
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/MOD/!svn/ver/212/mod/ViewController/adfmsrc/taskflows/contracts/contracts_Task_contracts_Task_SetCurrentRowWithKeyValuePageDef.xml
+END
+contractsQuerySection_Task_contractsQuerySection_Task_SetCurrentRowWithKeyValuePageDef.xml
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/MOD/!svn/ver/539/mod/ViewController/adfmsrc/taskflows/contracts/contractsQuerySection_Task_contractsQuerySection_Task_SetCurrentRowWithKeyValuePageDef.xml
+END
+contractsQuery_Task_contractsQuery_Task_RollbackPageDef.xml
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/MOD/!svn/ver/539/mod/ViewController/adfmsrc/taskflows/contracts/contractsQuery_Task_contractsQuery_Task_RollbackPageDef.xml
+END
+contractsQuery_Task_contractsQuery_Task_SetCurrentRowWithKeyValuePageDef.xml
+K 25
+svn:wc:ra_dav:version-url
+V 145
+/svn/MOD/!svn/ver/539/mod/ViewController/adfmsrc/taskflows/contracts/contractsQuery_Task_contractsQuery_Task_SetCurrentRowWithKeyValuePageDef.xml
+END
+contracts_Task_contracts_Task_RollbackPageDef.xml
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/MOD/!svn/ver/212/mod/ViewController/adfmsrc/taskflows/contracts/contracts_Task_contracts_Task_RollbackPageDef.xml
+END
+contractsQuerySection_Task_contractsQuerySection_Task_RollbackPageDef.xml
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/svn/MOD/!svn/ver/539/mod/ViewController/adfmsrc/taskflows/contracts/contractsQuerySection_Task_contractsQuerySection_Task_RollbackPageDef.xml
+END

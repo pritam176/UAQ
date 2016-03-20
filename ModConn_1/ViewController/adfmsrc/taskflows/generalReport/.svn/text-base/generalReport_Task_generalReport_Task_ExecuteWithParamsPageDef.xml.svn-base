@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="generalReport_Task_generalReport_Task_ExecuteWithParamsPageDef"
+                Package="taskflows.generalReport" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Root.ReportsModule.AdmReportsView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmReportsView1Iterator" Refresh="ifNeeded"/>
+    <iterator id="AdmReportsItemsView2Iterator"
+              Binds="Root.ReportsModule.AdmReportsItemsView2"
+              DataControl="ModModuleDataControl" RangeSize="-1"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AdmReportsView1Iterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="bindReportId" NDValue="#{pageFlowScope.reportId}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </action>
+  </bindings>
+</pageDefinition>

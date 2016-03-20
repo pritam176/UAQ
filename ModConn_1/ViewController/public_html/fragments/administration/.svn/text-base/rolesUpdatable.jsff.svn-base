@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelHeader text="#{rs.role_updatable_PanelHeader_Label}" id="ph1">
+    <f:facet name="context"/>
+    <f:facet name="menuBar"/>
+    <f:facet name="toolbar">
+      <af:toolbar id="t1">
+        <af:commandToolbarButton
+                                 id="ctb2" text="#{rs.common_button_save}"
+                                 icon="/images/save.png"
+                                 action="#{viewScope.rolesUpdatableBean.save_action}"/>
+        <af:commandToolbarButton actionListener="#{bindings.Rollback.execute}"
+                                 immediate="true" id="ctb3"
+                                 icon="/images/cancel.gif"
+                                 text="#{rs.common_button_cancel}">
+          <af:resetActionListener/>
+        </af:commandToolbarButton>
+        <af:commandToolbarButton text="#{rs.bankBranch_buttonBankBack}"
+                                 id="ctb1" icon="/images/arrow_undo.png"
+                                 action="back">
+          <af:setActionListener from="#{null}"
+                                to="#{bindings.NodeTypeAttr.inputValue}"/>
+        </af:commandToolbarButton>
+      </af:toolbar>
+    </f:facet>
+    <f:facet name="legend"/>
+    <f:facet name="info"/>
+    <af:spacer width="10" height="10" id="s1"/>
+    <af:panelFormLayout id="pfl1" rows="4">
+      <af:panelGroupLayout id="pgl2" layout="horizontal">
+        <af:inputText value="#{bindings.Id.inputValue}"
+                      label="#{bindings.Id.hints.label}"
+                      required="#{bindings.Id.hints.mandatory}"
+                      columns="#{bindings.Id.hints.displayWidth}"
+                      maximumLength="#{bindings.Id.hints.precision}"
+                      shortDesc="#{bindings.Id.hints.tooltip}" id="it2"
+                      readOnly="true" partialTriggers="ctb2">
+          <f:validator binding="#{bindings.Id.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.Id.format}"/>
+        </af:inputText>
+        <af:spacer width="10" height="10" id="s3"/>
+        <af:inputText value="#{bindings.Name.inputValue}"
+                      label="#{bindings.Name.hints.label}"
+                      required="#{bindings.Name.hints.mandatory}"
+                      columns="#{bindings.Name.hints.displayWidth}"
+                      maximumLength="#{bindings.Name.hints.precision}"
+                      shortDesc="#{bindings.Name.hints.tooltip}" id="it1">
+          <f:validator binding="#{bindings.Name.validator}"/>
+        </af:inputText>
+      </af:panelGroupLayout>
+      <af:spacer width="10" height="10" id="spacer1"/>
+      <af:panelGroupLayout id="pgl1" halign="center" valign="middle">
+        <af:selectOneChoice label="#{rs.role_updatable_NodeType_Label}"
+                            id="soc1" value="#{bindings.NodeType.inputValue}"
+                            valueChangeListener="#{viewScope.rolesUpdatableBean.onNodeTypeChanged}"
+                            autoSubmit="true">
+          <f:selectItems value="#{bindings.NodeType.items}" id="si2"/>
+        </af:selectOneChoice>
+        <af:spacer width="10" height="10" id="s2"/>
+        <af:selectOrderShuttle id="sos1"
+                               leadingHeader="#{rs.users_label_allMenus}"
+                               trailingHeader="#{rs.users_label_selectedMenus}"
+                               size="100" leadingDescShown="true"
+                               trailingDescShown="true"
+                               contentStyle="width:300px;"
+                               value="#{viewScope.rolesUpdatableBean.selectedValues}"
+                               partialTriggers="soc1">
+          <f:selectItems value="#{viewScope.rolesUpdatableBean.allItems}"
+                         id="si1"/>
+        </af:selectOrderShuttle>
+      </af:panelGroupLayout>
+    </af:panelFormLayout>
+  </af:panelHeader>
+</jsp:root>

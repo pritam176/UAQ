@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+      <af:panelGroupLayout layout="vertical" id="pgl1" halign="center">
+        <af:query id="qryId1" headerText="#{rs.common_label_search}"
+                  disclosed="true" rows="1" maxColumns="2"
+                  value="#{bindings.AdmLeavesViewROCriteriaQuery.queryDescriptor}"
+                  model="#{bindings.AdmLeavesViewROCriteriaQuery.queryModel}"
+                  queryListener="#{bindings.AdmLeavesViewROCriteriaQuery.processQuery}"
+                  queryOperationListener="#{bindings.AdmLeavesViewROCriteriaQuery.processQueryOperation}"
+                  resultComponentId="::pc1:t1" saveQueryMode="hidden"
+                  modeChangeVisible="false"/>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="Result">
+        <af:table value="#{bindings.AdmLeavesViewRO1.collectionModel}" var="row"
+                  rows="#{bindings.AdmLeavesViewRO1.rangeSize}"
+                  emptyText="#{rs.common_label_table_no_data}"
+                  fetchSize="#{bindings.AdmLeavesViewRO1.rangeSize}"
+                  rowBandingInterval="0"
+                  filterModel="#{bindings.AdmLeavesViewROCriteriaQuery.queryDescriptor}"
+                  queryListener="#{bindings.AdmLeavesViewROCriteriaQuery.processQuery}"
+                  filterVisible="true" varStatus="vs"
+                  selectedRowKeys="#{bindings.AdmLeavesViewRO1.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.AdmLeavesViewRO1.collectionModel.makeCurrent}"
+                  rowSelection="single" id="t1" styleClass="AFStretchWidth"
+                  partialTriggers="::ctb2" columnStretching="column:c5">
+          <af:column width="55" align="center"
+                     headerText="#{rs.common_label_serial}" id="c12">
+            <af:outputText value="#{vs.index + 1}" id="ot6"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesViewRO1.hints.LeaveId.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesViewRO1.hints.LeaveId.label}"
+                     id="c4" align="center" width="125" noWrap="false">
+            <af:outputText value="#{row.LeaveId}" id="ot2">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.AdmLeavesViewRO1.hints.LeaveId.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesViewRO1.hints.LeaveName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesViewRO1.hints.LeaveName.label}"
+                     id="c5" align="center" noWrap="false">
+            <af:outputText value="#{row.LeaveName}" id="ot1"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesViewRO1.hints.CreateDate.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesViewRO1.hints.CreateDate.label}"
+                     id="c2" width="125" align="center">
+            <f:facet name="filter">
+              <af:inputDate value="#{vs.filterCriteria.CreateDate}" id="id1"/>
+            </f:facet>
+            <af:outputText value="#{row.bindings.CreateDate.inputValue}"
+                           shortDesc="#{bindings.AdmLeavesViewRO1.hints.CreateDate.tooltip}"
+                           id="id2">
+              <af:convertDateTime pattern="#{bindings.AdmLeavesViewRO1.hints.CreateDate.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column id="c6" width="35" align="center">
+            <af:commandLink id="cl1" action="addEdit">
+              <af:image source="/images/edit.png" id="i1"/>
+              <f:setPropertyActionListener target="#{pageFlowScope.actionType}"
+                                           value="edit"/>
+            </af:commandLink>
+          </af:column>
+        </af:table>
+    </f:facet>
+    <f:facet name="Popup"></f:facet>
+    <f:facet name="ToolbarButton">
+      <af:toolbar id="t3">
+        <af:commandToolbarButton icon="/images/add.png" id="ctb2"
+                                 action="addEdit">
+          <f:setPropertyActionListener target="#{pageFlowScope.actionType}"
+                                       value="add"/>
+        </af:commandToolbarButton>
+      </af:toolbar>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

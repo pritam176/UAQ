@@ -1,0 +1,26 @@
+<adapter-config name="MergeWorkFlowHistory" adapter="Database Adapter" wsdlLocation="MergeWorkFlowHistory.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/uaqsoa_db" UIConnectionName="DEV_SOA" adapterRef=""/>
+  <endpoint-interaction portType="MergeWorkFlowHistory_ptt" operation="merge">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="MergeWorkFlowHistory.WorkflowHistory"/>
+      <property name="DmlType" value="merge"/>
+      <property name="OutputCompletedXml" value="true"/>
+      <property name="MappingsMetaDataURL" value="MergeWorkFlowHistory-or-mappings.xml"/>
+      <property name="OptimizeMerge" value="true"/>
+      <property name="DetectOmissions" value="true"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+  <endpoint-interaction portType="MergeWorkFlowHistory_ptt" operation="MergeWorkFlowHistorySelect">
+    <interaction-spec className="oracle.tip.adapter.db.DBReadInteractionSpec">
+      <property name="DescriptorName" value="MergeWorkFlowHistory.WorkflowHistory"/>
+      <property name="QueryName" value="MergeWorkFlowHistorySelect"/>
+      <property name="MappingsMetaDataURL" value="MergeWorkFlowHistory-or-mappings.xml"/>
+      <property name="ReturnSingleResultSet" value="false"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

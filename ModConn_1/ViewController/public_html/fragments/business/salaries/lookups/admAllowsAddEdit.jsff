@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt4">
+    <f:facet name="Master">
+      <af:group id="g3">
+        <af:panelFormLayout id="pfl4" rows="3">
+          <af:inputText value="#{bindings.Name.inputValue}"
+                        label="#{bindings.Name.hints.label}" required="true"
+                        maximumLength="#{bindings.Name.hints.precision}"
+                        shortDesc="#{bindings.Name.hints.tooltip}" id="it4"
+                        contentStyle="width:200px !important;">
+            <f:validator binding="#{bindings.Name.validator}"/>
+          </af:inputText>
+          <af:selectOneChoice value="#{bindings.InsurType.inputValue}"
+                              label="#{bindings.InsurType.label}"
+                              required="true"
+                              shortDesc="#{bindings.InsurType.hints.tooltip}"
+                              id="soc1" unselectedLabel="#{rs.SELECT_FROM_LIST}"
+                              contentStyle="width:200px !important;">
+            <f:selectItems value="#{bindings.InsurType.items}" id="si1"/>
+          </af:selectOneChoice>
+          <af:inputText value="#{bindings.PeriodToStop.inputValue}"
+                        label="#{bindings.PeriodToStop.hints.label}"
+                        required="#{bindings.PeriodToStop.hints.mandatory}"
+                        columns="#{bindings.PeriodToStop.hints.displayWidth}"
+                        maximumLength="#{bindings.PeriodToStop.hints.precision}"
+                        shortDesc="#{bindings.PeriodToStop.hints.tooltip}"
+                        id="it7" contentStyle="width:200px !important;">
+            <f:validator binding="#{bindings.PeriodToStop.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.PeriodToStop.format}"/>
+          </af:inputText>
+          <af:panelGroupLayout id="pgl0" layout="horizontal">
+            <af:inputListOfValues id="subjectIdId"
+                                  popupTitle="#{rs.common_label_search_select} #{bindings.SubjectId.hints.label}"
+                                  label="#{bindings.SubjectId.hints.label}"
+                                  value="#{bindings.SubjectId.inputValue}"
+                                  model="#{bindings.SubjectId.listOfValuesModel}"
+                                  required="true"
+                                  columns="#{bindings.SubjectId.hints.displayWidth}"
+                                  shortDesc="#{bindings.SubjectId.hints.tooltip}"
+                                  autoSubmit="true"
+                                  contentStyle="width:75px !important;">
+              <f:validator binding="#{bindings.SubjectId.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.SubjectId.format}"/>
+            </af:inputListOfValues>
+            <af:spacer width="3px" id="s2"/>
+            <af:inputText value="#{bindings.SubjName.inputValue}" simple="true"
+                          required="#{bindings.SubjName.hints.mandatory}"
+                          columns="#{bindings.SubjName.hints.displayWidth}"
+                          maximumLength="#{bindings.SubjName.hints.precision}"
+                          shortDesc="#{bindings.SubjName.hints.tooltip}"
+                          partialTriggers="subjectIdId" id="it2"
+                          contentStyle="width:200px !important;"
+                          disabled="true">
+              <f:validator binding="#{bindings.SubjName.validator}"/>
+            </af:inputText>
+          </af:panelGroupLayout>
+        </af:panelFormLayout>
+        <af:spacer height="5px" id="s1"/>
+        <af:panelGroupLayout layout="horizontal" id="pgl1">
+          <af:selectOneRadio label="#{bindings.LeaveInclude.hints.label}"
+                             id="sor1"
+                             value="#{bindings.LeaveInclude.inputValue}"
+                             contentStyle="width:200px !important;"
+                             layout="horizontal" required="true">
+            <af:selectItem label="#{rs.common_yes_label}" value="Y" id="si2"/>
+            <af:selectItem label="#{rs.common_no_label}" value="N" id="si3"/>
+          </af:selectOneRadio>
+          <af:selectOneRadio label="#{bindings.Compensation.hints.label}"
+                             id="sor2"
+                             value="#{bindings.Compensation.inputValue}"
+                             contentStyle="width:200px !important;"
+                             layout="horizontal" required="true">
+            <af:selectItem label="#{rs.common_yes_label}" value="1" id="si4"/>
+            <af:selectItem label="#{rs.common_no_label}" value="0" id="si7"/>
+          </af:selectOneRadio>
+          <af:selectOneRadio label="#{bindings.IndemInclude.hints.label}"
+                             id="sbr1"
+                             value="#{bindings.IndemInclude.inputValue}"
+                             contentStyle="width:200px !important;"
+                             layout="horizontal" required="true">
+            <af:selectItem label="#{rs.common_yes_label}" value="Y" id="si5"/>
+            <af:selectItem label="#{rs.common_no_label}" value="N" id="si6"/>
+          </af:selectOneRadio>
+        </af:panelGroupLayout>
+      </af:group>
+    </f:facet>
+    <f:facet name="MasterToolbar">
+      <af:panelGroupLayout layout="horizontal" id="pgl12">
+        <af:commandButton actionListener="#{bindings.Commit.execute}"
+                          icon="/images/save.png"
+                          text="#{rs.common_button_save}" partialSubmit="true"
+                          id="cb4"/>
+        <af:spacer width="5px" id="s7"/>
+        <af:commandButton icon="/images/arrow_undo.png"
+                          actionListener="#{bindings.Rollback.execute}"
+                          action="back" text="#{rs.bankBranch_buttonBankBack}"
+                          immediate="true" id="cb6"/>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

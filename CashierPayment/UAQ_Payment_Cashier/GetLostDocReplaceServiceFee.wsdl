@@ -1,0 +1,25 @@
+<?binding.jca GetLostDocReplaceServiceFee_db.jca?>
+<wsdl:definitions name="GetLostDocReplaceServiceFee" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/GetLostDocReplaceServiceFee" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/GetLostDocReplaceServiceFee" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/GetLostDocReplaceServiceFee" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="GetLostDocReplaceServiceFee_plt">
+        <plt:role name="GetLostDocReplaceServiceFee_role">
+            <plt:portType name="tns:GetLostDocReplaceServiceFee_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/GetLostDocReplaceServiceFee" schemaLocation="xsd/GetLostDocReplaceServiceFee.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="GetLostDocReplaceServiceFeeInput_msg">
+        <wsdl:part name="GetLostDocReplaceServiceFeeInput_msg" element="db:GetLostDocReplaceServiceFeeInput"/>
+    </wsdl:message>
+    <wsdl:message name="GetLostDocReplaceServiceFeeOutput_msg">
+        <wsdl:part name="GetLostDocReplaceServiceFeeOutput" element="db:GetLostDocReplaceServiceFeeOutput"/>
+    </wsdl:message>
+    <wsdl:portType name="GetLostDocReplaceServiceFee_ptt">
+        <wsdl:operation name="GetLostDocReplaceServiceFee">
+            <wsdl:input message="tns:GetLostDocReplaceServiceFeeInput_msg"/>
+            <wsdl:output message="tns:GetLostDocReplaceServiceFeeOutput_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

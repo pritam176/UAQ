@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="roles-Task">
+    <default-activity id="__1">roles</default-activity>
+    <data-control-scope id="__9">
+      <isolated/>
+    </data-control-scope>
+    <managed-bean id="__22">
+      <managed-bean-name id="__24">rolesUpdatableBean</managed-bean-name>
+      <managed-bean-class id="__25">com.mod.financial.view.managed.administration.RolesUpdatable</managed-bean-class>
+      <managed-bean-scope id="__23">view</managed-bean-scope>
+       <managed-property id="__10">
+        <property-name id="__11">allItemsIteratorName</property-name>
+        <value id="__12">AllMenusByNodeTypeROViewIterator</value>
+      </managed-property>
+      <managed-property id="__13">
+        <property-name id="__19">allItemsValueAttrName</property-name>
+        <value id="__20">MenuId</value>
+      </managed-property>
+      <managed-property id="__21">
+        <property-name id="__60">allItemsDisplayAttrName</property-name>
+        <value id="__61">#{userInfo.language =='ar' ? 'ArMenuTitle' :
+                         'EnMenuTitle' }</value>
+      </managed-property>
+      <managed-property id="__62">
+        <property-name id="__63">allItemsDescriptionAttrName</property-name>
+        <value id="__42">ArMenuTitle</value>
+      </managed-property>
+      <managed-property id="__64">
+        <property-name id="__65">selectedValuesIteratorName</property-name>
+        <value id="__66">AdmRolesProgsViewIterator</value>
+      </managed-property>
+      <managed-property id="__67">
+        <property-name id="__50">selectedValuesValueAttrName</property-name>
+        <value id="__48">ProgId</value>
+      </managed-property>
+    </managed-bean>
+    <view id="roles">
+      <page>/fragments/administration/roles.jsff</page>
+    </view>
+    <view id="rolesUpdatable">
+      <page>/fragments/administration/rolesUpdatable.jsff</page>
+    </view>
+    <method-call id="CreateInsertRoles">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__2">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="Execute">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__31">
+        <fixed-outcome>Execute</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__4">
+      <from-activity-id id="__5">roles</from-activity-id>
+      <control-flow-case id="__7">
+        <from-outcome id="__8">new</from-outcome>
+        <to-activity-id id="__6">CreateInsertRoles</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__70">
+        <from-outcome id="__71">update</from-outcome>
+        <to-activity-id id="__73">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__26">
+      <from-activity-id id="__27">rolesUpdatable</from-activity-id>
+      <control-flow-case id="__29">
+        <from-outcome id="__30">back</from-outcome>
+        <to-activity-id id="__28">roles</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__32">
+      <from-activity-id id="__33">Execute</from-activity-id>
+      <control-flow-case id="__35">
+        <from-outcome id="__36">Execute</from-outcome>
+        <to-activity-id id="__34">rolesUpdatable</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__3">
+      <from-activity-id id="__14">CreateInsertRoles</from-activity-id>
+      <control-flow-case id="__17">
+        <from-outcome id="__16">CreateInsert</from-outcome>
+        <to-activity-id id="__15">Execute</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

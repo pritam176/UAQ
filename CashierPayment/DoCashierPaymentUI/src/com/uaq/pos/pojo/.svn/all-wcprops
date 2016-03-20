@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/pojo
+END
+PaymentVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/pojo/PaymentVO.java
+END
+PaymentResponseECR.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/pojo/PaymentResponseECR.java
+END
+PaymentRequestECR.java
+K 25
+svn:wc:ra_dav:version-url
+V 137
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/pojo/PaymentRequestECR.java
+END
+PaymentReportFilterVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 141
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/pojo/PaymentReportFilterVO.java
+END
+PaymentStatus.java
+K 25
+svn:wc:ra_dav:version-url
+V 133
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos/pojo/PaymentStatus.java
+END

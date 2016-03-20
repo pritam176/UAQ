@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt5" >
+    <f:facet name="Query">
+        <af:query id="qryId1" headerText="Search" disclosed="true"
+                  value="#{bindings.AdmRolesViewCriteriaQuery.queryDescriptor}"
+                  model="#{bindings.AdmRolesViewCriteriaQuery.queryModel}"
+                  queryListener="#{bindings.AdmRolesViewCriteriaQuery.processQuery}"
+                  queryOperationListener="#{bindings.AdmRolesViewCriteriaQuery.processQueryOperation}"
+                  resultComponentId="::pc1:resId1" saveQueryMode="hidden"
+                  modeChangeVisible="false"/>
+    </f:facet>
+    <f:facet name="Result">
+      <af:table value="#{bindings.AdmRolesView.collectionModel}" var="row"
+                rows="#{bindings.AdmRolesView.rangeSize}"
+                emptyText="#{bindings.AdmRolesView.viewable ? 'No data to display.' : 'Access Denied.'}"
+                fetchSize="#{bindings.AdmRolesView.rangeSize}"
+                rowBandingInterval="0"
+                selectedRowKeys="#{bindings.AdmRolesView.collectionModel.selectedRow}"
+                selectionListener="#{bindings.AdmRolesView.collectionModel.makeCurrent}"
+                rowSelection="single" id="resId1"
+                columnStretching="column:resId1c2" partialTriggers="::ctb1">
+        <af:column sortProperty="#{bindings.AdmRolesView.hints.Id.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmRolesView.hints.Id.label}"
+                   id="resId1c1">
+          <af:outputText value="#{row.Id}" id="ot2">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmRolesView.hints.Id.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmRolesView.hints.Name.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmRolesView.hints.Name.label}"
+                   id="resId1c2">
+          <af:outputText value="#{row.Name}" id="ot1"/>
+        </af:column>
+        <af:column id="c1" width="30" align="center">
+          <af:commandLink id="cl1" action="update">
+            <af:image source="/images/edit.png" id="i1"/>
+          </af:commandLink>
+        </af:column>
+        <af:column id="c2" width="30" align="center">
+          <af:commandLink id="commandLink1">
+            <af:image source="/images/delete.gif" id="image1"/>
+            <af:showPopupBehavior popupId="::p2"/>
+          </af:commandLink>
+        </af:column>
+      </af:table>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:commandToolbarButton
+                               disabled="#{!bindings.CreateInsert.enabled}"
+                               id="ctb1" text="#{rs.common_button_new}"
+                               icon="/images/add.png" action="new"/>
+    </f:facet>
+  </af:pageTemplate>
+
+
+</jsp:root>

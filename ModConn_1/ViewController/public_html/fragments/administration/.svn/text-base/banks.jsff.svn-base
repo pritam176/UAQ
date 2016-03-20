@@ -1,0 +1,176 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+          <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3" >
+    <f:facet name="Query">
+      <af:query id="qryId1" headerText="#{rs.banks_queryPanel_Search}"
+                disclosed="true"
+                value="#{bindings.AdmBanksSearchViewCriteriaQuery.queryDescriptor}"
+                model="#{bindings.AdmBanksSearchViewCriteriaQuery.queryModel}"
+                queryListener="#{bindings.AdmBanksSearchViewCriteriaQuery.processQuery}"
+                queryOperationListener="#{bindings.AdmBanksSearchViewCriteriaQuery.processQueryOperation}"
+                resultComponentId="::pc1"/>
+    </f:facet>
+    <f:facet name="Result">
+      <af:table value="#{bindings.AdmBanksView.collectionModel}" var="row"
+                rows="#{bindings.AdmBanksView.rangeSize}"
+                emptyText="#{rs.common_label_table_no_data}"
+                fetchSize="#{bindings.AdmBanksView.rangeSize}"
+                rowBandingInterval="0"
+                selectedRowKeys="#{bindings.AdmBanksView.collectionModel.selectedRow}"
+                selectionListener="#{bindings.AdmBanksView.collectionModel.makeCurrent}"
+                rowSelection="single" id="resId1"
+                columnStretching="column:resId1c2" allDetailsEnabled="true"
+                filterVisible="true" columnSelection="single"
+                disableColumnReordering="true" persist="ALL">
+        <af:column sortProperty="#{bindings.AdmBanksView.hints.Id.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmBanksView.hints.Id.label}"
+                   id="resId1c1">
+          <af:outputText value="#{row.Id}" id="ot5">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmBanksView.hints.Id.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmBanksView.hints.BankName.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmBanksView.hints.BankName.label}"
+                   id="resId1c2">
+          <af:outputText value="#{row.BankName}" id="ot4"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmBanksView.hints.SectionId.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmBanksView.hints.SectionId.label}"
+                   id="resId1c3">
+          <af:outputText value="#{row.SectionId}" id="ot3">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmBanksView.hints.SectionId.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmBanksView.hints.AccId.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmBanksView.hints.AccId.label}"
+                   id="resId1c4">
+          <af:outputText value="#{row.AccId}" id="ot2">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmBanksView.hints.AccId.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmBanksView.hints.SaccId.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmBanksView.hints.SaccId.label}"
+                   id="resId1c5">
+          <af:outputText value="#{row.SaccId}" id="ot1">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmBanksView.hints.SaccId.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column id="c1" width="25" align="center">
+          <af:commandLink id="cl1">
+            <af:image source="/images/edit.png" id="i1"/>
+            <af:showPopupBehavior popupId="::p1"/>
+          </af:commandLink>
+        </af:column>
+        <af:column id="c2" width="25" align="center">
+          <af:commandLink id="commandLink1">
+            <af:image source="/images/delete.gif" id="image1"/>
+            <af:showPopupBehavior popupId="::p2"/>
+          </af:commandLink>
+        </af:column>
+      </af:table>
+    </f:facet>
+    <f:facet name="Popup">
+      <af:group id="g1">
+        <af:popup id="p1" popupCanceledListener="#{banksBean.cancelListener}"
+                  contentDelivery="lazyUncached"
+                  binding="#{banksBean.banksPopup}">
+          <af:dialog id="d1" title="#{rs.banks_dialog_title}"
+                     closeIconVisible="false"
+                     dialogListener="#{banksBean.saveListener}">
+            <af:panelFormLayout id="pfl1">
+              <af:inputText value="#{bindings.Id.inputValue}"
+                            label="#{bindings.Id.hints.label}"
+                            required="#{bindings.Id.hints.mandatory}"
+                            columns="#{bindings.Id.hints.displayWidth}"
+                            maximumLength="#{bindings.Id.hints.precision}"
+                            shortDesc="#{bindings.Id.hints.tooltip}" id="it5">
+                <f:validator binding="#{bindings.Id.validator}"/>
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.Id.format}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.BankName.inputValue}"
+                            label="#{bindings.BankName.hints.label}"
+                            required="#{bindings.BankName.hints.mandatory}"
+                            columns="#{bindings.BankName.hints.displayWidth}"
+                            maximumLength="#{bindings.BankName.hints.precision}"
+                            shortDesc="#{bindings.BankName.hints.tooltip}"
+                            id="it2">
+                <f:validator binding="#{bindings.BankName.validator}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.SectionId.inputValue}"
+                            label="#{bindings.SectionId.hints.label}"
+                            required="#{bindings.SectionId.hints.mandatory}"
+                            columns="#{bindings.SectionId.hints.displayWidth}"
+                            maximumLength="#{bindings.SectionId.hints.precision}"
+                            shortDesc="#{bindings.SectionId.hints.tooltip}"
+                            id="it1">
+                <f:validator binding="#{bindings.SectionId.validator}"/>
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.SectionId.format}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.AccId.inputValue}"
+                            label="#{bindings.AccId.hints.label}"
+                            required="#{bindings.AccId.hints.mandatory}"
+                            columns="#{bindings.AccId.hints.displayWidth}"
+                            maximumLength="#{bindings.AccId.hints.precision}"
+                            shortDesc="#{bindings.AccId.hints.tooltip}"
+                            id="it4">
+                <f:validator binding="#{bindings.AccId.validator}"/>
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.AccId.format}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.SaccId.inputValue}"
+                            label="#{bindings.SaccId.hints.label}"
+                            required="#{bindings.SaccId.hints.mandatory}"
+                            columns="#{bindings.SaccId.hints.displayWidth}"
+                            maximumLength="#{bindings.SaccId.hints.precision}"
+                            shortDesc="#{bindings.SaccId.hints.tooltip}"
+                            id="it3">
+                <f:validator binding="#{bindings.SaccId.validator}"/>
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.SaccId.format}"/>
+              </af:inputText>
+            </af:panelFormLayout>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="p2" contentDelivery="lazyUncached">
+          <af:dialog id="d2" title="#{rs['banks_dialog_deleteTitle']}"
+                     dialogListener="#{banksBean.deleteServicesDialogListener}"
+                     closeIconVisible="false">
+            <af:panelGroupLayout id="pg" layout="horizontal">
+              <af:outputText value="#{rs['common_delete_Message']}"
+                             id="outputText1"
+                             inlineStyle="color:Red; font-size:small;"/>
+              <af:spacer width="5" height="10" id="s2"/>
+              <af:outputText value="#{bindings.BankName.inputValue}" id="ot20"
+                             inlineStyle="color:Red; font-size:small;"/>
+              <af:outputText value=" ?" id="outputText3"
+                             inlineStyle="color:Red; font-size:small;"/>
+            </af:panelGroupLayout>
+          </af:dialog>
+        </af:popup>
+      </af:group>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:toolbar id="t1">
+        <af:commandToolbarButton id="ctb1" icon="/images/add.png"
+                                 action="#{banksBean.create_action}"/>
+        <af:commandToolbarButton text="#{rs.banks_buttonBankBraches}" id="ctb2"
+                                 action="branch" icon="/images/branch.png"
+                                 disabled="#{bindings.AdmBanksViewIterator.estimatedRowCount ==0}"/>
+      </af:toolbar>
+    </f:facet>
+    <f:attribute name="Title" value="#{rs.banks_panelHeader_title}"/>
+  </af:pageTemplate>
+</jsp:root>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="userInbox-Task">
+    <default-activity id="__1">userInbox</default-activity>
+    <view id="userInbox">
+      <page>/fragments/business/correspondances/userInbox.jsff</page>
+    </view>
+    <view id="docsTransfer">
+      <page>/fragments/business/correspondances/docsTransfer.jsff</page>
+    </view>
+    <view id="docTransferList">
+      <page>/fragments/business/correspondances/docTransferList.jsff</page>
+    </view>
+    <method-call id="CreateInsert">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__17">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">userInbox</from-activity-id>
+      <control-flow-case id="__4">
+        <from-outcome id="__6">docTransfer</from-outcome>
+        <to-activity-id id="__5">docTransferList</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">docsTransfer</from-activity-id>
+      <control-flow-case id="__9">
+        <from-outcome id="__11">back</from-outcome>
+        <to-activity-id id="__10">userInbox</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__12">
+      <from-activity-id id="__13">docTransferList</from-activity-id>
+      <control-flow-case id="__14">
+        <from-outcome id="__16">editDocTransfer</from-outcome>
+        <to-activity-id id="__15">docsTransfer</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__19">
+        <from-outcome id="__20">addDocTransfer</from-outcome>
+        <to-activity-id id="__18">CreateInsert</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__21">
+      <from-activity-id id="__22">CreateInsert</from-activity-id>
+      <control-flow-case id="__25">
+        <from-outcome id="__24">CreateInsert</from-outcome>
+        <to-activity-id id="__23">docsTransfer</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

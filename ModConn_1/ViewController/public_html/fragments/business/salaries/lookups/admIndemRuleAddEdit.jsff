@@ -1,0 +1,85 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt4">
+    <f:facet name="Master">
+      <af:panelGroupLayout id="pgl1">
+        <af:panelGroupLayout id="pfl2" partialTriggers="joinCodeId"
+                             layout="horizontal">
+          <af:inputListOfValues id="joinCodeId"
+                                popupTitle="#{rs.common_label_search_select} #{bindings.Id.hints.label}"
+                                value="#{bindings.Id.inputValue}"
+                                label="#{bindings.Id.hints.label}"
+                                model="#{bindings.Id.listOfValuesModel}"
+                                required="#{bindings.Id.hints.mandatory}"
+                                columns="#{bindings.Id.hints.displayWidth}"
+                                shortDesc="#{bindings.Id.hints.tooltip}">
+            <f:validator binding="#{bindings.Id.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.Id.format}"/>
+          </af:inputListOfValues>
+          <af:spacer width="5px" id="s1"/>
+          <af:inputText value="#{bindings.Name.inputValue}" simple="true"
+                        required="#{bindings.Name.hints.mandatory}"
+                        columns="#{bindings.Name.hints.displayWidth}"
+                        maximumLength="#{bindings.Name.hints.precision}"
+                        shortDesc="#{bindings.Name.hints.tooltip}"
+                        partialTriggers="joinCodeId" id="it4"
+                        contentStyle="width:250px !important;" disabled="true">
+            <f:validator binding="#{bindings.Name.validator}"/>
+          </af:inputText>
+        </af:panelGroupLayout>
+        <af:panelFormLayout id="pfl1">
+          <af:inputText value="#{bindings.First5Years.inputValue}"
+                        label="#{bindings.First5Years.hints.label}"
+                        required="#{bindings.First5Years.hints.mandatory}"
+                        columns="#{bindings.First5Years.hints.displayWidth}"
+                        maximumLength="#{bindings.First5Years.hints.precision}"
+                        shortDesc="#{bindings.First5Years.hints.tooltip}"
+                        id="it3" contentStyle="width:100px !important;" autoSubmit="true">
+            <f:validator binding="#{bindings.First5Years.validator}"/>
+            <f:converter converterId="javax.faces.Number"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.Sec5Years.inputValue}"
+                        label="#{bindings.Sec5Years.hints.label}"
+                        required="#{bindings.Sec5Years.hints.mandatory}"
+                        columns="#{bindings.Sec5Years.hints.displayWidth}"
+                        maximumLength="#{bindings.Sec5Years.hints.precision}"
+                        shortDesc="#{bindings.Sec5Years.hints.tooltip}" id="it2"
+                        contentStyle="width:100px !important;" autoSubmit="true">
+            <f:validator binding="#{bindings.Sec5Years.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.Sec5Years.format}"/>
+            <f:converter converterId="javax.faces.Number"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.ExtraYears.inputValue}"
+                        label="#{bindings.ExtraYears.hints.label}"
+                        required="#{bindings.ExtraYears.hints.mandatory}"
+                        columns="#{bindings.ExtraYears.hints.displayWidth}"
+                        maximumLength="#{bindings.ExtraYears.hints.precision}"
+                        shortDesc="#{bindings.ExtraYears.hints.tooltip}"
+                        id="it1" contentStyle="width:100px !important;" autoSubmit="true">
+            <f:validator binding="#{bindings.ExtraYears.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.ExtraYears.format}"/>
+            <f:converter converterId="javax.faces.Number"/>
+          </af:inputText>
+        </af:panelFormLayout>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="MasterToolbar">
+      <af:panelGroupLayout layout="horizontal" id="pgl12">
+        <af:commandButton actionListener="#{bindings.Commit.execute}"
+                          icon="/images/save.png"
+                          text="#{rs.common_button_save}" partialSubmit="true"
+                          id="cb4"/>
+        <af:spacer width="5px" id="s7"/>
+        <af:commandButton icon="/images/arrow_undo.png"
+                          actionListener="#{bindings.Rollback.execute}"
+                          action="back" text="#{rs.bankBranch_buttonBankBack}"
+                          immediate="true" id="cb6"/>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

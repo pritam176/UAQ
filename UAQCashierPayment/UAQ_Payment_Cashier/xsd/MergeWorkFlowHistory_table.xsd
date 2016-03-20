@@ -1,0 +1,73 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/MergeWorkFlowHistory" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/MergeWorkFlowHistory" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="WorkflowHistoryCollection" type="WorkflowHistoryCollection"/>
+   <xs:complexType name="WorkflowHistoryCollection">
+      <xs:sequence>
+         <xs:element name="WorkflowHistory" type="WorkflowHistory" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="WorkflowHistory">
+      <xs:sequence>
+         <xs:element name="id" type="xs:decimal" nillable="true"/>
+         <xs:element name="requestId" type="xs:decimal" minOccurs="0"/>
+         <xs:element name="stateId" type="xs:decimal" minOccurs="0"/>
+         <xs:element name="userId" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="assignedToUserId" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="userComments" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="2000"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="stepAction" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="stepId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="sourceId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
+         <xs:element name="modifiedDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="createdby" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="modifiedby" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="stepName" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="MergeWorkFlowHistorySelectInputParameters" type="MergeWorkFlowHistorySelect"/>
+   <xs:complexType name="MergeWorkFlowHistorySelect">
+      <xs:sequence/>
+   </xs:complexType>
+</xs:schema>

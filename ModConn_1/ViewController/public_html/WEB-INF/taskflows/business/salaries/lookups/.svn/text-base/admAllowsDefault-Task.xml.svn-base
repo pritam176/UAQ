@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="admAllowsDefault-Task">
+    <default-activity id="__1">admAllowsDefaultMain</default-activity>
+    <view id="admAllowsDefaultMain">
+      <page>/fragments/business/salaries/lookups/admAllowsDefaultMain.jsff</page>
+    </view>
+    <view id="admAllowsDefaultAddEdit">
+      <page>/fragments/business/salaries/lookups/admAllowsDefaultAddEdit.jsff</page>
+    </view>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">admAllowsDefaultMain</from-activity-id>
+      <control-flow-case id="__4">
+        <from-outcome id="__10">addEdit</from-outcome>
+        <to-activity-id id="__5">admAllowsDefaultAddEdit</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__6">
+      <from-activity-id id="__7">admAllowsDefaultAddEdit</from-activity-id>
+      <control-flow-case id="__9">
+        <from-outcome id="__11">back</from-outcome>
+        <to-activity-id id="__8">admAllowsDefaultMain</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

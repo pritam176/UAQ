@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="outboundDocsAddEditPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CorresModule.CorDocMasterOutboundDocsView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDocMasterOutboundDocsView1Iterator"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false"
+                  IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                  Uses="LOV_SectionId" id="SectionId"/>
+    <listOfValues StaticList="false"
+                  IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                  Uses="LOV_OsectionId" id="OsectionId"/>
+    <listOfValues StaticList="false"
+                  IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                  Uses="LOV_SubjId" id="SubjId"/>
+    <attributeValues IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                     id="DocNo">
+      <AttrNames>
+        <Item Value="DocNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                     id="SectionName">
+      <AttrNames>
+        <Item Value="SectionName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                     id="DocDate">
+      <AttrNames>
+        <Item Value="DocDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                     id="DocRef">
+      <AttrNames>
+        <Item Value="DocRef"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                     id="OSectionName">
+      <AttrNames>
+        <Item Value="OSectionName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                     id="SubjName">
+      <AttrNames>
+        <Item Value="SubjName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CorDocMasterOutboundDocsView1Iterator" StaticList="false"
+          Uses="LOV_OutDocDest" id="OutDocDest" DTSupportsMRU="false"/>
+    <listOfValues StaticList="false"
+                  IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                  Uses="LOV_RefId" id="RefId"/>
+    <attributeValues IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                     id="OutSubjDetail">
+      <AttrNames>
+        <Item Value="OutSubjDetail"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+  </bindings>
+</pageDefinition>

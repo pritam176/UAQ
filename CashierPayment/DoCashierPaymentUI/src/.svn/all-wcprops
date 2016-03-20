@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src
+END
+Application.properties
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/UAQ/!svn/ver/6939/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/Application.properties
+END
+log4j.xml
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/log4j.xml
+END
+jdbc.properties
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/UAQ/!svn/ver/6939/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/jdbc.properties
+END

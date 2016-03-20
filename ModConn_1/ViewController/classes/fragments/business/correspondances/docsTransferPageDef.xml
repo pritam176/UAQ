@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="docsTransferPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CorresModule.UserInboxView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="UserInboxView1Iterator"/>
+    <iterator Binds="Root.CorresModule.AccSpcDocMainView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccSpcDocMainView1Iterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserInboxView1Iterator" id="DocRef">
+      <AttrNames>
+        <Item Value="DocRef"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="UserInboxView1Iterator"
+                  Uses="LOV_SectionId" id="SectionId"/>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="FiscalYear1">
+      <AttrNames>
+        <Item Value="FiscalYear1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="FiscalYear2">
+      <AttrNames>
+        <Item Value="FiscalYear2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="DocSerial">
+      <AttrNames>
+        <Item Value="DocSerial"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="DocDate">
+      <AttrNames>
+        <Item Value="DocDate"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccSpcDocMainView1Iterator" StaticList="false"
+          Uses="LOV_DocType" id="DocType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="DocDesc">
+      <AttrNames>
+        <Item Value="DocDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="CurrId">
+      <AttrNames>
+        <Item Value="CurrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="ExRate1">
+      <AttrNames>
+        <Item Value="ExRate1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="ExRate2">
+      <AttrNames>
+        <Item Value="ExRate2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="DocId">
+      <AttrNames>
+        <Item Value="DocId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="DocStatus">
+      <AttrNames>
+        <Item Value="DocStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="CreditAcc">
+      <AttrNames>
+        <Item Value="CreditAcc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="OdocId">
+      <AttrNames>
+        <Item Value="OdocId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="ExpShtNo">
+      <AttrNames>
+        <Item Value="ExpShtNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="TransferType">
+      <AttrNames>
+        <Item Value="TransferType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="SaccNo">
+      <AttrNames>
+        <Item Value="SaccNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="CountryId">
+      <AttrNames>
+        <Item Value="CountryId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="AccountNo">
+      <AttrNames>
+        <Item Value="AccountNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="AddExpNo">
+      <AttrNames>
+        <Item Value="AddExpNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="FinalShtNo">
+      <AttrNames>
+        <Item Value="FinalShtNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="CreateDate">
+      <AttrNames>
+        <Item Value="CreateDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="CreateUser">
+      <AttrNames>
+        <Item Value="CreateUser"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="Status">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator"
+                     id="LastChangeDate">
+      <AttrNames>
+        <Item Value="LastChangeDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator"
+                     id="LastChangeUser">
+      <AttrNames>
+        <Item Value="LastChangeUser"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="DueToName">
+      <AttrNames>
+        <Item Value="DueToName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="DueToBank">
+      <AttrNames>
+        <Item Value="DueToBank"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="PReference">
+      <AttrNames>
+        <Item Value="PReference"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="PAccountNo">
+      <AttrNames>
+        <Item Value="PAccountNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="PFrom">
+      <AttrNames>
+        <Item Value="PFrom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="PTo">
+      <AttrNames>
+        <Item Value="PTo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator"
+                     id="PAddressedBank">
+      <AttrNames>
+        <Item Value="PAddressedBank"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="PCopies">
+      <AttrNames>
+        <Item Value="PCopies"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="PSign">
+      <AttrNames>
+        <Item Value="PSign"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="PTafk">
+      <AttrNames>
+        <Item Value="PTafk"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="AllocId">
+      <AttrNames>
+        <Item Value="AllocId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="AllocId2">
+      <AttrNames>
+        <Item Value="AllocId2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="Src">
+      <AttrNames>
+        <Item Value="Src"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccSpcDocMainView1Iterator" StaticList="false"
+          Uses="LOV_PayAccountType" id="PayAccountType" DTSupportsMRU="false"/>
+    <list IterBinding="AccSpcDocMainView1Iterator" StaticList="false"
+          Uses="LOV_PaymentFrom" id="PaymentFrom" DTSupportsMRU="false"/>
+    <list IterBinding="AccSpcDocMainView1Iterator" StaticList="false"
+          Uses="LOV_PaymentActionType" id="PaymentActionType"
+          DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="AccOfficeId">
+      <AttrNames>
+        <Item Value="AccOfficeId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccSpcDocMainView1Iterator" StaticList="false"
+          Uses="LOV_PaymentMonth" id="PaymentMonth" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="FromDate">
+      <AttrNames>
+        <Item Value="FromDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccSpcDocMainView1Iterator" id="ToDate">
+      <AttrNames>
+        <Item Value="ToDate"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt1">
+    <f:facet name="Query">
+        <af:query id="qryId1" headerText="Search" disclosed="true"
+                  value="#{bindings.AccOfficesViewCriteriaQuery.queryDescriptor}"
+                  model="#{bindings.AccOfficesViewCriteriaQuery.queryModel}"
+                  queryListener="#{bindings.AccOfficesViewCriteriaQuery.processQuery}"
+                  queryOperationListener="#{bindings.AccOfficesViewCriteriaQuery.processQueryOperation}"
+                  resultComponentId="::pc1:resId1" rows="3"/>
+    </f:facet>
+    <f:facet name="Result">
+      <af:table value="#{bindings.AccOfficesView.collectionModel}" var="row"
+                rows="#{bindings.AccOfficesView.rangeSize}"
+                emptyText="#{bindings.AccOfficesView.viewable ? 'No data to display.' : 'Access Denied.'}"
+                fetchSize="#{bindings.AccOfficesView.rangeSize}"
+                rowBandingInterval="0"
+                filterModel="#{bindings.AccOfficesViewCriteriaQuery.queryDescriptor}"
+                queryListener="#{bindings.AccOfficesViewCriteriaQuery.processQuery}"
+                filterVisible="true" varStatus="vs"
+                selectedRowKeys="#{bindings.AccOfficesView.collectionModel.selectedRow}"
+                selectionListener="#{bindings.AccOfficesView.collectionModel.makeCurrent}"
+                rowSelection="single" id="resId1" partialTriggers="::ctb1"
+                columnStretching="column:resId1c8">
+        <af:column sortProperty="#{bindings.AccOfficesView.hints.Id.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AccOfficesView.hints.Id.label}"
+                   id="resId1c1" width="150">
+          <af:outputText value="#{row.Id}" id="ot3">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AccOfficesView.hints.Id.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AccOfficesView.hints.OfficeName.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AccOfficesView.hints.OfficeName.label}"
+                   id="resId1c2" width="280">
+          <af:outputText value="#{row.OfficeName}" id="ot6"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AccOfficesView.hints.CountryName.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AccOfficesView.hints.CountryId.label}"
+                   id="resId1c4" width="220">
+          <af:outputText value="#{row.CountryName}" id="ot5"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AccOfficesView.hints.SectionName.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AccOfficesView.hints.SectionId.label}"
+                   id="resId1c6" width="220">
+          <af:outputText value="#{row.SectionName}" id="ot7"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AccOfficesView.hints.UserName.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AccOfficesView.hints.UserId.label}"
+                   id="resId1c8" width="200">
+          <af:outputText value="#{row.UserName}" id="ot2"/>
+        </af:column>
+        <af:column id="c1" width="25" align="center">
+          <af:commandLink id="cl1" action="update">
+            <af:image source="/images/edit.png" id="i1"/>
+          </af:commandLink>
+        </af:column>
+        <af:column id="c2" width="25" align="center">
+          <af:commandLink id="commandLink1">
+            <af:image source="/images/delete.gif" id="image1"/>
+          </af:commandLink>
+        </af:column>
+      </af:table>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:toolbar id="t1">
+        <af:commandToolbarButton
+                                 text="#{rs.common_button_new}"
+                                 id="ctb1" icon="/images/add.png" action="new"/>
+      </af:toolbar>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

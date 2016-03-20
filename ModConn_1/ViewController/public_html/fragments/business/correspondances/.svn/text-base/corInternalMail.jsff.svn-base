@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt1">
+    <f:facet name="Master">
+      <af:panelFormLayout id="pfl1">
+        <af:inputText value="#{bindings.DocNo.inputValue}"
+                      label="#{bindings.DocNo.hints.label}"
+                      required="#{bindings.DocNo.hints.mandatory}"
+                      columns="#{bindings.DocNo.hints.displayWidth}"
+                      maximumLength="#{bindings.DocNo.hints.precision}"
+                      shortDesc="#{bindings.DocNo.hints.tooltip}" id="it3"
+                      contentStyle="width:150px !important;" disabled="true">
+          <f:validator binding="#{bindings.DocNo.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.DocNo.format}"/>
+        </af:inputText>
+        <af:panelLabelAndMessage id="plam1" label="#{bindings.SendUserLogName.hints.label}">
+        <af:panelGroupLayout id="pgl2" layout="horizontal">
+            <af:inputText value="#{bindings.SendUserLogName.inputValue}"
+                          simple="true"
+                          required="#{bindings.SendUserLogName.hints.mandatory}"
+                          columns="#{bindings.SendUserLogName.hints.displayWidth}"
+                          maximumLength="#{bindings.SendUserLogName.hints.precision}"
+                          shortDesc="#{bindings.SendUserLogName.hints.tooltip}"
+                          id="it4" disabled="true"
+                          contentStyle="width:100px !important;">
+              <f:validator binding="#{bindings.SendUserLogName.validator}"/>
+            </af:inputText>
+            <af:spacer width="5px" id="s4"/>
+            <af:inputText value="#{bindings.SendUserName.inputValue}"
+                          simple="true"
+                          required="#{bindings.SendUserName.hints.mandatory}"
+                          columns="#{bindings.SendUserName.hints.displayWidth}"
+                          maximumLength="#{bindings.SendUserName.hints.precision}"
+                          shortDesc="#{bindings.SendUserName.hints.tooltip}"
+                          id="it5" disabled="true"
+                          contentStyle="width:200px !important;">
+              <f:validator binding="#{bindings.SendUserName.validator}"/>
+            </af:inputText>
+          </af:panelGroupLayout>
+        </af:panelLabelAndMessage>
+        <af:inputDate value="#{bindings.RcvDate.inputValue}"
+                      label="#{bindings.RcvDate.hints.label}"
+                      required="#{bindings.RcvDate.hints.mandatory}"
+                      shortDesc="#{bindings.RcvDate.hints.tooltip}" id="id1"
+                      contentStyle="width:150px !important;" disabled="true">
+          <f:validator binding="#{bindings.RcvDate.validator}"/>
+          <af:convertDateTime pattern="#{bindings.RcvDate.format}"/>
+        </af:inputDate>
+        <af:inputText value="#{bindings.DocRef.inputValue}"
+                      label="#{bindings.DocRef.hints.label}"
+                      required="#{bindings.DocRef.hints.mandatory}"
+                      columns="#{bindings.DocRef.hints.displayWidth}"
+                      maximumLength="#{bindings.DocRef.hints.precision}"
+                      shortDesc="#{bindings.DocRef.hints.tooltip}" id="it1"
+                      contentStyle="width:150px !important;" disabled="true">
+          <f:validator binding="#{bindings.DocRef.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.OutSubjDetail.inputValue}"
+                      label="#{bindings.OutSubjDetail.hints.label}"
+                      required="#{bindings.OutSubjDetail.hints.mandatory}"
+                      columns="#{bindings.OutSubjDetail.hints.displayWidth}"
+                      maximumLength="#{bindings.OutSubjDetail.hints.precision}"
+                      shortDesc="#{bindings.OutSubjDetail.hints.tooltip}"
+                      id="it2" contentStyle="width:700px !important;" rows="7"
+                      disabled="true">
+          <f:validator binding="#{bindings.OutSubjDetail.validator}"/>
+        </af:inputText>
+        <f:facet name="footer">
+          <af:panelGroupLayout layout="horizontal" id="pgl1" halign="center">
+            <af:commandButton actionListener="#{bindings.First.execute}"
+                              text="#{rs.first}" partialSubmit="true" id="cb3"
+                              disabled="#{!bindings.First.enabled}"/>
+            <af:spacer width="5px" id="s1"/>
+            <af:commandButton actionListener="#{bindings.Previous.execute}"
+                              text="#{rs.previous}" partialSubmit="true"
+                              id="cb2"
+                              disabled="#{!bindings.Previous.enabled}"/>
+            <af:spacer width="5px" id="s2"/>
+            <af:commandButton actionListener="#{bindings.Next.execute}"
+                              text="#{rs.next}" partialSubmit="true" id="cb1"
+                              disabled="#{!bindings.Next.enabled}"/>
+            <af:spacer width="5px" id="s3"/>
+            <af:commandButton actionListener="#{bindings.Last.execute}"
+                              text="#{rs.last}" partialSubmit="true" id="cb4"
+                              disabled="#{!bindings.Last.enabled}"/>
+          </af:panelGroupLayout>
+        </f:facet>
+      </af:panelFormLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

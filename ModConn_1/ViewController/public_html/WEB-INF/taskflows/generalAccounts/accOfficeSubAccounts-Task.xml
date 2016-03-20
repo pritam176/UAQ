@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="accOfficeSubAccounts-Task">
+    <default-activity id="__1">accofficeSubAccount</default-activity>
+    <managed-bean id="__17">
+      <managed-bean-name id="__19">accOfficeSubAccountUpdatableBean</managed-bean-name>
+      <managed-bean-class id="__16">com.mod.financial.view.managed.accounts.AccOfficeSubAccountUpdatable</managed-bean-class>
+      <managed-bean-scope id="__18">request</managed-bean-scope>
+    </managed-bean>
+    <view id="accofficeSubAccount">
+      <page>/fragments/generalAccounts/accofficeSubAccount.jsff</page>
+    </view>
+    <method-call id="CreateInsertAccOfficeSubAccount">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__2">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <view id="accofficeSubAccountUpdatable">
+      <page>/fragments/generalAccounts/accofficeSubAccountUpdatable.jsff</page>
+    </view>
+    <control-flow-rule id="__3">
+      <from-activity-id id="__4">accofficeSubAccount</from-activity-id>
+      <control-flow-case id="__6">
+        <from-outcome id="__7">new</from-outcome>
+        <to-activity-id id="__5">CreateInsertAccOfficeSubAccount</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__13">
+        <from-outcome id="__15">update</from-outcome>
+        <to-activity-id id="__14">accofficeSubAccountUpdatable</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__8">
+      <from-activity-id id="__9">CreateInsertAccOfficeSubAccount</from-activity-id>
+      <control-flow-case id="__10">
+        <from-outcome id="__12">CreateInsert</from-outcome>
+        <to-activity-id id="__11">accofficeSubAccountUpdatable</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

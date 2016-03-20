@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+      <af:group id="g1">
+        
+        <af:panelGroupLayout layout="vertical" id="pgl1" halign="center">
+            <af:query id="qryId2" headerText="#{rs.common_label_search}"
+                    disclosed="true" rows="1" maxColumns="2"
+                      value="#{bindings.AdmDeductsViewCriteriaQuery.queryDescriptor}"
+                      model="#{bindings.AdmDeductsViewCriteriaQuery.queryModel}"
+                      queryListener="#{bindings.AdmDeductsViewCriteriaQuery.processQuery}"
+                      queryOperationListener="#{bindings.AdmDeductsViewCriteriaQuery.processQueryOperation}" saveQueryMode="hidden"
+                    modeChangeVisible="false" resultComponentId="::pc1:t1"/>
+        </af:panelGroupLayout>
+      </af:group>
+    </f:facet>
+    <f:facet name="Result">
+        <af:table value="#{bindings.AdmDeductsView1.collectionModel}" var="row"
+                  rows="#{bindings.AdmDeductsView1.rangeSize}"
+                  emptyText="#{rs.common_label_table_no_data}"
+                  fetchSize="#{bindings.AdmDeductsView1.rangeSize}"
+                  rowBandingInterval="0"
+                  filterModel="#{bindings.AdmDeductsView1Query.queryDescriptor}"
+                  queryListener="#{bindings.AdmDeductsView1Query.processQuery}"
+                  filterVisible="true" varStatus="vs"
+                  selectedRowKeys="#{bindings.AdmDeductsView1.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.AdmDeductsView1.collectionModel.makeCurrent}"
+                  rowSelection="single" id="t1" styleClass="AFStretchWidth" columnStretching="column:c14"
+                  partialTriggers="::ctb1">
+          <af:column width="40" align="center"
+                     headerText="#{rs.common_label_serial}" id="c19">
+            <af:outputText value="#{vs.index + 1}" id="ot6"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmDeductsView1.hints.Name.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmDeductsView1.hints.Name.label}"
+                     id="c14" noWrap="false" width="120">
+            <af:outputText value="#{row.bindings.Name.inputValue}"
+                          shortDesc="#{bindings.AdmDeductsView1.hints.Name.tooltip}"
+                          id="it5">
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmDeductsView1.hints.SubjName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmDeductsView1.hints.SubjName.label}"
+                     id="c17" noWrap="false" width="140">
+            <af:outputText value="#{row.bindings.SubjName.inputValue}"
+                          shortDesc="#{bindings.AdmDeductsView1.hints.SubjName.tooltip}"
+                          id="it3">
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmDeductsView1.hints.SectionName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmDeductsView1.hints.SectionName.label}"
+                     id="c13" noWrap="false" width="125">
+            <af:outputText value="#{row.bindings.SectionName.inputValue}"
+                          shortDesc="#{bindings.AdmDeductsView1.hints.SectionName.tooltip}"
+                          id="it4">
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmDeductsView1.hints.AccName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmDeductsView1.hints.AccName.label}"
+                     id="c22" noWrap="false" width="125">
+            <af:outputText value="#{row.bindings.AccName.inputValue}"
+                          shortDesc="#{bindings.AdmDeductsView1.hints.AccName.tooltip}"
+                          id="it7">
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmDeductsView1.hints.SaccName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmDeductsView1.hints.SaccName.label}"
+                     id="c11" noWrap="false" width="125">
+            <af:outputText value="#{row.bindings.SaccName.inputValue}"
+                          shortDesc="#{bindings.AdmDeductsView1.hints.SaccName.tooltip}"
+                          id="it8">
+            </af:outputText>
+          </af:column>
+        <af:column sortProperty="#{bindings.AdmDeductsView1.hints.CreateDate.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmDeductsView1.hints.CreateDate.label}"
+                   id="c18" noWrap="false" width="85" align="center">
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.CreateDate}" id="id3"
+                          contentStyle="width:60px !important;"/>
+          </f:facet>
+          <af:outputText value="#{row.bindings.CreateDate.inputValue}"
+                         shortDesc="#{bindings.AdmDeductsView1.hints.CreateDate.tooltip}"
+                         id="id4">
+            <af:convertDateTime pattern="#{bindings.AdmDeductsView1.hints.CreateDate.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmDeductsView1.hints.AccReq.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmDeductsView1.hints.AccReq.label}"
+                     id="c15" noWrap="false" width="45" align="center">
+          <af:selectBooleanCheckbox value="#{row.bindings.AccReq.inputValue}"
+                                    label="#{row.bindings.AccReq.label}"
+                                    shortDesc="#{bindings.AdmDeductsView1.hints.AccReq.tooltip}"
+                                    id="sbc1" disabled="true">
+                                    </af:selectBooleanCheckbox>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmDeductsView1.hints.IndemOrder.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmDeductsView1.hints.IndemOrder.label}"
+                     id="c20" noWrap="false" width="40" align="center">
+          
+            <af:outputText value="#{row.bindings.IndemOrder.inputValue}"
+                          shortDesc="#{bindings.AdmDeductsView1.hints.IndemOrder.tooltip}"
+                          id="it10">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.AdmDeductsView1.hints.IndemOrder.format}"/>
+            </af:outputText>
+        </af:column>
+          <af:column sortProperty="#{bindings.AdmDeductsView1.hints.DeductPriority.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmDeductsView1.hints.DeductPriority.label}"
+                     id="c16" noWrap="false" width="40" align="center">
+            <af:outputText value="#{row.bindings.DeductPriority.inputValue}"
+                          shortDesc="#{bindings.AdmDeductsView1.hints.DeductPriority.tooltip}"
+                          id="it11">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.AdmDeductsView1.hints.DeductPriority.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column id="c6" width="25" align="center">
+            <af:commandLink id="cl1" action="addEdit">
+              <af:image source="/images/edit.png" id="i1"/>
+            </af:commandLink>
+          </af:column>
+          <af:column id="c9" width="25" align="center" rendered="false">
+            <af:commandLink id="commandLink1">
+              <af:image source="/images/delete.gif" id="image1"/>
+              <af:showPopupBehavior popupId="::p2"/>
+            </af:commandLink>
+          </af:column>
+        </af:table>
+    </f:facet>
+    <f:facet name="Popup">
+      <af:popup id="p2" contentDelivery="lazyUncached">
+        <af:dialog id="d2" title="#{rs.deduct_dialog_deleteTitle}"
+                   closeIconVisible="false" type="none">
+          <af:panelGroupLayout id="pg" layout="horizontal">
+            <af:outputText value="#{rs['common_delete_Message']}"
+                           id="outputText1"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:spacer width="5" height="10" id="s2"/>
+            <af:outputText value="#{bindings.Name.inputValue}" id="ot20"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:outputText value=" ?" id="outputText3"
+                           inlineStyle="color:Red; font-size:small;"/>
+          </af:panelGroupLayout>
+          <af:spacer height="5px" id="s1"/>
+          <af:commandButton actionListener="#{bindings.Delete.execute}"
+                            text="#{rs.ok}" id="cb1" action="#{bindings.Commit.execute}"/>
+                            <af:spacer width="5px" id="s3"/>
+          <af:commandButton text="#{rs.common_button_cancel}" id="cb2" />
+        </af:dialog>
+      </af:popup>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:toolbar id="t2">
+        <af:commandToolbarButton actionListener="#{bindings.CreateWithParams.execute}"
+                                 icon="/images/add.png" action="addEdit"
+                                 id="ctb1"/>
+      </af:toolbar>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

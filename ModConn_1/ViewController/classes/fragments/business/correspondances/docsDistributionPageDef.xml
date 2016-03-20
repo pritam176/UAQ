@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="docsDistributionPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variable Type="java.lang.String" Name="callDistributeDocsFunction_return"
+                IsQueriable="false" IsUpdateable="0"
+                DefaultValue="${bindings.callDistributeDocsFunction.result}"/>
+      <variable Type="oracle.jbo.domain.Number"
+                Name="callDistributeDocsFunction_userId" IsQueriable="false"/>
+      <variable Type="java.lang.String" Name="callDistributeDocsFunction_docRef"
+                IsQueriable="false"/>
+      <variable Type="java.util.Date" Name="callDistributeDocsFunction_recvDate"
+                IsQueriable="false"/>
+      <variable Type="java.util.Date" Name="callDistributeDocsFunction_docDate"
+                IsQueriable="false"/>
+      <variable Type="oracle.jbo.domain.Number"
+                Name="callDistributeDocsFunction_sectionId"
+                IsQueriable="false"/>
+      <variable Type="java.lang.String"
+                Name="callDistributeDocsFunction_docDest" IsQueriable="false"/>
+      <variable Type="java.lang.String" Name="callDistributeDocsFunction_lang"
+                IsQueriable="false"/>
+      <variable Type="java.lang.String"
+                Name="callCancelDocsDistributionFunction_return"
+                IsQueriable="false" IsUpdateable="0"
+                DefaultValue="${bindings.callCancelDocsDistributionFunction.result}"/>
+      <variable Type="oracle.jbo.domain.Number"
+                Name="callCancelDocsDistributionFunction_userId"
+                IsQueriable="false"/>
+      <variable Type="java.lang.String"
+                Name="callCancelDocsDistributionFunction_docRef"
+                IsQueriable="false"/>
+      <variable Type="java.util.Date"
+                Name="callCancelDocsDistributionFunction_recvDate"
+                IsQueriable="false"/>
+      <variable Type="java.util.Date"
+                Name="callCancelDocsDistributionFunction_docDate"
+                IsQueriable="false"/>
+      <variable Type="oracle.jbo.domain.Number"
+                Name="callCancelDocsDistributionFunction_sectionId"
+                IsQueriable="false"/>
+      <variable Type="java.lang.String"
+                Name="callCancelDocsDistributionFunction_docDest"
+                IsQueriable="false"/>
+      <variable Type="java.lang.String"
+                Name="callCancelDocsDistributionFunction_lang"
+                IsQueriable="false"/>
+    </variableIterator>
+    <iterator Binds="Root.CommonModule.CommonLovVO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CommonLovVO1Iterator"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_SectionIdLov" id="SectionIdLov"/>
+    <attributeValues IterBinding="CommonLovVO1Iterator" id="SectionName">
+      <AttrNames>
+        <Item Value="SectionName"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_DocDest" id="DocDest"/>
+    <attributeValues IterBinding="CommonLovVO1Iterator" id="DocDestName">
+      <AttrNames>
+        <Item Value="DocDestName"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callDistributeDocsFunction" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callDistributeDocsFunction"
+                  IsViewObjectMethod="false" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.CorresModule"
+                  ReturnName="data.ModModuleDataControl.methodResults.callDistributeDocsFunction_ModModuleDataControl_dataProvider_Root_CorresModule_callDistributeDocsFunction_result">
+      <NamedData NDName="userId" NDType="oracle.jbo.domain.Number"
+                 NDValue="${bindings.callDistributeDocsFunction_userId}"/>
+      <NamedData NDName="docRef" NDType="java.lang.String"
+                 NDValue="${bindings.callDistributeDocsFunction_docRef}"/>
+      <NamedData NDName="recvDate" NDType="java.util.Date"
+                 NDValue="${bindings.callDistributeDocsFunction_recvDate}"/>
+      <NamedData NDName="docDate" NDType="java.util.Date"
+                 NDValue="${bindings.callDistributeDocsFunction_docDate}"/>
+      <NamedData NDName="sectionId" NDType="oracle.jbo.domain.Number"
+                 NDValue="${bindings.callDistributeDocsFunction_sectionId}"/>
+      <NamedData NDName="docDest" NDType="java.lang.String"
+                 NDValue="${bindings.callDistributeDocsFunction_docDest}"/>
+      <NamedData NDName="lang" NDType="java.lang.String"
+                 NDValue="${bindings.callDistributeDocsFunction_lang}"/>
+    </methodAction>
+    <attributeValues IterBinding="variables" id="userId">
+      <AttrNames>
+        <Item Value="callDistributeDocsFunction_userId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="docRef">
+      <AttrNames>
+        <Item Value="callDistributeDocsFunction_docRef"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="recvDate">
+      <AttrNames>
+        <Item Value="callDistributeDocsFunction_recvDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="docDate">
+      <AttrNames>
+        <Item Value="callDistributeDocsFunction_docDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="sectionId">
+      <AttrNames>
+        <Item Value="callDistributeDocsFunction_sectionId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="docDest">
+      <AttrNames>
+        <Item Value="callDistributeDocsFunction_docDest"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="lang">
+      <AttrNames>
+        <Item Value="callDistributeDocsFunction_lang"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callCancelDocsDistributionFunction"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="callCancelDocsDistributionFunction"
+                  IsViewObjectMethod="false" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.CorresModule"
+                  ReturnName="data.ModModuleDataControl.methodResults.callCancelDocsDistributionFunction_ModModuleDataControl_dataProvider_Root_CorresModule_callCancelDocsDistributionFunction_result">
+      <NamedData NDName="userId" NDType="oracle.jbo.domain.Number"
+                 NDValue="${bindings.callCancelDocsDistributionFunction_userId}"/>
+      <NamedData NDName="docRef" NDType="java.lang.String"
+                 NDValue="${bindings.callCancelDocsDistributionFunction_docRef}"/>
+      <NamedData NDName="recvDate" NDType="java.util.Date"
+                 NDValue="${bindings.callCancelDocsDistributionFunction_recvDate}"/>
+      <NamedData NDName="docDate" NDType="java.util.Date"
+                 NDValue="${bindings.callCancelDocsDistributionFunction_docDate}"/>
+      <NamedData NDName="sectionId" NDType="oracle.jbo.domain.Number"
+                 NDValue="${bindings.callCancelDocsDistributionFunction_sectionId}"/>
+      <NamedData NDName="docDest" NDType="java.lang.String"
+                 NDValue="${bindings.callCancelDocsDistributionFunction_docDest}"/>
+      <NamedData NDName="lang" NDType="java.lang.String"
+                 NDValue="${bindings.callCancelDocsDistributionFunction_lang}"/>
+    </methodAction>
+    <attributeValues IterBinding="variables" id="userId1">
+      <AttrNames>
+        <Item Value="callCancelDocsDistributionFunction_userId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="docRef1">
+      <AttrNames>
+        <Item Value="callCancelDocsDistributionFunction_docRef"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="recvDate1">
+      <AttrNames>
+        <Item Value="callCancelDocsDistributionFunction_recvDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="docDate1">
+      <AttrNames>
+        <Item Value="callCancelDocsDistributionFunction_docDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="sectionId1">
+      <AttrNames>
+        <Item Value="callCancelDocsDistributionFunction_sectionId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="docDest1">
+      <AttrNames>
+        <Item Value="callCancelDocsDistributionFunction_docDest"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="lang1">
+      <AttrNames>
+        <Item Value="callCancelDocsDistributionFunction_lang"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admEffElementsAddEditPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmEffElementsView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmEffElementsView1Iterator"/>
+  </executables>
+  <bindings>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <listOfValues StaticList="false" IterBinding="AdmEffElementsView1Iterator"
+                  Uses="LOV_EleName" id="EleName"/>
+    <listOfValues StaticList="false" IterBinding="AdmEffElementsView1Iterator"
+                  Uses="LOV_TableName" id="TableName"/>
+    <list IterBinding="AdmEffElementsView1Iterator" StaticList="false"
+          Uses="LOV_EleRule" id="EleRule" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AdmEffElementsView1Iterator" id="EleLabel">
+      <AttrNames>
+        <Item Value="EleLabel"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AdmEffElementsView1Iterator" StaticList="false"
+          Uses="LOV_EleType" id="EleType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AdmEffElementsView1Iterator" id="EleLen">
+      <AttrNames>
+        <Item Value="EleLen"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmEffElementsView1Iterator" id="EleDisp">
+      <AttrNames>
+        <Item Value="EleDisp"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="AdmEffElementsView1Iterator"
+                  Uses="LOV_LookupTable" id="LookupTable"/>
+    <listOfValues StaticList="false" IterBinding="AdmEffElementsView1Iterator"
+                  Uses="LOV_LookupField" id="LookupField"/>
+    <listOfValues StaticList="false" IterBinding="AdmEffElementsView1Iterator"
+                  Uses="LOV_DispCode" id="DispCode"/>
+    <attributeValues IterBinding="AdmEffElementsView1Iterator" id="EleRule1">
+      <AttrNames>
+        <Item Value="EleRule"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

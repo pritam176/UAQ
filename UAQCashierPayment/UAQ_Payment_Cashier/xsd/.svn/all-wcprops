@@ -1,0 +1,143 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd
+END
+GetEDirhamFees_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 123
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/GetEDirhamFees_table.xsd
+END
+MergeWorkFlowHistory_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/MergeWorkFlowHistory_table.xsd
+END
+PrintInvoicePayload.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/PrintInvoicePayload.xsd
+END
+ServicePayment_Service_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/ServicePayment_Service_table.xsd
+END
+Humantask1Payload.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/Humantask1Payload.xsd
+END
+TaskStateMachine.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/TaskStateMachine.xsd
+END
+Fee_Matrix_Letter_Service_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/Fee_Matrix_Letter_Service_table.xsd
+END
+Humantask1WorkflowTask.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/Humantask1WorkflowTask.xsd
+END
+GetMaxWorkflowID.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 119
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/GetMaxWorkflowID.xsd
+END
+GetAccountAttachments_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/GetAccountAttachments_table.xsd
+END
+ERP_Finance_Service_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/ERP_Finance_Service_table.xsd
+END
+Fee_Matrix_All_service_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/Fee_Matrix_All_service_table.xsd
+END
+GetLostDocReplaceServiceFee.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/GetLostDocReplaceServiceFee.xsd
+END
+GetLookUpsFrmDB.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/GetLookUpsFrmDB.xsd
+END
+Cashier_Payment_Details_Service_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 140
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/Cashier_Payment_Details_Service_table.xsd
+END
+PaymentData.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/PaymentData.xsd
+END
+DoCashierPaymentPayload.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/DoCashierPaymentPayload.xsd
+END
+Fee_Matrix_UserType_Service_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 136
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/Fee_Matrix_UserType_Service_table.xsd
+END
+Fee_Matrix_Service_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/Fee_Matrix_Service_table.xsd
+END
+Applicant_Request_Service_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/Applicant_Request_Service_table.xsd
+END
+Issue_SitePlan_Doc_Req_Service_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/Issue_SitePlan_Doc_Req_Service_table.xsd
+END
+DoCashierPaymentWorkflowTask.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/DoCashierPaymentWorkflowTask.xsd
+END
+ERP_Finance_table.xsd
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsd/ERP_Finance_table.xsd
+END

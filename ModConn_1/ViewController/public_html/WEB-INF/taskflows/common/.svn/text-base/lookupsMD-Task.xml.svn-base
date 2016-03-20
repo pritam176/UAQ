@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="lookupsMD-Task">
+    <default-activity id="__1">lookupsMD</default-activity>
+    <managed-bean id="__5">
+      <managed-bean-name id="__3">backing_fragments_common_lookupsMD</managed-bean-name>
+      <managed-bean-class id="__2">com.mod.financial.view.backing.fragments.common.LookupsMD</managed-bean-class>
+      <managed-bean-scope id="__4">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1fragments/common/lookupsMD.jsff-->
+    </managed-bean>
+    <managed-bean id="__9">
+      <managed-bean-name id="__6">backing_fragments_common_lookupsDT</managed-bean-name>
+      <managed-bean-class id="__8">com.mod.financial.view.backing.fragments.common.LookupsDT</managed-bean-class>
+      <managed-bean-scope id="__7">backingBean</managed-bean-scope>
+      <!--oracle-jdev-comment:managed-bean-jsp-link:1fragments/common/lookupsDT.jsff-->
+    </managed-bean>
+    <view id="lookupsMD">
+      <page>/fragments/common/lookupsMD.jsff</page>
+    </view>
+    <view id="lookupsDT">
+      <page>/fragments/common/lookupsDT.jsff</page>
+    </view>
+    <control-flow-rule id="__10">
+      <from-activity-id id="__11">lookupsMD</from-activity-id>
+      <control-flow-case id="__13">
+        <from-outcome id="__14">toDetail</from-outcome>
+        <to-activity-id id="__12">lookupsDT</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__15">
+      <from-activity-id id="__16">lookupsDT</from-activity-id>
+      <control-flow-case id="__18">
+        <from-outcome id="__19">toMaster</from-outcome>
+        <to-activity-id id="__17">lookupsMD</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

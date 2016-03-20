@@ -1,0 +1,15 @@
+/*By Gamal Abdelhamid*/
+.bordered-panel-style{
+ color:Red; 
+ font-family:'Times New Roman', 'Arial Black', times, Serif; 
+ font-size:large; 
+ border-color:Black; 
+ border-style:solid; 
+ border-width:thin; 
+ outline-width:medium;   
+}
+.summary-label-style{
+    color:Red;
+    font-family:'Times New Roman', 'Arial Black', times, Serif; 
+    font-size:15.0px; 
+}

@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelStretchLayout id="psl1" startWidth="0" endWidth="0" topHeight="0"
+                         bottomHeight="0">
+    <f:facet name="center">
+      <af:panelGroupLayout layout="scroll"
+                           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                           id="pgl1">
+        <af:panelHeader text="#{rs.common_label_menusFav} #{' '} #{userInfo.name}" id="ph1">
+          <f:facet name="context"/>
+          <f:facet name="menuBar"/>
+          <f:facet name="toolbar">
+            <af:toolbar id="t1">
+              <af:commandButton text="#{rs.common_button_save}" id="ctb1"
+                                icon="/images/save.png"
+                                action="#{viewScope.myFavoritesBean.save_action}"/>
+            </af:toolbar>
+          </f:facet>
+          <f:facet name="legend"/>
+          <f:facet name="info"/>
+          <af:spacer width="10" height="20" id="s1"/>
+          <af:selectOrderShuttle id="sos1"
+                                 value="#{viewScope.myFavoritesBean.selectedValues}"
+                                 leadingHeader="#{rs.users_label_allMenus}"
+                                 trailingHeader="#{rs.users_label_selectedMenus}"
+                                 size="100" autoSubmit="true"
+                                 leadingDescShown="true"
+                                 trailingDescShown="true"
+                                 contentStyle="width:200px;">
+            <f:selectItems value="#{viewScope.myFavoritesBean.allItems}"
+                           id="si1"/>
+          </af:selectOrderShuttle>
+        </af:panelHeader>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:panelStretchLayout>
+</jsp:root>

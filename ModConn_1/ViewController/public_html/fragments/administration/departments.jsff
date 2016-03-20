@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+<af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3" >
+  <!--oracle-jdev-comment:preferred-managed-bean-name:departmentsBean-->
+    <f:facet name="Query">
+      <af:query id="qryId1" headerText="#{rs.departments_queryPanel_Search}"
+                disclosed="true"
+                value="#{bindings.AdmDeptViewCriteriaQuery.queryDescriptor}"
+                model="#{bindings.AdmDeptViewCriteriaQuery.queryModel}"
+                queryListener="#{bindings.AdmDeptViewCriteriaQuery.processQuery}"
+                queryOperationListener="#{bindings.AdmDeptViewCriteriaQuery.processQueryOperation}"
+                resultComponentId="::pc1:resId1" saveQueryMode="hidden"
+                modeChangeVisible="false"/>
+    </f:facet>
+    <f:facet name="Result">
+        <af:table value="#{bindings.AdmDeptView.collectionModel}" var="row"
+                  rows="#{bindings.AdmDeptView.rangeSize}"
+                  emptyText="#{rs.common_label_table_no_data}"
+                  fetchSize="#{bindings.AdmDeptView.rangeSize}"
+                  rowBandingInterval="0"
+                  selectedRowKeys="#{bindings.AdmDeptView.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.AdmDeptView.collectionModel.makeCurrent}"
+                  rowSelection="single" id="resId1"
+                  columnStretching="column:resId1c2">
+          <af:column sortProperty="#{bindings.AdmDeptView.hints.Id.name}"
+                     sortable="true"
+                     headerText="#{bindings.AdmDeptView.hints.Id.label}"
+                     id="resId1c1">
+            <af:outputText value="#{row.Id}" id="ot2">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.AdmDeptView.hints.Id.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmDeptView.hints.Name.name}"
+                     sortable="true"
+                     headerText="#{bindings.AdmDeptView.hints.Name.label}"
+                     id="resId1c2">
+            <af:outputText value="#{row.Name}" id="ot7"/>
+          </af:column>
+          <af:column id="c1" width="25" align="center">
+            <af:commandLink id="cl1">
+              <af:image source="/images/edit.png" id="i1"/>
+              <af:showPopupBehavior popupId="::p1"/>
+            </af:commandLink>
+          </af:column>
+          <af:column id="c2" width="25" align="center">
+            <af:commandLink id="commandLink1">
+              <af:image source="/images/delete.gif" id="image1"/>
+              <af:showPopupBehavior popupId="::p2"/>
+            </af:commandLink>
+          </af:column>
+        </af:table>
+        
+        
+    </f:facet>
+    <f:facet name="ToolbarButton">
+        
+        <af:commandToolbarButton id="ctb1" icon="/images/add.png"
+                                 action="#{departmentsBean.create_action}"/>
+    </f:facet>
+    <f:attribute name="Title" value="#{rs.departments_panelHeader_title}"/>
+    <f:facet name="Popup">
+      <af:group id="g1">
+        <af:popup id="p2" contentDelivery="lazyUncached">
+          <af:dialog id="d2" title="#{rs['departments_dialog_deleteTitle']}"
+                     dialogListener="#{departmentsBean.deleteServicesDialogListener}">
+            <af:panelGroupLayout id="pg" layout="horizontal">
+              <af:outputText value="#{rs['common_delete_Message']}"
+                             id="outputText1"
+                             inlineStyle="color:Red; font-size:small;"/>
+              <af:spacer width="5" height="10" id="s2"/>
+              <af:outputText value="#{bindings.Name.inputValue}" id="ot20"
+                             inlineStyle="color:Red; font-size:small;"/>
+              <af:outputText value=" ?" id="outputText3"
+                             inlineStyle="color:Red; font-size:small;"/>
+            </af:panelGroupLayout>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="p1"
+                  popupCanceledListener="#{departmentsBean.cancelListener}"
+                  contentDelivery="lazyUncached"
+                  binding="#{departmentsBean.departmentsPopup}">
+          <af:dialog id="d1" closeIconVisible="false"
+                     dialogListener="#{departmentsBean.saveListener}"
+                     title="#{rs.departments_dialog_title}">
+            <af:panelFormLayout id="pfl1">
+              <af:inputText value="#{bindings.Id.inputValue}"
+                            label="#{bindings.Id.hints.label}"
+                            required="#{bindings.Id.hints.mandatory}"
+                            columns="#{bindings.Id.hints.displayWidth}"
+                            maximumLength="#{bindings.Id.hints.precision}"
+                            shortDesc="#{bindings.Id.hints.tooltip}" id="it1">
+                <f:validator binding="#{bindings.Id.validator}"/>
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.Id.format}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.Name.inputValue}"
+                            label="#{bindings.Name.hints.label}"
+                            required="#{bindings.Name.hints.mandatory}"
+                            columns="#{bindings.Name.hints.displayWidth}"
+                            maximumLength="#{bindings.Name.hints.precision}"
+                            shortDesc="#{bindings.Name.hints.tooltip}" id="it2">
+                <f:validator binding="#{bindings.Name.validator}"/>
+              </af:inputText>
+            </af:panelFormLayout>
+          </af:dialog>
+        </af:popup>
+      </af:group>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

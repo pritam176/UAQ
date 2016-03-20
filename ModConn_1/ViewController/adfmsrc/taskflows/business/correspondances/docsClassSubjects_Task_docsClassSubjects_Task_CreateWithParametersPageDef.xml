@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="docsClassSubjects_Task_docsClassSubjects_Task_CreateWithParametersPageDef"
+                Package="taskflows.business.correspondances"
+                SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Root.CorresModule.CorDocMasterView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDocMasterView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="CorDocMasterView1Iterator" id="CreateWithParams"
+            RequiresUpdateModel="true" Action="createWithParams">
+      <NamedData NDName="ReceivedBy" NDType="java.lang.String"
+                 NDValue="#{userInfo.userId}"/>
+      <NamedData NDName="RcvUserName" NDType="java.lang.String"
+                 NDValue="#{userInfo.name}"/>
+    </action>
+  </bindings>
+</pageDefinition>

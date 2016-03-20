@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admLeavesAddEditPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmLeavesView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmLeavesView1Iterator"/>
+  </executables>
+  <bindings>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <listOfValues StaticList="false" IterBinding="AdmLeavesView1Iterator"
+                  Uses="LOV_SubjectId" id="SubjectId"/>
+    <listOfValues StaticList="false" IterBinding="AdmLeavesView1Iterator"
+                  Uses="LOV_RevLeaveId" id="RevLeaveId"/>
+    <listOfValues StaticList="false" IterBinding="AdmLeavesView1Iterator"
+                  Uses="LOV_RevDed1Code" id="RevDed1Code"/>
+    <listOfValues StaticList="false" IterBinding="AdmLeavesView1Iterator"
+                  Uses="LOV_RevDed2Code" id="RevDed2Code"/>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="LeaveName">
+      <AttrNames>
+        <Item Value="LeaveName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="SubjName">
+      <AttrNames>
+        <Item Value="SubjName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="IntersecRequired">
+      <AttrNames>
+        <Item Value="IntersecRequired"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AdmLeavesView1Iterator" StaticList="false"
+          Uses="LOV_LeaveType" id="LeaveType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="PayDed">
+      <AttrNames>
+        <Item Value="PayDed"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AdmLeavesView1Iterator" StaticList="false"
+          Uses="LOV_AdvpayType" id="AdvpayType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="Period">
+      <AttrNames>
+        <Item Value="Period"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="Recurr">
+      <AttrNames>
+        <Item Value="Recurr"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="RevLeaveName">
+      <AttrNames>
+        <Item Value="RevLeaveName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="RevDed1Name">
+      <AttrNames>
+        <Item Value="RevDed1Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="RevDed2Name">
+      <AttrNames>
+        <Item Value="RevDed2Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="SalaryStop">
+      <AttrNames>
+        <Item Value="SalaryStop"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="SalaryResume">
+      <AttrNames>
+        <Item Value="SalaryResume"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="MaxDays">
+      <AttrNames>
+        <Item Value="MaxDays"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmLeavesView1Iterator" id="MinDays">
+      <AttrNames>
+        <Item Value="MinDays"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn/MOD/!svn/ver/570/mod/ViewController/src/com/mod/financial/view/managed/administration
+END
+UsersUpdatable.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/MOD/!svn/ver/576/mod/ViewController/src/com/mod/financial/view/managed/administration/UsersUpdatable.java
+END
+BankBranchesBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/MOD/!svn/ver/128/mod/ViewController/src/com/mod/financial/view/managed/administration/BankBranchesBean.java
+END
+RolesUpdatable.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/MOD/!svn/ver/407/mod/ViewController/src/com/mod/financial/view/managed/administration/RolesUpdatable.java
+END
+BanksBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/MOD/!svn/ver/183/mod/ViewController/src/com/mod/financial/view/managed/administration/BanksBean.java
+END
+CurrencyBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/MOD/!svn/ver/183/mod/ViewController/src/com/mod/financial/view/managed/administration/CurrencyBean.java
+END
+DepartmentsBean.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/MOD/!svn/ver/183/mod/ViewController/src/com/mod/financial/view/managed/administration/DepartmentsBean.java
+END

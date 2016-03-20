@@ -1,0 +1,67 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/Cashier_Payment_Details_Service" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/Cashier_Payment_Details_Service" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="CashierPaymentDetailsCollection" type="CashierPaymentDetailsCollection"/>
+   <xs:complexType name="CashierPaymentDetailsCollection">
+      <xs:sequence>
+         <xs:element name="CashierPaymentDetails" type="CashierPaymentDetails" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="CashierPaymentDetails">
+      <xs:sequence>
+         <xs:element name="id" type="xs:decimal" nillable="true"/>
+         <xs:element name="userId" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="requestNo" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="reqId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="typeOfPaymentId" type="xs:decimal" minOccurs="0"/>
+         <xs:element name="amount" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="status" minOccurs="0">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="createdby" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="modifiedby" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
+         <xs:element name="modifiedDate" type="xs:dateTime" minOccurs="0"/>
+         <xs:element name="serviceId" type="xs:decimal" minOccurs="0"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="Cashier_Payment_Details_ServiceSelect_inp_requestNoInputParameters" type="Cashier_Payment_Details_ServiceSelect_inp_requestNo"/>
+   <xs:complexType name="Cashier_Payment_Details_ServiceSelect_inp_requestNo">
+      <xs:sequence>
+         <xs:element name="inp_requestNo" type="xs:string" minOccurs="1" maxOccurs="1"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

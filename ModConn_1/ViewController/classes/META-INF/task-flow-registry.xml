@@ -1,0 +1,79 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<task-flow-registry xmlns="http://xmlns.oracle.com/adf/controller/rc">
+   <task-flow-descriptor path="WEB-INF/taskflows/administration/roles-Task.xml" id="roles-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/accCheckDelivery-Task.xml" id="accCheckDelivery-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/administration/users-Task.xml" id="users-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/administration/menus-Task.xml" id="menus-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/common/myFavorites-Task.xml" id="myFavorites-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admLeavesElements-Task.xml" id="admLeavesElements-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/docsQuery-Task.xml" id="docsQuery-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admEffElements-Task.xml" id="admEffElements-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/contracts/contractsQuery-Task.xml" id="contractsQuery-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false">
+      <input-parameter name="pageTypeFlag"/>
+      <input-parameter name="tabContext"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/docsClassSubjects-Task.xml" id="docsClassSubjects-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false">
+      <input-parameter name="pageTypeFlag"/>
+      <input-parameter name="tabContext"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/accPaymentFormDelivery-Task.xml" id="accPaymentFormDelivery-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/userInbox-Task.xml" id="userInbox-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/incomingDocuments-Task.xml" id="incomingDocuments-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false">
+      <input-parameter name="pageTypeFlag"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admAllowsTypes-Task.xml" id="admAllowsTypes-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admInsuranceRates.xml" id="admInsuranceRates" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/corDocDelivered-Task.xml" id="corDocDelivered-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admAllowLeaves-Task.xml" id="admAllowLeaves-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/docsReDistribution-Task.xml" id="docsReDistribution-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/directDocs-Task.xml" id="directDocs-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admLeaves-Task.xml" id="admLeaves-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admXLeaves-Task.xml" id="admXLeaves-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/common/TreeMenus-Task.xml" id="TreeMenus-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false">
+      <input-parameter name="tabContext"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/docsDetDistribution-Task.xml" id="docsDetDistribution-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/docsArchiving-Task.xml" id="docsArchiving-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/corDocDeleteDetails-Task.xml" id="corDocDeleteDetails-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/correspondance/inbox-Task.xml" id="inbox-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="META-INF/adfc-config.xml" id="" type="" uses-page-fragments="false" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/generalAccounts/accountsManual-Task.xml" id="accountsManual-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/contracts/contractsQuerySection-Task.xml" id="contractsQuerySection-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false">
+      <input-parameter name="pageTypeFlag"/>
+      <input-parameter name="tabContext"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/taskflows/generalAccounts/accOfficeSubAccounts-Task.xml" id="accOfficeSubAccounts-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/common/myAccount-Task.xml" id="myAccount-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false">
+      <input-parameter name="userId"/>
+      <input-parameter name="tabContext"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admAllowsDefault-Task.xml" id="admAllowsDefault-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/generalReport/generalReport-Task.xml" id="generalReport-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false">
+      <input-parameter name="tabContext"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/taskflows/generalAccounts/subAccounts-Task.xml" id="subAccounts-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/corDocReOpen-Task.xml" id="corDocReOpen-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/contracts/contractPays-Tak.xml" id="contractPays-Tak" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false">
+      <input-parameter name="pageTypeFlag"/>
+      <input-parameter name="tabContext"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admIndemRule-Task.xml" id="admIndemRule-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/administration/banks-Task.xml" id="banks-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/outboundDocs-Task.xml" id="outboundDocs-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/docsDistribution-Task.xml" id="docsDistribution-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/sentDocsRedirection-Task.xml" id="sentDocsRedirection-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admLeaveBalanceRule-Task.xml" id="admLeaveBalanceRule-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admGulfInsuredAllows-Task.xml" id="admGulfInsuredAllows-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/administration/currencies-Task.xml" id="currencies-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admAllows-Task.xml" id="admAllows-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/administration/departments-Task.xml" id="departments-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/generalAccounts/cashLoanSection-Task.xml" id="cashLoanSection-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/contracts/contracts-Task.xml" id="contracts-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false">
+      <input-parameter name="pageTypeFlag"/>
+      <input-parameter name="tabContext"/>
+   </task-flow-descriptor>
+   <task-flow-descriptor path="WEB-INF/taskflows/common/lookupsMD-Task.xml" id="lookupsMD-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/correspondances/corInternalMai-Task.xml" id="corInternalMai-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/business/salaries/lookups/admDeducts-Task.xml" id="admDeducts-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+   <task-flow-descriptor path="WEB-INF/taskflows/common/welcome-Task.xml" id="welcome-Task" type="task-flow-definition" uses-page-fragments="true" library-internal="false" remote-invocable="false" train="false"/>
+</task-flow-registry>

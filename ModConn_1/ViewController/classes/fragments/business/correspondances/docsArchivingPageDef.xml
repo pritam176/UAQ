@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="docsArchivingPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CorresModule.CorDocMasterArchivingView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDocMasterArchivingView1Iterator"/>
+    <searchRegion Criteria="CorDocMasterArchivingViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="CorDocMasterArchivingView1Iterator"
+                  id="CorDocMasterArchivingViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="CorDocMasterArchivingView1Iterator"
+          id="CorDocMasterArchivingView11">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.up.CorDocMasterArchivingView"
+                      Name="CorDocMasterArchivingView110">
+        <AttrNames>
+          <Item Value="ArchNo"/>
+          <Item Value="DocDest"/>
+          <Item Value="SectionId"/>
+          <Item Value="DocRef"/>
+          <Item Value="DocType"/>
+          <Item Value="Name"/>
+          <Item Value="DocYear"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+  </bindings>
+</pageDefinition>

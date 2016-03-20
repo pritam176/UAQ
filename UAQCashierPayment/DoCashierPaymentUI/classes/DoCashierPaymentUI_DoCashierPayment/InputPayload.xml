@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="11.1.1.64.93"
+          id="InputPayload" Package="DoCashierPaymentUI_DoCashierPayment"
+          BeanClass="DoCashierPaymentUI_DoCashierPayment.InputPayload"
+          isJavaBased="false">
+  <AccessorAttribute id="UserDetails" IsCollection="true"
+                     BeanClass="DoCashierPaymentUI_DoCashierPayment.UserDetailsPayload"
+                     CollectionBeanClass="DoCashierPaymentUI_DoCashierPayment.UserDetailsPayload_UserDetails_Operations">
+    <Properties>
+      <Property Name="nextSiblingNamespace" Value="http://PaymentData"/>
+      <Property Name="nextSibling" Value="RequestDetails"/>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="User Details"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="UserDetails"/>
+      <Property Name="targetNamespace" Value="http://PaymentData"/>
+    </Properties>
+  </AccessorAttribute>
+  <AccessorAttribute id="RequestDetails" IsCollection="true"
+                     BeanClass="DoCashierPaymentUI_DoCashierPayment.RequestDetailsPayLoad"
+                     CollectionBeanClass="DoCashierPaymentUI_DoCashierPayment.RequestDetailsPayLoad_RequestDetails_Operations">
+    <Properties>
+      <Property Name="nextSiblingNamespace" Value="http://PaymentData"/>
+      <Property Name="nextSibling" Value="PaymentDetails"/>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="Request Details"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="RequestDetails"/>
+      <Property Name="targetNamespace" Value="http://PaymentData"/>
+    </Properties>
+  </AccessorAttribute>
+  <AccessorAttribute id="PaymentDetails" IsCollection="true"
+                     BeanClass="DoCashierPaymentUI_DoCashierPayment.PaymentDetailsPayload"
+                     CollectionBeanClass="DoCashierPaymentUI_DoCashierPayment.PaymentDetailsPayload_PaymentDetails_Operations">
+    <Properties>
+      <Property Name="nextSiblingNamespace" Value="http://PaymentData"/>
+      <Property Name="nextSibling" Value="POSDetails"/>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="Payment Details"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="PaymentDetails"/>
+      <Property Name="targetNamespace" Value="http://PaymentData"/>
+    </Properties>
+  </AccessorAttribute>
+  <AccessorAttribute id="POSDetails" IsCollection="true"
+                     BeanClass="DoCashierPaymentUI_DoCashierPayment.POSDetailsPayLoad"
+                     CollectionBeanClass="DoCashierPaymentUI_DoCashierPayment.POSDetailsPayLoad_POSDetails_Operations">
+    <Properties>
+      <Property Name="minOccurs" Value="1"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="POS Details"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="POSDetails"/>
+      <Property Name="targetNamespace" Value="http://PaymentData"/>
+    </Properties>
+  </AccessorAttribute>
+  <AccessorAttribute id="AccountIdentityAttachmentList" IsCollection="true"
+                     BeanClass="DoCashierPaymentUI_DoCashierPayment.accountattachlistpayload"
+                     CollectionBeanClass="DoCashierPaymentUI_DoCashierPayment.accountattachlistpayload_AccountIdentityAttachmentList_Operations">
+    <Properties>
+      <Property Name="minOccurs" Value="0"/>
+      <Property Name="maxOccurs" Value="1"/>
+      <Property Name="LABEL" Value="Account Identity Attachment List"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="AccountIdentityAttachmentList"/>
+      <Property Name="targetNamespace" Value="http://PaymentData"/>
+    </Properties>
+  </AccessorAttribute>
+</JavaBean>

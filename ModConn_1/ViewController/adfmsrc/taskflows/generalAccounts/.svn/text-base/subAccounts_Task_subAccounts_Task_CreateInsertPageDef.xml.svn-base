@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="subAccounts_Task_subAccounts_Task_CreateInsertPageDef"
+                Package="taskflows.generalAccounts" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Root.GeneralAccountsModule.AccSubAccountsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccSubAccountsViewIterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AccSubAccountsViewIterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

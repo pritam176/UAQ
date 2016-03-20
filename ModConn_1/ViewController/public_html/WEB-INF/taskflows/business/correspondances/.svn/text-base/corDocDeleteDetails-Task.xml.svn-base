@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="corDocDeleteDetails-Task">
+    <default-activity id="__1">corDocDeleteDetails</default-activity>
+    <managed-bean id="__4">
+      <managed-bean-name id="__2">docDeleteDetailsBean</managed-bean-name>
+      <managed-bean-class id="__5">com.mod.financial.view.managed.business.correspondances.DocDeleteDetails</managed-bean-class>
+      <managed-bean-scope id="__3">view</managed-bean-scope>
+    </managed-bean>
+    <view id="corDocDeleteDetails">
+      <page>/fragments/business/correspondances/corDocDeleteDetails.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

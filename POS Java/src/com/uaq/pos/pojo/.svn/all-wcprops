@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/UAQ/!svn/ver/5977/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/com/uaq/pos/pojo
+END
+PaymentRequestECR.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn/UAQ/!svn/ver/5977/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/com/uaq/pos/pojo/PaymentRequestECR.java
+END
+PaymentStatus.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/UAQ/!svn/ver/5508/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/com/uaq/pos/pojo/PaymentStatus.java
+END
+PaymentVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/UAQ/!svn/ver/5533/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/com/uaq/pos/pojo/PaymentVO.java
+END
+PaymentReportFilterVO.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn/UAQ/!svn/ver/5508/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/com/uaq/pos/pojo/PaymentReportFilterVO.java
+END
+PaymentResponseECR.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/svn/UAQ/!svn/ver/5977/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/com/uaq/pos/pojo/PaymentResponseECR.java
+END

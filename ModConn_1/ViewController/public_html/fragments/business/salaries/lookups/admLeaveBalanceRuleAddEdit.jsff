@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt4">
+    <f:facet name="Master">
+      <af:panelGroupLayout id="pgl1">
+        <af:panelGroupLayout id="pfl2" partialTriggers="joinIdId"
+                             layout="horizontal">
+          <af:inputListOfValues id="joinIdId"
+                                popupTitle="#{rs.common_label_search_select} #{bindings.JoinId.hints.label}"
+                                value="#{bindings.JoinId.inputValue}"
+                                label="#{bindings.JoinId.hints.label}"
+                                model="#{bindings.JoinId.listOfValuesModel}"
+                                required="#{bindings.JoinId.hints.mandatory}"
+                                columns="#{bindings.JoinId.hints.displayWidth}"
+                                shortDesc="#{bindings.JoinId.hints.tooltip}"
+                                autoSubmit="true">
+            <f:validator binding="#{bindings.JoinId.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.JoinId.format}"/>
+          </af:inputListOfValues>
+          <af:spacer width="5px" id="s1"/>
+          <af:inputText value="#{bindings.JoinName.inputValue}" simple="true"
+                        required="#{bindings.JoinName.hints.mandatory}"
+                        columns="#{bindings.JoinName.hints.displayWidth}"
+                        maximumLength="#{bindings.JoinName.hints.precision}"
+                        shortDesc="#{bindings.JoinName.hints.tooltip}" id="it5"
+                        contentStyle="width:250px !important;" disabled="true">
+            <f:validator binding="#{bindings.JoinName.validator}"/>
+          </af:inputText>
+        </af:panelGroupLayout>
+        <af:panelFormLayout id="pfl3">
+          <af:selectOneChoice value="#{bindings.OverAge.inputValue}"
+                              label="#{bindings.OverAge.label}"
+                              required="true"
+                              shortDesc="#{bindings.OverAge.hints.tooltip}"
+                              id="soc1" contentStyle="width:130px !important;"
+                              autoSubmit="true" unselectedLabel="#{rs.SELECT_FROM_LIST}">
+            <f:selectItems value="#{bindings.OverAge.items}" id="si1"/>
+          </af:selectOneChoice>
+          <af:inputText value="#{bindings.DaysPerYear.inputValue}"
+                        label="#{bindings.DaysPerYear.hints.label}"
+                        required="#{bindings.DaysPerYear.hints.mandatory}"
+                        columns="#{bindings.DaysPerYear.hints.displayWidth}"
+                        maximumLength="#{bindings.DaysPerYear.hints.precision}"
+                        shortDesc="#{bindings.DaysPerYear.hints.tooltip}"
+                        id="it6" contentStyle="width:130px !important;"
+                        autoSubmit="true">
+            <f:validator binding="#{bindings.DaysPerYear.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.DaysPerYear.format}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.MaxBalance.inputValue}"
+                        label="#{bindings.MaxBalance.hints.label}"
+                        required="#{bindings.MaxBalance.hints.mandatory}"
+                        columns="#{bindings.MaxBalance.hints.displayWidth}"
+                        maximumLength="#{bindings.MaxBalance.hints.precision}"
+                        shortDesc="#{bindings.MaxBalance.hints.tooltip}"
+                        id="it4" contentStyle="width:130px !important;"
+                        autoSubmit="true">
+            <f:validator binding="#{bindings.MaxBalance.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.MaxBalance.format}"/>
+          </af:inputText>
+        </af:panelFormLayout>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="MasterToolbar">
+      <af:panelGroupLayout layout="horizontal" id="pgl12">
+        <af:commandButton actionListener="#{bindings.Commit.execute}"
+                          icon="/images/save.png"
+                          text="#{rs.common_button_save}" partialSubmit="true"
+                          id="cb4"/>
+        <af:spacer width="5px" id="s7"/>
+        <af:commandButton icon="/images/arrow_undo.png"
+                          actionListener="#{bindings.Rollback.execute}"
+                          action="back" text="#{rs.bankBranch_buttonBankBack}"
+                          immediate="true" id="cb6"/>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

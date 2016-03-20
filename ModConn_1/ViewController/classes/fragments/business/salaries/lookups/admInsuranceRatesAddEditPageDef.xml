@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admInsuranceRatesAddEditPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmInsuranceRatesView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmInsuranceRatesView1Iterator"/>
+  </executables>
+  <bindings>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <list IterBinding="AdmInsuranceRatesView1Iterator" StaticList="false"
+          Uses="LOV_NationId" id="NationId" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AdmInsuranceRatesView1Iterator"
+                     id="KwEmpRatio">
+      <AttrNames>
+        <Item Value="KwEmpRatio"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmInsuranceRatesView1Iterator"
+                     id="KwGovRatio">
+      <AttrNames>
+        <Item Value="KwGovRatio"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmInsuranceRatesView1Iterator"
+                     id="OtherEmpRatio">
+      <AttrNames>
+        <Item Value="OtherEmpRatio"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmInsuranceRatesView1Iterator"
+                     id="OtherGovRatio">
+      <AttrNames>
+        <Item Value="OtherGovRatio"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmInsuranceRatesView1Iterator"
+                     id="RuleActiveFrom">
+      <AttrNames>
+        <Item Value="RuleActiveFrom"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmInsuranceRatesView1Iterator"
+                     id="RuleActiveTill">
+      <AttrNames>
+        <Item Value="RuleActiveTill"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AdmInsuranceRatesView1Iterator" StaticList="false"
+          Uses="LOV_RuleActive" id="RuleActive" DTSupportsMRU="false"/>
+  </bindings>
+</pageDefinition>

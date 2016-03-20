@@ -1,0 +1,77 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<taskDefinition targetNamespace="http://xmlns.oracle.com/UAQPaymentProcesses/UAQ_Payment_Cashier/DoCashierPayment" xmlns:xp20="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.Xpath20" xmlns:ora="http://schemas.oracle.com/xpath/extension" xmlns:oraext="http://www.oracle.com/XSL/Transform/java/oracle.tip.pc.services.functions.ExtFunc" xmlns:task="http://xmlns.oracle.com/bpel/workflow/task" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://xmlns.oracle.com/bpel/workflow/taskDefinition" xmlns:bpm="http://xmlns.oracle.com/bpmn20/extensions"
+                xmlns:bpel2="http://docs.oasis-open.org/wsbpel/2.0/process/executable"
+                xmlns:ns0="http://xmlns.oracle.com/bpel/workflow/common"
+                xmlns:dvm="http://www.oracle.com/XSL/Transform/java/oracle.tip.dvm.LookupValue"
+                xmlns:evidence="http://xmlns.oracle.com/bpel/workflow/TaskEvidenceService"
+                xmlns:hwf="http://xmlns.oracle.com/bpel/workflow/xpath"
+                xmlns:ids="http://xmlns.oracle.com/bpel/services/IdentityService/xpath"
+                xmlns:xref="http://www.oracle.com/XSL/Transform/java/oracle.tip.xref.xpath.XRefXPathFunctions"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:ns1="http://PaymentData">
+   <name>DoCashierPayment</name>
+   <id>${domain_id}_${process_id}_${process_revision}_DoCashierPayment</id>
+   <title type="XPATH"><value>"Cashier Payment for Request "</value></title>
+   <priority>3</priority>
+   <process processId="" processVersion=""/>
+   <routingSlip xmlns="http://xmlns.oracle.com/bpel/workflow/routingSlip">
+      <globalConfiguration><applicationContext>OracleBPMProcessRolesApp</applicationContext>
+         <taskOwner type="STATIC" identityType="application_role">UAQ_Payment_Cashier.ProcessOwner</taskOwner>
+         <sharePayloadConfiguration>
+            <type>USE_SYSTEM_WIDE_GLOBAL_CONFIGURATION</type>
+         </sharePayloadConfiguration>
+      </globalConfiguration>
+      <participants isAdhocRoutingSupported="false">
+         <stage name="Stage1">
+            <participant name="default.DefaultPerformer">
+               <resource type="XPATH" identityType="group">/task:task/task:payload/ns1:Input/ns1:RequestDetails/ns1:cashierGrpName</resource>
+            </participant>
+         </stage>
+      </participants>
+      <notification includeTaskAttachments="false" actionable="false"
+                    secureNotifications="false"
+                    oneNotificationPerUserPerAction="false"
+                    hideWorklistUrlInEmail="false">
+         <action name="ASSIGN" recipient="ASSIGNEES"><![CDATA[null]]></action>
+         <groupNotificationConfiguration>SEND_INDIVIDUAL_NOTIFICATION</groupNotificationConfiguration>
+      </notification>
+   </routingSlip>
+   <workflowConfiguration features="ucm" xmlns="http://xmlns.oracle.com/bpel/workflow/configuration"
+                          xmlns:ns1="http://PaymentData">
+      <outcomes default="Cash">
+         <outcome>POS</outcome>
+         <outcome>Cash</outcome>
+      </outcomes>
+      <payload xmlSchemaDefinition="xsd/DoCashierPaymentPayload.xsd"
+               externalSchema="false">
+         <messageAttribute name="Input" attributeType="ELEMENT" type="ns1:Input"
+                           updatable="false" external="false"/>
+      </payload>
+      <bpelEventListener>false</bpelEventListener>
+      <bpelNoCallbacks>false</bpelNoCallbacks>
+      <accessRules>
+         <attributeRules>
+            <attribute>ATTACHMENTS</attribute>
+            <roles>
+               <role privilege="NO_ACCESS">ASSIGNEES</role>
+               <role privilege="NO_ACCESS">CREATOR</role>
+               <role privilege="NO_ACCESS">OWNER</role>
+               <role privilege="NO_ACCESS">REVIEWERS</role>
+               <role privilege="NO_ACCESS">ADMIN</role>
+               <role privilege="NO_ACCESS">APPROVERS</role>
+            </roles>
+         </attributeRules>
+      </accessRules>
+      <showCompleteGraphicalHistory>true</showCompleteGraphicalHistory>
+      <reevalTranslatablesOnUpdate>false</reevalTranslatablesOnUpdate>
+      <preActionMandatoryUserSteps/>
+      <allowInitiatorEditParticipants>false</allowInitiatorEditParticipants>
+      <allowParticipantsEditParticipants>false</allowParticipantsEditParticipants>
+      <globalCreationTask>false</globalCreationTask>
+      <taskFlowFileLocation>file:/C:/JDeveloper/mywork/UAQPaymentProcesses/DoCashierPaymentUI/public_html/WEB-INF/DoCashierPayment_TaskFlow.xml</taskFlowFileLocation>
+      <enableAutoClaim>true</enableAutoClaim>
+      <workflowConditions/>
+      <taskSequenceTypes>FUTURE</taskSequenceTypes>
+      <taskSequenceTypes>AGGREGATE</taskSequenceTypes>
+   </workflowConfiguration>
+</taskDefinition>

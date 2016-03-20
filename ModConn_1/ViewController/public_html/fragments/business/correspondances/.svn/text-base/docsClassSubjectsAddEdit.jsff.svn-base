@@ -1,0 +1,773 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelGroupLayout id="pgl13">
+    <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt1">
+      <f:facet name="Master">
+        <af:group id="g1">
+          <af:panelTabbed id="pt2" styleClass="AFStretchWidth"
+                          inlineStyle="height:220.0px;">
+            <af:showDetailItem id="sdi2" text="#{rs.DOCUMENT_DATA}">
+              <af:panelFormLayout id="pfl1" rows="4" labelWidth="100">
+                <af:inputText value="#{bindings.DocNo.inputValue}"
+                              label="#{bindings.DocNo.hints.label}"
+                              required="#{bindings.DocNo.hints.mandatory}"
+                              columns="#{bindings.DocNo.hints.displayWidth}"
+                              maximumLength="#{bindings.DocNo.hints.precision}"
+                              shortDesc="#{bindings.DocNo.hints.tooltip}"
+                              id="it3" contentStyle="width:150px !important;"
+                              partialTriggers="saveBtn" disabled="true">
+                  <f:validator binding="#{bindings.DocNo.validator}"/>
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.DocNo.format}"/>
+                </af:inputText>
+                <af:inputText value="#{bindings.SheetNo.inputValue}"
+                              label="#{bindings.SheetNo.hints.label}"
+                              required="#{bindings.SheetNo.hints.mandatory}"
+                              columns="#{bindings.SheetNo.hints.displayWidth}"
+                              maximumLength="#{bindings.SheetNo.hints.precision}"
+                              shortDesc="#{bindings.SheetNo.hints.tooltip}"
+                              id="it7" contentStyle="width:150px !important;"
+                              partialTriggers="saveBtn" disabled="true">
+                  <f:validator binding="#{bindings.SheetNo.validator}"/>
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.SheetNo.format}"/>
+                </af:inputText>
+                <af:inputText value="#{bindings.DocRef.inputValue}"
+                              label="#{bindings.DocRef.hints.label}"
+                              required="#{bindings.DocRef.hints.mandatory}"
+                              columns="#{bindings.DocRef.hints.displayWidth}"
+                              maximumLength="#{bindings.DocRef.hints.precision}"
+                              shortDesc="#{bindings.DocRef.hints.tooltip}"
+                              id="it17" disabled="true"
+                              contentStyle="width:150px !important;"
+                              partialTriggers="saveBtn">
+                  <f:validator binding="#{bindings.DocRef.validator}"/>
+                </af:inputText>
+                <af:inputDate value="#{bindings.DocDate.inputValue}"
+                              label="#{bindings.DocDate.hints.label}"
+                              required="true"
+                              shortDesc="#{bindings.DocDate.hints.tooltip}"
+                              id="id1" contentStyle="width:150px !important;">
+                  <f:validator binding="#{bindings.DocDate.validator}"/>
+                  <af:convertDateTime pattern="#{bindings.DocDate.format}"/>
+                </af:inputDate>
+                <af:inputText value="#{bindings.NoPage.inputValue}"
+                              label="#{bindings.NoPage.hints.label}"
+                              required="false"
+                              columns="#{bindings.NoPage.hints.displayWidth}"
+                              maximumLength="#{bindings.NoPage.hints.precision}"
+                              shortDesc="#{bindings.NoPage.hints.tooltip}"
+                              id="it11" contentStyle="width:150px !important;">
+                  <f:validator binding="#{bindings.NoPage.validator}"/>
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.NoPage.format}"/>
+                </af:inputText>
+                <af:selectOneChoice value="#{bindings.DocDest1.inputValue}"
+                                    label="#{bindings.DocDest1.label}"
+                                    required="true"
+                                    shortDesc="#{bindings.DocDest1.hints.tooltip}"
+                                    id="docDestId" autoSubmit="true"
+                                    contentStyle="width:150px !important;"
+                                    unselectedLabel="#{rs.SELECT_FROM_LIST}">
+                  <f:selectItems value="#{bindings.DocDest1.items}" id="si2"/>
+                </af:selectOneChoice>
+                <af:inputText value="#{bindings.OrderDesc.inputValue}"
+                              label="#{bindings.OrderDesc.hints.label}"
+                              required="#{bindings.OrderDesc.hints.mandatory}"
+                              columns="#{bindings.OrderDesc.hints.displayWidth}"
+                              maximumLength="#{bindings.OrderDesc.hints.precision}"
+                              shortDesc="#{bindings.OrderDesc.hints.tooltip}"
+                              id="it1" contentStyle="width:150px !important;">
+                  <f:validator binding="#{bindings.OrderDesc.validator}"/>
+                </af:inputText>
+                <af:inputDate value="#{bindings.RcvDate.inputValue}"
+                              label="#{bindings.RcvDate.hints.label}"
+                              required="true"
+                              shortDesc="#{bindings.RcvDate.hints.tooltip}"
+                              id="id2" contentStyle="width:150px !important;">
+                  <f:validator binding="#{bindings.RcvDate.validator}"/>
+                  <af:convertDateTime pattern="#{bindings.RcvDate.format}"/>
+                </af:inputDate>
+                <af:selectOneChoice value="#{bindings.DocPri.inputValue}"
+                                    label="#{bindings.DocPri.label}"
+                                    required="#{bindings.DocPri.hints.mandatory}"
+                                    shortDesc="#{bindings.DocPri.hints.tooltip}"
+                                    id="soc1"
+                                    contentStyle="width:150px !important;"
+                                    rendered="#{pageFlowScope.pageTypeFlag != 'add'}">
+                  <f:selectItems value="#{bindings.DocPri.items}" id="si1"/>
+                </af:selectOneChoice>
+                <af:inputListOfValues id="refIdId"
+                                      popupTitle="#{rs.common_label_search_select} #{bindings.RefId.hints.label}"
+                                      value="#{bindings.RefId.inputValue}"
+                                      label="#{bindings.RefId.hints.label}"
+                                      model="#{bindings.RefId.listOfValuesModel}"
+                                      required="#{bindings.RefId.hints.mandatory}"
+                                      columns="#{bindings.RefId.hints.displayWidth}"
+                                      shortDesc="#{bindings.RefId.hints.tooltip}"
+                                      contentStyle="width:150px !important;"
+                                      autoSubmit="true">
+                  <f:validator binding="#{bindings.RefId.validator}"/>
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.RefId.format}"/>
+                </af:inputListOfValues>
+                <af:panelLabelAndMessage partialTriggers="subjIdId docDestId"
+                                         id="plam2"
+                                         label="#{bindings.SubjId.hints.label}"
+                                         rendered="#{pageFlowScope.pageTypeFlag != 'add'}">
+                  <af:panelGroupLayout layout="horizontal" id="pgl3">
+                    <af:inputListOfValues id="subjIdId"
+                                          popupTitle="#{rs.common_label_search_select} #{bindings.SubjId.hints.label}"
+                                          value="#{bindings.SubjId.inputValue}"
+                                          model="#{bindings.SubjId.listOfValuesModel}"
+                                          required="#{bindings.SubjId.hints.mandatory}"
+                                          columns="#{bindings.SubjId.hints.displayWidth}"
+                                          shortDesc="#{bindings.SubjId.hints.tooltip}"
+                                          autoSubmit="true"
+                                          contentStyle="width:50px !important;">
+                      <f:validator binding="#{bindings.SubjId.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.SubjId.format}"/>
+                    </af:inputListOfValues>
+                    <af:inputText value="#{bindings.SubjName.inputValue}"
+                                  simple="true"
+                                  required="#{bindings.SubjName.hints.mandatory}"
+                                  columns="#{bindings.SubjName.hints.displayWidth}"
+                                  maximumLength="#{bindings.SubjName.hints.precision}"
+                                  shortDesc="#{bindings.SubjName.hints.tooltip}"
+                                  id="it2" disabled="true"
+                                  contentStyle="width:200px !important;">
+                      <f:validator binding="#{bindings.SubjName.validator}"/>
+                    </af:inputText>
+                  </af:panelGroupLayout>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage partialTriggers="sectionIdId"
+                                         id="plam1"
+                                         label="#{bindings.SectionId.hints.label}">
+                  <af:panelGroupLayout layout="horizontal" id="pgl2">
+                    <af:inputListOfValues id="sectionIdId"
+                                          popupTitle="#{rs.common_label_search_select} #{bindings.SectionId.hints.label}"
+                                          value="#{bindings.SectionId.inputValue}"
+                                          model="#{bindings.SectionId.listOfValuesModel}"
+                                          required="#{bindings.SectionId.hints.mandatory}"
+                                          columns="#{bindings.SectionId.hints.displayWidth}"
+                                          shortDesc="#{bindings.SectionId.hints.tooltip}"
+                                          autoSubmit="true"
+                                          contentStyle="width:50px !important;">
+                      <f:validator binding="#{bindings.SectionId.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.SectionId.format}"/>
+                    </af:inputListOfValues>
+                    <af:inputText value="#{bindings.Name.inputValue}"
+                                  simple="true"
+                                  required="#{bindings.Name.hints.mandatory}"
+                                  columns="#{bindings.Name.hints.displayWidth}"
+                                  maximumLength="#{bindings.Name.hints.precision}"
+                                  shortDesc="#{bindings.Name.hints.tooltip}"
+                                  id="it8" disabled="true"
+                                  contentStyle="width:200px !important;">
+                      <f:validator binding="#{bindings.Name.validator}"/>
+                    </af:inputText>
+                  </af:panelGroupLayout>
+                </af:panelLabelAndMessage>
+              <af:panelLabelAndMessage label="#{bindings.ReceivedBy.hints.label}"
+                                       id="plam9"
+                                       partialTriggers="receivedById">
+                <af:panelGroupLayout layout="horizontal" id="pgl1">
+                  <af:inputListOfValues id="receivedById"
+                                        popupTitle="#{rs.common_label_search_select} #{bindings.ReceivedBy.hints.label}"
+                                        value="#{bindings.ReceivedBy.inputValue}"
+                                        model="#{bindings.ReceivedBy.listOfValuesModel}"
+                                        required="#{bindings.ReceivedBy.hints.mandatory}"
+                                        columns="#{bindings.ReceivedBy.hints.displayWidth}"
+                                        shortDesc="#{bindings.ReceivedBy.hints.tooltip}"
+                                        autoSubmit="true"
+                                        contentStyle="width:50px !important;"
+                                        disabled="true">
+                    <f:validator binding="#{bindings.ReceivedBy.validator}"/>
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.ReceivedBy.format}"/>
+                  </af:inputListOfValues>
+                  <af:inputText value="#{pageFlowScope.pageTypeFlag == 'add' ? userInfo.name : bindings.RcvUserName.inputValue}"
+                                simple="true"
+                                required="#{bindings.RcvUserName.hints.mandatory}"
+                                columns="#{bindings.RcvUserName.hints.displayWidth}"
+                                maximumLength="#{bindings.RcvUserName.hints.precision}"
+                                shortDesc="#{bindings.RcvUserName.hints.tooltip}"
+                                id="it14" disabled="true"
+                                partialTriggers="receivedById"
+                                contentStyle="width:200px !important;">
+                    <f:validator binding="#{bindings.RcvUserName.validator}"/>
+                  </af:inputText>
+                </af:panelGroupLayout>
+              </af:panelLabelAndMessage>
+                <af:inputDate value="#{bindings.OrderDate.inputValue}"
+                              label="#{bindings.OrderDate.hints.label}"
+                              required="#{bindings.OrderDate.hints.mandatory}"
+                              shortDesc="#{bindings.OrderDate.hints.tooltip}"
+                              id="id3">
+                  <f:validator binding="#{bindings.OrderDate.validator}"/>
+                  <af:convertDateTime pattern="#{bindings.OrderDate.format}"/>
+                </af:inputDate>
+                <af:selectOneRadio label="#{bindings.AnsReq.hints.label}"
+                                   id="sbr1"
+                                   value="#{bindings.AnsReq.inputValue}"
+                                   contentStyle="width:150px !important;"
+                                   layout="horizontal"
+                                   rendered="#{pageFlowScope.pageTypeFlag != 'add'}">
+                  <af:selectItem label="#{rs.common_yes_label}" value="y"
+                                 id="si5"/>
+                  <af:selectItem label="#{rs.common_no_label}" value="N"
+                                 id="si6"/>
+                </af:selectOneRadio>
+                <af:inputText value="#{bindings.DocStatus.inputValue}"
+                              label="#{bindings.DocStatus.hints.label}"
+                              required="#{bindings.DocStatus.hints.mandatory}"
+                              columns="#{bindings.DocStatus.hints.displayWidth}"
+                              maximumLength="#{bindings.DocStatus.hints.precision}"
+                              shortDesc="#{bindings.DocStatus.hints.tooltip}"
+                              id="it10" contentStyle="width:150px !important;"
+                              rendered="false">
+                  <f:validator binding="#{bindings.DocStatus.validator}"/>
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.DocStatus.format}"/>
+                </af:inputText>
+              </af:panelFormLayout>
+              <af:inputText value="#{bindings.DocTitle.inputValue}"
+                            label="#{bindings.DocTitle.hints.label}"
+                            required="#{bindings.DocTitle.hints.mandatory}"
+                            columns="#{bindings.DocTitle.hints.displayWidth}"
+                            maximumLength="#{bindings.DocTitle.hints.precision}"
+                            shortDesc="#{bindings.DocTitle.hints.tooltip}"
+                            id="it6" contentStyle="width:450px !important;">
+                <f:validator binding="#{bindings.DocTitle.validator}"/>
+              </af:inputText>
+            </af:showDetailItem>
+          </af:panelTabbed>
+        </af:group>
+      </f:facet>
+      <f:facet name="Detail">
+        <af:group id="g2">
+          <af:panelTabbed id="pt3" styleClass="AFStretchWidth"
+                          inlineStyle="height:217.0px;"
+                          partialTriggers="saveBtn">
+            <af:showDetailItem id="sdi6" text="#{rs.attchments_title}">
+              <af:commandButton icon="/images/add.png"
+                                action="#{pageFlowScope.docsClassSubBean.createAttachAction}"
+                                id="cb1"
+                                disabled="#{bindings.Id1.inputValue == null}"/>
+              <af:spacer height="5px" id="s16"/>
+              <af:table value="#{bindings.CorDocAttachView1.collectionModel}"
+                        var="row" rows="#{bindings.CorDocAttachView1.rangeSize}"
+                        emptyText="#{rs.common_label_table_no_data}"
+                        fetchSize="#{bindings.CorDocAttachView1.rangeSize}"
+                        rowBandingInterval="0"
+                        selectedRowKeys="#{bindings.CorDocAttachView1.collectionModel.selectedRow}"
+                        selectionListener="#{bindings.CorDocAttachView1.collectionModel.makeCurrent}"
+                        rowSelection="single" id="attachT1"
+                        styleClass="AFStretchWidth" columnStretching="column:c1"
+                        partialTriggers="::cb1" inlineStyle="height:210px;">
+                <af:column sortProperty="#{bindings.CorDocAttachView1.hints.AttachNo.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocAttachView1.hints.AttachNo.label}"
+                           id="c2" width="100" align="center">
+                  <af:outputText value="#{row.bindings.AttachNo.inputValue}"
+                                 shortDesc="#{bindings.CorDocAttachView1.hints.AttachNo.tooltip}"
+                                 id="it5">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.CorDocAttachView1.hints.AttachNo.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocAttachView1.hints.AttachDesc.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocAttachView1.hints.AttachDesc.label}"
+                           id="c1" noWrap="false" align="center">
+                  <af:outputText value="#{row.bindings.AttachDesc.inputValue}"
+                                 shortDesc="#{bindings.CorDocAttachView1.hints.AttachDesc.tooltip}"
+                                 id="it4"/>
+                </af:column>
+                <af:column id="c3" width="25" align="center">
+                  <af:commandLink id="editCl">
+                    <af:image source="/images/edit.png" id="i1"/>
+                    <af:showPopupBehavior popupId="::addEditAttachP1"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="c4" width="25" align="center">
+                  <af:commandLink id="commandLink1">
+                    <af:image source="/images/delete.gif" id="image1"/>
+                    <af:showPopupBehavior popupId="::deleteAttachP2"/>
+                  </af:commandLink>
+                </af:column>
+              </af:table>
+            </af:showDetailItem>
+            <af:showDetailItem id="sdi1" text="#{rs.details_title}"
+                               rendered="#{pageFlowScope.pageTypeFlag != 'add'}">
+              <af:commandButton icon="/images/add.png"
+                                action="#{pageFlowScope.docsClassSubBean.createDetailAction}"
+                                id="cb3"/>
+              <af:spacer height="5px" id="s6"/>
+              <af:table value="#{bindings.CorDocDetailView1.collectionModel}"
+                        var="row" rows="#{bindings.CorDocDetailView1.rangeSize}"
+                        emptyText="#{rs.common_label_table_no_data}"
+                        fetchSize="#{bindings.CorDocDetailView1.rangeSize}"
+                        rowBandingInterval="0"
+                        selectedRowKeys="#{bindings.CorDocDetailView1.collectionModel.selectedRow}"
+                        selectionListener="#{bindings.CorDocDetailView1.collectionModel.makeCurrent}"
+                        rowSelection="single" id="detailT1"
+                        partialTriggers="::cb3" styleClass="AFStretchWidth"
+                        columnStretching="column:c17">
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.LineNo.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.LineNo.label}"
+                           id="c7" width="50" noWrap="false" align="center">
+                  <af:outputText value="#{row.bindings.LineNo.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.LineNo.tooltip}"
+                                 id="it18">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.CorDocDetailView1.hints.LineNo.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.UserId.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.UserId.label}"
+                           id="c13" width="75" noWrap="false" align="center">
+                  <af:outputText value="#{row.bindings.UserId.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.UserId.tooltip}"
+                                 id="it22">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.CorDocDetailView1.hints.UserId.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.UserName.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.UserName.label}"
+                           id="c10" width="100" noWrap="false" align="center">
+                  <af:outputText value="#{row.bindings.UserName.inputValue}"
+                                 id="it29"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.JoinId.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.JoinId.label}"
+                           id="c12" width="50" noWrap="false" align="center"
+                           rendered="false">
+                  <af:outputText value="#{row.bindings.JoinId.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.JoinId.tooltip}"
+                                 id="it19">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.CorDocDetailView1.hints.JoinId.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.JoinName.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.JoinName.label}"
+                           id="c14" width="100" noWrap="false" align="center">
+                  <af:outputText value="#{row.bindings.JoinName.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.JoinName.tooltip}"
+                                 id="ot4"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.ProgId.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.ProgId.label}"
+                           id="c8" width="50" noWrap="false" align="center"
+                           rendered="false">
+                  <af:outputText value="#{row.bindings.ProgId.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.ProgId.tooltip}"
+                                 id="it16">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.CorDocDetailView1.hints.ProgId.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.ProgName.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.ProgName.label}"
+                           id="c17" width="110" noWrap="false" align="center">
+                  <af:outputText value="#{row.bindings.ProgName.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.ProgName.tooltip}"
+                                 id="ot5"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.CountryId.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.CountryId.label}"
+                           id="c11" width="50" noWrap="false" align="center"
+                           rendered="false">
+                  <af:outputText value="#{row.bindings.CountryId.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.CountryId.tooltip}"
+                                 id="it15">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.CorDocDetailView1.hints.CountryId.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.CountryName.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.CountryName.label}"
+                           id="c18" width="100" noWrap="false" align="center">
+                  <af:outputText value="#{row.bindings.CountryName.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.CountryName.tooltip}"
+                                 id="ot6"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.AccId.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.AccId.label}"
+                           id="c6" width="75" noWrap="false" align="center">
+                  <af:outputText value="#{row.bindings.AccId.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.AccId.tooltip}"
+                                 id="it21">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.CorDocDetailView1.hints.AccId.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.AccName.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.AccName.label}"
+                           id="c19" width="120" noWrap="false" align="center">
+                  <af:outputText value="#{row.bindings.AccName.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.AccName.tooltip}"
+                                 id="ot7"/>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.EmpNo.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.EmpNo.label}"
+                           id="c5" width="50" noWrap="false" align="center"
+                           rendered="false">
+                  <af:outputText value="#{row.bindings.EmpNo.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.EmpNo.tooltip}"
+                                 id="it20">
+                    <af:convertNumber groupingUsed="false"
+                                      pattern="#{bindings.CorDocDetailView1.hints.EmpNo.format}"/>
+                  </af:outputText>
+                </af:column>
+                <af:column sortProperty="#{bindings.CorDocDetailView1.hints.EmpName.name}"
+                           sortable="true"
+                           headerText="#{bindings.CorDocDetailView1.hints.EmpName.label}"
+                           id="c20" width="100" noWrap="false" align="center">
+                  <af:outputText value="#{row.bindings.EmpName.inputValue}"
+                                 shortDesc="#{bindings.CorDocDetailView1.hints.EmpName.tooltip}"
+                                 id="ot8"/>
+                </af:column>
+                <af:column id="c15" width="25" align="center">
+                  <af:commandLink id="cl1">
+                    <af:image source="/images/edit.png" id="i2"/>
+                    <af:showPopupBehavior popupId="::addEditDetailP1"/>
+                  </af:commandLink>
+                </af:column>
+                <af:column id="c16" width="25" align="center">
+                  <af:commandLink id="cl2">
+                    <af:image source="/images/delete.gif" id="i3"/>
+                    <af:showPopupBehavior popupId="::deleteDetailP2"/>
+                  </af:commandLink>
+                </af:column>
+              </af:table>
+            </af:showDetailItem>
+          </af:panelTabbed>
+          <af:popup id="addEditAttachP1"
+                    popupCanceledListener="#{pageFlowScope.docsClassSubBean.cancelAttachListener}"
+                    contentDelivery="lazyUncached"
+                    binding="#{pageFlowScope.docsClassSubBean.attachPopup}">
+            <af:dialog id="d1" title="#{rs.attach_dialog_title}"
+                       closeIconVisible="false"
+                       dialogListener="#{pageFlowScope.docsClassSubBean.saveListener}">
+              <af:panelFormLayout id="pfl2">
+                <af:inputText value="#{bindings.Id.inputValue}"
+                              label="#{bindings.Id.hints.label}"
+                              required="#{bindings.Id.hints.mandatory}"
+                              columns="#{bindings.Id.hints.displayWidth}"
+                              maximumLength="#{bindings.Id.hints.precision}"
+                              shortDesc="#{bindings.Id.hints.tooltip}" id="it9"
+                              rendered="false">
+                  <f:validator binding="#{bindings.Id.validator}"/>
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.Id.format}"/>
+                </af:inputText>
+                <af:inputText value="#{bindings.AttachNo.inputValue}"
+                              label="#{bindings.AttachNo.hints.label}"
+                              required="#{bindings.AttachNo.hints.mandatory}"
+                              columns="#{bindings.AttachNo.hints.displayWidth}"
+                              maximumLength="#{bindings.AttachNo.hints.precision}"
+                              shortDesc="#{bindings.AttachNo.hints.tooltip}"
+                              id="it12" contentStyle="width:100px !important;">
+                  <f:validator binding="#{bindings.AttachNo.validator}"/>
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.AttachNo.format}"/>
+                </af:inputText>
+                <af:inputText value="#{bindings.AttachDesc.inputValue}"
+                              label="#{bindings.AttachDesc.hints.label}"
+                              required="true"
+                              columns="#{bindings.AttachDesc.hints.displayWidth}"
+                              maximumLength="#{bindings.AttachDesc.hints.precision}"
+                              shortDesc="#{bindings.AttachDesc.hints.tooltip}"
+                              id="it13" contentStyle="width:300px !important;"
+                              rows="3">
+                  <f:validator binding="#{bindings.AttachDesc.validator}"/>
+                </af:inputText>
+              </af:panelFormLayout>
+            </af:dialog>
+          </af:popup>
+          <af:popup id="deleteAttachP2" contentDelivery="lazyUncached">
+            <af:dialog id="d2" title="#{rs.attach_dialog_deleteTitle}"
+                       dialogListener="#{pageFlowScope.docsClassSubBean.deleteAttachDialogListener}"
+                       closeIconVisible="false">
+              <af:panelGroupLayout id="pg" layout="horizontal">
+                <af:outputText value="#{rs['common_delete_Message']}"
+                               id="outputText1"
+                               inlineStyle="color:Red; font-size:small;"/>
+                <af:spacer width="5" height="10" id="s2"/>
+                <af:outputText value="#{bindings.AttachNo.inputValue}" id="ot20"
+                               inlineStyle="color:Red; font-size:small;"/>
+                <af:outputText value=" ?" id="outputText3"
+                               inlineStyle="color:Red; font-size:small;"/>
+              </af:panelGroupLayout>
+            </af:dialog>
+          </af:popup>
+          <af:popup id="addEditDetailP1"
+                    popupCanceledListener="#{pageFlowScope.docsClassSubBean.cancelDetailListener}"
+                    contentDelivery="lazyUncached"
+                    binding="#{pageFlowScope.docsClassSubBean.detailPopup}">
+            <af:dialog id="d3" title="#{rs.docDetail_dialog_title}"
+                       closeIconVisible="false"
+                       dialogListener="#{pageFlowScope.docsClassSubBean.saveListener}"
+                       clientComponent="true">
+              <af:panelFormLayout id="pfl3" rows="4">
+                <af:inputText value="#{bindings.LineNo.inputValue}"
+                              label="#{bindings.LineNo.hints.label}"
+                              required="#{bindings.LineNo.hints.mandatory}"
+                              columns="#{bindings.LineNo.hints.displayWidth}"
+                              maximumLength="#{bindings.LineNo.hints.precision}"
+                              shortDesc="#{bindings.LineNo.hints.tooltip}"
+                              id="it24" contentStyle="width:175px !important;">
+                  <f:validator binding="#{bindings.LineNo.validator}"/>
+                  <af:convertNumber groupingUsed="false"
+                                    pattern="#{bindings.LineNo.format}"/>
+                </af:inputText>
+                <af:panelLabelAndMessage label="#{bindings.UserId.hints.label}"
+                                         partialTriggers="userIdId" id="plam3">
+                  <af:panelGroupLayout layout="horizontal" id="pgl6">
+                    <af:inputListOfValues id="userIdId"
+                                          popupTitle="#{rs.common_label_search_select} #{bindings.UserId.hints.label}"
+                                          value="#{bindings.UserId.inputValue}"
+                                          model="#{bindings.UserId.listOfValuesModel}"
+                                          required="#{bindings.UserId.hints.mandatory}"
+                                          columns="#{bindings.UserId.hints.displayWidth}"
+                                          shortDesc="#{bindings.UserId.hints.tooltip}"
+                                          autoSubmit="true"
+                                          contentStyle="width:75px !important;">
+                      <f:validator binding="#{bindings.UserId.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.UserId.format}"/>
+                    </af:inputListOfValues>
+                    <af:inputText value="#{bindings.UserName.inputValue}"
+                                  simple="true"
+                                  required="#{bindings.UserName.hints.mandatory}"
+                                  columns="#{bindings.UserName.hints.displayWidth}"
+                                  maximumLength="#{bindings.UserName.hints.precision}"
+                                  shortDesc="#{bindings.UserName.hints.tooltip}"
+                                  id="it25" disabled="true"
+                                  contentStyle="width:175px !important;">
+                      <f:validator binding="#{bindings.UserName.validator}"/>
+                    </af:inputText>
+                  </af:panelGroupLayout>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="#{bindings.CountryId.hints.label}"
+                                         partialTriggers="countryIdId"
+                                         id="plam5">
+                  <af:panelGroupLayout layout="horizontal" id="pgl7">
+                    <af:inputListOfValues id="countryIdId"
+                                          popupTitle="#{rs.common_label_search_select} #{bindings.CountryId.hints.label}"
+                                          value="#{bindings.CountryId.inputValue}"
+                                          model="#{bindings.CountryId.listOfValuesModel}"
+                                          required="#{bindings.CountryId.hints.mandatory}"
+                                          columns="#{bindings.CountryId.hints.displayWidth}"
+                                          shortDesc="#{bindings.CountryId.hints.tooltip}"
+                                          autoSubmit="true"
+                                          contentStyle="width:75px !important;">
+                      <f:validator binding="#{bindings.CountryId.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.CountryId.format}"/>
+                    </af:inputListOfValues>
+                    <af:inputText value="#{bindings.CountryName.inputValue}"
+                                  simple="true"
+                                  required="#{bindings.CountryName.hints.mandatory}"
+                                  columns="#{bindings.CountryName.hints.displayWidth}"
+                                  maximumLength="#{bindings.CountryName.hints.precision}"
+                                  shortDesc="#{bindings.CountryName.hints.tooltip}"
+                                  id="it23" disabled="true"
+                                  contentStyle="width:175px !important;">
+                      <f:validator binding="#{bindings.CountryName.validator}"/>
+                    </af:inputText>
+                  </af:panelGroupLayout>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="#{bindings.JoinId.hints.label}"
+                                         partialTriggers="joinIdId" id="plam6">
+                  <af:panelGroupLayout layout="horizontal" id="pgl8">
+                    <af:inputListOfValues id="joinIdId"
+                                          popupTitle="#{rs.common_label_search_select} #{bindings.JoinId.hints.label}"
+                                          value="#{bindings.JoinId.inputValue}"
+                                          model="#{bindings.JoinId.listOfValuesModel}"
+                                          required="#{bindings.JoinId.hints.mandatory}"
+                                          columns="#{bindings.JoinId.hints.displayWidth}"
+                                          shortDesc="#{bindings.JoinId.hints.tooltip}"
+                                          contentStyle="width:75px !important;">
+                      <f:validator binding="#{bindings.JoinId.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.JoinId.format}"/>
+                    </af:inputListOfValues>
+                    <af:inputText value="#{bindings.JoinName.inputValue}"
+                                  simple="true"
+                                  required="#{bindings.JoinName.hints.mandatory}"
+                                  columns="#{bindings.JoinName.hints.displayWidth}"
+                                  maximumLength="#{bindings.JoinName.hints.precision}"
+                                  shortDesc="#{bindings.JoinName.hints.tooltip}"
+                                  id="it26" disabled="true"
+                                  contentStyle="width:175px !important;">
+                      <f:validator binding="#{bindings.JoinName.validator}"/>
+                    </af:inputText>
+                  </af:panelGroupLayout>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="#{bindings.ProgId1.hints.label}"
+                                         partialTriggers="progId1Id" id="plam7">
+                  <af:panelGroupLayout layout="horizontal" id="pgl9">
+                    <af:inputListOfValues id="progId1Id"
+                                          popupTitle="#{rs.common_label_search_select} #{bindings.ProgId1.hints.label}"
+                                          value="#{bindings.ProgId1.inputValue}"
+                                          model="#{bindings.ProgId1.listOfValuesModel}"
+                                          required="#{bindings.ProgId1.hints.mandatory}"
+                                          columns="#{bindings.ProgId1.hints.displayWidth}"
+                                          shortDesc="#{bindings.ProgId1.hints.tooltip}"
+                                          autoSubmit="true"
+                                          contentStyle="width:75px !important;">
+                      <f:validator binding="#{bindings.ProgId1.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.ProgId1.format}"/>
+                    </af:inputListOfValues>
+                    <af:inputText value="#{bindings.ProgName.inputValue}"
+                                  simple="true"
+                                  required="#{bindings.ProgName.hints.mandatory}"
+                                  columns="#{bindings.ProgName.hints.displayWidth}"
+                                  maximumLength="#{bindings.ProgName.hints.precision}"
+                                  shortDesc="#{bindings.ProgName.hints.tooltip}"
+                                  id="it27" disabled="true"
+                                  contentStyle="width:175px !important;">
+                      <f:validator binding="#{bindings.ProgName.validator}"/>
+                    </af:inputText>
+                  </af:panelGroupLayout>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="#{bindings.EmpNo.hints.label}"
+                                         partialTriggers="empNoId" id="plam8">
+                  <af:panelGroupLayout layout="horizontal" id="pgl10">
+                    <af:inputListOfValues id="empNoId"
+                                          popupTitle="#{rs.common_label_search_select} #{bindings.EmpNo.hints.label}"
+                                          value="#{bindings.EmpNo.inputValue}"
+                                          model="#{bindings.EmpNo.listOfValuesModel}"
+                                          required="#{bindings.EmpNo.hints.mandatory}"
+                                          columns="#{bindings.EmpNo.hints.displayWidth}"
+                                          shortDesc="#{bindings.EmpNo.hints.tooltip}"
+                                          autoSubmit="true"
+                                          contentStyle="width:75px !important;">
+                      <f:validator binding="#{bindings.EmpNo.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.EmpNo.format}"/>
+                    </af:inputListOfValues>
+                    <af:inputText value="#{bindings.EmpName.inputValue}"
+                                  simple="true"
+                                  required="#{bindings.EmpName.hints.mandatory}"
+                                  columns="#{bindings.EmpName.hints.displayWidth}"
+                                  maximumLength="#{bindings.EmpName.hints.precision}"
+                                  shortDesc="#{bindings.EmpName.hints.tooltip}"
+                                  id="it28" disabled="true"
+                                  contentStyle="width:175px !important;">
+                      <f:validator binding="#{bindings.EmpName.validator}"/>
+                    </af:inputText>
+                  </af:panelGroupLayout>
+                </af:panelLabelAndMessage>
+                <af:panelLabelAndMessage label="#{bindings.AccId1.hints.label}"
+                                         partialTriggers="accId1Id progId1Id"
+                                         id="plam4">
+                  <af:panelGroupLayout layout="horizontal" id="pgl5">
+                    <af:inputListOfValues id="accId1Id"
+                                          popupTitle="#{rs.common_label_search_select} #{bindings.AccId1.hints.label}"
+                                          value="#{bindings.AccId1.inputValue}"
+                                          model="#{bindings.AccId1.listOfValuesModel}"
+                                          required="#{bindings.AccId1.hints.mandatory}"
+                                          columns="#{bindings.AccId1.hints.displayWidth}"
+                                          shortDesc="#{bindings.AccId1.hints.tooltip}"
+                                          autoSubmit="true"
+                                          contentStyle="width:75px !important;">
+                      <f:validator binding="#{bindings.AccId1.validator}"/>
+                      <af:convertNumber groupingUsed="false"
+                                        pattern="#{bindings.AccId1.format}"/>
+                    </af:inputListOfValues>
+                    <af:inputText value="#{bindings.AccName.inputValue}"
+                                  simple="true"
+                                  required="#{bindings.AccName.hints.mandatory}"
+                                  columns="#{bindings.AccName.hints.displayWidth}"
+                                  maximumLength="#{bindings.AccName.hints.precision}"
+                                  shortDesc="#{bindings.AccName.hints.tooltip}"
+                                  id="it31" disabled="true"
+                                  contentStyle="width:175px !important;">
+                      <f:validator binding="#{bindings.AccName.validator}"/>
+                    </af:inputText>
+                  </af:panelGroupLayout>
+                </af:panelLabelAndMessage>
+              </af:panelFormLayout>
+            </af:dialog>
+          </af:popup>
+          <af:popup id="deleteDetailP2" contentDelivery="lazyUncached">
+            <af:dialog id="d4" title="#{rs.detail_dialog_deleteTitle}"
+                       dialogListener="#{pageFlowScope.docsClassSubBean.deleteDetailDialogListener}"
+                       closeIconVisible="false">
+              <af:panelGroupLayout id="pgl4" layout="horizontal">
+                <af:outputText value="#{rs['common_delete_Message']}" id="ot1"
+                               inlineStyle="color:Red; font-size:small;"/>
+                <af:spacer width="5" height="10" id="s3"/>
+                <af:outputText value="#{bindings.LineNo.inputValue}" id="ot2"
+                               inlineStyle="color:Red; font-size:small;"/>
+                <af:outputText value=" ?" id="ot3"
+                               inlineStyle="color:Red; font-size:small;"/>
+              </af:panelGroupLayout>
+            </af:dialog>
+          </af:popup>
+        </af:group>
+      </f:facet>
+      <f:facet name="MasterToolbar">
+        <af:panelGroupLayout layout="horizontal" id="pgl12">
+          <af:commandButton actionListener="#{bindings.Commit.execute}"
+                            icon="/images/save.png"
+                            text="#{rs.common_button_save}"
+                            partialSubmit="true"
+                            action="#{pageFlowScope.docsClassSubBean.afterSaveProcessing}"
+                            id="cb4"/>
+          <af:spacer width="5px" id="s1"/>
+          <af:commandButton icon="/images/arrow_undo.png"
+                            actionListener="#{bindings.Rollback.execute}"
+                            action="back" text="#{rs.bankBranch_buttonBankBack}"
+                            immediate="true" id="cb6"/>
+        </af:panelGroupLayout>
+      </f:facet>
+      <f:facet name="DetailToolbar"/>
+      <f:facet name="PageFooter">
+        <af:panelGroupLayout layout="horizontal" id="pgl11" halign="center" rendered="false">
+          <af:commandButton actionListener="#{bindings.Commit.execute}"
+                            icon="/images/save.png"
+                            text="#{rs.common_button_save}" id="saveBtn"
+                            partialSubmit="true"
+                            action="#{pageFlowScope.docsClassSubBean.afterSaveProcessing}"/>
+          <af:spacer width="5px" id="s4"/>
+          <af:commandButton action="#{pageFlowScope.docsClassSubBean.cancelDocChanges}"
+                            icon="/images/cancel.gif"
+                            text="#{rs.common_button_cancel}" id="cb2"
+                            disabled="#{bindings.Id1.inputValue == null}"
+                            partialTriggers="saveBtn" immediate="true"
+                            rendered="false">
+            <af:resetActionListener/>
+          </af:commandButton>
+          <af:spacer width="5px" id="s5"/>
+          <af:commandButton id="ctb1" icon="/images/arrow_undo.png"
+                            actionListener="#{bindings.Rollback.execute}"
+                            action="back" text="#{rs.bankBranch_buttonBankBack}"
+                            immediate="true"/>
+        </af:panelGroupLayout>
+      </f:facet>
+    </af:pageTemplate>
+  </af:panelGroupLayout>
+</jsp:root>

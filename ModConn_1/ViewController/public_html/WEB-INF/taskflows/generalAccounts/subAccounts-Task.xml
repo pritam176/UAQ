@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="subAccounts-Task">
+    <default-activity id="__1">subAccounts</default-activity>
+    <managed-bean id="__24">
+      <managed-bean-name id="__23">subAccountsUpdatableBean</managed-bean-name>
+      <managed-bean-class id="__22">com.mod.financial.view.managed.accounts.SubAccountsUpdatable</managed-bean-class>
+      <managed-bean-scope id="__21">request</managed-bean-scope>
+    </managed-bean>
+    <view id="subAccounts">
+      <page>/fragments/generalAccounts/subAccounts.jsff</page>
+    </view>
+    <view id="subAccountsUpdatable">
+      <page>/fragments/generalAccounts/subAccountsUpdatable.jsff</page>
+    </view>
+    <method-call id="CreateInsertsubAccounts">
+      <method>#{bindings.CreateInsert.execute}</method>
+      <outcome id="__2">
+        <fixed-outcome>CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__3">
+      <from-activity-id id="__4">subAccounts</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome id="__7">new</from-outcome>
+        <to-activity-id id="__6">CreateInsertsubAccounts</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__8">
+        <from-outcome id="__10">update</from-outcome>
+        <to-activity-id id="__9">subAccountsUpdatable</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__11">
+      <from-activity-id id="__12">CreateInsertsubAccounts</from-activity-id>
+      <control-flow-case id="__13">
+        <from-outcome id="__15">CreateInsert</from-outcome>
+        <to-activity-id id="__14">subAccountsUpdatable</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__16">
+      <from-activity-id id="__17">subAccountsUpdatable</from-activity-id>
+      <control-flow-case id="__19">
+        <from-outcome id="__20">back</from-outcome>
+        <to-activity-id id="__18">subAccounts</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

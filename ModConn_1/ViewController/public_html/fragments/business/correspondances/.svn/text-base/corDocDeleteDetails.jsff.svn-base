@@ -1,0 +1,150 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt4">
+    <f:facet name="Master">
+      <af:group id="g3">
+      <af:panelGroupLayout layout="horizontal" id="pgl4">
+        <af:panelFormLayout id="pfl1">
+          <af:panelGroupLayout layout="horizontal" id="pgl3">
+            <af:inputListOfValues id="sectionIdLovId"
+                                  label="#{bindings.SectionIdLov.hints.label}"
+                                  popupTitle="#{rs.common_label_search_select} #{bindings.SectionIdLov.hints.label}"
+                                  value="#{bindings.SectionIdLov.inputValue}"
+                                  model="#{bindings.SectionIdLov.listOfValuesModel}"
+                                  required="true"
+                                  columns="#{bindings.SectionIdLov.hints.displayWidth}"
+                                  shortDesc="#{bindings.SectionIdLov.hints.tooltip}"
+                                  autoSubmit="true"
+                                  contentStyle="width:75px !important;"
+                                  valueChangeListener="#{viewScope.docDeleteDetailsBean.onSectionChange}">
+              <f:validator binding="#{bindings.SectionIdLov.validator}"/>
+            </af:inputListOfValues>
+            <af:spacer width="5px;" id="s2"/>
+            <af:inputText value="#{bindings.SectionName.inputValue}"
+                          simple="true"
+                          required="#{bindings.SectionName.hints.mandatory}"
+                          columns="#{bindings.SectionName.hints.displayWidth}"
+                          maximumLength="#{bindings.SectionName.hints.precision}"
+                          shortDesc="#{bindings.SectionName.hints.tooltip}"
+                          id="it2" disabled="true"
+                          contentStyle="width:200px !important;">
+              <f:validator binding="#{bindings.SectionName.validator}"/>
+            </af:inputText>
+          </af:panelGroupLayout>
+          <af:panelGroupLayout layout="horizontal" id="pgl2">
+            <af:inputListOfValues id="subjIdLovId"
+                                  label="#{bindings.SubjIdLov.hints.label}"
+                                  popupTitle="#{rs.common_label_search_select} #{bindings.SubjIdLov.hints.label}"
+                                  value="#{bindings.SubjIdLov.inputValue}"
+                                  model="#{bindings.SubjIdLov.listOfValuesModel}"
+                                  required="true"
+                                  columns="#{bindings.SubjIdLov.hints.displayWidth}"
+                                  shortDesc="#{bindings.SubjIdLov.hints.tooltip}"
+                                  autoSubmit="true"
+                                  contentStyle="width:75px !important;"
+                                  valueChangeListener="#{viewScope.docDeleteDetailsBean.onSubjectChange}">
+              <f:validator binding="#{bindings.SubjIdLov.validator}"/>
+            </af:inputListOfValues>
+            <af:spacer width="5px;" id="s3"/>
+            <af:inputText value="#{bindings.SubjectName.inputValue}"
+                          simple="true"
+                          required="#{bindings.SubjectName.hints.mandatory}"
+                          columns="#{bindings.SubjectName.hints.displayWidth}"
+                          maximumLength="#{bindings.SubjectName.hints.precision}"
+                          shortDesc="#{bindings.SubjectName.hints.tooltip}"
+                          id="it3" disabled="true"
+                          contentStyle="width:200px !important;">
+              <f:validator binding="#{bindings.SubjectName.validator}"/>
+            </af:inputText>
+          </af:panelGroupLayout>
+        </af:panelFormLayout>
+        <af:panelFormLayout id="pfl4">
+          <af:inputListOfValues id="docRefId"
+                                popupTitle="#{rs.common_label_search_select} #{bindings.DocRef.hints.label}"
+                                value="#{bindings.DocRef.inputValue}"
+                                label="#{bindings.DocRef.hints.label}"
+                                model="#{bindings.DocRef.listOfValuesModel}"
+                                required="true"
+                                columns="#{bindings.DocRef.hints.displayWidth}"
+                                shortDesc="#{bindings.DocRef.hints.tooltip}"
+                                autoSubmit="true"
+                                contentStyle="width:150px !important;" 
+                                  valueChangeListener="#{viewScope.docDeleteDetailsBean.onDocRefChange}">
+            <f:validator binding="#{bindings.DocRef.validator}"/>
+          </af:inputListOfValues>
+          <af:inputText label="#{rs.LINE_NO}" id="it7"
+                        binding="#{viewScope.docDeleteDetailsBean.lineNoIt}"
+                        autoSubmit="true" required="true" 
+                                  valueChangeListener="#{viewScope.docDeleteDetailsBean.onLineNoChange}"/>
+        </af:panelFormLayout>
+        </af:panelGroupLayout>
+        <af:panelFormLayout id="pfl2" partialTriggers="it7 docRefId subjIdLovId sectionIdLovId">
+          <f:facet name="footer"/>
+          <af:panelLabelAndMessage id="plam4"
+                                   label="#{bindings.JoinId.hints.label}">
+            <af:panelGroupLayout id="pgl0" layout="horizontal">
+              <af:inputText value="#{viewScope.docDeleteDetailsBean.joinId}" simple="true"
+                            required="#{bindings.JoinId.hints.mandatory}"
+                            columns="#{bindings.JoinId.hints.displayWidth}"
+                            maximumLength="#{bindings.JoinId.hints.precision}"
+                            shortDesc="#{bindings.JoinId.hints.tooltip}"
+                            id="it6" disabled="true"
+                          contentStyle="width:75px !important;">
+                <f:validator binding="#{bindings.JoinId.validator}"/>
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.JoinId.format}"/>
+              </af:inputText>
+              <af:spacer width="5px;" id="s5"/>
+              <af:inputText value="#{viewScope.docDeleteDetailsBean.joinName}" simple="true"
+                            required="#{bindings.Name.hints.mandatory}"
+                            columns="#{bindings.Name.hints.displayWidth}"
+                            maximumLength="#{bindings.Name.hints.precision}"
+                            shortDesc="#{bindings.Name.hints.tooltip}" id="it1" disabled="true"
+                                contentStyle="width:200px !important;" >
+                <f:validator binding="#{bindings.Name.validator}"/>
+              </af:inputText>
+            </af:panelGroupLayout>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage id="plam1"
+                                   label="#{bindings.Name.hints.label}">
+            <af:panelGroupLayout layout="horizontal" id="pgl1">
+              <af:inputText value="#{viewScope.docDeleteDetailsBean.empNo}" simple="true"
+                            required="#{bindings.EmpNo.hints.mandatory}"
+                            columns="#{bindings.EmpNo.hints.displayWidth}"
+                            maximumLength="#{bindings.EmpNo.hints.precision}"
+                            shortDesc="#{bindings.EmpNo.hints.tooltip}"
+                            id="it5" disabled="true"
+                          contentStyle="width:75px !important;">
+                <f:validator binding="#{bindings.EmpNo.validator}"/>
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.EmpNo.format}"/>
+              </af:inputText>
+              <af:spacer width="5px;" id="s1"/>
+              <af:inputText value="#{viewScope.docDeleteDetailsBean.empName}" simple="true"
+                            required="#{bindings.EmpName.hints.mandatory}"
+                            columns="#{bindings.EmpName.hints.displayWidth}"
+                            maximumLength="#{bindings.EmpName.hints.precision}"
+                            shortDesc="#{bindings.EmpName.hints.tooltip}"
+                            id="it4" disabled="true"
+                                contentStyle="width:200px !important;">
+                <f:validator binding="#{bindings.EmpName.validator}"/>
+              </af:inputText>
+            </af:panelGroupLayout>
+          </af:panelLabelAndMessage>
+        </af:panelFormLayout>
+      </af:group>
+    </f:facet>
+    <f:facet name="MasterToolbar">
+      <af:panelGroupLayout layout="horizontal" id="pgl12">
+        <af:commandButton icon="/images/save.png" text="#{rs.DELETE_LINE}"
+                          id="cb4"
+                          action="#{viewScope.docDeleteDetailsBean.deleteDetails}"/>
+        <af:spacer width="5px" id="s4"/>
+        <af:commandButton id="cb6" icon="/images/arrow_undo.png"
+                          text="#{rs.common_label_reassign}"/>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

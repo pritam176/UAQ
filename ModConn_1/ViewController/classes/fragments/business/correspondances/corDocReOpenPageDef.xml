@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="corDocReOpenPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CommonModule.CommonLovVO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CommonLovVO1Iterator"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_SectionIdLov" id="SectionIdLov"/>
+    <attributeValues IterBinding="CommonLovVO1Iterator" id="SectionName">
+      <AttrNames>
+        <Item Value="SectionName"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_SubjIdLov" id="SubjIdLov"/>
+    <attributeValues IterBinding="CommonLovVO1Iterator" id="SubjectName">
+      <AttrNames>
+        <Item Value="SubjectName"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_DocRef" id="DocRef"/>
+    <methodAction id="callUpdateDocsStatusFunction" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="callUpdateDocsStatusFunction"
+                  IsViewObjectMethod="false" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.CorresModule"
+                  ReturnName="data.ModModuleDataControl.methodResults.callUpdateDocsStatusFunction_ModModuleDataControl_dataProvider_Root_CorresModule_callUpdateDocsStatusFunction_result">
+      <NamedData NDName="userId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="docRef" NDType="java.lang.String"/>
+      <NamedData NDName="recvDate" NDType="java.util.Date"/>
+      <NamedData NDName="docDate" NDType="java.util.Date"/>
+      <NamedData NDName="sectionId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="subjectId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="lang" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

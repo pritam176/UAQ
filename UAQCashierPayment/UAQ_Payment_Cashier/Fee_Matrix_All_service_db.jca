@@ -1,0 +1,25 @@
+<adapter-config name="Fee_Matrix_All_service" adapter="Database Adapter" wsdlLocation="Fee_Matrix_All_service.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/uaqsoa_db" UIConnectionName="DevDB" adapterRef=""/>
+  <endpoint-interaction portType="Fee_Matrix_All_service_ptt" operation="merge">
+    <interaction-spec className="oracle.tip.adapter.db.DBWriteInteractionSpec">
+      <property name="DescriptorName" value="Fee_Matrix_All_service.EserviceFeeMatrix"/>
+      <property name="DmlType" value="merge"/>
+      <property name="MappingsMetaDataURL" value="Fee_Matrix_All_service-or-mappings.xml"/>
+      <property name="OptimizeMerge" value="true"/>
+      <property name="DetectOmissions" value="true"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+  <endpoint-interaction portType="Fee_Matrix_All_service_ptt" operation="Fee_Matrix_All_serviceSelect">
+    <interaction-spec className="oracle.tip.adapter.db.DBReadInteractionSpec">
+      <property name="DescriptorName" value="Fee_Matrix_All_service.EserviceFeeMatrix"/>
+      <property name="QueryName" value="Fee_Matrix_All_serviceSelect"/>
+      <property name="MappingsMetaDataURL" value="Fee_Matrix_All_service-or-mappings.xml"/>
+      <property name="ReturnSingleResultSet" value="false"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

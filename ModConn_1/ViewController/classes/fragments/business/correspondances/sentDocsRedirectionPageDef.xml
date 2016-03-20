@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="sentDocsRedirectionPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.SentDocsMasterView1.variablesMap.P_DEPT_NO"
+                     Name="ExecuteWithParams_P_DEPT_NO" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.SentDocsMasterView1.variablesMap.P_CREATE_USER"
+                     Name="ExecuteWithParams_P_CREATE_USER"
+                     IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.SentDocsMasterView1.variablesMap.P_ACTIVE_USER"
+                     Name="ExecuteWithParams_P_ACTIVE_USER"
+                     IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.SentDocsMasterView1.variablesMap.pDocRef"
+                     Name="ExecuteWithParams_pDocRef" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.SentDocsMasterView1.variablesMap.pExecDate"
+                     Name="ExecuteWithParams_pExecDate" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.SentDocsMasterView1.variablesMap.pRcvDate"
+                     Name="ExecuteWithParams_pRcvDate" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.SentDocsMasterView1.variablesMap.pSectionId"
+                     Name="ExecuteWithParams_pSectionId" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.SentDocsMasterView1.variablesMap.pSubjId"
+                     Name="ExecuteWithParams_pSubjId" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.SentDocsMasterView1.variablesMap.pDocDest"
+                     Name="ExecuteWithParams_pDocDest" IsQueriable="false"/>
+    </variableIterator>
+    <iterator Binds="SentDocsMasterView1" RangeSize="25"
+              DataControl="CorresModuleDataControl"
+              id="SentDocsMasterView1Iterator"/>
+    <searchRegion Binds="SentDocsMasterView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="SentDocsMasterView1Query"/>
+    <iterator Binds="Root.CorresModule.SentDocsMasterView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="SentDocsMasterView1Iterator1"/>
+    <iterator Binds="Root.CommonModule.CommonLovVO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CommonLovVO1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="SentDocsMasterView1Iterator" id="SentDocsMasterView1">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.up.SentDocsMasterView"
+                      Name="SentDocsMasterView10">
+        <AttrNames>
+          <Item Value="SectionName"/>
+          <Item Value="DocRef1"/>
+          <Item Value="RcvDate"/>
+          <Item Value="ExecDate"/>
+          <Item Value="SubjName"/>
+          <Item Value="DocDest1"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <methodAction id="callExecuteSentDocsRedirectionFunction"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="callExecuteSentDocsRedirectionFunction"
+                  IsViewObjectMethod="false" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.CorresModule"
+                  ReturnName="data.ModModuleDataControl.methodResults.callExecuteSentDocsRedirectionFunction_ModModuleDataControl_dataProvider_Root_CorresModule_callExecuteSentDocsRedirectionFunction_result">
+      <NamedData NDName="docId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="lang" NDType="java.lang.String"/>
+      <NamedData NDName="userId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="docDest" NDType="java.lang.String"/>
+    </methodAction>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_DocDest" id="DocDest"/>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_SectionIdLov" id="SectionIdLov"/>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_SubjIdLov" id="SubjIdLov"/>
+    <attributeValues IterBinding="variables" id="P_DEPT_NO">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_P_DEPT_NO"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="P_CREATE_USER">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_P_CREATE_USER"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="P_ACTIVE_USER">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_P_ACTIVE_USER"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pDocRef">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pDocRef"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pRcvDate">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pRcvDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pSectionId">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pSectionId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pSubjId">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pSubjId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pDocDest">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pDocDest"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="SentDocsMasterView1Iterator1" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="P_DEPT_NO" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_P_DEPT_NO}"/>
+      <NamedData NDName="P_CREATE_USER" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_P_CREATE_USER}"/>
+      <NamedData NDName="P_ACTIVE_USER" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_P_ACTIVE_USER}"/>
+      <NamedData NDName="pDocRef" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_pDocRef}"/>
+      <NamedData NDName="pExecDate" NDType="oracle.jbo.domain.Date"
+                 NDValue="${bindings.ExecuteWithParams_pExecDate}"/>
+      <NamedData NDName="pRcvDate" NDType="oracle.jbo.domain.Date"
+                 NDValue="${bindings.ExecuteWithParams_pRcvDate}"/>
+      <NamedData NDName="pSectionId" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_pSectionId}"/>
+      <NamedData NDName="pSubjId" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_pSubjId}"/>
+      <NamedData NDName="pDocDest" NDType="java.lang.String"
+                 NDValue="${bindings.ExecuteWithParams_pDocDest}"/>
+    </action>
+    <attributeValues IterBinding="variables" id="pExecDate">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pExecDate"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

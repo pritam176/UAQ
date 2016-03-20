@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admAllowLeavesMainPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmLeavesViewRO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmLeavesViewRO1Iterator"/>
+    <searchRegion Criteria="AdmLeavesViewROCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmLeavesViewRO1Iterator"
+                  id="AdmLeavesViewROCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmLeavesViewRO1Iterator" id="AdmLeavesViewRO1">
+      <nodeDefinition DefName="com.mod.financial.model.salaries.views.ro.AdmLeavesViewRO"
+                      Name="AdmLeavesViewRO10">
+        <AttrNames>
+          <Item Value="LeaveName"/>
+          <Item Value="LeaveId"/>
+          <Item Value="CreateDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

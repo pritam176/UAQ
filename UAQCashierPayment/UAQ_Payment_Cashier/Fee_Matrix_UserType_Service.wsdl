@@ -1,0 +1,28 @@
+<?binding.jca Fee_Matrix_UserType_Service_db.jca?>
+<wsdl:definitions name="Fee_Matrix_UserType_Service" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/Fee_Matrix_UserType_Service" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/Fee_Matrix_UserType_Service" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/Fee_Matrix_UserType_Service">
+    <plt:partnerLinkType name="Fee_Matrix_UserType_Service_plt">
+        <plt:role name="Fee_Matrix_UserType_Service_role">
+            <plt:portType name="tns:Fee_Matrix_UserType_Service_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/Fee_Matrix_UserType_Service" schemaLocation="xsd/Fee_Matrix_UserType_Service_table.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="EserviceFeeMatrixCollection_msg">
+        <wsdl:part name="EserviceFeeMatrixCollection" element="top:EserviceFeeMatrixCollection"/>
+    </wsdl:message>
+    <wsdl:message name="Fee_Matrix_UserType_ServiceSelect_inputParameters">
+        <wsdl:part name="Fee_Matrix_UserType_ServiceSelect_inputParameters" element="top:Fee_Matrix_UserType_ServiceSelect_service_id_fee_type_code_user_typeInputParameters"/>
+    </wsdl:message>
+    <wsdl:portType name="Fee_Matrix_UserType_Service_ptt">
+        <wsdl:operation name="merge">
+            <wsdl:input message="tns:EserviceFeeMatrixCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="Fee_Matrix_UserType_ServiceSelect">
+            <wsdl:input message="tns:Fee_Matrix_UserType_ServiceSelect_inputParameters"/>
+            <wsdl:output message="tns:EserviceFeeMatrixCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

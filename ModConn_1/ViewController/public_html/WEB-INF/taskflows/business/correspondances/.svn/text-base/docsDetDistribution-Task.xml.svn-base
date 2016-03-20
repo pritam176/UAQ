@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="docsDetDistribution-Task">
+    <default-activity id="__1">setDocDestByUserDeptNo</default-activity>
+    <managed-bean id="__2">
+      <managed-bean-name id="__5">docsDetDistributionBean</managed-bean-name>
+      <managed-bean-class id="__3">com.mod.financial.view.managed.business.correspondances.DocsDetDistribution</managed-bean-class>
+      <managed-bean-scope id="__4">view</managed-bean-scope>
+    </managed-bean>
+    <view id="docsDetDistribution">
+      <page>/fragments/business/correspondances/docsDetDistribution.jsff</page>
+    </view>
+    <method-call id="setDocDestByUserDeptNo">
+      <method>#{viewScope.docsDetDistributionBean.setDocDestByUserDeptNo}</method>
+      <outcome id="__11">
+        <fixed-outcome>go</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__6">
+      <from-activity-id id="__7">setDocDestByUserDeptNo</from-activity-id>
+      <control-flow-case id="__8">
+        <from-outcome id="__10">go</from-outcome>
+        <to-activity-id id="__9">docsDetDistribution</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt4">
+    <f:facet name="Master">
+      <af:group id="g3">
+        <af:inputText value="#{bindings.pSheetNo.inputValue}"
+                      label="#{bindings.pSheetNo.hints.label}" required="true"
+                      columns="#{bindings.pSheetNo.hints.displayWidth}"
+                      maximumLength="#{bindings.pSheetNo.hints.precision}"
+                      shortDesc="#{bindings.pSheetNo.hints.tooltip}" id="it2">
+          <f:validator binding="#{bindings.pSheetNo.validator}"/>
+        </af:inputText>
+        <af:spacer width="10px" id="s2"/>
+        <af:panelGroupLayout layout="horizontal" id="pgl1">
+          <af:inputListOfValues id="userIdDocDeliveredId"
+                                popupTitle="#{rs.common_label_search_select} #{bindings.UserIdDocDelivered.hints.label}"
+                                label="#{bindings.UserIdDocDelivered.hints.label}"
+                                value="#{bindings.UserIdDocDelivered.inputValue}"
+                                model="#{bindings.UserIdDocDelivered.listOfValuesModel}"
+                                required="true"
+                                columns="#{bindings.UserIdDocDelivered.hints.displayWidth}"
+                                shortDesc="#{bindings.UserIdDocDelivered.hints.tooltip}"
+                                autoSubmit="true"
+                                contentStyle="width:75px !important;">
+            <f:validator binding="#{bindings.UserIdDocDelivered.validator}"/>
+          </af:inputListOfValues>
+          <af:inputText value="#{bindings.UserNameDocDelivered.inputValue}"
+                        simple="true"
+                        required="#{bindings.UserNameDocDelivered.hints.mandatory}"
+                        columns="#{bindings.UserNameDocDelivered.hints.displayWidth}"
+                        maximumLength="#{bindings.UserNameDocDelivered.hints.precision}"
+                        shortDesc="#{bindings.UserNameDocDelivered.hints.tooltip}"
+                        id="it1" disabled="true"
+                        partialTriggers="userIdDocDeliveredId"
+                        contentStyle="width:200px !important;">
+            <f:validator binding="#{bindings.UserNameDocDelivered.validator}"/>
+          </af:inputText>
+        </af:panelGroupLayout>
+      </af:group>
+    </f:facet>
+    <f:facet name="MasterToolbar">
+      <af:panelGroupLayout layout="horizontal" id="pgl12">
+        <af:commandButton actionListener="#{bindings.ExecuteWithParams.execute}"
+                          icon="/images/save.png"
+                          text="#{rs.cor_doc_delivered_save}" id="cb4"
+                          action="#{viewScope.corDocDeliveredBean.saveDocDelivered}"/>
+        <af:spacer width="5px" id="s1"/>
+        <af:commandButton text="#{rs.common_label_reassign}" id="cb2">
+          <f:setPropertyActionListener target="#{bindings.pSheetNo.inputValue}"
+                                       value=""/>
+          <f:setPropertyActionListener target="#{bindings.UserIdDocDelivered.inputValue}"
+                                       value=""/>
+        </af:commandButton>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

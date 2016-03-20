@@ -1,0 +1,131 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt4">
+    <f:facet name="Master">
+      <af:group id="g3">
+        <af:panelFormLayout id="pfl4" rows="3">
+          <af:inputDate label="#{rs.doc_date}" id="id1" autoSubmit="true"
+                        binding="#{viewScope.docsDetDistributionBean.docDateId}"
+                        contentStyle="width:150px !important;">
+            <f:convertDateTime pattern="MM-dd-yyyy"/>
+          </af:inputDate>
+          <af:inputDate label="#{rs.doc_receive_date}" id="id2"
+                        autoSubmit="true"
+                        binding="#{viewScope.docsDetDistributionBean.rcvDateId}"
+                        contentStyle="width:150px !important;">
+            <f:convertDateTime pattern="MM-dd-yyyy"/>
+          </af:inputDate>
+          <af:inputText label="#{rs.doc_reference}" id="it1" autoSubmit="true"
+                        contentStyle="width:150px !important;" rendered="false"/>
+          <af:inputListOfValues id="docRefId"
+                                popupTitle="#{rs.common_label_search_select} #{bindings.DocRef.hints.label}"
+                                value="#{bindings.DocRef.inputValue}"
+                                label="#{bindings.DocRef.hints.label}"
+                                model="#{bindings.DocRef.listOfValuesModel}"
+                                required="#{bindings.DocRef.hints.mandatory}"
+                                columns="#{bindings.DocRef.hints.displayWidth}"
+                                shortDesc="#{bindings.DocRef.hints.tooltip}" contentStyle="width:150px !important;" autoSubmit="true">
+            <f:validator binding="#{bindings.DocRef.validator}"/>
+          </af:inputListOfValues>
+          <af:panelLabelAndMessage id="plam1"
+                                   label="#{bindings.SectionIdLov.hints.label}"
+                                   partialTriggers="sectionIdLovId">
+            <af:panelGroupLayout layout="horizontal" id="pgl1">
+              <af:inputListOfValues id="sectionIdLovId"
+                                    popupTitle="#{rs.common_label_search_select} #{bindings.SectionIdLov.hints.label}"
+                                    value="#{bindings.SectionIdLov.inputValue}"
+                                    model="#{bindings.SectionIdLov.listOfValuesModel}"
+                                    required="#{bindings.SectionIdLov.hints.mandatory}"
+                                    columns="#{bindings.SectionIdLov.hints.displayWidth}"
+                                    shortDesc="#{bindings.SectionIdLov.hints.tooltip}"
+                                    autoSubmit="true"
+                                    contentStyle="width:75px !important;">
+                <f:validator binding="#{bindings.SectionIdLov.validator}"/>
+              </af:inputListOfValues>
+              <af:spacer width="5px;" id="s2"/>
+              <af:inputText value="#{bindings.SectionName.inputValue}"
+                            simple="true"
+                            required="#{bindings.SectionName.hints.mandatory}"
+                            columns="#{bindings.SectionName.hints.displayWidth}"
+                            maximumLength="#{bindings.SectionName.hints.precision}"
+                            shortDesc="#{bindings.SectionName.hints.tooltip}"
+                            id="it2" disabled="true"
+                            contentStyle="width:200px !important;">
+                <f:validator binding="#{bindings.SectionName.validator}"/>
+              </af:inputText>
+            </af:panelGroupLayout>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage id="plam2"
+                                   label="#{bindings.DocDest.hints.label}"
+                                   partialTriggers="docDestId">
+            <af:panelGroupLayout layout="horizontal" id="pgl2">
+              <af:inputListOfValues id="docDestId"
+                                    popupTitle="#{rs.common_label_search_select} #{bindings.DocDest.hints.label}"
+                                    value="#{bindings.DocDest.inputValue}"
+                                    model="#{bindings.DocDest.listOfValuesModel}"
+                                    required="#{bindings.DocDest.hints.mandatory}"
+                                    columns="#{bindings.DocDest.hints.displayWidth}"
+                                    shortDesc="#{bindings.DocDest.hints.tooltip}"
+                                    autoSubmit="true"
+                                    contentStyle="width:75px !important;" disabled="true">
+                <f:validator binding="#{bindings.DocDest.validator}"/>
+              </af:inputListOfValues>
+              <af:spacer width="5px;" id="s3"/>
+              <af:inputText value="#{bindings.DocDestName.inputValue}"
+                            simple="true"
+                            required="#{bindings.DocDestName.hints.mandatory}"
+                            columns="#{bindings.DocDestName.hints.displayWidth}"
+                            maximumLength="#{bindings.DocDestName.hints.precision}"
+                            shortDesc="#{bindings.DocDestName.hints.tooltip}"
+                            id="it3" disabled="true"
+                            contentStyle="width:200px !important;">
+                <f:validator binding="#{bindings.DocDestName.validator}"/>
+              </af:inputText>
+            </af:panelGroupLayout>
+          </af:panelLabelAndMessage>
+          <af:panelLabelAndMessage id="plam3"
+                                   label="#{bindings.SubjIdLov.hints.label}"
+                                   partialTriggers="subjIdLovId">
+            <af:panelGroupLayout layout="horizontal" id="pgl3">
+              <af:inputListOfValues id="subjIdLovId"
+                                    popupTitle="#{rs.common_label_search_select} #{bindings.SubjIdLov.hints.label}"
+                                    value="#{bindings.SubjIdLov.inputValue}"
+                                    model="#{bindings.SubjIdLov.listOfValuesModel}"
+                                    required="#{bindings.SubjIdLov.hints.mandatory}"
+                                    columns="#{bindings.SubjIdLov.hints.displayWidth}"
+                                    shortDesc="#{bindings.SubjIdLov.hints.tooltip}"
+                                    autoSubmit="true"
+                                    contentStyle="width:75px !important;">
+                <f:validator binding="#{bindings.SubjIdLov.validator}"/>
+              </af:inputListOfValues>
+              <af:spacer width="5px;" id="s4"/>
+              <af:inputText value="#{bindings.SubjectName.inputValue}"
+                            simple="true"
+                            required="#{bindings.SubjectName.hints.mandatory}"
+                            columns="#{bindings.SubjectName.hints.displayWidth}"
+                            maximumLength="#{bindings.SubjectName.hints.precision}"
+                            shortDesc="#{bindings.SubjectName.hints.tooltip}"
+                            id="it4" disabled="true"
+                            contentStyle="width:200px !important;">
+                <f:validator binding="#{bindings.SubjectName.validator}"/>
+              </af:inputText>
+            </af:panelGroupLayout>
+          </af:panelLabelAndMessage>
+        </af:panelFormLayout>
+      </af:group>
+    </f:facet>
+    <f:facet name="MasterToolbar">
+      <af:panelGroupLayout layout="horizontal" id="pgl12">
+        <af:commandButton icon="/images/save.png"
+                          text="#{rs.doc_det_distribution}" id="cb4"
+                          action="#{viewScope.docsDetDistributionBean.distributeDetDocs}"/>
+        <af:spacer width="5px" id="s1"/>
+        <af:commandButton id="cb6" icon="/images/arrow_undo.png"
+                          action="#{viewScope.docsDetDistributionBean.cancelDetDocsDistribution}"
+                          text="#{rs.cancel_doc_det_distribution}"/>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

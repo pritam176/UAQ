@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="contracts-Task">
+    <default-activity id="__42">checkFlag</default-activity>
+    <data-control-scope id="__31">
+      <isolated/>
+    </data-control-scope>
+    <input-parameter-definition id="__33">
+      <name id="__32">pageTypeFlag</name>
+      <value>#{pageFlowScope.pageTypeFlag}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__34">
+      <name id="__35">tabContext</name>
+      <value>#{pageFlowScope.tabContext}</value>
+      <class>oracle.ui.pattern.dynamicShell.TabContext</class>
+    </input-parameter-definition>
+    <managed-bean id="__7">
+      <managed-bean-name id="__8">contractsBean</managed-bean-name>
+      <managed-bean-class id="__10">com.mod.financial.view.managed.business.contracts.Contracts</managed-bean-class>
+      <managed-bean-scope id="__9">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <view id="contractsMain">
+      <page>/fragments/business/contracts/contractsMain.jsff</page>
+    </view>
+    <view id="addEditContract">
+      <page>/fragments/business/contracts/addEditContract.jsff</page>
+    </view>
+    <method-call id="Rollback">
+      <method>#{bindings.Rollback.execute}</method>
+      <outcome id="__16">
+        <fixed-outcome>Rollback</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="SetCurrentRowWithKeyValue">
+      <method>#{bindings.setCurrentRowWithKeyValue.execute}</method>
+      <outcome id="__25">
+        <fixed-outcome>setCurrentRowWithKeyValue</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="checkFlag">
+      <method>#{pageFlowScope.contractsBean.setPageType}</method>
+      <outcome id="__43">
+        <fixed-outcome>go</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">contractsMain</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome id="__6">addEditContract</from-outcome>
+        <to-activity-id id="__4">addEditContract</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__11">
+      <from-activity-id id="__12">addEditContract</from-activity-id>
+      <control-flow-case id="__13">
+        <from-outcome id="__15">back</from-outcome>
+        <to-activity-id id="__14">contractsMain</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__18">
+        <from-outcome id="__19">cancel</from-outcome>
+        <to-activity-id id="__17">Rollback</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__20">
+      <from-activity-id id="__21">Rollback</from-activity-id>
+      <control-flow-case id="__23">
+        <from-outcome id="__24">Rollback</from-outcome>
+        <to-activity-id id="__22">SetCurrentRowWithKeyValue</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__26">
+      <from-activity-id id="__27">SetCurrentRowWithKeyValue</from-activity-id>
+      <control-flow-case id="__28">
+        <from-outcome id="__30">setCurrentRowWithKeyValue</from-outcome>
+        <to-activity-id id="__29">addEditContract</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__37">
+      <from-activity-id id="__38">checkFlag</from-activity-id>
+      <control-flow-case id="__39">
+        <from-outcome id="__41">go</from-outcome>
+        <to-activity-id id="__40">contractsMain</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

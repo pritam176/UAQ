@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="AccountsManualUpdatablePageDef"
+                Package="fragments.generalAccounts">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.GeneralAccountsModule.AccAccountsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccAccountsViewIterator" ChangeEventPolicy="ppr"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false" IterBinding="AccAccountsViewIterator"
+                  Uses="LOV_AccProg" id="AccProg"/>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="AccNo">
+      <AttrNames>
+        <Item Value="AccNo"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccAccountsViewIterator" StaticList="false"
+          Uses="LOV_AccMain" id="AccMain" DTSupportsMRU="false"/>
+    <list IterBinding="AccAccountsViewIterator" StaticList="false"
+          Uses="LOV_AccChapter" id="AccChapter" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="AccGroup">
+      <AttrNames>
+        <Item Value="AccGroup"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="AccItem">
+      <AttrNames>
+        <Item Value="AccItem"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="AccType">
+      <AttrNames>
+        <Item Value="AccType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="AccCd">
+      <AttrNames>
+        <Item Value="AccCd"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="AccName">
+      <AttrNames>
+        <Item Value="AccName"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccAccountsViewIterator" StaticList="false"
+          Uses="LOV_AccStatus" id="AccStatus" DTSupportsMRU="false"/>
+    <list IterBinding="AccAccountsViewIterator" StaticList="false"
+          Uses="LOV_AccountType" id="AccountType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="AccountsGroups">
+      <AttrNames>
+        <Item Value="AccountsGroups"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="ProgName">
+      <AttrNames>
+        <Item Value="ProgName"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <list IterBinding="AccAccountsViewIterator" StaticList="false"
+          Uses="LOV_AccNature" id="AccNature" DTSupportsMRU="true"/>
+    <methodAction IterBinding="AccAccountsViewIterator" id="copyAccount"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="copyAccount" IsViewObjectMethod="true"
+                  DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.GeneralAccountsModule.AccAccountsView"
+                  ReturnName="data.ModModuleDataControl.methodResults.copyAccount_ModModuleDataControl_dataProvider_Root_GeneralAccountsModule_AccAccountsView_copyAccount_result">
+      <NamedData NDName="orgId" NDValue="#{bindings.OrgId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="accId" NDValue="#{bindings.Id.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="progId" NDValue="#{bindings.AccProg1.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="lastUser"
+                 NDValue="#{bindings.LastChangeUser.inputValue}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="OrgId">
+      <AttrNames>
+        <Item Value="OrgId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="LastChangeUser">
+      <AttrNames>
+        <Item Value="LastChangeUser"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccAccountsViewIterator" id="AccProg1">
+      <AttrNames>
+        <Item Value="AccProg"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccAccountsViewIterator"
+                     id="Enablecopyaccountflag">
+      <AttrNames>
+        <Item Value="Enablecopyaccountflag"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admGulfInsuredAllowsMainPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmGulfInsuredAllowsView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmGulfInsuredAllowsView1Iterator"/>
+    <searchRegion Criteria="AdmGulfInsuredAllowsViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmGulfInsuredAllowsView1Iterator"
+                  id="AdmGulfInsuredAllowsViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmGulfInsuredAllowsView1Iterator"
+          id="AdmGulfInsuredAllowsView1">
+      <nodeDefinition DefName="com.mod.financial.model.salaries.views.up.AdmGulfInsuredAllowsView"
+                      Name="AdmGulfInsuredAllowsView10">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="NationId"/>
+          <Item Value="AllowId"/>
+          <Item Value="Name"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="AdmGulfInsuredAllowsView1Iterator"
+            id="CreateWithParams" RequiresUpdateModel="true"
+            Action="createWithParams"/>
+    <attributeValues IterBinding="AdmGulfInsuredAllowsView1Iterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmGulfInsuredAllowsView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+  </bindings>
+</pageDefinition>

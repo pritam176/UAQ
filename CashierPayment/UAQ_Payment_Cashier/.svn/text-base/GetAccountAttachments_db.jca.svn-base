@@ -1,0 +1,14 @@
+<adapter-config name="GetAccountAttachments" adapter="Database Adapter" wsdlLocation="GetAccountAttachments.wsdl" xmlns="http://platform.integration.oracle/blocks/adapter/fw/metadata">
+  
+  <connection-factory location="eis/uaqsoa_db" UIConnectionName="DevDB" adapterRef=""/>
+  <endpoint-interaction portType="GetAccountAttachments_ptt" operation="GetAccountAttachmentsSelect">
+    <interaction-spec className="oracle.tip.adapter.db.DBReadInteractionSpec">
+      <property name="DescriptorName" value="GetAccountAttachments.Accountattachments"/>
+      <property name="QueryName" value="GetAccountAttachmentsSelect"/>
+      <property name="MappingsMetaDataURL" value="GetAccountAttachments-or-mappings.xml"/>
+      <property name="ReturnSingleResultSet" value="false"/>
+      <property name="GetActiveUnitOfWork" value="false"/>
+    </interaction-spec>
+  </endpoint-interaction>
+
+</adapter-config>

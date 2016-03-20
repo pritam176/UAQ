@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox text="PanelBox1" id="pb1">
+    <f:facet name="toolbar"/>
+        <af:panelFormLayout id="pfl1"
+                            binding="#{pageFlowScope.generalReportBean.panelFormReport}"
+                            rows="3">
+            <f:facet name="footer">
+                <af:toolbar id="t1">
+                    <af:commandToolbarButton text="commandToolbarButton 1"
+                                             id="ctb1"
+                                             action="#{pageFlowScope.generalReportBean.test_action}"/>
+                </af:toolbar>
+            </f:facet>
+        </af:panelFormLayout>
+    </af:panelBox>
+    <!--oracle-jdev-comment:preferred-managed-bean-name:generalReportBean-->
+</jsp:root>

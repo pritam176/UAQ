@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="usersSearchPageDef"
+                Package="fragments.administration">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.AdministrationModule.AdmUsersView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmUsersViewIterator"/>
+    <searchRegion Criteria="AdmUsersViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmUsersViewIterator" id="AdmUsersViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmUsersViewIterator" id="AdmUsersView">
+      <nodeDefinition DefName="com.mod.financial.model.administration.views.up.AdmUsersView"
+                      Name="AdmUsersView0">
+        <AttrNames>
+          <Item Value="LogName"/>
+          <Item Value="Name"/>
+          <Item Value="DeptNo"/>
+          <Item Value="Pwd"/>
+          <Item Value="Machine"/>
+          <Item Value="PwdExpDate"/>
+          <Item Value="LogFrom"/>
+          <Item Value="LogTo"/>
+          <Item Value="ExpiryDate"/>
+          <Item Value="UserStatus" Binds="UserStatus"/>
+          <Item Value="ContractType"/>
+          <Item Value="JobDesc"/>
+          <Item Value="UserDept"/>
+          <Item Value="SheetPrinter"/>
+          <Item Value="DeptName"/>
+          <Item Value="OrgName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <button IterBinding="AdmUsersViewIterator" StaticList="true"
+            id="UserStatus">
+      <AttrNames>
+        <Item Value="UserStatus"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="A"/>
+        <Item Value="S"/>
+      </ValueList>
+    </button>
+  </bindings>
+</pageDefinition>

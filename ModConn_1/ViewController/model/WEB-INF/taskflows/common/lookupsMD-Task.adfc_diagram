@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">lookupsMD</property>
+      <property
+         name="page">/fragments/common/lookupsMD.jsff</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>lookupsMD&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">265.5459</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">173.0</property>
+   </View>
+   <View
+      id="View3">
+      <property
+         name="activityId">lookupsDT</property>
+      <property
+         name="page">/fragments/common/lookupsDT.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>lookupsDT&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">269.59766</property>
+      <property
+         name="x">502.0</property>
+      <property
+         name="pageFragment">true</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="View2"
+      to="View3">
+      <property
+         name="fromOutcome">toDetail</property>
+      <property
+         name="sdm:polyPoints">R46,214.0574,261.6953,461.0,265.74707,L46</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase5"
+      from="View3"
+      to="View2">
+      <property
+         name="fromOutcome">toMaster</property>
+      <property
+         name="sdm:polyPoints">L54,460.9426,272.74707,214.0,268.6953,R54</property>
+   </ControlFlowCase>
+</SDM>

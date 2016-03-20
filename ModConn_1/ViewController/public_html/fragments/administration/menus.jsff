@@ -1,0 +1,163 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelSplitter id="ps1" splitterPosition="300">
+    <f:facet name="first">
+      <af:panelCollection id="pc1">
+        <f:facet name="menus"/>
+        <f:facet name="toolbar"/>
+        <f:facet name="statusbar"/>
+        <af:tree value="#{bindings.AdmMenusROView.treeModel}" var="node"
+                 rowSelection="single" id="t1"
+                 selectionListener="#{menusBean.OnSelection}"
+                 binding="#{menusBean.tree}">
+          <f:facet name="nodeStamp">
+            <af:outputText value="#{userInfo.language == 'ar' ? node.ArMenuTitle : node.EnMenuTitle} " id="ot1"/>
+          </f:facet>
+          <f:facet name="contextMenu">
+            <af:popup id="p1">
+              <af:menu text="menu 1" id="m2">
+                <af:commandMenuItem id="cmi2"
+                                    text="#{rs.common_button_newMenuSameLevel}"
+                                    action="#{menusBean.create_sameLevel_nodeMenu}"
+                                    />
+                <af:commandMenuItem text="#{rs.common_button_newMenuChildLevel}"
+                                    id="cmi1"
+                                    action="#{menusBean.create_childLevel_nodeMenu}"/>
+                <af:commandMenuItem id="cmi3"
+                                    text="#{rs.common_button_delete}"
+                                    action="#{menusBean.showDeletePopup}"/>
+              </af:menu>
+            </af:popup>
+          </f:facet>
+        </af:tree>
+      </af:panelCollection>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelBox text="#{rs.common_Title_Menus}" id="pb1">
+        <f:facet name="toolbar">
+          <af:toolbar id="t2">
+            <af:commandToolbarButton
+                                     text="#{rs.common_button_save}"
+                                     id="ctb1" icon="/images/save.png"
+                                     action="#{menusBean.save_action}"/>
+            <af:commandToolbarButton
+                                     immediate="true" id="ctb2"
+                                     text="#{rs.common_button_cancel}"
+                                     icon="/images/cancel.gif"
+                                     action="#{menusBean.cancel_action}">
+              <af:resetActionListener/>
+            </af:commandToolbarButton>
+          </af:toolbar>
+        </f:facet>
+        <af:spacer width="10" height="10" id="s9"/>
+        <af:panelFormLayout id="pfl1" rows="10" maxColumns="2"
+                            binding="#{menusBean.form}">
+          <af:spacer width="10" height="10" id="s1"/>
+          <af:inputText value="#{bindings.MenuNo.inputValue}"
+                        label="#{bindings.MenuNo.hints.label}"
+                        required="#{bindings.MenuNo.hints.mandatory}"
+                        columns="#{bindings.MenuNo.hints.displayWidth}"
+                        maximumLength="#{bindings.MenuNo.hints.precision}"
+                        shortDesc="#{bindings.MenuNo.hints.tooltip}" id="it7">
+            <f:validator binding="#{bindings.MenuNo.validator}"/>
+          </af:inputText>
+          <af:spacer width="10" height="10" id="s8"/>
+          <af:inputText value="#{bindings.MenuName.inputValue}"
+                        label="#{bindings.MenuName.hints.label}"
+                        required="#{bindings.MenuName.hints.mandatory}"
+                        columns="#{bindings.MenuName.hints.displayWidth}"
+                        maximumLength="#{bindings.MenuName.hints.precision}"
+                        shortDesc="#{bindings.MenuName.hints.tooltip}" id="it1">
+            <f:validator binding="#{bindings.MenuName.validator}"/>
+          </af:inputText>
+          <af:spacer width="10" height="10" id="s2"/>
+          <af:selectOneChoice value="#{bindings.NodeType.inputValue}"
+                              label="#{bindings.NodeType.label}"
+                              required="#{bindings.NodeType.hints.mandatory}"
+                              shortDesc="#{bindings.NodeType.hints.tooltip}"
+                              id="soc1">
+            <f:selectItems value="#{bindings.NodeType.items}" id="si1"/>
+          </af:selectOneChoice>
+          <af:spacer width="10" height="10" id="s3"/>
+          <af:inputText value="#{bindings.ArMenuTitle.inputValue}"
+                        label="#{bindings.ArMenuTitle.hints.label}"
+                        required="#{bindings.ArMenuTitle.hints.mandatory}"
+                        columns="#{bindings.ArMenuTitle.hints.displayWidth}"
+                        maximumLength="#{bindings.ArMenuTitle.hints.precision}"
+                        shortDesc="#{bindings.ArMenuTitle.hints.tooltip}"
+                        id="it3">
+            <f:validator binding="#{bindings.ArMenuTitle.validator}"/>
+          </af:inputText>
+          <af:spacer width="10" height="10" id="s4"/>
+          <af:inputText value="#{bindings.EnMenuTitle.inputValue}"
+                        label="#{bindings.EnMenuTitle.hints.label}"
+                        required="#{bindings.EnMenuTitle.hints.mandatory}"
+                        columns="#{bindings.EnMenuTitle.hints.displayWidth}"
+                        maximumLength="#{bindings.EnMenuTitle.hints.precision}"
+                        shortDesc="#{bindings.EnMenuTitle.hints.tooltip}"
+                        id="it2">
+            <f:validator binding="#{bindings.EnMenuTitle.validator}"/>
+          </af:inputText>
+          <af:spacer width="10" height="10" id="s5"/>
+          <af:selectBooleanCheckbox value="#{bindings.Active.inputValue}"
+                                    label="#{bindings.Active.hints.label}"
+                                    required="#{bindings.Active.hints.mandatory}"
+                                    shortDesc="#{bindings.Active.hints.tooltip}"
+                                    id="it4"/>
+          <af:spacer width="10" height="10" id="s6"/>
+          <af:inputText value="#{bindings.ShowOrder.inputValue}"
+                        label="#{bindings.ShowOrder.hints.label}"
+                        required="#{bindings.ShowOrder.hints.mandatory}"
+                        columns="#{bindings.ShowOrder.hints.displayWidth}"
+                        maximumLength="#{bindings.ShowOrder.hints.precision}"
+                        shortDesc="#{bindings.ShowOrder.hints.tooltip}"
+                        id="it5">
+            <f:validator binding="#{bindings.ShowOrder.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.ShowOrder.format}"/>
+          </af:inputText>
+          <af:spacer width="10" height="10" id="s7"/>
+          <af:inputListOfValues id="parentTitleNameId"
+                                popupTitle="Search and Select: #{bindings.ParentTitleName.hints.label}"
+                                value="#{bindings.ParentTitleName.inputValue}"
+                                label="#{bindings.ParentTitleName.hints.label}"
+                                model="#{bindings.ParentTitleName.listOfValuesModel}"
+                                required="#{bindings.ParentTitleName.hints.mandatory}"
+                                columns="#{bindings.ParentTitleName.hints.displayWidth}"
+                                shortDesc="#{bindings.ParentTitleName.hints.tooltip}">
+            <f:validator binding="#{bindings.ParentTitleName.validator}"/>
+          </af:inputListOfValues>
+          <af:spacer width="10" height="10" id="s10"/>
+          <af:inputText value="#{bindings.Notes.inputValue}"
+                        label="#{bindings.Notes.hints.label}"
+                        required="#{bindings.Notes.hints.mandatory}"
+                        columns="35"
+                        maximumLength="#{bindings.Notes.hints.precision}"
+                        shortDesc="#{bindings.Notes.hints.tooltip}" id="it6"
+                        rows="7">
+            <f:validator binding="#{bindings.Notes.validator}"/>
+          </af:inputText>
+        </af:panelFormLayout>
+        <af:popup id="p2" contentDelivery="lazyUncached"
+                  binding="#{menusBean.deletePopup}">
+          <af:dialog id="d2" title="#{rs['common_button_delete']}"
+                     dialogListener="#{menusBean.deleteDialogListener}">
+            <af:panelGroupLayout id="pg" layout="horizontal">
+              <af:outputText value="#{rs['common_delete_Message']}"
+                             id="outputText1"
+                             inlineStyle="color:Red; font-size:small;"/>
+              <af:spacer width="5" height="10" id="spacer1"/>
+              <af:outputText id="ot20"
+                             inlineStyle="color:Red; font-size:small;"
+                             value="#{userInfo.language == 'ar' ? bindings.ArMenuTitle.inputValue : bindings.EnMenuTitle.inputValue} "/>
+              <af:outputText value=" ?" id="outputText3"
+                             inlineStyle="color:Red; font-size:small;"/>
+            </af:panelGroupLayout>
+          </af:dialog>
+        </af:popup>
+      </af:panelBox>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>

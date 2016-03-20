@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://xmlns.oracle.com/adfm/application"
+             version="11.1.1.64.93" id="DataBindings" SeparateXMLFiles="false"
+             Package="cashierprintinvoiceui" ClientType="Generic">
+  <pageMap>
+    <page path="/taskDetails1.jspx"
+          usageId="cashierprintinvoiceui_taskDetails1PageDef"/>
+    <page path="/CashierPrint.jspx"
+          usageId="cashierprintinvoiceui_CashierPrintPageDef"/>
+  </pageMap>
+  <pageDefinitionUsages>
+    <page id="cashierprintinvoiceui_taskDetails1PageDef"
+          path="cashierprintinvoiceui.pageDefs.taskDetails1PageDef"/>
+    <page id="cashierprintinvoiceui_CashierPrintPageDef"
+          path="cashierprintinvoiceui.pageDefs.CashierPrintPageDef"/>
+  </pageDefinitionUsages>
+  <dataControlUsages>
+    <dc id="CashierPrintInvoiceUI_PrintInvoice"
+        path="cashierprintinvoiceui.CashierPrintInvoiceUI_PrintInvoice"/>
+  </dataControlUsages>
+</Application>

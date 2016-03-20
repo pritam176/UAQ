@@ -1,0 +1,473 @@
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice
+END
+identityType_assigneeUsers_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 181
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/identityType_assigneeUsers_Operations.xml
+END
+RequestDetailsPayLoad.xml
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/RequestDetailsPayLoad.xml
+END
+commentType_userComment_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 178
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/commentType_userComment_Operations.xml
+END
+UpdatableEvidenceAttributesType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 175
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/UpdatableEvidenceAttributesType.xml
+END
+POSDetailsPayLoad_POSDetails_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 183
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/POSDetailsPayLoad_POSDetails_Operations.xml
+END
+POSDetailsPayLoad.xml
+K 25
+svn:wc:ra_dav:version-url
+V 161
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/POSDetailsPayLoad.xml
+END
+accountattachlistpayload_AccountIdentityAttachmentList_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 209
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/accountattachlistpayload_AccountIdentityAttachmentList_Operations.xml
+END
+identityType_assigneeGroups_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 182
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/identityType_assigneeGroups_Operations.xml
+END
+collectionTargetType_collectionTarget_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 192
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/collectionTargetType_collectionTarget_Operations.xml
+END
+preActionUserStepsType_preActionUserSteps_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 196
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/preActionUserStepsType_preActionUserSteps_Operations.xml
+END
+documentType_document_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/documentType_document_Operations.xml
+END
+attachmentType_attachment_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 180
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/attachmentType_attachment_Operations.xml
+END
+PrintInvoicePayloadType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 167
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/PrintInvoicePayloadType.xml
+END
+displayInfoType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/displayInfoType.xml
+END
+preActionUserStepType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/preActionUserStepType.xml
+END
+scaType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/scaType.xml
+END
+actionType_systemActions_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 179
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/actionType_systemActions_Operations.xml
+END
+identityType_assignees_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 177
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/identityType_assignees_Operations.xml
+END
+PaymentDetailsPayload.xml
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/PaymentDetailsPayload.xml
+END
+documentType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/documentType.xml
+END
+keyListType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/keyListType.xml
+END
+shortHistoryTaskType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/shortHistoryTaskType.xml
+END
+ucmMetadataItemType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 163
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/ucmMetadataItemType.xml
+END
+UserDetailsPayload_UserDetails_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 185
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/UserDetailsPayload_UserDetails_Operations.xml
+END
+assignmentContextType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 165
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/assignmentContextType.xml
+END
+attachmentType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/attachmentType.xml
+END
+accountattachRec.xml
+K 25
+svn:wc:ra_dav:version-url
+V 160
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/accountattachRec.xml
+END
+customAttributesType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/customAttributesType.xml
+END
+processType_processInfo_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 178
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/processType_processInfo_Operations.xml
+END
+InputPayload.xml
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/InputPayload.xml
+END
+getTaskDetails_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 169
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/getTaskDetails_Operations.xml
+END
+task.xml
+K 25
+svn:wc:ra_dav:version-url
+V 148
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/task.xml
+END
+systemAttributesType_systemAttributes_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 192
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/systemAttributesType_systemAttributes_Operations.xml
+END
+EvidenceType_evidence_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/EvidenceType_evidence_Operations.xml
+END
+displayInfoType_displayInfo_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 182
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/displayInfoType_displayInfo_Operations.xml
+END
+actionType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 154
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/actionType.xml
+END
+PrintInvoicePayloadType_payload_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 186
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/PrintInvoicePayloadType_payload_Operations.xml
+END
+RequestDetailsPayLoad_RequestDetails_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 191
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/RequestDetailsPayLoad_RequestDetails_Operations.xml
+END
+identityType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/identityType.xml
+END
+actionType_restrictedActions_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 183
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/actionType_restrictedActions_Operations.xml
+END
+InputPayload_Input_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 173
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/InputPayload_Input_Operations.xml
+END
+callbackType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/callbackType.xml
+END
+PaymentDetailsPayload_PaymentDetails_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 191
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/PaymentDetailsPayload_PaymentDetails_Operations.xml
+END
+identityType_reviewers_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 177
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/identityType_reviewers_Operations.xml
+END
+callbackType_callback_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/callbackType_callback_Operations.xml
+END
+UpdatableEvidenceAttributesType_UpdatableEvidenceAttributes_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 214
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/UpdatableEvidenceAttributesType_UpdatableEvidenceAttributes_Operations.xml
+END
+collectionTargetType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/collectionTargetType.xml
+END
+systemMessageAttributesType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 171
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/systemMessageAttributesType.xml
+END
+accountattachRec_accountAttachmentRec_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 192
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/accountattachRec_accountAttachmentRec_Operations.xml
+END
+assignmentContextTypeValueType_value_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 191
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/assignmentContextTypeValueType_value_Operations.xml
+END
+assignmentContextType_assignmentContext_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 194
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/assignmentContextType_assignmentContext_Operations.xml
+END
+ucmMetadataItemType_ucmMetadataItem_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 190
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/ucmMetadataItemType_ucmMetadataItem_Operations.xml
+END
+actionType_customActions_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 179
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/actionType_customActions_Operations.xml
+END
+assignmentContextTypeValueType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 174
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/assignmentContextTypeValueType.xml
+END
+keyType_key_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 166
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/keyType_key_Operations.xml
+END
+collectionTargetActionType_action_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 188
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/collectionTargetActionType_action_Operations.xml
+END
+keyListType_keyList_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 174
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/keyListType_keyList_Operations.xml
+END
+UserDetailsPayload.xml
+K 25
+svn:wc:ra_dav:version-url
+V 162
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/UserDetailsPayload.xml
+END
+commentType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/commentType.xml
+END
+keyType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/keyType.xml
+END
+flexfieldMappingType_flexfieldMappings_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 193
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/flexfieldMappingType_flexfieldMappings_Operations.xml
+END
+preActionUserStepsType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 166
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/preActionUserStepsType.xml
+END
+accountattachlistpayload.xml
+K 25
+svn:wc:ra_dav:version-url
+V 168
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/accountattachlistpayload.xml
+END
+shortHistoryTaskType_task_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 180
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/shortHistoryTaskType_task_Operations.xml
+END
+collectionTargetActionType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 170
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/collectionTargetActionType.xml
+END
+systemAttributesType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/systemAttributesType.xml
+END
+identityType_updatedBy_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 177
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/identityType_updatedBy_Operations.xml
+END
+shortHistoryType_shortHistory_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 184
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/shortHistoryType_shortHistory_Operations.xml
+END
+customAttributesType_customAttributes_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 192
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/customAttributesType_customAttributes_Operations.xml
+END
+flexfieldMappingType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/flexfieldMappingType.xml
+END
+getTaskDetails.xml
+K 25
+svn:wc:ra_dav:version-url
+V 158
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/getTaskDetails.xml
+END
+processType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/processType.xml
+END
+scaType_sca_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 166
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/scaType_sca_Operations.xml
+END
+identityType_fromUser_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 176
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/identityType_fromUser_Operations.xml
+END
+preActionUserStepType_preActionUserStep_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 194
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/preActionUserStepType_preActionUserStep_Operations.xml
+END
+EvidenceType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 156
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/EvidenceType.xml
+END
+shortHistoryType.xml
+K 25
+svn:wc:ra_dav:version-url
+V 160
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/shortHistoryType.xml
+END
+systemMessageAttributesType_systemMessageAttributes_Operations.xml
+K 25
+svn:wc:ra_dav:version-url
+V 206
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/adfmsrc/CashierPrintInvoiceUI_PrintInvoice/systemMessageAttributesType_systemMessageAttributes_Operations.xml
+END

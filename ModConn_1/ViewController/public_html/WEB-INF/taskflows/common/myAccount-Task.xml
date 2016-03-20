@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="myAccount-Task">
+    <default-activity id="__1">ExecuteMyAccountWithParams</default-activity>
+    <input-parameter-definition id="__9">
+      <name id="__8">userId</name>
+      <value>#{pageFlowScope.userId}</value>
+    </input-parameter-definition>
+    <input-parameter-definition id="__15" >
+      <name id="__14">tabContext</name>
+      <value>#{pageFlowScope.tabContext}</value>
+      <class>oracle.ui.pattern.dynamicShell.TabContext</class>
+    </input-parameter-definition>
+    <managed-bean id="__13">
+      <managed-bean-name id="__12">myAccountBean</managed-bean-name>
+      <managed-bean-class id="__10">com.mod.financial.view.managed.common.MyAccount</managed-bean-class>
+      <managed-bean-scope id="__11">request</managed-bean-scope>
+    </managed-bean>
+    <method-call id="ExecuteMyAccountWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__2">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <view id="myAccount">
+      <page>/common/myAccount.jsff</page>
+    </view>
+    <control-flow-rule id="__3">
+      <from-activity-id id="__4">ExecuteMyAccountWithParams</from-activity-id>
+      <control-flow-case id="__7">
+        <from-outcome id="__5">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__6">myAccount</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

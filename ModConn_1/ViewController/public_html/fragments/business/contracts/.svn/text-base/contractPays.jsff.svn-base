@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt1">
+    <f:facet name="Master">
+      <af:panelFormLayout id="pfl1" rows="2" inlineStyle="white-space: nowrap;">
+        <af:panelLabelAndMessage label="#{bindings.ContractNo.hints.label}"
+                                 id="plam4">
+          <af:outputText value="#{bindings.ContractNo.inputValue}" id="ot5"/>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="#{bindings.ContractedSection.hints.label}"
+                                 id="plam2">
+          <af:outputText value="#{bindings.SectionName.inputValue}" id="ot4"/>
+          <af:spacer width="10" height="10" id="s1"/>
+          <af:outputText value="#{bindings.ContractedSection.inputValue}"
+                         id="ot1">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.ContractedSection.format}"/>
+          </af:outputText>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="#{bindings.ContractDate.hints.label}"
+                                 id="plam1">
+          <af:outputText value="#{bindings.ContractDate.inputValue}" id="ot2">
+            <af:convertDateTime pattern="#{bindings.ContractDate.format}"/>
+          </af:outputText>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="#{bindings.ContractValue.hints.label}"
+                                 id="plam5">
+          <af:outputText value="#{bindings.ContractValue.inputValue}" id="ot3">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.ContractValue.format}"/>
+          </af:outputText>
+        </af:panelLabelAndMessage>
+      </af:panelFormLayout>
+    </f:facet>
+    <f:facet name="Detail">
+      <af:panelFormLayout id="pfl2" inlineStyle="white-space: nowrap;">
+        <af:inputListOfValues id="tiDocIdId"
+                              popupTitle="Search and Select: #{bindings.TiDocId.hints.label}"
+                              value="#{bindings.TiDocId.inputValue}"
+                              label="#{bindings.TiDocId.hints.label}"
+                              model="#{bindings.TiDocId.listOfValuesModel}"
+                              required="#{bindings.TiDocId.hints.mandatory}"
+                              columns="#{bindings.TiDocId.hints.displayWidth}"
+                              shortDesc="#{bindings.TiDocId.hints.tooltip}">
+          <f:validator binding="#{bindings.TiDocId.validator}"/>
+        </af:inputListOfValues>
+        <af:inputText value="#{bindings.PayNo.inputValue}"
+                      label="#{bindings.PayNo.hints.label}"
+                      required="#{bindings.PayNo.hints.mandatory}"
+                      columns="#{bindings.PayNo.hints.displayWidth}"
+                      maximumLength="#{bindings.PayNo.hints.precision}"
+                      shortDesc="#{bindings.PayNo.hints.tooltip}" id="it2">
+          <f:validator binding="#{bindings.PayNo.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.PayNo.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.ExchRate.inputValue}"
+                      label="#{bindings.ExchRate.hints.label}"
+                      required="#{bindings.ExchRate.hints.mandatory}"
+                      columns="#{bindings.ExchRate.hints.displayWidth}"
+                      maximumLength="#{bindings.ExchRate.hints.precision}"
+                      shortDesc="#{bindings.ExchRate.hints.tooltip}" id="it4">
+          <f:validator binding="#{bindings.ExchRate.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.ExchRate.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.ExchRate2.inputValue}"
+                      label="#{bindings.ExchRate2.hints.label}"
+                      required="#{bindings.ExchRate2.hints.mandatory}"
+                      columns="#{bindings.ExchRate2.hints.displayWidth}"
+                      maximumLength="#{bindings.ExchRate2.hints.precision}"
+                      shortDesc="#{bindings.ExchRate2.hints.tooltip}" id="it10">
+          <f:validator binding="#{bindings.ExchRate2.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.ExchRate2.format}"/>
+        </af:inputText>
+        <af:inputDate value="#{bindings.InvFromDate.inputValue}"
+                      label="#{bindings.InvFromDate.hints.label}"
+                      required="#{bindings.InvFromDate.hints.mandatory}"
+                      shortDesc="#{bindings.InvFromDate.hints.tooltip}"
+                      id="id1">
+          <f:validator binding="#{bindings.InvFromDate.validator}"/>
+          <af:convertDateTime pattern="#{bindings.InvFromDate.format}"/>
+        </af:inputDate>
+        <af:inputText value="#{bindings.InvValue.inputValue}"
+                      label="#{bindings.InvValue.hints.label}"
+                      required="#{bindings.InvValue.hints.mandatory}"
+                      columns="#{bindings.InvValue.hints.displayWidth}"
+                      maximumLength="#{bindings.InvValue.hints.precision}"
+                      shortDesc="#{bindings.InvValue.hints.tooltip}" id="it12">
+          <f:validator binding="#{bindings.InvValue.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.InvValue.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.LocalValue.inputValue}"
+                      label="#{bindings.LocalValue.hints.label}"
+                      required="#{bindings.LocalValue.hints.mandatory}"
+                      columns="#{bindings.LocalValue.hints.displayWidth}"
+                      maximumLength="#{bindings.LocalValue.hints.precision}"
+                      shortDesc="#{bindings.LocalValue.hints.tooltip}" id="it7">
+          <f:validator binding="#{bindings.LocalValue.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.LocalValue.format}"/>
+        </af:inputText>
+        <af:panelLabelAndMessage label="#{bindings.PayValue.hints.label}" id="plam3">
+          <af:inputText value="#{bindings.PayValue.inputValue}"
+                        label="#{bindings.PayValue.hints.label}"
+                        required="#{bindings.PayValue.hints.mandatory}"
+                        columns="#{bindings.PayValue.hints.displayWidth}"
+                        maximumLength="#{bindings.PayValue.hints.precision}"
+                        shortDesc="#{bindings.PayValue.hints.tooltip}" id="it3"
+                        simple="true" contentStyle="width: 150px;">
+            <f:validator binding="#{bindings.PayValue.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.PayValue.format}"/>
+          </af:inputText>
+          <af:commandButton text="#{rs.CONTRACTS_PAYS_BUTTON_DEDUCTIONS}" id="cb1"/>
+        </af:panelLabelAndMessage>
+        <af:inputText value="#{bindings.PayActValue.inputValue}"
+                      label="#{bindings.PayActValue.hints.label}"
+                      required="#{bindings.PayActValue.hints.mandatory}"
+                      columns="#{bindings.PayActValue.hints.displayWidth}"
+                      maximumLength="#{bindings.PayActValue.hints.precision}"
+                      shortDesc="#{bindings.PayActValue.hints.tooltip}"
+                      id="it6">
+          <f:validator binding="#{bindings.PayActValue.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.PayActValue.format}"/>
+        </af:inputText>
+        <af:panelLabelAndMessage label="#{bindings.PayType.label}" id="plam7">
+          <af:selectOneChoice value="#{bindings.PayType.inputValue}"
+                              label="#{bindings.PayType.label}"
+                              required="#{bindings.PayType.hints.mandatory}"
+                              shortDesc="#{bindings.PayType.hints.tooltip}"
+                              id="soc1" simple="true"
+                              contentStyle="width: 160px;">
+            <f:selectItems value="#{bindings.PayType.items}" id="si1"/>
+          </af:selectOneChoice>
+          <af:commandButton text="#{rs.CONTRACTS_PAYS_BUTTON_DETAILS}" id="cb2"/>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="#{bindings.BankId.hints.label}" id="plam6">
+          <af:inputText value="#{bindings.BankId.inputValue}"
+                        label="#{bindings.BankId.hints.label}"
+                        required="#{bindings.BankId.hints.mandatory}"
+                        columns="#{bindings.BankId.hints.displayWidth}"
+                        maximumLength="#{bindings.BankId.hints.precision}"
+                        shortDesc="#{bindings.BankId.hints.tooltip}" id="it8"
+                        simple="true">
+            <f:validator binding="#{bindings.BankId.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.BankId.format}"/>
+          </af:inputText>
+          <af:inputText value="#{bindings.DiBankName.inputValue}"
+                        label="#{bindings.DiBankName.hints.label}"
+                        required="#{bindings.DiBankName.hints.mandatory}"
+                        columns="#{bindings.DiBankName.hints.displayWidth}"
+                        maximumLength="#{bindings.DiBankName.hints.precision}"
+                        shortDesc="#{bindings.DiBankName.hints.tooltip}"
+                        id="it1" simple="true">
+            <f:validator binding="#{bindings.DiBankName.validator}"/>
+          </af:inputText>
+        </af:panelLabelAndMessage>
+        <af:inputText value="#{bindings.BankNumber.inputValue}"
+                      label="#{bindings.BankNumber.hints.label}"
+                      required="#{bindings.BankNumber.hints.mandatory}"
+                      columns="#{bindings.BankNumber.hints.displayWidth}"
+                      maximumLength="#{bindings.BankNumber.hints.precision}"
+                      shortDesc="#{bindings.BankNumber.hints.tooltip}" id="it11">
+          <f:validator binding="#{bindings.BankNumber.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.PayReference.inputValue}"
+                      label="#{bindings.PayReference.hints.label}"
+                      required="#{bindings.PayReference.hints.mandatory}"
+                      columns="#{bindings.PayReference.hints.displayWidth}"
+                      maximumLength="#{bindings.PayReference.hints.precision}"
+                      shortDesc="#{bindings.PayReference.hints.tooltip}"
+                      id="it9">
+          <f:validator binding="#{bindings.PayReference.validator}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.Description.inputValue}"
+                      label="#{bindings.Description.hints.label}"
+                      required="#{bindings.Description.hints.mandatory}"
+                      columns="#{bindings.Description.hints.displayWidth}"
+                      maximumLength="#{bindings.Description.hints.precision}"
+                      shortDesc="#{bindings.Description.hints.tooltip}"
+                      id="it5" rows="4">
+          <f:validator binding="#{bindings.Description.validator}"/>
+        </af:inputText>
+      </af:panelFormLayout>
+    </f:facet>
+    <f:facet name="MasterToolbar">
+      <af:toolbar id="t1">
+        <af:commandToolbarButton text="#{rs.CONTRACTS_PAYS_BUTTON_DO_PAY}"
+                                 id="ctb3" icon="/images/save.png"/>
+        <af:commandToolbarButton id="ctb2" icon="/images/cancel.gif"
+                                 text="#{rs.common_button_cancel}"
+                                 action="#{pageFlowScope.contractPays.paysCancelAction}"/>
+        <af:commandToolbarButton id="ctb1" icon="/images/arrow_undo.png"
+                                 action="#{pageFlowScope.contractPays.paysReturnAction}"/>
+      </af:toolbar>
+    </f:facet>
+    <f:facet name="DetailToolbar"/>
+    <f:facet name="PageFooter"/>
+    <f:attribute name="MasterTitle"
+                 value="#{rs.CONTRACTS_PAYS_PANEL_MASTER_TITLE}"/>
+    <f:attribute name="DetailTitle"
+                 value="#{rs.CONTRACTS_PAYS_PANEL_DETAIL_TITLE}"/>
+  </af:pageTemplate>
+  <!--oracle-jdev-comment:preferred-managed-bean-name:contractPays-->
+</jsp:root>

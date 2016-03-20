@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+      <af:group id="g1"></af:group>
+    </f:facet>
+    <f:facet name="Result">
+      <af:table value="#{bindings.CorDirectDocsView11.collectionModel}"
+                var="row" rows="#{bindings.CorDirectDocsView11.rangeSize}"
+                emptyText="#{rs.common_label_table_no_data}"
+                fetchSize="#{bindings.CorDirectDocsView11.rangeSize}"
+                rowBandingInterval="0"
+                filterModel="#{bindings.CorDirectDocsView1Query.queryDescriptor}"
+                queryListener="#{bindings.CorDirectDocsView1Query.processQuery}"
+                filterVisible="true" varStatus="vs"
+                selectedRowKeys="#{bindings.CorDirectDocsView11.collectionModel.selectedRow}"
+                selectionListener="#{bindings.CorDirectDocsView11.collectionModel.makeCurrent}"
+                rowSelection="single" id="t1" partialTriggers="::cb1" styleClass="AFStretchWidth" columnStretching="column:c5">
+        <af:column sortProperty="#{bindings.CorDirectDocsView11.hints.DocDate.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDirectDocsView11.hints.DocDate.label}"
+                   id="c6" noWrap="false" width="75" align="center">
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.DocDate}" id="id3"/>
+          </f:facet>
+          <af:outputText value="#{row.bindings.DocDate.inputValue}"
+                         shortDesc="#{bindings.CorDirectDocsView11.hints.DocDate.tooltip}"
+                         id="id2">
+            <af:convertDateTime pattern="#{bindings.CorDirectDocsView11.hints.DocDate.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDirectDocsView11.hints.RcvDate.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDirectDocsView11.hints.RcvDate.label}"
+                   id="c3" noWrap="false" width="75" align="center">
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.RcvDate}" id="id1"/>
+          </f:facet>
+          <af:outputText value="#{row.bindings.RcvDate.inputValue}"
+                         shortDesc="#{bindings.CorDirectDocsView11.hints.RcvDate.tooltip}"
+                         id="id4">
+            <af:convertDateTime pattern="#{bindings.CorDirectDocsView11.hints.RcvDate.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDirectDocsView11.hints.DocRef.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDirectDocsView11.hints.DocRef.label}"
+                   id="c4" noWrap="false" width="75" align="center">
+          <af:outputText value="#{row.bindings.DocRef.inputValue}"
+                         shortDesc="#{bindings.CorDirectDocsView11.hints.DocRef.tooltip}"
+                         id="it3"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDirectDocsView11.hints.DocTitle.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDirectDocsView11.hints.DocTitle.label}"
+                   id="c8" noWrap="false" rendered="false">
+          <af:outputText value="#{row.bindings.DocTitle.inputValue}"
+                         shortDesc="#{bindings.CorDirectDocsView11.hints.DocTitle.tooltip}"
+                         id="it2"></af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDirectDocsView11.hints.RefId.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDirectDocsView11.hints.RefId.label}"
+                   id="c7" noWrap="false" width="75" align="center">
+          <af:outputText value="#{row.bindings.RefId.inputValue}"
+                         shortDesc="#{bindings.CorDirectDocsView11.hints.SectionName.tooltip}"
+                         id="ot2"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDirectDocsView11.hints.NoPage.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDirectDocsView11.hints.NoPage.label}"
+                   id="c1" noWrap="false" width="75">
+          <af:outputText value="#{row.bindings.NoPage.inputValue}"
+                         shortDesc="#{bindings.CorDirectDocsView11.hints.NoPage.tooltip}"
+                         id="it1">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.CorDirectDocsView11.hints.NoPage.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDirectDocsView11.hints.DocDest.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDirectDocsView11.hints.DocDest.label}"
+                   id="c9" noWrap="false" width="175">
+          <af:selectOneChoice value="#{row.bindings.DocDest.inputValue}"
+                              label="#{row.bindings.DocDest.label}"
+                              required="#{bindings.CorDirectDocsView11.hints.DocDest.mandatory}"
+                              shortDesc="#{bindings.CorDirectDocsView11.hints.DocDest.tooltip}"
+                              id="soc1" disabled="true">
+            <f:selectItems value="#{row.bindings.DocDest.items}" id="si1"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDirectDocsView11.hints.SectionName.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDirectDocsView11.hints.SectionName.label}"
+                   id="c2" noWrap="false" width="135">
+          <af:outputText value="#{row.bindings.SectionName.inputValue}"
+                         shortDesc="#{bindings.CorDirectDocsView11.hints.SectionName.tooltip}"
+                         id="ot1"></af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.CorDirectDocsView11.hints.SubjName.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.CorDirectDocsView11.hints.SubjName.label}"
+                   id="c5" noWrap="false" width="120">
+          <af:outputText value="#{row.bindings.SubjName.inputValue}"
+                         shortDesc="#{bindings.CorDirectDocsView11.hints.SubjName.tooltip}"
+                         id="it4"></af:outputText>
+        </af:column>
+      </af:table>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:group id="g2">
+        <af:commandToolbarButton icon="/images/add.png" id="cb1"
+                                 action="addDirectDoc"
+                                 actionListener="#{bindings.CreateInsert.execute}"></af:commandToolbarButton>
+      </af:group>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

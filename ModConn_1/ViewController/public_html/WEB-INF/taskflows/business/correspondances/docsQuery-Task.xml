@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="docsQuery-Task">
+    <default-activity id="__1">docsQuery</default-activity>
+    <view id="docsQuery">
+      <page>/fragments/business/correspondances/docsQuery.jsff</page>
+    </view>
+    <view id="docsQueryDetails">
+      <page>/fragments/business/correspondances/docsQueryDetails.jsff</page>
+    </view>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">docsQuery</from-activity-id>
+      <control-flow-case id="__5">
+        <from-outcome id="__6">goToDocDetails</from-outcome>
+        <to-activity-id id="__4">docsQueryDetails</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">docsQueryDetails</from-activity-id>
+      <control-flow-case id="__9">
+        <from-outcome id="__11">back</from-outcome>
+        <to-activity-id id="__10">docsQuery</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

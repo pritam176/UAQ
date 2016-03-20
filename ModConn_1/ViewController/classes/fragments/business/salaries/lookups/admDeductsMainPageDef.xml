@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admDeductsMainPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmDeductsView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmDeductsView1Iterator"/>
+    <searchRegion Binds="AdmDeductsView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AdmDeductsView1Query"/>
+    <searchRegion Criteria="AdmDeductsViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmDeductsView1Iterator"
+                  id="AdmDeductsViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmDeductsView1Iterator" id="AdmDeductsView1">
+      <nodeDefinition DefName="com.mod.financial.model.salaries.views.up.AdmDeductsView"
+                      Name="AdmDeductsView10">
+        <AttrNames>
+          <Item Value="Name"/>
+          <Item Value="SubjName"/>
+          <Item Value="SectionName"/>
+          <Item Value="AccName"/>
+          <Item Value="SaccName"/>
+          <Item Value="AccReq" Binds="AccReq"/>
+          <Item Value="CreateDate"/>
+          <Item Value="IndemOrder"/>
+          <Item Value="SaccFlag"/>
+          <Item Value="DeductPriority"/>
+          <Item Value="Flags"/>
+          <Item Value="IncInInsRep" Binds="IncInInsRep"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AdmDeductsView1Iterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmDeductsView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <button IterBinding="AdmDeductsView1Iterator" id="AccReq"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="AccReq"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <button IterBinding="AdmDeductsView1Iterator" id="IncInInsRep"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="IncInInsRep"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="1"/>
+        <Item Value="0"/>
+      </ValueList>
+    </button>
+    <action IterBinding="AdmDeductsView1Iterator" id="CreateWithParams"
+            RequiresUpdateModel="true" Action="createWithParams">
+      <NamedData NDName="CreateUser" NDType="java.lang.String"
+                 NDValue="#{userInfo.userName}"/>
+            </action>
+  </bindings>
+</pageDefinition>

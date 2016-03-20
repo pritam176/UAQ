@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="docsClassSubjects-Task">
+    <default-activity id="__1">setPageTypeFlag</default-activity>
+    <data-control-scope id="__31">
+      <isolated/>
+    </data-control-scope>
+    <input-parameter-definition id="__33">
+      <name id="__32">pageTypeFlag</name>
+      <value>#{pageFlowScope.pageTypeFlag}</value>
+      <class>java.lang.String</class>
+    </input-parameter-definition>
+    <input-parameter-definition id="__34">
+      <name id="__35">tabContext</name>
+      <value>#{pageFlowScope.tabContext}</value>
+      <class>oracle.ui.pattern.dynamicShell.TabContext</class>
+    </input-parameter-definition>
+    <managed-bean id="__5">
+      <managed-bean-name id="__2">docsClassSubBean</managed-bean-name>
+      <managed-bean-class id="__4">com.mod.financial.view.managed.business.correspondances.DocsClassSubjects</managed-bean-class>
+      <managed-bean-scope id="__3">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <view id="docsClassSubjectsMain">
+      <page>/fragments/business/correspondances/docsClassSubjectsMain.jsff</page>
+    </view>
+    <view id="docsClassSubjectsAddEdit">
+      <page>/fragments/business/correspondances/docsClassSubjectsAddEdit.jsff</page>
+    </view>
+    <method-call id="setPageTypeFlag">
+      <method>#{pageFlowScope.docsClassSubBean.setPageTypeFlag}</method>
+      <outcome id="__41">
+        <fixed-outcome>go</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__6">
+      <from-activity-id id="__7">docsClassSubjectsMain</from-activity-id>
+      <control-flow-case id="__8">
+        <from-outcome id="__10">addEditDocMaster</from-outcome>
+        <to-activity-id id="__9">docsClassSubjectsAddEdit</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__11">
+      <from-activity-id id="__12">docsClassSubjectsAddEdit</from-activity-id>
+      <control-flow-case id="__14">
+        <from-outcome id="__15">back</from-outcome>
+        <to-activity-id id="__13">docsClassSubjectsMain</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__36">
+      <from-activity-id id="__37">setPageTypeFlag</from-activity-id>
+      <control-flow-case id="__39">
+        <from-outcome id="__40">go</from-outcome>
+        <to-activity-id id="__38">docsClassSubjectsMain</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

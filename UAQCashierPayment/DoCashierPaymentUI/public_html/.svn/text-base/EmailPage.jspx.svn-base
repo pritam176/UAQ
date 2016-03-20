@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+  <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  <f:view>
+    <af:document id="d1">
+      <af:form id="f1">
+        <af:outputFormatted value="&lt;html>&lt;h1>Dear User,&lt;/h1>&lt;p>Please Do the Payment For the Request Having reference number #{data.docashierpaymentui_taskDetails1PageDef.RequestNumber.inputValue}  .&lt;/p>&lt;p>Thanks &amp;amp; Regards,&lt;/p>&lt;p>UAQ Admin.&lt;/p>&lt;/html>" id="of1"/>
+      </af:form>
+    </af:document>
+  </f:view>
+</jsp:root>

@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<?oracleBPM version="11.1.1.7.0.2.22" fileRevision="20120217"?>
+<processDocumentation xmlns="http://xmlns.oracle.com/bpm/taskMetadataService/processDocumentation">
+    <component name="CachierProcess">
+        <topicDocumentations>
+            <topicDocumentation name="CachierProcess">
+                <descriptions>
+                    <description locale="en">CachierProcess</description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT14754202214998">
+                <labels>
+                    <label locale="en">CashierPaymentDialog</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT14757530218222">
+                <labels>
+                    <label locale="en">getPaymentDetails</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT14757710005071">
+                <labels>
+                    <label locale="en">getPaymentDetailsWithLetter</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT14757717391320">
+                <labels>
+                    <label locale="en">getPaymentDetailsWithUserType</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT14758851984677">
+                <labels>
+                    <label locale="en">getGenralAmountFees</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT1476390264195">
+                <labels>
+                    <label locale="en">Assign Values</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT14956959225933">
+                <labels>
+                    <label locale="en">GetLookups</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT14957026582290">
+                <labels>
+                    <label locale="en">GetAccountAttachments</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT15136484775329">
+                <labels>
+                    <label locale="en">Assign Values</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT15179176442454">
+                <labels>
+                    <label locale="en">GetLostDocReplaceFees</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT15195688016452">
+                <labels>
+                    <label locale="en">mergeWorkflowHistory</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT15195845663281">
+                <labels>
+                    <label locale="en">mergeWorkflowHistory</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="ACT15196471082737">
+                <labels>
+                    <label locale="en">GetStepID</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="EVT14749329322651">
+                <labels>
+                    <label locale="en">Start</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="EVT14749329322668">
+                <labels>
+                    <label locale="en">End</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="GTW14754580679841">
+                <labels>
+                    <label locale="en">check values</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="GTW15135879584643">
+                <labels>
+                    <label locale="en">CheckAmountGivenBySeviceornot</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="GTW15136482491789">
+                <labels>
+                    <label locale="en">ApplicationFesOrServiceFees</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="GTW15179170183657">
+                <labels>
+                    <label locale="en">LostDocReplaceService</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="GTW15195837678961">
+                <labels>
+                    <label locale="en">PaymentType</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf194"/>
+            <topicDocumentation name="sf195"/>
+            <topicDocumentation name="sf208">
+                <labels>
+                    <label locale="en">no letter no usertype</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf12"/>
+            <topicDocumentation name="sf14">
+                <labels>
+                    <label locale="en">with letter no usertype</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf16">
+                <labels>
+                    <label locale="en">with usertype no letter</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf18"/>
+            <topicDocumentation name="sf20"/>
+            <topicDocumentation name="sf69"/>
+            <topicDocumentation name="sf23"/>
+            <topicDocumentation name="sf269"/>
+            <topicDocumentation name="sf27"/>
+            <topicDocumentation name="sf83"/>
+            <topicDocumentation name="sf105">
+                <labels>
+                    <label locale="en">Service Provided Amount</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf451">
+                <labels>
+                    <label locale="en">Application Fees</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf453">
+                <labels>
+                    <label locale="en">Service Fees</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf455"/>
+            <topicDocumentation name="sf661"/>
+            <topicDocumentation name="sf663">
+                <labels>
+                    <label locale="en">LostDocReplaceService</label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf665"/>
+            <topicDocumentation name="sf230">
+                <labels>
+                    <label locale="en"></label>
+                </labels>
+                <descriptions>
+                    <description locale="en"></description>
+                </descriptions>
+            </topicDocumentation>
+            <topicDocumentation name="sf233"/>
+            <topicDocumentation name="sf278"/>
+            <topicDocumentation name="sf280"/>
+            <topicDocumentation name="sf281"/>
+        </topicDocumentations>
+    </component>
+</processDocumentation>

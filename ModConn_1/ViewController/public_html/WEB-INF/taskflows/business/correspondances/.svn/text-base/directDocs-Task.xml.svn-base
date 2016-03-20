@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="directDocs-Task">
+    <default-activity id="__1">directDocsList</default-activity>
+    <view id="addEditDirectDocs">
+      <page>/fragments/business/correspondances/addEditDirectDoc.jsff</page>
+    </view>
+    <view id="directDocsList">
+      <page>/fragments/business/correspondances/directDocsList.jsff</page>
+    </view>
+    <control-flow-rule id="__2">
+      <from-activity-id id="__3">directDocsList</from-activity-id>
+      <control-flow-case id="__4">
+        <from-outcome id="__6">addDirectDoc</from-outcome>
+        <to-activity-id id="__5">addEditDirectDocs</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">addEditDirectDocs</from-activity-id>
+      <control-flow-case id="__9">
+        <from-outcome id="__11">back</from-outcome>
+        <to-activity-id id="__10">directDocsList</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

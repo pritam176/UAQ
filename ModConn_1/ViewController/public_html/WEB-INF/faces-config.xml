@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="1.2" xmlns="http://java.sun.com/xml/ns/javaee">
+  <application>
+    <default-render-kit-id>oracle.adf.rich</default-render-kit-id>
+    <resource-bundle>
+      <base-name>com.mod.financial.view.resources.ViewBundle</base-name>
+      <var>rs</var>
+    </resource-bundle>
+    <locale-config>
+      <default-locale>en</default-locale>
+    </locale-config>
+    <message-bundle>com.mod.financial.view.resources.ViewBundle</message-bundle>
+  </application>
+  <lifecycle>
+    <phase-listener>com.mod.financial.view.utils.PhaseListenerImpl</phase-listener>
+  </lifecycle>
+</faces-config>

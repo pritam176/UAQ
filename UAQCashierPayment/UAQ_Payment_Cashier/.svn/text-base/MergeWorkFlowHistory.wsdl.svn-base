@@ -1,0 +1,29 @@
+<?binding.jca MergeWorkFlowHistory_db.jca?>
+<wsdl:definitions name="MergeWorkFlowHistory" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/MergeWorkFlowHistory" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/MergeWorkFlowHistory" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/MergeWorkFlowHistory">
+    <plt:partnerLinkType name="MergeWorkFlowHistory_plt">
+        <plt:role name="MergeWorkFlowHistory_role">
+            <plt:portType name="tns:MergeWorkFlowHistory_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/MergeWorkFlowHistory" schemaLocation="xsd/MergeWorkFlowHistory_table.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="WorkflowHistoryCollection_msg">
+        <wsdl:part name="WorkflowHistoryCollection" element="top:WorkflowHistoryCollection"/>
+    </wsdl:message>
+    <wsdl:message name="MergeWorkFlowHistorySelect_inputParameters">
+        <wsdl:part name="MergeWorkFlowHistorySelect_inputParameters" element="top:MergeWorkFlowHistorySelectInputParameters"/>
+    </wsdl:message>
+    <wsdl:portType name="MergeWorkFlowHistory_ptt">
+        <wsdl:operation name="merge">
+            <wsdl:input message="tns:WorkflowHistoryCollection_msg"/>
+            <wsdl:output message="tns:WorkflowHistoryCollection_msg"/>
+        </wsdl:operation>
+        <wsdl:operation name="MergeWorkFlowHistorySelect">
+            <wsdl:input message="tns:MergeWorkFlowHistorySelect_inputParameters"/>
+            <wsdl:output message="tns:WorkflowHistoryCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

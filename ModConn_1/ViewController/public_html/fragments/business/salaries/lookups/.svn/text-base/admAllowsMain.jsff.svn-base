@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+      <af:panelGroupLayout layout="vertical" id="pgl1" halign="center">
+          <af:query id="qryId1" headerText="#{rs.common_label_search}" disclosed="true" rows="1" maxColumns="2"
+                    value="#{bindings.AdmAllowsViewCriteriaQuery.queryDescriptor}"
+                    model="#{bindings.AdmAllowsViewCriteriaQuery.queryModel}"
+                    queryListener="#{bindings.AdmAllowsViewCriteriaQuery.processQuery}"
+                    queryOperationListener="#{bindings.AdmAllowsViewCriteriaQuery.processQueryOperation}" resultComponentId="::pc1:t1" saveQueryMode="hidden"
+                  modeChangeVisible="false"/>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="Result">
+      <af:table value="#{bindings.AdmAllowsView1.collectionModel}" var="row"
+                rows="#{bindings.AdmAllowsView1.rangeSize}"
+                emptyText="#{rs.common_label_table_no_data}"
+                fetchSize="#{bindings.AdmAllowsView1.rangeSize}"
+                rowBandingInterval="0"
+                filterModel="#{bindings.AdmAllowsView1Query.queryDescriptor}"
+                queryListener="#{bindings.AdmAllowsView1Query.processQuery}"
+                filterVisible="true" varStatus="vs"
+                selectedRowKeys="#{bindings.AdmAllowsView1.collectionModel.selectedRow}"
+                selectionListener="#{bindings.AdmAllowsView1.collectionModel.makeCurrent}"
+                rowSelection="single" id="t1"
+                partialTriggers="::ctb2 ::cb1 ::cb2" styleClass="AFStretchWidth"
+                columnStretching="column:c3">
+        <af:column width="40" align="center"
+                   headerText="#{rs.common_label_serial}">
+          <af:outputText value="#{vs.index + 1}" id="ot6"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmAllowsView1.hints.Name.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmAllowsView1.hints.Name.label}"
+                   id="c3" width="95" align="center">
+          <af:outputText value="#{row.Name}" id="ot1"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmAllowsView1.hints.SubjName.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmAllowsView1.hints.SubjName.label}"
+                   id="c4" width="200" noWrap="false" align="center">
+          <af:outputText value="#{row.bindings.SubjName.inputValue}"
+                         shortDesc="#{bindings.AdmAllowsView1.hints.SubjName.tooltip}"
+                         id="it1"></af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmAllowsView1.hints.IndemInclude.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmAllowsView1.hints.IndemInclude.label}"
+                   id="c7" width="65" noWrap="false" align="center">
+          <af:selectBooleanCheckbox value="#{row.bindings.IndemInclude.inputValue}"
+                                    label="#{row.bindings.IndemInclude.label}"
+                                    shortDesc="#{bindings.AdmAllowsView1.hints.IndemInclude.tooltip}"
+                                    id="sbc1" disabled="true"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmAllowsView1.hints.InsurType.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmAllowsView1.hints.InsurType.label}"
+                   id="c10" width="150" noWrap="false" align="center">
+          <af:selectOneChoice value="#{row.bindings.InsurType.inputValue}"
+                              label="#{row.bindings.InsurType.label}"
+                              required="#{bindings.AdmAllowsView1.hints.InsurType.mandatory}"
+                              shortDesc="#{bindings.AdmAllowsView1.hints.InsurType.tooltip}"
+                              id="soc1" disabled="true">
+            <f:selectItems value="#{row.bindings.InsurType.items}" id="si1"/>
+          </af:selectOneChoice>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmAllowsView1.hints.CreateDate.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmAllowsView1.hints.CreateDate.label}"
+                   id="c5" width="93" noWrap="false" align="center">
+          <f:facet name="filter">
+            <af:inputDate value="#{vs.filterCriteria.CreateDate}" id="id2"/>
+          </f:facet>
+          <af:outputText value="#{row.bindings.CreateDate.inputValue}"
+                         shortDesc="#{bindings.AdmAllowsView1.hints.CreateDate.tooltip}"
+                         id="id1">
+            <af:convertDateTime pattern="#{bindings.AdmAllowsView1.hints.CreateDate.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmAllowsView1.hints.LeaveInclude.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmAllowsView1.hints.LeaveInclude.label}"
+                   id="c2" width="75" noWrap="false" align="center">
+          <af:selectBooleanCheckbox value="#{row.bindings.LeaveInclude.inputValue}"
+                                    label="#{row.bindings.LeaveInclude.label}"
+                                    shortDesc="#{bindings.AdmAllowsView1.hints.LeaveInclude.tooltip}"
+                                    id="sbc2" disabled="true"
+                                    />
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmAllowsView1.hints.Compensation.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmAllowsView1.hints.Compensation.label}"
+                   id="c8" width="55" noWrap="false" align="center">
+          <af:selectBooleanCheckbox value="#{row.bindings.Compensation.inputValue}"
+                                    label="#{row.bindings.Compensation.label}"
+                                    shortDesc="#{bindings.AdmAllowsView1.hints.Compensation.tooltip}"
+                                    id="sbc3" disabled="true"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmAllowsView1.hints.PeriodToStop.name}"
+                   filterable="true" sortable="true"
+                   headerText="#{bindings.AdmAllowsView1.hints.PeriodToStop.label}"
+                   id="c1" width="65" noWrap="false" align="center">
+          <af:outputText value="#{row.PeriodToStop}" id="ot5">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmAllowsView1.hints.PeriodToStop.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column id="c6" width="25" align="center">
+          <af:commandLink id="cl1" action="addEdit">
+            <af:image source="/images/edit.png" id="i1"/>
+          </af:commandLink>
+        </af:column>
+        <af:column id="c9" width="25" align="center" rendered="false">
+          <af:commandLink id="commandLink1">
+            <af:image source="/images/delete.gif" id="image1"/>
+            <af:showPopupBehavior popupId="::p2"/>
+          </af:commandLink>
+        </af:column>
+      </af:table>
+    </f:facet>
+    <f:facet name="Popup">
+      <af:popup id="p2" contentDelivery="lazyUncached">
+        <af:dialog id="d2" title="#{rs.allow_dialog_deleteTitle}"
+                   closeIconVisible="false" type="none">
+          <af:panelGroupLayout id="pg" layout="horizontal">
+            <af:outputText value="#{rs['common_delete_Message']}"
+                           id="outputText1"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:spacer width="5" height="10" id="s2"/>
+            <af:outputText value="#{bindings.Name.inputValue}" id="ot20"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:outputText value=" ?" id="outputText3"
+                           inlineStyle="color:Red; font-size:small;"/>
+          </af:panelGroupLayout>
+          <af:spacer height="5px" id="s1"/>
+          <af:commandButton actionListener="#{bindings.Delete.execute}"
+                            text="#{rs.ok}" id="cb1" action="#{bindings.Commit.execute}"/>
+                            <af:spacer width="5px" id="s3"/>
+          <af:commandButton text="#{rs.common_button_cancel}" id="cb2" />
+        </af:dialog>
+      </af:popup>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:toolbar id="t3">
+        <af:commandButton actionListener="#{bindings.CreateWithParams.execute}"
+                          icon="/images/add.png" id="ctb2" action="addEdit"
+                          />
+      </af:toolbar>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

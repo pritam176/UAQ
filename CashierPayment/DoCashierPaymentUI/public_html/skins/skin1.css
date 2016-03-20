@@ -1,0 +1,3293 @@
+/* Copyright (c) 2012, 2013, Oracle and/or its affiliates. 
+All rights reserved. */
+
+/**
+ * WebCenter Portal skin (similar to OSN)
+ *
+ * NOTE: THIS IS A COPY OF A FILE WITH THE SAME NAME IN WCCORE.
+ * IT IS COPIED HERE UNTIL WE GET A NEW WCCORE LABEL CONTAINING IT.
+ *
+ */
+@namespace af "http://xmlns.oracle.com/adf/faces/rich";
+@namespace dvt "http://xmlns.oracle.com/dss/adf/faces";
+/**
+ * Default Font Family, e.g.
+ * font-family: Tahoma,Verdana,Helvetica,sans-serif
+ */
+af|document{
+  background-image: none; 
+  background-color: #ffffff;  
+}
+.AFDefaultFontFamily:alias
+{
+  font-family: Trebuchet MS, Verdana, Arial, Helvetica, sans-serif;
+}
+
+/**
+ * Link
+ */
+.AFLinkForeground:alias
+{
+  color: #1466B2;
+}
+
+/**
+ * Font Size
+ */
+.AFDefaultFont:alias
+{
+  font-size: 15px;
+}
+
+/**
+ * Text foreground color.
+ */
+.AFTextForeground:alias
+{
+  color: #000000;
+}
+
+/**
+ * Label text color.
+ */
+.AFLabelTextForeground:alias,
+.AFLabelTextForegroundDisabled:alias
+{
+  color: #666666;
+}
+.AFAddressFieldText{
+  color: #3a3a3a; 
+}
+.AFAddressFieldTextDisabled{
+}
+.AFDataNumber{
+  color: #3a3a3a; 
+}
+.AFDataNumberDisabled{
+  color: #3a3a3a; 
+}
+.AFDataText{
+  color: #3a3a3a; 
+}
+.AFDataTextDisabled{
+  color: #3a3a3a; 
+}
+.AFFieldNumber{
+  color: #3a3a3a; 
+}
+.AFFieldNumberDisabled{
+  color: #3a3a3a; 
+}
+.AFFieldText{
+  color: #3a3a3a; 
+}
+.AFFieldTextDisabled{
+  color: #3a3a3a; 
+}
+.AFInstructionText{
+  color: #3a3a3a; 
+}
+.AFInstructionTextDisabled{
+  color: #3a3a3a; 
+}
+.AFRequiredIconStyle{
+  color: #ff0000; 
+}
+
+af|outputText{
+  color: #3a3a3a; 
+}
+af|outputText.boldtext{
+  font-weight: bold !important;
+}
+af|commandImageLink::text{
+  color: #ffffff !important;   
+}
+.AFPanelFormLayoutContentCell .boldtext{
+  font-weight: bold !important; 
+}
+af|separator{
+  background-color: #d3d3d3;
+  margin:10px 10px;
+}
+/* inputNumberSpinbox start here */
+af|inputNumberSpinbox{
+  background-image: none; 
+  background-color: #ffffff;
+  border: 1px solid #d3d3d3;
+  -webkit-border-radius: 6px; 
+  -moz-border-radius: 6px; 
+  -ms-border-radius: 6px; 
+  -o-border-radius: 6px; 
+  -khtml-border-radius: 6px; 
+  border-radius: 6px; 
+  width: 75px;
+}
+af|inputNumberSpinbox::label{
+  background-color:transparent; 
+  color: #3a3a3a !important
+}
+af|inputNumberSpinbox::content{
+  background-image: none; 
+  background-color:transparent;
+  border: 0px none transparent;
+}
+
+/* inputNumberSpinbox end here */
+/* inputText (1st Component) start here */
+af|inputText{
+  color: #3a3a3a; 
+}
+af|inputText::label{
+  color: #3a3a3a !important;
+}
+af|inputText:disabled::label{
+  color: #999999 !important; 
+}
+af|inputText:required::label{
+  color: #3a3a3a; 
+}
+af|inputText::content{
+  background-image: none; 
+  background-color: #ffffff;
+  border: 1px solid #d3d3d3;
+  -webkit-border-radius: 6px; 
+  -moz-border-radius: 6px; 
+  -ms-border-radius: 6px; 
+  -o-border-radius: 6px; 
+  -khtml-border-radius: 6px; 
+  border-radius: 6px; 
+  padding: 3px 4px 3px 4px;
+}
+af|inputText:disabled::content{
+  display:inline-block !important;
+  height:14px;
+}
+af|inputText::context-content{
+  background-color: transparent; 
+}
+af|inputText::changed-icon{
+  background-color: transparent;
+}
+/* inputText (1st Component) end here */
+
+/* selectOneChoice (2nd Component) start here */
+af|selectOneChoice{
+  color: #3a3a3a; 
+}
+af|selectOneChoice::label{
+  color: #3a3a3a !important; 
+}
+af|selectOneChoice:disabled::label{
+  color: #999999 !important; 
+}
+af|selectOneChoice:required::label{
+  color: #3a3a3a; 
+}
+af|selectOneChoice::changed-icon{
+   
+}
+af|selectOneChoice::compact-content{
+   
+}
+af|selectOneChoice::compact-dropdown{
+   
+}
+af|selectOneChoice::compact-dropdown-icon{
+   
+}
+af|selectOneChoice::compact-dropdown-icon-style{
+   
+}
+af|selectOneChoice::content{
+  background-color: #ffffff;
+  border: 1px solid #d3d3d3 !important;
+  -webkit-border-radius: 6px; 
+  -moz-border-radius: 6px; 
+  -ms-border-radius: 6px; 
+  -o-border-radius: 6px; 
+  -khtml-border-radius: 6px; 
+  border-radius: 6px; 
+  padding: 2px 4px 2px 4px;
+  width:180px;
+}
+af|selectOneChoice::content-border{
+}
+af|selectOneChoice::context-content{
+}
+af|selectOneChoice::dropdown-panel{
+ 
+}
+af|selectOneChoice::dynamic-help-icon{   
+}
+af|selectOneChoice::dynamic-help-icon-style{
+  background-image: none; 
+}
+af|selectOneChoice::item{   
+}
+af|selectOneChoice::separator{   
+}
+/* selectOneChoice (2nd Component) end here */
+
+/* selectOneChoice (3rd Component) start here */
+af|inputComboboxListOfValues{
+  color: #3a3a3a; 
+}
+af|inputComboboxListOfValues::label{
+  color: #3a3a3a !important; 
+}
+af|inputComboboxListOfValues:disabled::label{
+  color: #999999 !important; 
+}
+af|inputComboboxListOfValues::changed-icon{
+  background-color: transparent; 
+}
+af|inputComboboxListOfValues::container{
+  background-color: #ffffff;
+  background-image: none;
+  -webkit-border-radius: 6px; 
+  -moz-border-radius: 6px; 
+  -ms-border-radius: 6px; 
+  -o-border-radius: 6px; 
+  -khtml-border-radius: 6px; 
+  border-radius: 6px;
+  border: 1px solid #d3d3d3 !important;
+  padding: 4px 4px 3px 4px !important;
+}
+af|inputComboboxListOfValues::content{
+  background-color: transparent;
+  background-image: none;
+  line-height: 20px;
+}
+
+af|inputComboboxListOfValues::context-content{
+}
+af|inputComboboxListOfValues::dropdown-cell, af|inputComboboxListOfValues::dropdown-cell:hover{
+  background-color: transparent !important;
+  border: 0px none transparent !important;
+  -webkit-border-radius: 6px; 
+  -moz-border-radius: 6px; 
+  -ms-border-radius: 6px; 
+  -o-border-radius: 6px; 
+  -khtml-border-radius: 6px; 
+  border-radius: 6px;
+}
+af|inputComboboxListOfValues::dropdown-icon{
+}
+af|inputComboboxListOfValues::dropdown-icon:hover{
+}
+af|inputComboboxListOfValues::dropdown-icon-style{
+}
+af|inputComboboxListOfValues::dropdown-icon-style:active{
+}
+af|inputComboboxListOfValues::dropdown-icon-style:disabled{
+}
+af|inputComboboxListOfValues:disabled::dropdown-icon-style{
+}
+af|inputComboboxListOfValues:disabled::dropdown-icon-style:active{
+}
+af|inputComboboxListOfValues::popup-create-icon{
+}
+af|inputComboboxListOfValues::popup-create-icon-style{
+}
+af|inputComboboxListOfValues::search{
+}
+af|inputComboboxListOfValues::separator{
+   
+}
+/* selectOneChoice (3rd Component) end here */
+
+/* inputListOfValues (4th Component) start here */
+af|inputListOfValues{
+  color: #3a3a3a; 
+}
+af|inputListOfValues::label{
+  color: #3a3a3a !important; 
+}
+af|inputListOfValues:disabled::label{
+  color: #999999 !important;
+}
+af|inputListOfValues:required::label{
+  color: #3a3a3a; 
+}
+af|inputListOfValues::changed-icon{
+  background-color: Blue; 
+}
+af|inputListOfValues::content{
+  background-image: none; 
+  background-color: #ffffff;
+  border: 1px solid #d3d3d3;
+  -webkit-border-radius: 6px; 
+  -moz-border-radius: 6px; 
+  -ms-border-radius: 6px; 
+  -o-border-radius: 6px; 
+  -khtml-border-radius: 6px; 
+  border-radius: 6px; 
+  padding: 3px 4px 3px 4px;
+}
+af|inputListOfValues:disabled::content{
+  display:inline-block !important;
+  height:14px;
+}
+af|inputListOfValues::search-icon{
+  background-color: transparent; 
+}
+af|inputListOfValues::search-icon-style{
+background-image: url("/images/11_Search-16.png");
+  background-color: transparent; 
+}
+af|inputListOfValues::search-icon-style:disabled{
+  background-color: transparent; 
+}
+af|inputListOfValues::search-disabled-icon{
+  background-color: transparent; 
+}
+af|inputListOfValues::popup-create-icon{
+  background-color: transparent; 
+}
+af|inputListOfValues::popup-create-icon-style{
+  background-color: transparent; 
+}
+/* inputListOfValues (4th Component) end here */
+
+/* inputDate (5th Component) start here */
+af|inputDate{
+  color: #3a3a3a; 
+}
+af|inputDate::label{
+  color: #3a3a3a !important; 
+}
+af|inputDate:disabled::label{
+  color: #999999 !important;
+}
+af|inputDate:required::label
+{
+  color: #3a3a3a; 
+}
+af|inputDate::changed-icon{
+  background-color: Blue; 
+}
+af|inputDate::content{
+  background-image: none; 
+  background-color: #ffffff;
+  border: 1px solid #d3d3d3;
+  -webkit-border-radius: 6px; 
+  -moz-border-radius: 6px; 
+  -ms-border-radius: 6px; 
+  -o-border-radius: 6px; 
+  -khtml-border-radius: 6px; 
+  border-radius: 6px; 
+  padding: 3px 4px 3px 4px; 
+}
+af|inputDate:disabled::content{
+  display:inline-block !important;
+  height:14px; 
+}
+af|inputDate::timezone{
+  background-color: Lime; 
+}
+af|inputDate::launch-icon{
+  background-color: Navy; 
+}
+af|inputDate::launch-icon-style{
+  background-image: url("/images/048-16.png") !important;
+}
+af|inputDate::launch-icon-style:hover{
+  background-image: url("/images/048-16.png") !important;
+}
+af|inputDate::launch-icon-style:active{
+  background-image: url("/images/048-16.png");
+}
+af|inputDate::launch-icon-style:disabled{
+  background-image: url("/images/048-16.png");
+}
+/* inputDate (5th Component) end here */
+
+/* inputFile (6th Component) start here */
+af|inputFile{
+  color: #3a3a3a; 
+}
+af|inputFile::label{
+  color: #3a3a3a !important; 
+}
+af|inputFile:disabled::label{
+  color: #999999 !important;
+}
+af|inputFile:required::label{
+  color: #3a3a3a; 
+}
+af|inputFile::changed-icon{
+  background-color: Aqua; 
+}
+af|inputFile::content{
+  background-image: none;
+  background-color: #ffffff;
+  -webkit-border-radius: 6px; 
+  -moz-border-radius: 6px; 
+  -ms-border-radius: 6px; 
+  -o-border-radius: 6px; 
+  -khtml-border-radius: 6px; 
+  border-radius: 6px;
+  border: 1px solid #d3d3d3 !important;
+  padding: 1px 4px 1px 4px !important;
+}
+
+af|inputFile:disabled::content{
+  line-height:23px !important;
+  height:23px !important;
+}
+
+af|inputFile::dynamic-help-icon-style{
+  background-image: none; 
+}
+
+af|inputFile::dynamic-help-icon{
+  background-color: transparent;
+}
+/* inputFile (6th Component) end here */
+
+
+af|selectBooleanRadio::item-text{
+  line-height: 7px;
+}
+af|selectOneRadio::item-text{
+  line-height: 7px;
+}
+
+/* panelLabelAndMessage start here */
+af|panelLabelAndMessage{
+  color: #3a3a3a !important;
+}
+af|panelLabelAndMessage::label{
+  color: #3a3a3a !important; 
+}
+af|panelLabelAndMessage.leftAlign::label{
+  text-align: left; 
+}
+af|panelLabelAndMessage.Boldtext::label{
+  font-weight: bold !important; 
+}
+af|panelLabelAndMessage.mapFeild::label{
+  vertical-align: top !important; 
+}
+
+af|panelLabelAndMessage::changed-icon{
+
+}
+af|panelLabelAndMessage::content-cell{
+
+}
+af|panelLabelAndMessage::dynamic-help-icon{
+
+}
+af|panelLabelAndMessage::dynamic-help-icon-style{
+ 
+}
+af|panelLabelAndMessage::end-facet{
+
+}
+af|panelLabelAndMessage.topAndButtomSpace::content-cell.AFPanelFormLayoutContentCell{
+     padding: 15px 0px;  
+}
+/* panelLabelAndMessage end here */
+
+/* resetButton start here */
+af|resetButton.btn-reset{
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;
+  background-color: #69a635;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#69a635), to(#64a540));
+  background-image: -webkit-linear-gradient(top, #69a635, 0%, #64a540, 100%);
+  background-image: -moz-linear-gradient(top, #69a635 0%, #64a540 100%);
+  background-image: linear-gradient(to bottom, #69a635 0%, #64a540 100%);
+  background-repeat: repeat-x;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 6px;
+  font-weight: bold;
+  padding: 10px 8px 10px 8px;
+  border: 1px solid #56a443;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+af|resetButton.btn-reset:hover,
+af|resetButton.btn-reset:active,
+af|resetButton.btn-reset:active:hover,
+af|resetButton.btn-reset:focus,
+af|resetButton.btn-reset:focus:hover{
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;
+  background-color: #69a635;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#69a635), to(#64a540));
+  background-image: -webkit-linear-gradient(top, #69a635, 0%, #64a540, 100%);
+  background-image: -moz-linear-gradient(top, #69a635 0%, #64a540 100%);
+  background-image: linear-gradient(to bottom, #69a635 0%, #64a540 100%);
+  background-repeat: repeat-x;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 6px;
+  font-weight: bold;
+  padding: 10px 8px 10px 8px;
+  border: 1px solid #56a443;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+
+af|resetButton.btn-reset:disabled,
+af|resetButton.btn-reset:active:disabled{
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  cursor: not-allowed;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;
+  background-color: #0066cc;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#66696b), to(#a6b3cd));
+  background-image: -webkit-linear-gradient(top, #66696b, 0%, #a6b3cd, 100%);
+  background-image: -moz-linear-gradient(top, #66696b 0%, #a6b3cd 100%);
+  background-image: linear-gradient(to bottom, #66696b 0%, #a6b3cd 100%);
+  background-repeat: repeat-x;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 6px;
+  font-weight: bold;
+  padding: 10px 8px 10px 8px;
+   border: 1px solid #7b838b;
+  text-decoration: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+
+@agent ie and (version:8){ 
+af|resetButton.btn-reset {
+  filter: none;
+  @gradient-green-2: #82c549;*/
+  -pie-background: linear-gradient(#69a635 0%, #64a540) 0 0;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;  
+  position: relative;
+  behavior: url(/skins/PIE.htc); 
+}
+af|resetButton.btn-reset:hover,
+af|resetButton.btn-reset:focus  {
+  filter: none;
+  -pie-background: linear-gradient(#69a635 0%, #64a540) 0 0;
+  position: relative;
+  behavior: url(/skins/PIE.htc);  
+}
+}
+@agent ie and (version:9){ 
+af|resetButton.btn-reset {
+  filter: none;
+  @gradient-green-2: #82c549;*/
+  -pie-background: linear-gradient(#69a635 0%, #64a540) 0 0;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;  
+  position: relative;
+  behavior: url(/skins/PIE.htc); 
+}
+af|resetButton.btn-reset:hover,
+af|resetButton.btn-reset:focus  {
+  filter: none;
+  -pie-background: linear-gradient(#69a635 0%, #64a540) 0 0;
+  position: relative;
+  behavior: url(/skins/PIE.htc);  
+}
+}
+af|resetButton.btn-reset:busy{
+}
+af|resetButton.btn-reset::access-key{
+}
+
+/* resetButton end here */
+
+/* commandButton start here */
+af|commandButton.btn-action {
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;
+  background-color: #a2171c;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#d31b23), to(#d7333a));
+  background-image: -webkit-linear-gradient(top, #d31b23, 0%, #d7333a, 100%);
+  background-image: -moz-linear-gradient(top, #d31b23 0%, #d7333a 100%);
+  background-image: linear-gradient(to bottom, #d31b23 0%, #d7333a 100%);
+  background-repeat: repeat-x;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 6px;
+  font-weight: bold;
+  padding: 10px 8px 10px 8px;
+  border: 1px solid #d31b23;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+af|commandButton.btn-action:hover,
+af|commandButton.btn-action:active,
+af|commandButton.btn-action:active:hover,
+af|commandButton.btn-action:focus,
+af|commandButton.btn-action:focus:hover{
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px; 
+  background-color: #a2171c;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#d31b23), to(#d7333a));
+  background-image: -webkit-linear-gradient(top, #d31b23, 0%, #d7333a, 100%);
+  background-image: -moz-linear-gradient(top, #d31b23 0%, #d7333a 100%);
+  background-image: linear-gradient(to bottom, #d31b23 0%, #d7333a 100%);
+  background-repeat: repeat-x;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 6px;
+  font-weight: bold;
+  padding: 10px 8px 10px 8px;
+  border: 1px solid #d31b23;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+
+af|commandButton.btn-action:disabled,
+af|commandButton.btn-action:active:disabled{
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  cursor: not-allowed;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;
+  background-color: #a2171c;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#d31b23), to(#d7333a));
+  background-image: -webkit-linear-gradient(top, #d31b23, 0%, #d7333a, 100%);
+  background-image: -moz-linear-gradient(top, #d31b23 0%, #d7333a 100%);
+  background-image: linear-gradient(to bottom, #d31b23 0%, #d7333a 100%);
+  background-repeat: repeat-x;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 6px;
+  font-weight: bold;
+  padding: 10px 8px 10px 8px;
+   border: 1px solid #d31b23;
+  text-decoration: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+@agent ie and (version:8){ 
+af|commandButton.btn-action {
+  filter: none;
+  @gradient-green-2: #a2171c;*/
+  -pie-background: linear-gradient(#d31b23 0%, #d7333a) 0 0;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;  
+  position: relative;
+  behavior: url(/skins/PIE.htc); 
+}
+af|commandButton.btn-action:hover,
+af|commandButton.btn-action:focus  {
+  filter: none;
+  -pie-background: linear-gradient(#d31b23 0%, #d7333a) 0 0;
+  position: relative;
+  behavior: url(/skins/PIE.htc);  
+}
+}
+@agent ie and (version:9){ 
+af|commandButton.btn-action {
+  filter: none;
+  @gradient-green-2: #a2171c;*/
+  -pie-background: linear-gradient(#d31b23 0%, #d7333a) 0 0;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;  
+  position: relative;
+  behavior: url(/skins/PIE.htc); 
+}
+af|commandButton.btn-action:hover,
+af|commandButton.btn-action:focus  {
+  filter: none;
+  -pie-background: linear-gradient(#d31b23 0%, #d7333a) 0 0;
+  position: relative;
+  behavior: url(/skins/PIE.htc);  
+}
+}
+
+
+af|commandButton.btn-noBg {
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  background-image:none;
+  background-repeat:no-repeat;
+  border:0px none transparent;
+  cursor: pointer;
+}
+
+af|commandButton.btn-noBg:hover,
+af|commandButton.btn-noBg:active,
+af|commandButton.btn-noBg:active:hover,
+af|commandButton.btn-noBg:focus,
+af|commandButton.btn-noBg:focus:hover{
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  background-image:none;
+  background-repeat:no-repeat;
+  border:0px none transparent;
+  cursor: pointer;
+}
+
+
+af|commandButton.btn-noBg:disabled,
+af|commandButton.btn-noBg:active:disabled{
+  display: inline-block;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  background-color: transparent;
+  background-image:none;
+  background-repeat:no-repeat;
+  border:0px none transparent;
+  cursor: not-allowed;
+}
+
+
+af|commandButton.btn-secondary{
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;
+  background-color: #69a635;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#69a635), to(#64a540));
+  background-image: -webkit-linear-gradient(top, #69a635, 0%, #64a540, 100%);
+  background-image: -moz-linear-gradient(top, #69a635 0%, #64a540 100%);
+  background-image: linear-gradient(to bottom, #69a635 0%, #64a540 100%);
+  background-repeat: repeat-x;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 6px;
+  font-weight: bold;
+  padding: 10px 8px 10px 8px;
+  border: 1px solid #56a443;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+af|commandButton.btn-secondary:hover,
+af|commandButton.btn-secondary:active,
+af|commandButton.btn-secondary:active:hover,
+af|commandButton.btn-secondary:focus,
+af|commandButton.btn-secondary:focus:hover{
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;
+  background-color: #69a635;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#69a635), to(#64a540));
+  background-image: -webkit-linear-gradient(top, #69a635, 0%, #64a540, 100%);
+  background-image: -moz-linear-gradient(top, #69a635 0%, #64a540 100%);
+  background-image: linear-gradient(to bottom, #69a635 0%, #64a540 100%);
+  background-repeat: repeat-x;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 6px;
+  font-weight: bold;
+  padding: 10px 8px 10px 8px;
+  border: 1px solid #56a443;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+
+
+af|commandButton.btn-secondary:disabled,
+af|commandButton.btn-secondary:active:disabled{
+  display: inline-block;
+  margin-bottom: 0;
+  text-align: center;
+  vertical-align: middle;
+  cursor: not-allowed;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+  color: #ffffff;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;
+  background-color: #0066cc;
+  background-image: -webkit-gradient(linear, left 0%, left 100%, from(#66696b), to(#a6b3cd));
+  background-image: -webkit-linear-gradient(top, #66696b, 0%, #a6b3cd, 100%);
+  background-image: -moz-linear-gradient(top, #66696b 0%, #a6b3cd 100%);
+  background-image: linear-gradient(to bottom, #66696b 0%, #a6b3cd 100%);
+  background-repeat: repeat-x;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 6px;
+  font-weight: bold;
+  padding: 10px 8px 10px 8px;
+   border: 1px solid #7b838b;
+  text-decoration: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+
+@agent ie and (version:8){ 
+af|commandButton.btn-secondary {
+  filter: none;
+  @gradient-green-2: #82c549;*/
+  -pie-background: linear-gradient(#69a635 0%, #64a540) 0 0;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;  
+  position: relative;
+  behavior: url(/skins/PIE.htc); 
+}
+af|commandButton.btn-secondary:hover,
+af|commandButton.btn-secondary:focus  {
+  filter: none;
+  -pie-background: linear-gradient(#69a635 0%, #64a540) 0 0;
+  position: relative;
+  behavior: url(/skins/PIE.htc);  
+}
+}
+@agent ie and (version:9){ 
+af|commandButton.btn-secondary {
+  filter: none;
+  @gradient-green-2: #82c549;*/
+  -pie-background: linear-gradient(#69a635 0%, #64a540) 0 0;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;  
+  position: relative;
+  behavior: url(/skins/PIE.htc); 
+}
+af|commandButton.btn-secondary:hover,
+af|commandButton.btn-secondary:focus  {
+  filter: none;
+  -pie-background: linear-gradient(#69a635 0%, #64a540) 0 0;
+  position: relative;
+  behavior: url(/skins/PIE.htc);  
+}
+}
+/* commandButton end here */
+
+
+af|panelStretchLayout af|panelGroupLayout.pageHeading{
+  padding-top: 15px !important;
+  background-color: #0066cc;
+  color: #ffffff;
+  font-size:14px;
+  font-weight: bold;
+  text-decoration: underline; 
+}
+
+af|panelStretchLayout.pageHeading{
+  background-color: #0066cc;
+  color: #ffffff;
+  font-size:14px;
+  font-weight: bold;
+  text-decoration: none;
+}
+af|panelCollection af|toolbox::body {
+  border: 0px none transparent;
+}
+af|panelGroupLayout.pageBody{
+  padding: 10px;
+  background-color: #f5f5f5;
+}
+af|panelGroupLayout.detailPageImage{
+  margin-right: 15px; 
+  margin-bottom: 15px;
+}
+af|panelGroupLayout.textMarginT5{
+  margin-top: 5px;
+}
+af|panelGroupLayout.textMarginT10{
+  margin-top: 10px;
+}
+af|panelGroupLayout.textMarginB10{
+  margin-bottom: 10px;
+}
+af|panelGroupLayout.textMarginB5{
+  margin-bottom: 5px;
+}
+
+/* panelBox start here */
+af|panelBox{
+    background-color: #fcfcfc;
+    border: 1px solid #d3d3d3 !important;
+    border-radius: 8px;
+    margin-bottom: 10px !important; 
+}
+af|panelBox::center{
+  background-image: none !important;
+  border: 0 none transparent;
+}
+af|panelBox::content{
+  background-image: none !important; 
+  color: #3a3a3a; 
+}
+af|panelBox::footer-center{
+  background-image: none !important; 
+}
+af|panelBox::footer-end{
+  background-image: none !important; 
+}
+af|panelBox::footer-start{
+  background-image: none !important; 
+}
+af|panelBox::header-center{
+  background-image: none !important;
+  background-color: #9aceff;
+  color: #000000;
+  font-size:12px;
+  font-weight: bold;
+}
+af|panelBox::header-element{
+  background-image: none !important; 
+  background-color: #9aceff;
+  color: #000000;
+  font-size:12px;
+  font-weight: bold; 
+}
+af|panelBox::header-end{
+  background-image: none !important; 
+  background-color: #9aceff;
+  color: #000000;
+  font-size:12px;
+  font-weight: bold;
+ -webkit-border-radius: 0px 8px 0px 0px; 
+  -moz-border-radius: 0px 8px 0px 0px; 
+  -ms-border-radius: 0px 8px 0px 0px; 
+  -o-border-radius: 0px 8px 0px 0px; 
+  -khtml-border-radius: 8px 0px 0px 0px; 
+  border-radius: 0px 8px 0px 0px;  
+}
+af|panelBox::header-start{
+  background-image: none !important; 
+  background-color: #9aceff;
+  color: #000000;
+  font-size:12px;
+  font-weight: bold;
+ -webkit-border-radius: 8px 0px 0px 0px; 
+  -moz-border-radius: 8px 0px 0px 0px; 
+  -ms-border-radius: 8px 0px 0px 0px; 
+  -o-border-radius: 8px 0px 0px 0px; 
+  -khtml-border-radius: 8px 0px 0px 0px; 
+  border-radius: 8px 0px 0px 0px; 
+}
+af|panelBox::header-text{
+  color: #333333; 
+  padding: 6px 0 6px 4px;
+}
+af|panelBox::disclosed-icon-style{
+  background-color: transparent;
+}
+af|panelBox::dynamic-help-icon-style{
+  background-color: transparent;
+}
+af|panelBox::disclosed-icon{
+  background-color: #f5f5f5; 
+}
+af|panelBox::disclosure-link{
+  background-color: #f5f5f5; 
+}
+af|panelBox::undisclosed-icon{
+  background-color: #f5f5f5; 
+}
+af|panelBox::undisclosed-icon-style{
+  background-color: transparent; 
+}
+/*
+af|panelBox{
+  background-color: #f5f5f5; 
+}
+af|panelBox::disclosed-icon-style{
+  background-color: transparent; 
+}
+af|panelBox::dynamic-help-icon-style{
+  background-color: transparent;
+}
+af|panelBox::center{
+  background-image: none !important;
+  border: 0 none transparent;
+}
+af|panelBox::content{
+  background-image: none !important; 
+  color: #3a3a3a; 
+}
+af|panelBox::footer-center{
+  background-image: none !important; 
+}
+af|panelBox::footer-end{
+  background-image: none !important; 
+}
+af|panelBox::footer-start{
+  background-image: none !important; 
+}
+af|panelBox::header-center{
+  background-image: none !important; 
+}
+af|panelBox::header-element{
+  background-image: none !important; 
+}
+af|panelBox::header-end{
+  background-image: none !important;
+ -webkit-border-radius: 0px 8px 0px 0px; 
+  -moz-border-radius: 0px 8px 0px 0px; 
+  -ms-border-radius: 0px 8px 0px 0px; 
+  -o-border-radius: 0px 8px 0px 0px; 
+  -khtml-border-radius: 8px 0px 0px 0px; 
+  border-radius: 0px 8px 0px 0px; 
+}
+af|panelBox::header-start{
+  background-image: none !important;
+ -webkit-border-radius: 8px 0px 0px 0px; 
+  -moz-border-radius: 8px 0px 0px 0px; 
+  -ms-border-radius: 8px 0px 0px 0px; 
+  -o-border-radius: 8px 0px 0px 0px; 
+  -khtml-border-radius: 8px 0px 0px 0px; 
+  border-radius: 8px 0px 0px 0px; 
+}
+af|panelBox::header-text{
+  color: #333333; 
+  padding: 6px 0 6px 4px;
+}
+af|panelBox::undisclosed-icon{
+  background-color: #f5f5f5; 
+}
+af|panelBox::undisclosed-icon-style{
+  background-color: #f5f5f5; 
+}
+af|panelBox::disclosed-icon{
+  background-color: #f5f5f5; 
+}
+af|panelBox::disclosure-link{
+  background-color: #f5f5f5; 
+}
+*/
+/* panelBox end here */
+
+/* showDetailHeader start here */
+af|showDetailHeader{
+  background-color: #fcfcfc;
+  color: #3a3a3a;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;
+  border: 1px solid #d3d3d3; 
+}
+af|showDetailHeader::title-table{
+  background-color: #9aceff;
+  -webkit-border-radius: 8px 8px 0px 0px; 
+  -moz-border-radius: 8px 8px 0px 0px; 
+  -ms-border-radius: 8px 8px 0px 0px; 
+  -o-border-radius: 8px 8px 0px 0px; 
+  -khtml-border-radius: 8px 8px 0px 0px; 
+  border-radius: 8px 8px 0px 0px; 
+  padding: 4px 0px; 
+}
+af|showDetailHeader::context-container{
+  background-color: transparent;
+}
+af|showDetailHeader::context-container:rtl{
+  background-color: transparent; 
+}
+af|showDetailHeader::content0, af|showDetailHeader::content1, af|showDetailHeader::content2, af|showDetailHeader::content3, af|showDetailHeader::content4, af|showDetailHeader::content5{
+  background-color: transparent;
+  padding: 4px 10px;
+}
+af|showDetailHeader::title-start0, af|showDetailHeader::title-start1, af|showDetailHeader::title-start2, af|showDetailHeader::title-start3, af|showDetailHeader::title-start4, af|showDetailHeader::title-start5{
+  background-color: transparent; 
+  background-image: none; 
+}
+af|showDetailHeader::title0, af|showDetailHeader::title1, af|showDetailHeader::title2, af|showDetailHeader::title3, af|showDetailHeader::title4, af|showDetailHeader::title5{
+  background-color: transparent; 
+  background-image: none; 
+}
+af|showDetailHeader::title-text0, af|showDetailHeader::title-text1, af|showDetailHeader::title-text2, af|showDetailHeader::title-text3, af|showDetailHeader::title-text4, af|showDetailHeader::title-text5{
+  background-color: transparent; 
+  background-image: none;
+  color: #3a3a3a;
+}
+af|showDetailHeader::title-end0, af|showDetailHeader::title-end1, af|showDetailHeader::title-end2, af|showDetailHeader::title-end3, af|showDetailHeader::title-end4, af|showDetailHeader::title-end5{
+  background-color: transparent; 
+  background-image: none; 
+}
+af|showDetailHeader::toolbar{
+  background-color: transparent;
+}
+af|showDetailHeader::instruction-text{
+  background-color: transparent;
+}
+af|showDetailHeader::disclosed-icon-style{
+  background-color: transparent;
+}
+af|showDetailHeader::disclosed-icon-style:active{
+  background-color: transparent;
+}
+af|showDetailHeader::disclosure-icon-container{
+  background-color: transparent; 
+}
+af|showDetailHeader::disclosure-icon-container:rtl{
+  background-color: transparent; 
+}
+af|showDetailHeader::disclosure-link{
+  background-color: transparent; 
+}
+af|showDetailHeader::dynamic-help-icon{
+  background-color: transparent;
+}
+af|showDetailHeader::dynamic-help-icon-style{
+  background-color: transparent;
+}
+af|showDetailHeader::dynamic-help-icon-style:active{
+  background-color: transparent;
+}
+af|showDetailHeader::dynamic-help-icon-style:disabled{
+  background-color: transparent; 
+}
+af|showDetailHeader::dynamic-help-icon-style:disabled:active{
+  background-color: transparent;
+}
+af|showDetailHeader::error-icon{
+  background-color: transparent;
+}
+af|showDetailHeader::help-link-container{
+  background-color: transparent;
+}
+af|showDetailHeader::icon-style{
+  background-color: transparent;
+}
+af|showDetailHeader::info{
+  background-color: transparent;
+}
+af|showDetailHeader::information-icon{
+  background-color: transparent;
+}
+af|showDetailHeader::undisclosed-icon{
+  background-color: transparent; 
+}
+af|showDetailHeader::undisclosed-icon-style{
+  background-color: transparent;
+}
+af|showDetailHeader::undisclosed-icon-style:active{
+  background-color: transparent;
+}
+af|showDetailHeader::confirmation-icon{
+  background-color: transparent;
+}
+af|showDetailHeader::warning-icon{
+  background-color: transparent;
+}
+/* showDetailHeader end here */
+
+/* panelHeader end here */
+af|panelHeader{
+  color: #3a3a3a;
+  background-color: transparent; 
+  background-image: none;
+  border: 1px solid #d3d3d3;
+  -webkit-border-radius: 8px; 
+  -moz-border-radius: 8px; 
+  -ms-border-radius: 8px; 
+  -o-border-radius: 8px; 
+  -khtml-border-radius: 8px; 
+  border-radius: 8px;
+}
+af|panelHeader::title-table{
+  background-color: #d5e4ec;
+  -webkit-border-radius: 8px 8px 0px 0px; 
+  -moz-border-radius: 8px 8px 0px 0px; 
+  -ms-border-radius: 8px 8px 0px 0px; 
+  -o-border-radius: 8px 8px 0px 0px; 
+  -khtml-border-radius: 8px 8px 0px 0px; 
+  border-radius: 8px 8px 0px 0px; 
+  padding: 4px 0px;
+}
+af|panelHeader::toolbar{
+  background-color: transparent; 
+  background-image: none;
+}
+af|panelHeader::title-start0, af|panelHeader::title-start1, af|panelHeader::title-start2, af|panelHeader::title-start3, af|panelHeader::title-start4, af|panelHeader::title-start5{
+  background-color: transparent; 
+  background-image: none;
+  width: 8px;
+}
+af|panelHeader::content0, af|panelHeader::content1, af|panelHeader::content2, af|panelHeader::content3, af|panelHeader::content4, af|panelHeader::content5{
+  background-color: #f0f3fb;
+  -webkit-border-radius: 0px 0px 8px 8px; 
+  -moz-border-radius: 0px 0px 8px 8px; 
+  -ms-border-radius: 0px 0px 8px 8px; 
+  -o-border-radius: 0px 0px 8px 8px;
+  -khtml-border-radius: 0px 0px 8px 8px; 
+  border-radius: 0px 0px 8px 8px;
+  padding: 5px 5px 0px 5px;
+}
+af|panelHeader::title-end0, af|panelHeader::title-end1, af|panelHeader::title-end2, af|panelHeader::title-end3, af|panelHeader::title-end4, af|panelHeader::title-end5{
+  background-color: transparent;
+  background-image: none;
+  width: 8px;
+}
+af|panelHeader::title-text0, af|panelHeader::title-text1, af|panelHeader::title-text2, af|panelHeader::title-text3, af|panelHeader::title-text4, af|panelHeader::title-text5{
+  background-color: transparent;
+  background-image: none;
+  color: #3a3a3a;
+}
+af|panelHeader::title0, af|panelHeader::title1, af|panelHeader::title2, af|panelHeader::title3, af|panelHeader::title4, af|panelHeader::title5{
+  background-color: transparent;
+  background-image: none; 
+}
+af|panelHeader::confirmation-icon{
+  background-color: transparent;
+}
+af|panelHeader::context-container{
+  background-color: transparent; 
+}
+af|panelHeader::dynamic-help-icon{
+  background-color: transparent; 
+}
+af|panelHeader::dynamic-help-icon-style{
+  background-color: transparent;
+}
+af|panelHeader::error-icon{
+  background-color: transparent;
+}
+af|panelHeader::help-link-container{
+  background-color: transparent;
+}
+af|panelHeader::icon-style{
+  background-color: transparent;
+}
+af|panelHeader::info{
+  background-color: transparent;
+}
+af|panelHeader::information-icon{
+  background-color: transparent;
+}
+af|panelHeader::instruction-text{
+  background-color: transparent;
+}
+af|panelHeader::warning-icon{
+  background-color: transparent; 
+}
+/* panelHeader end here */
+/* Table start here */
+af|treeTable{
+  border: 0px none;
+}
+af|table{
+  border: 0px none;
+}
+af|table::navbar{
+  width: 100% !important; 
+}
+af|table::navbar-current-page{
+  width:30px;
+  background-color: #ffffff;
+}
+af|table::data-row af|image{
+  margin: 10px !important;
+  border: 1px solid #cdcdcd;
+}
+af|table.teaserLinkTable::data-row af|column::data-cell{
+  border-bottom: 1px solid #cdcdcd;
+  padding:3px 0px;
+}
+af|table.teaserLinkNewTable::data-row af|column::data-cell{
+  border-bottom: 1px solid #cdcdcd;
+  padding:3px 0px;
+}
+
+af|table::data-table-VH-lines af|column::data-cell{
+  border-right: 0px none;
+}
+
+/* Table end here */
+/* commandImageLink start here */
+af|commandImageLink{
+  color: #000000;
+  text-decoration: none !important; 
+}
+af|commandImageLink:busy{
+  color: #000000; 
+  text-decoration: none !important; 
+}
+af|commandImageLink::image{
+  color: #000000;
+  text-decoration: none !important; 
+}
+af|commandImageLink::text{
+  color: #000000; 
+  text-decoration: none !important; 
+}
+af|commandImageLink::text:active{
+  color: #000000; 
+  text-decoration: none !important; 
+}
+af|commandImageLink:disabled::text{
+  color: #000000; 
+  text-decoration: none !important; 
+}
+af|commandImageLink:visited::text{
+  color: #000000; 
+  text-decoration: none !important; 
+}
+
+/* footer social network commandImageLink start here */
+af|commandImageLink.sociNetIcons{
+  padding: 10px 12px;
+  border-left: 1px solid #9d9d9d;
+}
+af|commandImageLink:busy{
+
+}
+af|commandImageLink::image{
+ 
+}
+af|commandImageLink::text{
+margin-left: 6px;
+margin-right: 6px;
+}
+af|commandImageLink::text:active{
+margin-left: 6px;
+margin-right: 6px;
+}
+af|commandImageLink:disabled::text{
+margin-left: 6px;
+margin-right: 6px;
+}
+af|commandImageLink:visited::text{
+margin-left: 6px;
+margin-right: 6px;
+}
+/* footer social network commandImageLink start here */
+
+
+
+/* commandImageLink end here */
+/* commandLink start here */
+af|commandLink{
+  color: #000000;
+  text-decoration: none;
+}
+af|commandLink:active{
+  color: #000000;
+  text-decoration: none;
+}
+af|commandLink:hover{
+  color: #000000;
+  text-decoration: none;
+}
+af|commandLink:link:active{
+  color: #000000;
+  text-decoration: none;
+}
+af|commandLink:busy{
+  color: #000000;
+  text-decoration: none;
+}
+af|commandLink:disabled{
+  color: #000000;
+  text-decoration: none;
+}
+
+/* topMainLinks with commandLink start here */
+af|commandLink.topMainLinks{
+  font-size: 15px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px !important;
+  border-left: 1px solid #b3b3b3 !important;
+}
+af|commandLink.topMainLinks:active{
+  font-size: 15px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px !important;
+  border-left: 1px solid #b3b3b3 !important;
+}
+af|commandLink.topMainLinks:hover{
+  font-size: 15px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px !important;
+  border-left: 1px solid #b3b3b3 !important;
+}
+af|commandLink.topMainLinks:link:active{
+  font-size: 15px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px !important;
+  border-left: 1px solid #b3b3b3 !important;
+}
+af|commandLink.topMainLinks:busy{
+  font-size: 15px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px !important;
+  border-left: 1px solid #b3b3b3 !important;
+}
+af|commandLink.topMainLinks:disabled{
+  font-size: 15px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px !important;
+  border-left: 1px solid #b3b3b3 !important;
+}
+/* topMainLinks with commandLink end here */
+
+/* footer links commandLink start here */
+af|commandLink.footerlinks1{
+  padding: 0px 10px;
+  text-decoration: none;
+}
+af|commandLink.footerlinks{
+  padding: 0px 10px;
+  border-left: 1px solid #000000;
+  text-decoration: none;
+}
+af|commandLink.topMainLinks:active{
+  padding: 0px 10px;
+  border-left: 1px solid #000000;
+  text-decoration: none;
+}
+af|commandLink.topMainLinks:hover{
+  padding: 0px 10px;
+  border-left: 1px solid #000000;
+  text-decoration: none;
+}
+af|commandLink.topMainLinks:link:active{
+  padding: 0px 10px;
+  border-left: 1px solid #000000;
+  text-decoration: none;
+}
+af|commandLink.topMainLinks:busy{
+  padding: 0px 10px;
+  border-left: 1px solid #000000;
+  text-decoration: none;
+}
+af|commandLink.topMainLinks:disabled{
+  padding: 0px 10px;
+  border-left: 1px solid #000000;
+  text-decoration: none;
+}
+/* footer links commandLink start here */
+
+af|commandLink.headingContentDetail{
+  font-size: 18px;
+  font-weight: bold;
+  color: #b3161b;
+}
+/* TeaserLinkText commandLink start here */
+af|commandLink.teaserLinkText{
+  color: #b3161b;
+  white-space: normal;
+}
+
+af|commandLink.teaserLinkText:active{
+  color: #b3161b;
+  white-space: normal;
+}
+af|commandLink.teaserLinkText:hover{
+  color: #b3161b;
+  white-space: normal;
+}
+af|commandLink.teaserLinkText:link:active{
+  color: #b3161b;
+  text-decoration: none;
+  white-space: normal;
+}
+af|commandLink.teaserLinkText:busy{
+  color: #b3161b;
+  text-decoration: none;
+  white-space: normal;
+}
+af|commandLink.teaserLinkText:disabled{
+  color: #b3161b;
+  text-decoration: none;
+  white-space: normal;
+}
+/* EventTeaser links commandLink end here */
+/* TeaserBodyText commandLink start here */
+af|commandLink.teaserBodyText{
+  color: #000000;
+  text-decoration: none;
+  white-space: normal;
+  cursor: default;
+}
+
+af|commandLink.teaserBodyText:active{
+  color: #000000;
+  text-decoration: none;
+  white-space: normal;
+  cursor: default;
+}
+af|commandLink.teaserBodyText:hover{
+  color: #000000;
+  text-decoration: none;
+  white-space: normal;
+  cursor: default;
+}
+af|commandLink.teaserBodyText:link:active{
+  color: #000000;
+  text-decoration: none;
+  white-space: normal;
+  cursor: default;
+}
+af|commandLink.teaserBodyText:busy{
+  color: #000000;
+  text-decoration: none;
+  white-space: normal;
+  cursor: default;
+}
+af|commandLink.teaserBodyText:disabled{
+  color: #000000;
+  text-decoration: none;
+  white-space: normal;
+  cursor: default;
+}
+/* TeaserBodyText commandLink end here */
+/* Nav with commandLink start here */
+af|commandLink.topNav{
+  color: #ffffff;
+  display: inline-block;
+  padding: 21px 15px !important;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+af|commandLink.topNav:active{
+  color: #ffffff;
+  display: inline-block;
+  padding: 21px 15px !important;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: green;
+}
+af|commandLink.topNav:hover{
+  color: #ffffff;
+  display: inline-block;
+  padding: 21px 15px !important;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: green;
+}
+af|commandLink.topNav:link:active{
+  color: #ffffff;
+  display: inline-block;
+  padding: 21px 15px !important;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: green;
+}
+af|commandLink.topNav:busy{
+  color: #ffffff;
+  display: inline-block;
+  padding: 21px 15px !important;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: green;
+}
+af|commandLink.topNav:disabled{
+  color: #ffffff;
+  display: inline-block;
+  padding: 21px 15px !important;
+  text-decoration: none;
+  text-transform: uppercase;
+  background-color: #3a3a3a;
+}
+
+/* commandLink end here */
+/* Nav with commandLink end here */
+
+
+/* goImageLink start here */
+af|goImageLink{
+  color: #000000;
+  text-decoration: none;
+}
+af|goImageLink::image{
+}
+af|goImageLink.logo::image{
+  height: 70px;
+}
+af|goImageLink::text{
+  color: Black; 
+}
+/* goImageLink end here */
+/* goLink start here */
+af|goLink{
+  color: #000000;
+  text-decoration: none; 
+}
+af|goLink:active{
+  color: #000000;
+  text-decoration: none; 
+}
+af|goLink:disabled{
+  color: #000000;
+  text-decoration: none;
+}
+af|goLink:link:active{
+  color: #000000;
+  text-decoration: none;
+}
+af|goLink:visited{
+  color: #000000;
+  text-decoration: none; 
+}
+
+/* goLink topMainLinks starts here */
+af|goLink.topMainLinks{
+  font-size: 15px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px;
+  border-left: 1px solid #b3b3b3; 
+}
+af|goLink.topMainLinks:active{
+  font-size: 15px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px;
+  border-left: 1px solid #b3b3b3; 
+}
+af|goLink.topMainLinks:disabled{
+  font-size: 15px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px;
+  border-left: 1px solid #b3b3b3; 
+}
+af|goLink.topMainLinks:link:active{
+  font-size: 15px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px;
+  border-left: 1px solid #b3b3b3; 
+}
+af|goLink.topMainLinks:visited{
+  font-size: 15px !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 10px;
+  border-left: 1px solid #b3b3b3; 
+}
+/* goLink topMainLinks end here */
+/* goLink end here */
+
+/* outputText start here */
+af|outputText.topMainLinks{
+  color: #000000 !important; 
+  font-size: 15px !important;
+  text-transform: uppercase;
+  padding: 10px;
+  border-left: 1px solid #b3b3b3;
+}
+
+af|outputText.headingContentDetail{
+  font-size: 18px !important;
+  font-weight: bold !important;
+  color: #b3161b !important;
+}
+/* outputText end here */
+
+/**
+ * -------------------------------
+ * form control
+ * -------------------------------
+ */
+
+.AFFormControlContentBackground:alias,
+af|selectOneChoice::content,
+.WCInputText
+{
+  border-radius: 3px;
+  background-color: #FAFCFD;
+  background-image: none;
+}
+
+af|inputText::content:focus,
+.WCInputText:focus
+{
+  border-color: #1466B2;
+  background-color: #FFFFFF;
+}
+
+/** 
+ * -------------------------------
+ * Dialog 
+ * -------------------------------
+ */
+
+af|panelWindow::header,
+af|panelWindow::header-start,
+af|panelWindow::header-end,
+af|dialog::header,
+af|dialog::header-start,
+af|dialog::header-end
+{
+  background-color: #1466B2;
+  background-image: none;
+  height: 32px;
+}
+
+af|panelWindow::header-start,
+af|dialog::header-start
+{
+  border-top-left-radius: 3px;
+  width: 12px;
+}
+
+af|panelWindow::header-start:rtl,
+af|dialog::header-start:rtl
+{
+  border-top-left-radius: 0px;
+  border-top-right-radius: 3px;
+}
+
+af|panelWindow::header-end,
+af|dialog::header-end
+{
+  border-top-right-radius: 3px;
+  width: 5px;
+}
+
+af|panelWindow::header-end:rtl,
+af|dialog::header-end:rtl
+{
+  border-top-right-radius: 0px;
+  border-top-left-radius: 3px;
+}
+
+af|panelWindow::title,
+af|dialog::title
+{
+  color: #FFFFFF;
+  font-size: 15px;
+  font-weight: normal;
+  margin: 0px;
+}
+
+af|panelWindow::content,
+af|panelWindow::content-start,
+af|panelWindow::content-center,
+af|panelWindow::content-end,
+af|panelWindow::footer,
+af|panelWindow::footer-start,
+af|panelWindow::footer-end,
+af|dialog::content,
+af|dialog::content-start,
+af|dialog::content-center,
+af|dialog::content-end,
+af|dialog::footer,
+af|dialog::footer-start,
+af|dialog::footer-end
+{
+  background-color: #FFFFFF;
+  background-image: none;
+  border-style: none;
+}
+
+af|panelWindow::footer-start,
+af|dialog::footer-start
+{
+  border-bottom-left-radius: 3px;
+}
+
+af|panelWindow::footer-start:rtl,
+af|dialog::footer-start:rtl
+{
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 3px;
+}
+
+af|panelWindow::footer-end,
+af|dialog::footer-end
+{
+  border-bottom-right-radius: 3px;
+}
+
+af|panelWindow::footer-end:rtl,
+af|dialog::footer-end:rtl
+{
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 3px;
+}
+
+af|panelWindow::footer-content,
+af|dialog::footer-content
+{
+  padding-bottom: 8px;
+  padding-right: 3px;
+}
+
+af|panelWindow::footer-content:rtl,
+af|dialog::footer-content:rtl
+{
+  padding-right: 0px;
+  padding-left: 3px;
+}
+
+af|panelWindow::close-icon-region,
+af|dialog::close-icon-region,
+af|dialog::dynamic-help-icon-container,
+af|panelWindow::dynamic-help-icon-container
+{
+  margin-top:0px;
+}
+
+af|panelWindow::close-icon-region,
+af|dialog::close-icon-region
+{
+  width:16px;
+  height:16px;
+}
+
+af|panelWindow::close-icon-style,
+af|dialog::close-icon-style
+{
+  background-image: url("/adf/webcenter/close_white_ena.png");
+  width:16px;
+  height:16px;
+}
+
+/* add 'region' to make more specific -- see bug ____ */
+af|panelWindow::close-icon-region af|panelWindow::close-icon-style:hover,
+af|dialog::close-icon-region af|dialog::close-icon-style:hover
+{
+  background-image: url("/adf/webcenter/close_white_ovr.png");
+  cursor: pointer;
+}
+
+af|panelWindow::close-icon-region af|panelWindow::close-icon-style:active,
+af|dialog::close-icon-region af|dialog::close-icon-style:active
+{
+  background-image: url("/adf/webcenter/close_white_dwn.png");
+}
+
+af|dialog::dynamic-help-icon-style,
+af|panelWindow::dynamic-help-icon-style
+{
+  background-image: url('/adf/webcenter/helptopics_white_ena.png');
+}
+
+/* add 'container' to make more specific -- see bug ____ */
+af|dialog::dynamic-help-icon-container af|dialog::dynamic-help-icon-style:hover,
+af|panelWindow::dynamic-help-icon-container af|panelWindow::dynamic-help-icon-style:hover
+{
+  background-image: url('/adf/webcenter/helptopics_white_ovr.png');
+}
+
+af|dialog::dynamic-help-icon-container af|dialog::dynamic-help-icon-style:active,
+af|panelWindow::dynamic-help-icon-container af|panelWindow::dynamic-help-icon-style:active
+{
+  background-image: url('/adf/webcenter/helptopics_white_dwn.png');
+}
+
+af|dialog::dynamic-help-icon-style:disabled,
+af|panelWindow::dynamic-help-icon-style:disabled,
+af|dialog::dynamic-help-icon-style:disabled:hover,
+af|panelWindow::dynamic-help-icon-style:disabled:hover,
+af|dialog::dynamic-help-icon-style:disabled:active,
+af|panelWindow::dynamic-help-icon-style:disabled:active
+{
+  background-image: url('/adf/webcenter/helptopics_white_dis.png');
+}
+
+
+/**
+ * -------------------------------
+ * Date Picker
+ * -------------------------------
+ */
+
+af|inputDate::launch-icon-style
+{
+  background-image:url("/adf/webcenter/choosedate_ena.png");
+}
+
+af|inputDate::launch-icon-style:active
+{
+  background-image:url("/adf/webcenter/choosedate_dwn.png");
+}
+
+@agent (touchScreen:none) {
+af|inputDate::launch-icon-style:hover
+{
+  background-image:url("/adf/webcenter/choosedate_ovr.png");
+}
+af|inputDate::launch-icon-style:disabled:hover
+{
+  background-image:url("/adf/webcenter/choosedate_dis.png");
+}
+}
+
+af|inputDate::launch-icon-style:disabled,
+af|inputDate::launch-icon-style:disabled:active
+{
+  background-image:url("/adf/webcenter/choosedate_dis.png");
+}
+
+
+/**
+ * -------------------------------
+ * Headers
+ * -------------------------------
+ */
+.AFPanelHeaderTitleStartSubLevels:alias,
+.AFPanelHeaderTitleEndSubLevels:alias
+{
+  /* -tr-inhibit: background-image; */
+  background-image: none;
+  min-width: 0px;
+  width: 0px;
+}
+
+.AFPanelHeaderTitleCenterSubLevels:alias
+{
+  /* -tr-inhibit: background-image; */
+  background-image: none;
+  margin-bottom:5px;
+}
+
+.AFSmallHeaderFont:alias,
+af|panelHeader::title-text2,
+af|showDetailHeader::title-text2
+{
+  color: #033C6C;
+  font-size: 13px;
+}
+
+/**
+ * Profile page is changed. Commented out for now.
+ *
+ * Profile information header
+
+af|showDetailFrame::header:medium
+{
+    background-color: #EBEDED;
+    border: none;
+    color: #323232;
+    padding: 5px;
+}
+*/
+
+.WCSectionSeparator 
+{
+  margin-top:20px;
+  margin-bottom:5px;
+  border-color: #EAEBEC;
+}
+
+/**
+ * -------------------------------
+ * Table and Tree
+ * -------------------------------
+ */
+
+/* ========= OSN Style Table ========= */
+
+af|table.WCTable af|column::column-header-table,
+af|treeTable.WCTable af|column::column-header-table
+{
+  background-color: #E7F0F7;
+  background-image: none;
+  border-color: #D2E1ED;
+  border-width: 1px;
+  border-top-style: solid;
+  border-bottom-style: solid;
+  border-right-style: none;
+  border-left-style: none;
+}
+
+af|table.WCTable af|column::column-header-cell,
+af|treeTable.WCTable af|column::column-header-cell
+{
+  border: none;
+  background-color: transparent;
+  background-image: none;
+  color: #333333;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+af|table.WCTable af|column::column-header-cell-content,
+af|treeTable.WCTable af|column::column-header-cell-content
+{
+  border-right: 1px solid #dddddd;
+}
+
+af|table.WCTable af|column::column-header-cell-content:rtl,
+af|treeTable.WCTable af|column::column-header-cell-content:rtl
+{
+  border-right: none;
+  border-left: 1px solid #dddddd;
+}
+
+af|table.WCListTable af|table::data-row:selected
+{
+  background-color: #E7F0F7;
+}
+
+af|table.WCListTable af|table::data-row:selected af|column::data-cell
+{
+  background-color: transparent;
+  background-image: none; 
+  color: #1466B2;   /* was: #0572CE, see bug 13740153 */
+  font-weight: bold;
+}
+
+/* color contrast - see bug 13744481 */
+af|table::data-row:highlighted af|column::data-cell,
+af|table::data-row:highlighted af|column::banded-data-cel
+{
+  background-color:#F0F8FF; /* was: #B8DFFD; */
+}
+
+.AFTableCellDataSelected:alias {
+  background-color: #D6E6F2; /* was: #9CACC9; */
+}
+
+.AFTableCellDataSelectedFocused:alias {
+  background-color: #D6E6F2; /* was: #C4CEE0; */
+}
+
+.AFTableCellDataSelectedBanded:alias {
+  background-color: #D6E6F2; /* was: #9CACC9; */
+}
+
+.AFTableCellDataSelectedBandedFocused:alias {
+  background-color: #D6E6F2; /* was: #C4CEE0; */
+}
+
+
+/* ========= a tree with more whitespace ========= */
+
+.WCWideSpacedTree af|tree::data-cell
+{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+/**
+ * Documents Page
+ */
+
+.WCDoclibItemTitleText
+{
+  color: #1466B2;
+}
+
+af|tree.WCDocLibNavTree af|tree::data-row:selected
+{
+  background-color: #E7F0F7;
+}
+
+af|tree.WCDocLibNavTree af|tree::data-row:hover
+{
+  background-color: #EEEEEE;
+}
+
+af|tree.WCDocLibNavTree af|tree::data-row:selected af|tree::node-stamp-text
+{
+  background-color: #E7F0F7;
+  background-image: none;
+  border: none;
+}
+
+af|tree.WCDocLibNavTree af|tree::data-row:selected af|commandLink
+{
+  color: #1466B2;   /* was: #0572CE, see bug 13740153 */
+  font-weight: bold;
+  text-decoration: none;
+}
+
+af|tree.WCDocLibNavTree af|tree::data-row af|commandLink,
+af|tree.WCDocLibNavTree af|tree::data-row af|commandLink:hover
+{
+  color: #333333;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+af|tree.WCDocLibNavTree
+{
+  border-right: 1px solid #D2E1ED;
+}
+
+af|tree.WCDocLibNavTree:rtl
+{
+  border-right: none;
+  border-left: 1px solid #D2E1ED;
+}
+
+/**
+ * -------------------------------
+ * Toolbar
+ * -------------------------------
+ */
+
+/* toolbar items
+   commented out for now until Kevin's spec
+  
+.WCDocLibToolbar af|menu::bar-item,
+.WCDocLibToolbar af|commandToolbarButton,
+.WCDocLibToolbar af|goMenuItem::bar-item
+{
+  background-color: #EBECED;                     
+  background-image: none;
+  border: 1px solid #C9CCCE;                     
+  font-weight: bold;   
+  color: #666666;
+  margin-right: 3px;
+  padding: 4px 0px 0px;  
+  height: 22px;
+}
+
+.WCDocLibToolbar af|menu::bar-item:hover,
+.WCDocLibToolbar af|menu::bar-item:highlighted
+{
+  background-color: #F1F2F2;                     
+  background-image: none;   
+  box-shadow: 0 1px 0 #E8E8E8;
+  border-color: #A9ABAE;      
+  padding: 4px 0px 0px;  
+  height: 22px;
+}
+
+.WCDocLibToolbar af|menu::bar-item-text
+{
+  font-weight: bold;   
+  color: #666666;
+}
+*/
+
+/**
+ * -------------------------------
+ * Buttons
+ * -------------------------------
+ */
+
+.AFButtonNative:alias
+{
+  line-height: 18px;
+  padding: 0 10px 1px;  
+}
+
+/* enabled */
+.AFButtonForeground:alias
+{
+  margin: 0;
+  font-size: 12px;
+  color: #666666;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.AFButtonBackground:alias
+{  
+  background-color: #EBECED;                     
+  background-image: none;
+}
+
+.AFButtonBorder:alias
+{
+  border: 1px solid #C9CCCE;                     
+  border-radius: 3px;
+}
+
+af|goButton,
+af|commandButton
+{
+  background-image: none;   
+}
+
+af|goButton.ok,
+af|commandButton.ok
+{
+  background-color: #1466B2;
+  background-image: none;
+  border-color: #005C9D;
+  color: #FFFFFF;
+}
+
+/* hover */
+.AFButtonBackgroundHover:alias
+{  
+  background-color: #F1F2F2;                     
+  background-image: none;   
+  box-shadow: 0 1px 0 #E8E8E8;
+}
+
+.AFButtonBorderHover:alias
+{
+  border-color: #A9ABAE;                 
+}
+
+af|goButton.ok:hover,
+af|commandButton.ok:hover
+{
+  background-color: #2A87D5;
+  background-image: none;
+  border-color: #005897;
+  color: #FFFFFF;
+  box-shadow-color: #E8E8E8;
+}
+
+/* active */
+.AFButtonBackgroundActive:alias
+{  
+  background-color: #CCCDCE;                    
+  background-image: none;   
+  box-shadow: 0 2px 4px #ABACAD inset;
+}
+
+.AFButtonBorderActive:alias
+{
+  border-color: #8F9295;
+}
+
+af|goButton.ok:active,
+af|goButton.ok:active:hover,
+af|goButton.ok:active:hover:focus,
+af|commandButton.ok:active,
+af|commandButton.ok:active:hover,
+af|commandButton.ok:active:hover:focus
+{
+  background-color: #005C9D;
+  border-color: #003264;
+  color: #FFFFFF;
+  box-shadow: 0 2px 4px #004D84 inset;
+}
+
+/* disabled */
+.AFButtonBackgroundDisabled:alias
+{
+  background-color: #EBECED;
+  color: #666666;
+  box-shadow: none;
+  opacity: 0.5;
+}
+
+.AFButtonBorderDisabled:alias
+{
+  border-color: #C9CCCE;
+}
+
+af|goButton.ok:disabled,
+af|commandButton.ok:disabled
+{
+  -tr-rule-ref: selector(".AFButtonBackgroundDisabled:alias");
+}
+
+/* IE 7 and 8 exceptions */
+@agent ie and (version: 7), ie and (version: 8)
+{
+  .AFButtonBackgroundHover:alias
+  {  
+    -tr-inhibit: box-shadow;
+  }
+
+  .AFButtonBackgroundActive:alias
+  {  
+    -tr-inhibit: box-shadow;
+  }
+
+  .AFButtonBackgroundDisabled:alias
+  {  
+    -tr-inhibit: box-shadow;
+  }
+
+  .AFButtonBorder:alias
+  {  
+    -tr-inhibit: border-radius;
+  }
+}
+
+@agent (touchScreen:none)
+{
+  /* workaround adf faces bug 14239220 (remove when fixed) */
+  af|commandToolbarButton:hover,
+  af|commandToolbarButton:text-only:hover,
+  af|toolbar af|commandToolbarButton:hover,
+  af|toolbar af|commandToolbarButton:text-only:hover
+  {
+    -tr-rule-ref: selector(".AFButtonBackgroundHover:alias");
+  }
+}
+
+/* Move the icon up 1px relative to the text */
+af|toolbar af|commandToolbarButton::image
+{
+  padding-bottom: 1px;
+}
+
+af|toolbar af|commandToolbarButton::link
+{
+  padding-top: 1px;
+}
+
+
+
+af|dialog::footer-button
+{
+  line-height: 18px;
+  padding: 0 10px 2px;  
+  margin-left: 5px;
+  background-color: #EBECED;                     
+  background-image: none;
+  border: 1px solid #C9CCCE;                     
+}
+
+af|dialog::footer-button:text-only
+{
+  margin-left: 5px;
+}
+
+af|dialog::footer-button:rtl,
+af|dialog::footer-button:text-only:rtl
+{
+  margin-left: 0px;
+  margin-right: 5px;
+}
+
+/**
+ * -------------------------------
+ * Toolbar buttons
+ * -------------------------------
+ */
+af|toolbar af|commandToolbarButton::text
+{
+  color: #333333;
+}
+
+af|toolbar af|commandToolbarButton:disabled,
+af|toolbar af|commandToolbarButton:hover:disabled
+{
+  color: #8F969B;
+  box-shadow: none;
+}
+
+/* IE 7 and 8 exceptions */
+@agent ie and (version: 7), ie and (version: 8)
+{
+  af|toolbar af|commandToolbarButton:disabled,
+  af|toolbar af|commandToolbarButton:hover:disabled
+  {  
+    -tr-inhibit: box-shadow;
+  }
+}
+
+
+/**
+ * -------------------------------
+ * Quick Query
+ * -------------------------------
+ */
+
+
+af|quickQuery::search-icon-style {
+  background-image: url('/adf/webcenter/go_ena.png');
+}
+
+af|quickQuery::search-icon-style:rtl {
+  background-image: url('/adf/webcenter/go_ena_rtl.png');
+}
+
+@agent (touchScreen:none) {
+af|quickQuery::search-icon-style:hover {
+  background-image:url('/adf/webcenter/go_ovr.png');
+}
+
+af|quickQuery::search-icon-style:hover:rtl {
+  background-image:url('/adf/webcenter/go_ovr_rtl.png');
+}
+}
+
+af|quickQuery::search-icon-style:active {
+  background-image:url('/adf/webcenter/go_dwn.png');
+}
+
+af|quickQuery::search-icon-style:active:rtl {
+  background-image:url('/adf/webcenter/go_dwn_rtl.png');
+}
+
+af|quickQuery::disabled-search-icon-style {
+  background-image: url('/adf/webcenter/go_dis.png');
+}
+
+af|quickQuery::disabled-search-icon-style:rtl {
+  background-image: url('/adf/webcenter/go_dis_rtl.png');
+}
+
+
+/**
+ * -------------------------------
+ * Tabs
+ * -------------------------------
+ */
+
+.AFTabAboveEndUnselectedBackground:alias:ltr {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_end_n.png');
+}
+.AFTabAboveEndUnselectedBackground:alias:rtl {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_end_n_rtl.png');
+} 
+.AFTabAboveEndSelectedBackground:alias:ltr {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_end_a.png');
+}
+.AFTabAboveEndSelectedBackground:alias:rtl {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_end_a_rtl.png');
+}
+.AFTabAboveEndUnselectedDisabledBackground:alias:ltr {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_end_d.png');
+}
+.AFTabAboveEndUnselectedDisabledBackground:alias:rtl {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_end_d_rtl.png');
+} 
+
+
+.AFTabAboveStartUnselectedBackground:alias:ltr {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_start_n.png');
+}
+.AFTabAboveStartUnselectedBackground:alias:rtl {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_start_n_rtl.png');
+}
+.AFTabAboveStartSelectedBackground:alias:ltr {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_start_a.png');
+}
+.AFTabAboveStartSelectedBackground:alias:rtl {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_start_a_rtl.png');
+}
+.AFTabAboveStartUnselectedDisabledBackground:alias:ltr {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_start_d.png');
+}
+.AFTabAboveStartUnselectedDisabledBackground:alias:rtl {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_start_d_rtl.png');
+}
+
+
+.AFTabAboveMiddleUnselectedBackground:alias {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_mid_n.png');
+}
+.AFTabAboveMiddleSelectedBackground:alias {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_mid_a.png');
+}
+.AFTabAboveMiddleUnselectedDisabledBackground:alias {
+  background-image: url('/adf/spaces/skins/webcenter-portal/images/t3_above_mid_d.png');
+}
+
+
+
+/* Tab text/link colors */
+af|panelTabbed::tab af|panelTabbed::tab-content,
+af|panelTabbed::tab af|panelTabbed::tab-text-link,
+af|navigationPane-tabs::tab af|navigationPane-tabs::tab-content,
+af|navigationPane-tabs::tab af|navigationPane-tabs::tab-link
+{
+  color: #31414A;
+}
+
+
+/* hover */
+@agent (touchScreen:none)
+{
+  af|panelTabbed::tab:hover af|panelTabbed::tab-content,
+  af|panelTabbed::tab:hover af|panelTabbed::tab-text-link,
+  af|navigationPane-tabs::tab:hover af|navigationPane-tabs::tab-content,
+  af|navigationPane-tabs::tab:hover af|navigationPane-tabs::tab-link
+  {
+    color: #0154af;  /* NEED COLOR */
+  }
+  af|panelTabbed::tab:selected:hover af|panelTabbed::tab-content,
+  af|panelTabbed::tab:selected:hover af|panelTabbed::tab-text-link,
+  af|navigationPane-tabs::tab:selected:hover af|navigationPane-tabs::tab-content,
+  af|navigationPane-tabs::tab:selected:hover af|navigationPane-tabs::tab-link
+  {
+    color: #1466B2;
+  }
+
+  af|panelTabbed::tab:hover af|panelTabbed::tab-content:disabled,
+  af|panelTabbed::tab:hover af|panelTabbed::tab-text-link:disabled,
+  af|panelTabbed::tab:selected:hover af|panelTabbed::tab-content:disabled,
+  af|panelTabbed::tab:selected:hover af|panelTabbed::tab-text-link:disabled,
+  af|navigationPane-tabs::tab:hover af|navigationPane-tabs::tab-content:disabled,
+  af|navigationPane-tabs::tab:hover af|navigationPane-tabs::tab-link:disabled,
+  af|navigationPane-tabs::tab:selected:hover af|navigationPane-tabs::tab-content:disabled,
+  af|navigationPane-tabs::tab:selected:hover af|navigationPane-tabs::tab-link:disabled
+  {
+    color: #838e9b;  /* NEED COLOR */
+  }
+}
+
+/* selected */
+af|panelTabbed::tab:selected af|panelTabbed::tab-content,
+af|panelTabbed::tab:selected af|panelTabbed::tab-text-link,
+af|navigationPane-tabs::tab:selected af|navigationPane-tabs::tab-content,
+af|navigationPane-tabs::tab:selected af|navigationPane-tabs::tab-link
+{
+  color: #1466B2;
+}
+
+/* disabled */
+af|panelTabbed af|panelTabbed::tab-text-link:disabled,
+af|panelTabbed::tab-content:disabled,
+af|panelTabbed::tab-text-link:disabled,
+af|panelTabbed::tab:selected af|panelTabbed::tab-content:disabled,
+af|panelTabbed::tab:selected af|panelTabbed::tab-text-link:disabled,
+af|navigationPane-tabs::tab-content:disabled,
+af|navigationPane-tabs::tab-link:disabled,
+af|navigationPane-tabs::tab:selected af|navigationPane-tabs::tab-content:disabled,
+af|navigationPane-tabs::tab:selected af|navigationPane-tabs::tab-link:disabled,
+af|panelTabbed::tab:disabled af|panelTabbed::tab-content,
+af|navigationPane-tabs::tab:disabled af|navigationPane-tabs::tab-content,
+af|navigationPane-tabs::tab:disabled af|navigationPane-tabs::tab-link
+{
+  color: #838e9b;  /* NEED COLOR */
+}
+
+
+/**
+ * -------------------------------
+ * Menus
+ * -------------------------------
+ */
+af|commandMenuItem::bar-item,
+af|goMenuItem::bar-item,
+af|menu::bar-item
+{
+}
+
+/* IE 7 and 8 exceptions */
+@agent ie and (version: 7), ie and (version: 8)
+{
+  af|commandMenuItem::bar-item,
+  af|goMenuItem::bar-item,
+  af|menu::bar-item
+  {  
+    -tr-inhibit: border-radius;
+  }
+}
+
+/**
+ * -------------------------------
+ * Profile Page
+ * -------------------------------
+ */
+
+af|image.WCProfilePic,
+af|commandImageLink.WCProfilePic::image
+{
+  height: 150px;
+}
+af|image.logo
+{
+  height: 70px;
+}
+
+/**
+ * -------------------------------
+ * Top Navigation Bar
+ * -------------------------------
+ */
+
+/* this is required to overwrite the background color from super skin */
+af|panelGroupLayout.WCSiteTemplateTopNavPanel 
+{
+  background-image: none;
+  background-color: transparent; /* #1466B2; */
+} 
+
+af|panelGroupLayout.WCSiteTemplateTopNavPanel .WCTopNavActions 
+{
+  margin-top: 6px;
+  margin-right: 80px;
+}
+
+af|panelGroupLayout.WCSiteTemplateTopNavPanel .WCTopNavActions:rtl
+{
+  margin-right: 0px;
+  margin-left: 80px;
+}
+
+af|menuBar.WCSiteTemplateTopNavPanel
+{
+  background-color:transparent;
+  height: auto;
+  border-top-color: transparent;
+  border-top-style: solid;
+  border-top-width: 1px;
+}
+
+af|menuBar.WCSiteTemplateTopNavPanel:rtl
+{
+  margin-left: 0px;
+  margin-right: 24px;
+}
+
+af|menuBar.WCSiteTemplateTopNavPanel af|menuBar::body {
+  padding: 0px;
+}
+
+af|menuBar.WCSiteTemplateTopNavPanel af|menu::bar-item,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem::bar-item,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem::bar-item {
+    background-color: transparent;
+    font-weight: normal;
+    height: auto;
+    border: none;
+    padding: 18px 7px;
+}
+
+af|menuBar.WCSiteTemplateTopNavPanel af|menu::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem::bar-item-text {
+    text-align: center;
+    font-size: 15px;
+    color: #E4E4E4;
+    border: none;
+}
+
+af|menuBar.WCSiteTemplateTopNavPanel af|menu::bar-item:highlighted,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem::bar-item:highlighted,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem::bar-item:highlighted,
+af|menuBar.WCSiteTemplateTopNavPanel af|menu::bar-item:depressed,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem::bar-item:depressed,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem::bar-item:depressed 
+{
+    background-image: none;
+    background-color: #2a2a2a;
+    border: none;
+    cursor: pointer;
+}
+
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem.WCSiteTemplateTopNavPanelSelected:highlighted,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem.WCSiteTemplateTopNavPanelSelected:highlighted
+{
+  background-color: #008000;
+}
+
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem.WCSiteTemplateTopNavPanelSelected:highlighted::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem.WCSiteTemplateTopNavPanelSelected:highlighted::bar-item-text
+{
+  color: #ffffff;
+}
+
+af|menuBar.WCSiteTemplateTopNavPanel af|menu:highlighted::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|menu:depressed::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem:depressed::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem:highlighted::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem:depressed::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem:highlighted::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandImageLink::text
+{
+    color: #E4E4E4;
+    border: none;
+    cursor: pointer;
+}
+
+.WCSiteTemplateTopNavPanel af|commandImageLink::text
+{
+    color: #E4E4E4;
+    border: none;
+    cursor: pointer;
+
+    /* for bug 14851741 */
+    font-weight: normal;
+}
+
+/* Busy */
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem:busy,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem:busy,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem:busy af|commandMenuItem::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem:busy af|goMenuItem::bar-item-text 
+{
+    cursor: wait;
+}
+
+
+/* selected */
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem.WCSiteTemplateTopNavPanelSelected,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem.WCSiteTemplateTopNavPanelSelected {
+  background-color: #008000;
+}
+
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem.WCSiteTemplateTopNavPanelSelected af|menu::bar-item,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem.WCSiteTemplateTopNavPanelSelected af|commandMenuItem::bar-item,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem.WCSiteTemplateTopNavPanelSelected af|menu::bar-item:highlighted,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem.WCSiteTemplateTopNavPanelSelected af|commandMenuItem::bar-item:highlighted,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem.WCSiteTemplateTopNavPanelSelected af|menu::bar-item:depressed,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem.WCSiteTemplateTopNavPanelSelected af|commandMenuItem::bar-item:depressed,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem.WCSiteTemplateTopNavPanelSelected af|menu::bar-item,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem.WCSiteTemplateTopNavPanelSelected af|goMenuItem::bar-item,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem.WCSiteTemplateTopNavPanelSelected af|menu::bar-item:highlighted,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem.WCSiteTemplateTopNavPanelSelected af|goMenuItem::bar-item:highlighted,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem.WCSiteTemplateTopNavPanelSelected af|menu::bar-item:depressed,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem.WCSiteTemplateTopNavPanelSelected af|goMenuItem::bar-item:depressed {
+  background-color: #008000;
+}
+
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem.WCSiteTemplateTopNavPanelSelected af|menu::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|commandMenuItem.WCSiteTemplateTopNavPanelSelected af|commandMenuItem::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem.WCSiteTemplateTopNavPanelSelected af|menu::bar-item-text,
+af|menuBar.WCSiteTemplateTopNavPanel af|goMenuItem.WCSiteTemplateTopNavPanelSelected af|goMenuItem::bar-item-text {
+    color: #ffffff;
+}
+
+
+/* ====== Root class for the template ======= */
+
+.WCSiteTemplateBackground 
+{
+    background-image: none;
+    background-color: transparent;
+}
+
+/* ====== Template header section ======= */
+
+af|panelGroupLayout.WCSiteTemplateGlobNavItems af|goLink,
+af|panelGroupLayout.WCSiteTemplateGlobNavItems af|commandLink,
+af|panelGroupLayout.WCSiteTemplateGlobNavItems af|goImageLink::text,
+af|panelGroupLayout.WCSiteTemplateGlobNavItems af|commandImageLink::text,
+af|panelGroupLayout.WCSiteTemplateGlobNavItems af|goLink:visited,
+af|panelGroupLayout.WCSiteTemplateGlobNavItems af|commandLink:visited,
+af|panelGroupLayout.WCSiteTemplateGlobNavItems af|goImageLink:visited::text,
+af|panelGroupLayout.WCSiteTemplateGlobNavItems af|commandImageLink:visited::text
+{
+  font-size: 15px !important;
+  color: #000000 !important;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0px;  
+}
+
+/* These decorativeBox rules are to make old well with the new skin.
+   It is not working well yet. Commented out for now.
+af|decorativeBox.WCSiteTemplateHeader
+{
+  width:100%;
+  height: 37px;
+}
+
+af|decorativeBox[theme="webcenter"] af|goLink:hover 
+{
+  text-decoration: none;
+}
+
+af|decorativeBox[theme="webcenter"] af|commandImageLink::text,
+af|decorativeBox[theme="webcenter"] af|goImageLink::text
+af|decorativeBox[theme="webcenter"] af|commandImageLink:visited::text,
+af|decorativeBox[theme="webcenter"] af|goImageLink:visited::text
+{
+  color: #000000;
+}
+
+af|decorativeBox::top-end[theme="webcenter"]:rtl,
+af|decorativeBox::top-start[theme="webcenter"] {
+  background-color: transparent; 
+  background-image: none;
+  -tr-height: 4px;
+  -tr-width: 10px;
+}
+
+af|decorativeBox::top-start[theme="webcenter"]:rtl,
+af|decorativeBox::top-end[theme="webcenter"] {
+  background-color: transparent; 
+  background-image: none;
+  -tr-height: 4px;
+  -tr-width: 10px;
+}
+
+af|decorativeBox::bottom-start[theme="webcenter"]:rtl,
+af|decorativeBox::bottom-start[theme="webcenter"] {
+  background-color: transparent; 
+  background-image: none;
+  -tr-height: 6px;
+  -tr-width: 10px;
+}
+
+af|decorativeBox::bottom-end[theme="webcenter"]:rtl,
+af|decorativeBox::bottom-end[theme="webcenter"] {
+  background-color: transparent; 
+  background-image: none;
+  -tr-height: 6px;
+  -tr-width: 10px;
+}
+
+af|decorativeBox::end[theme="webcenter"]:rtl,
+af|decorativeBox::start[theme="webcenter"] {
+  background-color: transparent; 
+  background-image: none;
+  -tr-height: 26px;
+  -tr-width: 10px;
+}
+
+af|decorativeBox::start[theme="webcenter"]:rtl,
+af|decorativeBox::end[theme="webcenter"] {
+  background-color: transparent; 
+  background-image: none;
+  -tr-height: 26px;
+  -tr-width: 10px;
+}
+
+af|decorativeBox::top[theme="webcenter"] {
+  background-color: transparent; 
+  background-image: none;
+  -tr-height: 4px;
+}
+
+af|decorativeBox::bottom[theme="webcenter"] {
+  background-color: transparent; 
+  background-image: none;
+  -tr-height: 6px;
+}
+
+af|decorativeBox::center[theme="webcenter"] {
+  background-color: transparent; 
+  background-image: none;
+}
+*/
+
+.WCSiteTemplatePage
+{
+  padding-top: 0px;
+}
+
+af|goLink.WCSiteTemplateGlobalText
+{
+  font-size: 15px;
+  color: #000000;
+  white-space: nowrap;
+  font-weight: normal;
+  text-decoration: none;
+}
+
+.WCSiteTemplateBrandingText
+{
+  text-transform: uppercase;
+  font-weight: normal;
+  text-decoration: none;
+  display:none;
+}
+
+.WCSiteTemplateBrandingSubText
+{ 
+  font-weight: bold;
+} 
+  
+af|panelGroupLayout.WCSiteTemplateGlobNavItems
+{
+  margin-right: 70px;
+}
+
+af|panelGroupLayout.WCSiteTemplateGlobNavItems:rtl
+{
+  margin-right: 0px;
+  margin-left: 70px;
+}
+
+/**
+ * current user Link on right end of top navigation bar
+ */
+.WCSiteTemplateCurUserLink
+{
+  color: #E4E4E4;
+  max-width: 150px;
+}
+
+.WCSiteTemplateUserPhoto
+{
+  /* for bug 14851741 */
+  margin: 0px;
+}
+
+.WCSiteTemplateUserPhoto af|image
+{
+  position: absolute;
+  top: 15px;
+  max-width: 50px;
+  max-height: 50px;
+  border: 1px solid white;
+  right: 20px;
+}
+
+.WCSiteTemplateUserPhoto af|image:rtl
+{
+  right: auto;
+  left: 20px;
+}
+
+/* ====== Template window section ======= */
+
+.WCSiteTemplateBackground {
+    background-image: none;
+    background-color: transparent;
+}
+
+/* ====== Template top banner section ======= */
+
+.WCSiteTemplateBanner
+{
+    background-position: 0 0;
+    background-repeat: repeat-x;
+    height: 144px;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 10;
+}
+
+.WCSiteTemplateBannerTop
+{
+    background-color: rgba(235, 235, 235, 0.77);
+    height: 90px;
+}
+
+.WCSiteTemplateBannerBottom
+{
+    background-color: #4a4a4a;
+    height: 54px;
+}
+
+/* see bug 16880716 */
+af|document::skip-link
+{
+    z-index: 20;
+}
+
+/* ====== Template top global section ======= */
+
+.WCSiteTemplateGlobal
+{
+    padding: 0px;
+    min-height: auto;
+    height: 90px;
+}
+
+/* ====== Template header + top navigation section ======= */
+
+.WCSiteTemplateHeaderTopNav {
+    height: 144px;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+
+/* ====== Template content section ======= */
+
+.WCSiteTemplateContent
+{
+    min-height: auto;
+    margin-top: 144px;
+    margin-bottom: 90px;
+}
+
+/* ====== Template footer section ======= */
+
+af|panelBorderLayout.WCSiteTemplateFooter
+{
+    background-color: #F0F0F0;
+    border-top-color: #D2E1ED;
+    border-top-style: solid;
+    border-top-width: 1px;
+    color: #333333;
+    font-size: 12px;
+    height: 90px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 0px !important;
+}
+
+.WCSiteTemplateFooterContent
+{
+    width: 100%;
+    margin: 0 auto;
+}
+
+af|panelBorderLayout.WCSiteTemplateFooter af|goLink, 
+af|panelBorderLayout.WCSiteTemplateFooter af|commandLink::text, 
+af|panelBorderLayout.WCSiteTemplateFooter af|commandImageLink::text 
+{
+    color: #333333;
+    font-size: 12px;
+}
+
+.WCSiteTemplateFooterLink
+{
+    font-size: 12px;
+    border-left: 1px solid #CCCCCC;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.WCSiteTemplateFooterLink:rtl
+{
+    border-left: none;
+    border-right: 1px solid #CCCCCC;
+}
+
+.WCSiteTemplateFooterLinkFirst
+{
+    font-size: 12px;
+    padding-left: 0px;
+    padding-right: 8px;
+}
+
+.WCSiteTemplateFooterLinkFirst:rtl
+{
+    padding-left: 8px;
+    padding-right: 0px;
+}
+
+/**
+ * -------------------------------
+ * Members Page
+ * -------------------------------
+ */
+
+.WCMembersBox
+{
+  margin-top: 12px;
+}
+
+/**
+ * -------------------------------
+ * List Page
+ * -------------------------------
+ */
+
+.WCViewList
+{
+  margin-top: 12px;
+}
+
+/**
+ * -------------------------------
+ * Search Page
+ * -------------------------------
+ */
+
+.WCSearchBreadcrumb
+{
+  background-color: #D6E6F2;
+}
+
+/**
+ * -----------------------------------------------------------
+ * BUG 15958105
+ * This will be used to show the composer chrome
+ * in Edit mode of Page Template (SkyrosTopNav/WebcenterTopNav) 
+ * ----------------------------------------------------------- 
+ */
+.WCEdit .WCSiteTemplateBanner,
+.WCEdit .WCSiteTemplateHeaderTopNav
+{
+    top: 75px;
+}
+ /* -----------------------------------------------------------
+ * Added For Page Search And Submit Button style class
+ * ----------------------------------------------------------- 
+ */
+.af_commandButton.p_AFTextOnly, .af_goButton.p_AFTextOnly {
+    background-color: #9aceff;
+    background-image: none;
+    background-position: center top;
+    background-repeat: repeat-x;
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+    padding-bottom: 6px;
+    padding-top: 5px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.af_commandToolbarButton {
+    font-family: Trebuchet MS, Verdana, Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    font-size: 15px;
+    padding: 0px;
+    cursor: default;
+    white-space: nowrap;
+    border-style: solid;
+    border-width: 1px;
+    border-top-color: #E0E3E8;
+    border-right-color: #606974;
+    border-bottom-color: #606974;
+    border-left-color: #E0E3E8;
+    border: 1px solid #C9CCCE;
+    border-radius: 3px;
+    background-position: top center;
+    background-repeat: repeat-x;
+    background-color: #9ACEFF;
+    padding-top: 7px;
+    padding-bottom: 9px;
+}
+/* AFStretchWidth width:100%; margin: 0 auto; AFStretchHeight */

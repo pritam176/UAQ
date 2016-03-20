@@ -1,0 +1,585 @@
+af|inputNumberSpinbox::content{
+    border: 1px solid #7f9db9;
+    margin: 3px 2px !important;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+/*------ Override of Fusion FX style by Hooma 1-11-2015 ----------------------*/
+h1,h2,h3{
+  font-family: Arial, Helvetica, sans-serif !important;
+  font-weight: bold !important;
+}
+
+af|goLink,
+af|commandLink,
+af|goImageLink::text,
+af|commandImageLink::text,
+af|goLink:visited,
+af|commandLink:visited,
+af|goImageLink:visited::text,
+af|commandImageLink:visited::text{
+    text-decoration: none;
+    padding: 0 10px;
+    color: #000000 !important;
+}
+.AFLabelTextForeground:alias, .AFFieldText{
+    color: #003d5b !important;
+}
+.AFRequiredIconStyle {
+    color: red !important;
+}
+/*-------------------------- af:Inputtext ------------------------------------*/
+af|inputText::content {
+    border: 1px solid #7f9db9;
+    margin: 3px 2px !important;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+af|inputText::content:disabled {
+    background-color: #eeeeee !important;
+}
+
+af|inputText::label {
+    color: #003d5b !important;
+    font-size: 12px !important;
+}
+
+af|outputLabel {
+    color: #000000;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+}
+
+af|inputDate::content {
+    border: 1px solid #7f9db9;
+    margin: 3px 2px !important;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+af|chooseDate::content {
+    border: 1px solid #7f9db9;
+    margin: 3px 2px !important;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    width: 50px !important;
+    height: 50px !important;
+}
+/*-------------------------- af:Select ---------------------------------------*/
+af|selectOneChoice::content {
+    border: 1px solid #7f9db9;
+    margin: 3px 2px !important;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    font-size: 12px !important;
+    
+}
+
+af|selectOneChoice::content:disabled {
+    background-color: #eeeeee !important;
+}
+
+af|selectOneChoice::label {
+     color: #003d5b !important;
+    font-size: 12px !important;
+}
+/*-------------------------- af:commandbutton --------------------------------*/
+af|query::button, af|commandButton {
+    padding: 2px 12px;
+    font-size: 12px;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid #adadad;
+    border-radius: 4px;    
+    text-shadow: 0 1px 0 #fff;
+    background-image: -webkit-linear-gradient(top,#fff 0,#e0e0e0 100%);
+    background-image: -o-linear-gradient(top,#fff 0,#e0e0e0 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#fff),to(#e0e0e0));
+    background-image: linear-gradient(to bottom,#fff 0,#e0e0e0 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe0e0e0', GradientType=0);
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    background-repeat: repeat-x;
+}
+af|commandButton:focus,
+af|commandButton:hover,
+af|commandButton:active,
+af|commandButton:focus:hover, 
+af|commandButton:focus:hover:active,
+af|query::button:focus,
+af|query::button:hover,
+af|query::button:active,
+af|query::button:focus:hover, 
+af|query::button:focus:hover:active{
+    background: linear-gradient(to bottom,#e0e0e0 0,#ffffff 100%) !important;
+    color:#333;
+    border:1px solid #adadad !important;
+    padding: 2px 12px !important;
+    font-size: 12px !important;
+    font-weight: 400 !important;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+/*-------------------------- af:Tree -----------------------------------------*/
+af|tree {
+    color: #000000 !important;
+    background-color: #F6F6F6 !important;
+    border: 1px solid #E4E4E4 !important;
+    font-weight: bold !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    overflow-y: auto !important;
+}
+
+af|panelCollection af|tree {
+    background-color: transparent;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: bold !important;
+}
+
+af|tree::node-stamp-text
+{
+  border: none; 
+  color: #003d5b; 
+  font-size:15px !important;
+} 
+af|tree::data-cell:twinkle-on af|tree::node-stamp-text
+{
+  border: none; 
+  color: #003d5b; 
+}
+af|tree::data-row:focused af|tree::node-stamp-text
+{
+  color: #003d5b; 
+}
+af|tree::data-row:selected af|tree::node-stamp-text
+{
+  color: #003d5b; 
+}
+af|tree::data-row:selected:focused af|tree::node-stamp-text
+{
+  color: #003d5b; 
+}
+af|tree::data-row:selected:inactive af|tree::node-stamp-text
+{
+  color: #003d5b; 
+}
+af|tree::h-selector-row af|tree::node-stamp-text
+{
+  color: #003d5b; 
+}
+
+af|tree::node-anim-icon-style af|tree::leaf-icon-style {
+    background-color: transparent;
+}
+
+HTML BODY af|tree.AFAuxiliaryStretchWidth {
+    background-color: transparent;
+}
+
+HTML BODY af|tree.AFStretchWidth {
+    background-color: transparent;
+}
+
+af|tree::collapsed-icon-style {
+    width: 13px !important;
+    height: 13px !important;
+    background-image: url("../images/collapse_icon.png")!important;
+    background-repeat: no-repeat !important;
+    background-color: transparent !important;
+    background-size:13px 13px;
+}
+
+af|tree::expanded-icon-style {
+    width: 13px !important;
+    height: 13px !important;
+    background-image: url("../images/expande.png")!important;
+    background-repeat: no-repeat !important;
+    background-color: transparent !important;
+    background-size:13px 13px;
+}
+
+
+
+/*-------------------------- af:Table -----------------------------------*/
+af|table tr:nth-child(even) {background: #f6f6f6 !important;}
+af|table tr:nth-child(odd) {background: #FFFFFF !important;}
+
+
+af|table {
+    background: #f9f9f9;
+   border: 1px solid #7f9db9;
+}
+
+af|column::column-header-cell {
+    height: 25px;
+    background-color: #164a7a;
+    line-height: 25px;
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    color:#ffffff;
+    text-align:center !important;
+    vertical-align: middle;
+    border-left: 1px solid #a0bfdc ;
+}
+
+af|column::data-cell{
+    height: 25px;
+    line-height: 25px;
+    font-family: Tahoma,Arial, Helvetica, sans-serif !important;
+    font-size: 1em !important;
+    color:#555555;
+    vertical-align: middle;
+    background-color: none;
+}
+af|table::data-row:hover af|column::data-cell
+{ 
+background-color: #E8F3FD;  
+color: #555555;  
+}
+af|table::data-row:hover af|column::banded-data-cell { 
+    background-color: #E8F3FD;
+    color: #555555; 
+}
+
+.AFTableCellDataSelected:alias {
+    background-color: #90adc8;
+}
+
+.AFTableCellDataSelectedFocused:alias {
+    background-color: #aac0d4;
+}
+
+/*-------------------------- af:Radio ----------------------------------------*/
+af|selectOneRadio::item-text {
+    padding: 0 5px;
+}
+/*-------------------------- af:Checkbox -------------------------------------*/
+af|selectBooleanCheckbox::label {
+    color: #000000;
+    padding: 0 5px;
+}
+af|selectBooleanCheckbox::label:disabled {color:#777777 !important;}
+/*----------------------------------------------------------------------------*/
+.AFBrandingBarItem {
+    line-height: 32px !important;
+    font-size: 12px !important;
+}
+.AFBrandingBarTitle {
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: bold !important;
+    font-size:23px !important;  
+    margin: 0 2px !important;
+   /*- color:#787A37 !important;   */
+   color:#000000 !important;
+   
+}
+/*-------------------------------- af|panelBox  ------------------------------*/
+af|panelBox::header-start:core:default {
+    background-image: none;
+    background-image: -webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+    background-image: -o-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#e8e8e8));
+    background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0);
+    background-repeat: repeat-x;
+    border: 1px solid #E1E1E8;
+    border-left:0px !important;
+}
+af|panelBox::header-end:core:default {
+    background-image: none;
+       background-image: -webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+    background-image: -o-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#e8e8e8));
+    background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0);
+    background-repeat: repeat-x;
+    border: 1px solid #E1E1E8;
+    width:1px !important;
+    border-right:0px !important;
+}
+af|panelBox::header-center:core:default {
+    background-image: none;
+    padding: 2px 8px;   
+    background-image: -webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+    background-image: -o-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#e8e8e8));
+    background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0);
+    background-repeat: repeat-x;
+    border: 1px solid #E1E1E8;
+    border-left:0px !important;
+    border-right:0px !important;
+}
+
+af|panelBox::header-element {
+    font-size: 16px !important;
+    color: #003d5b;
+}
+
+af|panelBox::center:core:default {
+    background-image: none;
+    border: 1px solid #E1E1E8;
+    background: #F9F9F9;
+}
+
+
+af|panelBox::footer-start:core:default {
+    display: none;
+}
+
+af|panelBox::footer-center:core:default {
+    display: none;
+}
+
+af|panelBox::footer-end:core:default {
+    display: none;
+}
+
+af|panelBox::disclosed-icon-style {
+    width: 16px;
+    height: 16px;
+    background-image: url("../images/expand2-24.png");
+    background-repeat: no-repeat;
+    outline: none;
+    cursor: pointer;
+}
+
+af|panelBox::disclosed-icon-style:hover {
+    width: 16px;
+    height: 16px;
+    background: url("../images/expand2-24.png")!important;
+    background-repeat: no-repeat;
+    outline: none;
+}
+
+af|panelBox::disclosed-icon-style:active {
+    width: 16px;
+    height: 16px;
+    background: url("../images/expand2-24.png")!important;
+    background-repeat: no-repeat;
+    outline: none;
+}
+
+af|panelBox::undisclosed-icon-style {
+    width: 16px;
+    height: 16px;
+    background-image: url("../images/previous-24.png");
+    background-repeat: no-repeat;
+    outline: none;
+    cursor: pointer;
+}
+
+af|panelBox::undisclosed-icon-style:hover {
+    width: 16px;
+    height: 16px;
+    outline: none;
+    background: url("../images/previous-24.png")!important;
+    background-repeat: no-repeat;
+}
+
+af|panelBox::undisclosed-icon-style:active {
+    width: 16px;
+    height: 16px;
+    outline: none;
+    background: url("../images/previous-24.png")!important;
+    background-repeat: no-repeat;
+}
+/*----------------------------------------------------------------------------*/
+/*---------------------------------  TABS  -----------------------------------*/
+af|panelTabbed::tab-content{
+    font-family: Arial, Helvetica, sans-serif !important;font-weight: bold !important;
+}
+af|panelTabbed::tab-content a,af|panelTabbed::tab-content a:visited,af|panelTabbed::tab-content a:link{font-family: Arial, Helvetica, sans-serif !important;font-weight: bold !important;font-size:14px !important;color:#003d5b; }
+af|panelTabbed::tab:selected af|panelTabbed::tab-content a,af|panelTabbed::tab:selected af|panelTabbed::tab-content a:visited,
+af|panelTabbed::tab:selected af|panelTabbed::tab-content a:link{font-family: Arial, Helvetica, sans-serif !important;font-weight: bold !important;}
+/*------------------------------------------------------------------------------------------------------------------------*/
+af|panelHeader::title-table {
+    background-image: none;
+    padding: 2px 8px;   
+    background-image: -webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+    background-image: -o-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#e8e8e8));
+    background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0);
+    background-repeat: repeat-x;
+    border: 1px solid #E1E1E8;
+    border-left:0px !important;
+    border-right:0px !important;
+}
+af|panelHeader::title-text0 {
+    font-size: 16px !important;
+    color: #003d5b !important;
+}
+/*-------------------------------------------------------------------------------------------------------
+af|decorativeBox{
+    background:red !important;
+}
+af|decorativeBox::end{
+background:red !important;
+}
+*/
+/*-----------------------------------------------------------------------
+af_navigationPane-tabs_header{
+    background:#E8EDF2 !important;
+}
+af|navigationPane-tabs::header{
+    background:#f8fbfd !important;
+}*/
+
+.mod_login_box af|panelBox::header-element {
+    font-size: 20px !important;
+    color: #003d5b;
+    margin-top:5px;
+}
+#pt1\3A np1\3A cni3\3A \3A disclosureAnchor{
+    font-size:20px !important;
+    padding-top:2px !important;
+}
+#pt1\3A np1\3A cni3.af_navigationPane-tabs_tab.p_AFSelected{ background:#F8F8FD !important;}
+/*-------------------------- NavigationPane-tabs -----------------------------------*/
+div[id*="tabIndex"] {margin-left:4px !important;}
+af|navigationPane-tabs::tab-content{
+    padding: 2px 10px !important;
+    background:none !important;
+    border:none !important;
+}
+af|navigationPane-tabs::tab-start{display:none !important;}
+af|navigationPane-tabs::tab-end{display:none !important;}
+
+af|navigationPane-tabs::tab{
+    border-radius: 5px 5px 0 0 !important;
+    background: linear-gradient(to bottom, #f5f5f5 0px, #ffffff 100%) !important;
+    margin-left:4px !important;
+}
+af|navigationPane-tabs::tab:selectd{
+    border-radius: 5px 5px 0 0 !important;
+    background:#F3F3F3 !important;
+    border: 1px solid #E1E1E8;
+}
+af|navigationPane-tabs::tab-link{
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    color:#555 !important;
+    text-align:center !important; 
+}
+af|navigationPane-tabs::tab-link:selected{
+    color: #003d5b !important;
+    font-size: 15px !important;
+}
+/*---------------------------input spinbox-------------------*/
+af|inputNumberSpinbox::decrementor-icon-style{
+    width: 16px !important;
+    height: 16px !important;
+    background-image: url("../images/down-16.png") !important;
+    background-repeat: no-repeat !important;
+    outline: none !important;
+    background-color: transparent !important;
+}
+af|inputNumberSpinbox::incrementor-icon-style{
+    width: 16px !important;
+    height: 16px !important;
+    background-image: url("../images/up-16.png") !important;
+    background-repeat: no-repeat !important;
+    outline: none !important;
+    background-color: transparent !important;
+}
+
+af|inputNumberSpinbox::decrementor-icon-style:hover{
+    width: 16px !important;
+    height: 16px !important;
+    background-image: url("../images/down-16.png") !important;
+    background-repeat: no-repeat !important;
+    outline: none !important;
+    background-color: transparent !important;
+    opacity: 0.5;
+}
+af|inputNumberSpinbox::incrementor-icon-style:hover{
+    width: 16px !important;
+    height: 16px !important;
+    background-image: url("../images/up-16.png") !important;
+    background-repeat: no-repeat !important;
+    outline: none !important;
+    background-color: transparent !important;
+    opacity: 0.5;
+}
+
+af|inputNumberSpinbox::decrement-cell {
+    background-color: transparent !important;
+    border: none !important;
+    height: 16px !important;
+    width: 16px !important;
+}
+af|inputNumberSpinbox::increment-cell {
+    background-color: transparent !important;
+    border: none !important;
+    height: 16px !important;
+    width: 16px !important;
+}
+/*-----------------------------------------------------------------*/
+af|inputDate::launch-icon-style, af|panelList af|inputDate::launch-icon-style {
+    background-color: transparent !important;
+    background-size: 17px 17px !important;
+    font-size: 14px;
+    left: 22px !important;
+    position: relative !important;
+    top: 3px !important;
+    width: 18px !important;
+}
+.login_title {
+    background: #7590A8 none repeat scroll 0 0 !important;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #ffffff;
+    display: block;
+    font-family: Arial,Helvetica,sans-serif !important;
+    font-size: 20px !important;
+    font-weight: bold !important;
+    height: 40px;
+    line-height: 40px;
+    margin-right: -5px;
+    margin-top: -10px;
+    width: 495px;
+}
+
+af|inputListOfValues::content {
+    border: 1px solid #7f9db9;
+    margin: 3px 2px !important;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+}
+
+af|inputListOfValues::content:disabled {
+    background-color: #eeeeee !important;
+}
+
+af|inputListOfValues::label {
+    color: #003d5b !important;
+    font-size: 12px !important;
+}
+/*-------------------------------- 23-11-2015 by hooma ----------------------*/
+af|chooseDate::week-header-row{
+    background-color: #90adc8 !important;
+    color:#000000 !important;
+    text-shadow: 0 1px 0 #ccc;
+}
+af|chooseDate::today{
+     background-color: #164A7A !important;
+    color:#ffffff !important;
+}
+af|chooseDate::regular-day:selected{
+     background-color: #40A790 !important;
+}

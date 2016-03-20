@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="currencyFragPageDef"
+                Package="fragments.administration">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.AdministrationModule.AdmCurrenciesView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmCurrenciesViewIterator"/>
+    <searchRegion Criteria="AdmCurrenciesSearchViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmCurrenciesViewIterator"
+                  id="AdmCurrenciesSearchViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmCurrenciesViewIterator" id="AdmCurrenciesView">
+      <nodeDefinition DefName="com.mod.financial.model.administration.views.up.AdmCurrenciesView"
+                      Name="AdmCurrenciesView0">
+        <AttrNames>
+          <Item Value="CreateDate"/>
+          <Item Value="CreateUser"/>
+          <Item Value="CurrDecimal"/>
+          <Item Value="CurrName"/>
+          <Item Value="ExchRate"/>
+          <Item Value="Id"/>
+          <Item Value="LastChangeDate"/>
+          <Item Value="LastChangeUser"/>
+          <Item Value="NameEn"/>
+          <Item Value="Status"/>
+          <Item Value="Symbol"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AdmCurrenciesViewIterator" id="CurrDecimal">
+      <AttrNames>
+        <Item Value="CurrDecimal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmCurrenciesViewIterator" id="CurrName">
+      <AttrNames>
+        <Item Value="CurrName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmCurrenciesViewIterator" id="ExchRate">
+      <AttrNames>
+        <Item Value="ExchRate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmCurrenciesViewIterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmCurrenciesViewIterator" id="Symbol">
+      <AttrNames>
+        <Item Value="Symbol"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmCurrenciesViewIterator" id="CreateInsert"
+            InstanceName="ModModuleDataControl.Root.AdministrationModule.AdmCurrenciesView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="AdmCurrenciesViewIterator" id="Delete"
+            InstanceName="ModModuleDataControl.Root.AdministrationModule.AdmCurrenciesView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="ModModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="ModModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+  </bindings>
+</pageDefinition>

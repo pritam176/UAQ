@@ -1,0 +1,55 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+   <entry key="root_descriptor_alias">ESERVICE_FEE_MATRIX</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_11">USER_TYPE</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_9">LAND_TYPE</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_10">LETTER</entry>
+   <entry key="ESERVICE_FEE_MATRIX.LAND_TYPE:db_column_type">VARCHAR2</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_8">APPLICANT</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_7">AMOUNT</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_6">FEE_TYPE</entry>
+   <entry key="ESERVICE_FEE_MATRIX.LETTER:db_column_size">20</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_5">FEE_TYPE_CODE</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_4">FEE_ID</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_3">SERVICE_NAME</entry>
+   <entry key="ESERVICE_FEE_MATRIX.LAND_TYPE:db_column_not_null">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_2">SERVICE_ID</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_1">DEPARTMENT_CODE</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_column_0">FEE_MATRIX_ID</entry>
+   <entry key="ESERVICE_FEE_MATRIX.APPLICANT:db_column_size">500</entry>
+   <entry key="ESERVICE_FEE_MATRIX.APPLICANT:db_column_not_null">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_TYPE:db_column_not_null">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX.LAND_TYPE:db_column_size">20</entry>
+   <entry key="ESERVICE_FEE_MATRIX.SERVICE_ID:db_column_not_null">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_TYPE_CODE:db_column_type">VARCHAR2</entry>
+   <entry key="ESERVICE_FEE_MATRIX:db_table_type">TABLE</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_TYPE_CODE:db_column_not_null">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX.SERVICE_ID:db_column_type">VARCHAR2</entry>
+   <entry key="ESERVICE_FEE_MATRIX.AMOUNT:db_column_not_null">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_MATRIX_ID:db_column_type">NUMBER</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_ID:db_column_not_null">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_TYPE_CODE:db_column_size">20</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_ID:db_column_type">VARCHAR2</entry>
+   <entry key="ESERVICE_FEE_MATRIX.SERVICE_ID:db_column_size">20</entry>
+   <entry key="ESERVICE_FEE_MATRIX.USER_TYPE:db_column_type">VARCHAR2</entry>
+   <entry key="ESERVICE_FEE_MATRIX.AMOUNT:db_column_type">NUMBER</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_TYPE:db_column_type">VARCHAR2</entry>
+   <entry key="ESERVICE_FEE_MATRIX.DEPARTMENT_CODE:db_column_type">VARCHAR2</entry>
+   <entry key="ESERVICE_FEE_MATRIX.SERVICE_NAME:db_column_not_null">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_ID:db_column_size">20</entry>
+   <entry key="return_single_result_set">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX.USER_TYPE:db_column_size">20</entry>
+   <entry key="ESERVICE_FEE_MATRIX.SERVICE_NAME:db_column_type">VARCHAR2</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_TYPE:db_column_size">500</entry>
+   <entry key="ESERVICE_FEE_MATRIX.DEPARTMENT_CODE:db_column_size">20</entry>
+   <entry key="ESERVICE_FEE_MATRIX.USER_TYPE:db_column_not_null">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX.DEPARTMENT_CODE:db_column_not_null">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX.LETTER:db_column_not_null">false</entry>
+   <entry key="ESERVICE_FEE_MATRIX.SERVICE_NAME:db_column_size">500</entry>
+   <entry key="ESERVICE_FEE_MATRIX.LETTER:db_column_type">VARCHAR2</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_MATRIX_ID:db_column_precision">0</entry>
+   <entry key="ESERVICE_FEE_MATRIX.AMOUNT:db_column_precision">0</entry>
+   <entry key="ESERVICE_FEE_MATRIX.FEE_MATRIX_ID:db_column_not_null">true</entry>
+   <entry key="ESERVICE_FEE_MATRIX.APPLICANT:db_column_type">VARCHAR2</entry>
+</properties>

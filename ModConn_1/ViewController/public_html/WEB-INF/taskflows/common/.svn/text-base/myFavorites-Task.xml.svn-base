@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="myFavorites-Task">
+    <default-activity id="__1">AdmUserMenusExecuteWithParams</default-activity>
+<managed-bean id="__8">
+      <managed-bean-name id="__6">myFavoritesBean</managed-bean-name>
+      <managed-bean-class id="__7">com.mod.financial.view.managed.common.MyFavorites</managed-bean-class>
+      <managed-bean-scope id="__9">view</managed-bean-scope>
+      
+      <managed-property id="__10">
+        <property-name id="__11">allItemsIteratorName</property-name>
+        <value id="__12">AllMenusViewIterator</value>
+      </managed-property>
+      <managed-property id="__13">
+        <property-name id="__19">allItemsValueAttrName</property-name>
+        <value id="__20">MenuId</value>
+      </managed-property>
+      <managed-property id="__21">
+        <property-name id="__22">allItemsDisplayAttrName</property-name>
+        <value id="__23">#{userInfo.language =='ar' ? 'ArMenuTitle' :
+                         'EnMenuTitle' }</value>
+      </managed-property>
+      <managed-property id="__24">
+        <property-name id="__43">allItemsDescriptionAttrName</property-name>
+        <value id="__42">ArMenuTitle</value>
+      </managed-property>
+      <managed-property id="__47">
+        <property-name id="__45">selectedValuesIteratorName</property-name>
+        <value id="__46">AdmUsersFavoritesViewIterator</value>
+      </managed-property>
+      <managed-property id="__49">
+        <property-name id="__50">selectedValuesValueAttrName</property-name>
+        <value id="__48">MenuId</value>
+      </managed-property>
+      
+    </managed-bean>
+    <view id="myFavorites">
+      <page>/fragments/common/myFavorites.jsff</page>
+    </view>
+    <method-call id="AdmUserMenusExecuteWithParams">
+      <method>#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__14">
+        <fixed-outcome>ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__15">
+      <from-activity-id id="__16">AdmUserMenusExecuteWithParams</from-activity-id>
+      <control-flow-case id="__18">
+        <from-outcome id="__25">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__17">myFavorites</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

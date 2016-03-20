@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/UAQ/!svn/ver/6709/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/com/uaq/pos/util
+END
+PosUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/UAQ/!svn/ver/6709/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/com/uaq/pos/util/PosUtil.java
+END
+ConfUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/UAQ/!svn/ver/5508/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/com/uaq/pos/util/ConfUtils.java
+END
+UAQLogger.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/UAQ/!svn/ver/5607/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/com/uaq/pos/util/UAQLogger.java
+END
+DateUtil.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/UAQ/!svn/ver/6325/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/com/uaq/pos/util/DateUtil.java
+END

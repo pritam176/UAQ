@@ -1,0 +1,25 @@
+<?binding.jca GetAccountAttachments_db.jca?>
+<wsdl:definitions name="GetAccountAttachments" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/GetAccountAttachments" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/GetAccountAttachments" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:top="http://xmlns.oracle.com/pcbpel/adapter/db/top/GetAccountAttachments">
+    <plt:partnerLinkType name="GetAccountAttachments_plt">
+        <plt:role name="GetAccountAttachments_role">
+            <plt:portType name="tns:GetAccountAttachments_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/GetAccountAttachments" schemaLocation="xsd/GetAccountAttachments_table.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="GetAccountAttachmentsSelect_inputParameters">
+        <wsdl:part name="GetAccountAttachmentsSelect_inputParameters" element="top:GetAccountAttachmentsSelect_inp_accountidInputParameters"/>
+    </wsdl:message>
+    <wsdl:message name="AccountattachmentsCollection_msg">
+        <wsdl:part name="AccountattachmentsCollection" element="top:AccountattachmentsCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="GetAccountAttachments_ptt">
+        <wsdl:operation name="GetAccountAttachmentsSelect">
+            <wsdl:input message="tns:GetAccountAttachmentsSelect_inputParameters"/>
+            <wsdl:output message="tns:AccountattachmentsCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

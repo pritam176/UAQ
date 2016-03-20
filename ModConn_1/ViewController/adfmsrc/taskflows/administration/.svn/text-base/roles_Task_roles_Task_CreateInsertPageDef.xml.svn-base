@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="roles_Task_roles_Task_CreateInsertPageDef"
+                Package="taskflows.administration" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Root.SecurityModule.AdmRolesView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmRolesViewIterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AdmRolesViewIterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

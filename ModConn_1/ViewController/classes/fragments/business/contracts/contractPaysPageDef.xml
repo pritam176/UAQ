@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="contractPaysPageDef"
+                Package="fragments.business.contracts">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.ContractsModule.AccContractsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccContractsViewIterator"/>
+    <iterator Binds="Root.ContractsModule.AccContractPaysView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccContractPaysViewIterator"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ContractNo">
+      <AttrNames>
+        <Item Value="ContractNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="ContractedSection">
+      <AttrNames>
+        <Item Value="ContractedSection"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="SectionName">
+      <AttrNames>
+        <Item Value="SectionName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ContractDate">
+      <AttrNames>
+        <Item Value="ContractDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ContractValue">
+      <AttrNames>
+        <Item Value="ContractValue"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="AccContractPaysViewIterator"
+                  Uses="LOV_TiDocId" id="TiDocId"/>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="PayNo">
+      <AttrNames>
+        <Item Value="PayNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="ExchRate">
+      <AttrNames>
+        <Item Value="ExchRate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="ExchRate2">
+      <AttrNames>
+        <Item Value="ExchRate2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="InvFromDate">
+      <AttrNames>
+        <Item Value="InvFromDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="InvValue">
+      <AttrNames>
+        <Item Value="InvValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="LocalValue">
+      <AttrNames>
+        <Item Value="LocalValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="PayValue">
+      <AttrNames>
+        <Item Value="PayValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="PayActValue">
+      <AttrNames>
+        <Item Value="PayActValue"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccContractPaysViewIterator" StaticList="false"
+          Uses="LOV_PayType" id="PayType" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="BankId">
+      <AttrNames>
+        <Item Value="BankId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="BankNumber">
+      <AttrNames>
+        <Item Value="BankNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="DiBankName">
+      <AttrNames>
+        <Item Value="DiBankName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="PayReference">
+      <AttrNames>
+        <Item Value="PayReference"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="Description">
+      <AttrNames>
+        <Item Value="Description"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">docsQuery</property>
+      <property
+         name="page">/fragments/business/correspondances/docsQuery.jsff</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>docsQuery&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">226.39648</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">165.5</property>
+   </View>
+   <View
+      id="View3">
+      <property
+         name="activityId">docsQueryDetails</property>
+      <property
+         name="page">/fragments/business/correspondances/docsQueryDetails.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>docsQueryDetails&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">226.79883</property>
+      <property
+         name="x">479.35254</property>
+      <property
+         name="pageFragment">true</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="View2"
+      to="View3">
+      <property
+         name="fromOutcome">goToDocDetails</property>
+      <property
+         name="sdm:polyPoints">R46,206.50607,222.5459,438.35254,222.94824,L46</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase5"
+      from="View3"
+      to="View2">
+      <property
+         name="fromOutcome">back</property>
+      <property
+         name="sdm:polyPoints">L54,438.34647,229.94824,206.5,229.5459,R54</property>
+   </ControlFlowCase>
+</SDM>

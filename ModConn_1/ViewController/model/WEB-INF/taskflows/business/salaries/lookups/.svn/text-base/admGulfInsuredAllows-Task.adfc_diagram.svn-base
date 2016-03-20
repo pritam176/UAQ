@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">admGulfInsuredAllowsMain</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admGulfInsuredAllowsMain.jsff</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admGulfInsuredAllowsMain&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">199.79883</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">227.03125</property>
+   </View>
+   <View
+      id="View3">
+      <property
+         name="activityId">admGulfInsuredAllowsAddEdit</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admGulfInsuredAllowsAddEdit.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admGulfInsuredAllowsAddEdit&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">193.09766</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">580.041</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="View2"
+      to="View3">
+      <property
+         name="fromOutcome">addEdit</property>
+      <property
+         name="sdm:polyPoints">R46,268.03125,195.94824,538.95447,189.24707,L46</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase5"
+      from="View3"
+      to="View2">
+      <property
+         name="fromOutcome">back</property>
+      <property
+         name="sdm:polyPoints">L54,539.041,196.24707,268.11777,202.94824,R54</property>
+   </ControlFlowCase>
+</SDM>

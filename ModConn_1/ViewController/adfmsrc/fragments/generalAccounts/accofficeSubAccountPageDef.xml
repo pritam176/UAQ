@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="accofficeSubAccountPageDef"
+                Package="fragments.generalAccounts">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.GeneralAccountsModule.AccOfficesView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccOfficesViewIterator"/>
+    <searchRegion Criteria="AccOfficesViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AccOfficesViewIterator"
+                  id="AccOfficesViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AccOfficesViewIterator" id="AccOfficesView">
+      <nodeDefinition DefName="com.mod.financial.model.generalAccounts.views.up.AccOfficesView"
+                      Name="AccOfficesView0">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="OfficeName"/>
+          <Item Value="CountryId"/>
+          <Item Value="CountryName"/>
+          <Item Value="SectionId"/>
+          <Item Value="SectionName"/>
+          <Item Value="UserId"/>
+          <Item Value="UserName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,1221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="addEditContractPageDef"
+                Package="fragments.business.contracts">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.ContractsModule.AccContractsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccContractsViewIterator"/>
+    <iterator Binds="Root.ContractsModule.AccContractLgsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccContractLgsViewIterator"/>
+    <iterator Binds="Root.ContractsModule.AccContractDocsROView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccContractDocsROViewIterator"/>
+    <searchRegion Binds="AccContractDocsROViewIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AccContractDocsROViewQuery"/>
+    <iterator Binds="Root.ContractsModule.AccContractAccountsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccContractAccountsViewIterator"/>
+    <searchRegion Binds="AccContractAccountsViewIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AccContractAccountsViewQuery"/>
+    <iterator Binds="Root.ContractsModule.WpnContractWaccountsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="WpnContractWaccountsViewIterator"/>
+    <searchRegion Binds="WpnContractWaccountsViewIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="WpnContractWaccountsViewQuery"/>
+    <iterator Binds="Root.ContractsModule.AccContractChangeView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccContractChangeViewIterator"/>
+    <searchRegion Binds="AccContractChangeViewIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AccContractChangeViewQuery"/>
+    <iterator Binds="Root.ContractsModule.AccContractPaysView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccContractPaysViewIterator"/>
+    <searchRegion Binds="AccContractPaysViewIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AccContractPaysViewQuery"/>
+    <iterator Binds="Root.ContractsModule.DeductionDetailView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="DeductionDetailViewIterator"/>
+    <iterator Binds="Root.ContractsModule.AccContractPaysAccView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccContractPaysAccViewIterator"/>
+    <searchRegion Binds="AccContractPaysAccViewIterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AccContractPaysAccViewQuery"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="AccContractsViewIterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ContractNo">
+      <AttrNames>
+        <Item Value="ContractNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ContractDesc">
+      <AttrNames>
+        <Item Value="ContractDesc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ContractType">
+      <AttrNames>
+        <Item Value="ContractType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="ContractedSection">
+      <AttrNames>
+        <Item Value="ContractedSection"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ReqSection">
+      <AttrNames>
+        <Item Value="ReqSection"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="CurrId">
+      <AttrNames>
+        <Item Value="CurrId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ContractDate">
+      <AttrNames>
+        <Item Value="ContractDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ContractValue">
+      <AttrNames>
+        <Item Value="ContractValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="ContractLocalValue">
+      <AttrNames>
+        <Item Value="ContractLocalValue"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccContractsViewIterator" StaticList="false"
+          Uses="LOV_MainType" id="MainType" DTSupportsMRU="true"/>
+    <list IterBinding="AccContractsViewIterator" StaticList="false"
+          Uses="LOV_CurrId" id="CurrId1" DTSupportsMRU="true"/>
+    <attributeValues IterBinding="AccContractsViewIterator" id="CurrYearValue">
+      <AttrNames>
+        <Item Value="CurrYearValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="PrevYearValue">
+      <AttrNames>
+        <Item Value="PrevYearValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ComYearValue">
+      <AttrNames>
+        <Item Value="ComYearValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="PayCount">
+      <AttrNames>
+        <Item Value="PayCount"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccContractsViewIterator" StaticList="false"
+          Uses="LOV_PayPeriod" id="PayPeriod" DTSupportsMRU="false"/>
+    <list IterBinding="AccContractsViewIterator" StaticList="false"
+          Uses="LOV_ContractType" id="ContractType1" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AccContractsViewIterator" id="CurrPayNo">
+      <AttrNames>
+        <Item Value="CurrPayNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="PrvPayCount">
+      <AttrNames>
+        <Item Value="PrvPayCount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="PaidAmount">
+      <AttrNames>
+        <Item Value="PaidAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="PaidAmountLocal">
+      <AttrNames>
+        <Item Value="PaidAmountLocal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ValueBeforSys">
+      <AttrNames>
+        <Item Value="ValueBeforSys"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="CompId">
+      <AttrNames>
+        <Item Value="CompId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="CompName">
+      <AttrNames>
+        <Item Value="CompName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="SuppContract">
+      <AttrNames>
+        <Item Value="SuppContract"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="InitPayPer">
+      <AttrNames>
+        <Item Value="InitPayPer"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="InitPayValue">
+      <AttrNames>
+        <Item Value="InitPayValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ModifiedDate">
+      <AttrNames>
+        <Item Value="ModifiedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ModifiedValue">
+      <AttrNames>
+        <Item Value="ModifiedValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="ContractStartDate">
+      <AttrNames>
+        <Item Value="ContractStartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="ContractEndDate">
+      <AttrNames>
+        <Item Value="ContractEndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="RenewalFlag">
+      <AttrNames>
+        <Item Value="RenewalFlag"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ContarctStatus">
+      <AttrNames>
+        <Item Value="ContarctStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="Status">
+      <AttrNames>
+        <Item Value="Status"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="DelayedSacc">
+      <AttrNames>
+        <Item Value="DelayedSacc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="EscrowBankSacc">
+      <AttrNames>
+        <Item Value="EscrowBankSacc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="InitPayDate">
+      <AttrNames>
+        <Item Value="InitPayDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="AdvancedPayType">
+      <AttrNames>
+        <Item Value="AdvancedPayType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="WarrantyAdvancedDate">
+      <AttrNames>
+        <Item Value="WarrantyAdvancedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="WarrantyWorkDate">
+      <AttrNames>
+        <Item Value="WarrantyWorkDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="AdvancedPaymentSacc">
+      <AttrNames>
+        <Item Value="AdvancedPaymentSacc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="PenaltyValueSacc">
+      <AttrNames>
+        <Item Value="PenaltyValueSacc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="LateValueSacc">
+      <AttrNames>
+        <Item Value="LateValueSacc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="GuranteeValueSacc">
+      <AttrNames>
+        <Item Value="GuranteeValueSacc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="InsuranceValueSacc">
+      <AttrNames>
+        <Item Value="InsuranceValueSacc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="TaxValueSacc">
+      <AttrNames>
+        <Item Value="TaxValueSacc"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="OthersSacc">
+      <AttrNames>
+        <Item Value="OthersSacc"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="AccContractsViewIterator"
+                  Uses="LOV_AdvancedPaymentSacc" id="AdvancedPaymentSacc1"/>
+    <listOfValues StaticList="false" IterBinding="AccContractsViewIterator"
+                  Uses="LOV_PenaltyValueSacc" id="PenaltyValueSacc1"/>
+    <listOfValues StaticList="false" IterBinding="AccContractsViewIterator"
+                  Uses="LOV_LateValueSacc" id="LateValueSacc1"/>
+    <listOfValues StaticList="false" IterBinding="AccContractsViewIterator"
+                  Uses="LOV_GuranteeValueSacc" id="GuranteeValueSacc1"/>
+    <listOfValues StaticList="false" IterBinding="AccContractsViewIterator"
+                  Uses="LOV_InsuranceValueSacc" id="InsuranceValueSacc1"/>
+    <listOfValues StaticList="false" IterBinding="AccContractsViewIterator"
+                  Uses="LOV_TaxValueSacc" id="TaxValueSacc1"/>
+    <listOfValues StaticList="false" IterBinding="AccContractsViewIterator"
+                  Uses="LOV_OthersSacc" id="OthersSacc1"/>
+    <listOfValues StaticList="false" IterBinding="AccContractsViewIterator"
+                  Uses="LOV_SuppSacc" id="SuppSacc1"/>
+    <attributeValues IterBinding="AccContractsViewIterator" id="SuppSaccName">
+      <AttrNames>
+        <Item Value="SuppSaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="AdvPaymentSaccName">
+      <AttrNames>
+        <Item Value="AdvPaymentSaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="PenaltyValueSaccName">
+      <AttrNames>
+        <Item Value="PenaltyValueSaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="LateValueSaccName">
+      <AttrNames>
+        <Item Value="LateValueSaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="GuranteeValueSaccName">
+      <AttrNames>
+        <Item Value="GuranteeValueSaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="InsuranceValueSaccName">
+      <AttrNames>
+        <Item Value="InsuranceValueSaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="TaxValueSaccName">
+      <AttrNames>
+        <Item Value="TaxValueSaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="OthersSaccName">
+      <AttrNames>
+        <Item Value="OthersSaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="AccContractsViewIterator"
+                  Uses="LOV_DelayedSacc" id="DelayedSacc1"/>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="DelayedSaccName">
+      <AttrNames>
+        <Item Value="DelayedSaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="AccContractsViewIterator"
+                  Uses="LOV_EscrowBankSacc" id="EscrowBankSacc1"/>
+    <attributeValues IterBinding="AccContractsViewIterator" id="EscrowSaccName">
+      <AttrNames>
+        <Item Value="EscrowSaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <attributeValues IterBinding="AccContractsViewIterator" id="AuthNo">
+      <AttrNames>
+        <Item Value="AuthNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="AuthOpenDate">
+      <AttrNames>
+        <Item Value="AuthOpenDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="AuthCloseDate">
+      <AttrNames>
+        <Item Value="AuthCloseDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="AuthValue">
+      <AttrNames>
+        <Item Value="AuthValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="AuthLocalValue">
+      <AttrNames>
+        <Item Value="AuthLocalValue"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="AccContractsViewIterator"
+                  Uses="LOV_AuthAccount" id="AuthAccount"/>
+    <attributeValues IterBinding="AccContractsViewIterator" id="AuthSaccName">
+      <AttrNames>
+        <Item Value="AuthSaccName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="WpnAdvancedPayment">
+      <AttrNames>
+        <Item Value="WpnAdvancedPayment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="WpnAllocatedGurantee">
+      <AttrNames>
+        <Item Value="WpnAllocatedGurantee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="WpnPreviouslyPayments">
+      <AttrNames>
+        <Item Value="WpnPreviouslyPayments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="WpnStops">
+      <AttrNames>
+        <Item Value="WpnStops"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="WpnPenaltyValue">
+      <AttrNames>
+        <Item Value="WpnPenaltyValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="WpnLabFees">
+      <AttrNames>
+        <Item Value="WpnLabFees"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="WpnOthers">
+      <AttrNames>
+        <Item Value="WpnOthers"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="BdgAdvancedPayment">
+      <AttrNames>
+        <Item Value="BdgAdvancedPayment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="BdgPenaltyValue">
+      <AttrNames>
+        <Item Value="BdgPenaltyValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="BdgLateValue">
+      <AttrNames>
+        <Item Value="BdgLateValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="BdgGuranteeValue">
+      <AttrNames>
+        <Item Value="BdgGuranteeValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="BdgInsuranceValue">
+      <AttrNames>
+        <Item Value="BdgInsuranceValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="BdgTaxValue">
+      <AttrNames>
+        <Item Value="BdgTaxValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="BdgOthers">
+      <AttrNames>
+        <Item Value="BdgOthers"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ExecutionValue">
+      <AttrNames>
+        <Item Value="ExecutionValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="MaterialValue">
+      <AttrNames>
+        <Item Value="MaterialValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="ConstructionValue">
+      <AttrNames>
+        <Item Value="ConstructionValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="DelvValue">
+      <AttrNames>
+        <Item Value="DelvValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="SparePartsValue">
+      <AttrNames>
+        <Item Value="SparePartsValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator"
+                     id="MaintenanceValue">
+      <AttrNames>
+        <Item Value="MaintenanceValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="Others">
+      <AttrNames>
+        <Item Value="Others"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="LgNo">
+      <AttrNames>
+        <Item Value="LgNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="LgType">
+      <AttrNames>
+        <Item Value="LgType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="BankId">
+      <AttrNames>
+        <Item Value="BankId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="StartDate">
+      <AttrNames>
+        <Item Value="StartDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="DeliverDate">
+      <AttrNames>
+        <Item Value="DeliverDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="Sht1Id">
+      <AttrNames>
+        <Item Value="Sht1Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="EndDate">
+      <AttrNames>
+        <Item Value="EndDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="CashDate">
+      <AttrNames>
+        <Item Value="CashDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="RetShtId">
+      <AttrNames>
+        <Item Value="RetShtId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="LgTypeName">
+      <AttrNames>
+        <Item Value="LgTypeName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="LgStatus">
+      <AttrNames>
+        <Item Value="LgStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="LgAmount">
+      <AttrNames>
+        <Item Value="LgAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator"
+                     id="LastExtendDate">
+      <AttrNames>
+        <Item Value="LastExtendDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="CshShtId">
+      <AttrNames>
+        <Item Value="CshShtId"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="AccContractLgsViewIterator" StaticList="false"
+          Uses="LOV_LgType" id="LgType1" DTSupportsMRU="true"/>
+    <list IterBinding="AccContractLgsViewIterator" StaticList="false"
+          Uses="LOV_LgTypeName" id="LgTypeName1" DTSupportsMRU="true"/>
+    <list IterBinding="AccContractLgsViewIterator" StaticList="false"
+          Uses="LOV_LgStatus" id="LgStatus1" DTSupportsMRU="true"/>
+    <list IterBinding="AccContractsViewIterator" StaticList="false"
+          Uses="LOV_ContarctStatus" id="ContarctStatus1" DTSupportsMRU="true"/>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="BankName">
+      <AttrNames>
+        <Item Value="BankName"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="AccContractDocsROViewIterator"
+          id="AccContractDocsROView">
+      <nodeDefinition DefName="com.mod.financial.model.contracts.views.ro.AccContractDocsROView"
+                      Name="AccContractDocsROView0">
+        <AttrNames>
+          <Item Value="DocId"/>
+          <Item Value="SectionId"/>
+          <Item Value="SectionName"/>
+          <Item Value="DocNo"/>
+          <Item Value="DocRef"/>
+          <Item Value="SubjId"/>
+          <Item Value="SubjectCode"/>
+          <Item Value="SubjectName"/>
+          <Item Value="DocDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AccContractAccountsViewIterator"
+          id="AccContractAccountsView">
+      <nodeDefinition DefName="com.mod.financial.model.contracts.views.up.AccContractAccountsView"
+                      Name="AccContractAccountsView0">
+        <AttrNames>
+          <Item Value="LineNo"/>
+          <Item Value="AccCode"/>
+          <Item Value="AccName"/>
+          <Item Value="FiscalYear1"/>
+          <Item Value="FiscalYear2"/>
+          <Item Value="Value"/>
+          <Item Value="PaidValue"/>
+          <Item Value="AllocNo"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="WpnContractWaccountsViewIterator"
+          id="WpnContractWaccountsView">
+      <nodeDefinition DefName="com.mod.financial.model.contracts.views.up.WpnContractWaccountsView"
+                      Name="WpnContractWaccountsView0">
+        <AttrNames>
+          <Item Value="LineNo"/>
+          <Item Value="TsWaccId"/>
+          <Item Value="TsWaccName"/>
+          <Item Value="FiscalYear1"/>
+          <Item Value="FiscalYear2"/>
+          <Item Value="Value"/>
+          <Item Value="LocalValue"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AccContractChangeViewIterator"
+          id="AccContractChangeView">
+      <nodeDefinition DefName="com.mod.financial.model.contracts.views.up.AccContractChangeView"
+                      Name="AccContractChangeView0">
+        <AttrNames>
+          <Item Value="DocNo"/>
+          <Item Value="DocRef"/>
+          <Item Value="SubjectCode"/>
+          <Item Value="SubjectName"/>
+          <Item Value="ChangeDesc"/>
+          <Item Value="ChangeStatus"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AccContractPaysViewIterator" id="AccContractPaysView">
+      <nodeDefinition DefName="com.mod.financial.model.contracts.views.up.AccContractPaysView"
+                      Name="AccContractPaysView0">
+        <AttrNames>
+          <Item Value="PayStatus"/>
+          <Item Value="TiPayRef"/>
+          <Item Value="PayActValue"/>
+          <Item Value="PayActDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AccContractPaysViewIterator" id="AccContractPaysView1">
+      <nodeDefinition DefName="com.mod.financial.model.contracts.views.up.AccContractPaysView"
+                      Name="AccContractPaysView10">
+        <AttrNames>
+          <Item Value="TotDed"/>
+          <Item Value="InvValue"/>
+          <Item Value="InvFromDate"/>
+          <Item Value="InvToDate"/>
+          <Item Value="InvNo"/>
+          <Item Value="TiDocId"/>
+          <Item Value="PayNo"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <list IterBinding="AccContractsViewIterator" StaticList="false"
+          Uses="LOV_PayMethod" id="PayMethod" DTSupportsMRU="false"/>
+    <list IterBinding="AccContractsViewIterator" StaticList="false"
+          Uses="LOV_PayNature" id="PayNature" DTSupportsMRU="false"/>
+    <attributeValues IterBinding="AccContractsViewIterator" id="Flags">
+      <AttrNames>
+        <Item Value="Flags"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AccContractsViewIterator" StaticList="false"
+            Uses="LOV_Chk1" id="Chk1" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="Chk1"/>
+      </AttrNames>
+    </button>
+    <button IterBinding="AccContractsViewIterator" StaticList="false"
+            Uses="LOV_Chk2" id="Chk2" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="Chk2"/>
+      </AttrNames>
+    </button>
+    <button IterBinding="AccContractsViewIterator" StaticList="false"
+            Uses="LOV_Chk3" id="Chk3" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="Chk3"/>
+      </AttrNames>
+    </button>
+    <button IterBinding="AccContractsViewIterator" StaticList="false"
+            Uses="LOV_Chk4" id="Chk4" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="Chk4"/>
+      </AttrNames>
+    </button>
+    <button IterBinding="AccContractsViewIterator" StaticList="false"
+            Uses="LOV_Chk5" id="Chk5" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="Chk5"/>
+      </AttrNames>
+    </button>
+    <button IterBinding="AccContractsViewIterator" StaticList="false"
+            Uses="LOV_Chk6" id="Chk6" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="Chk6"/>
+      </AttrNames>
+    </button>
+    <button IterBinding="AccContractsViewIterator" StaticList="false"
+            Uses="LOV_Chk7" id="Chk7" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="Chk7"/>
+      </AttrNames>
+    </button>
+    <button IterBinding="AccContractsViewIterator" StaticList="false"
+            Uses="LOV_Chk8" id="Chk8" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="Chk8"/>
+      </AttrNames>
+    </button>
+    <listOfValues StaticList="false" IterBinding="AccContractLgsViewIterator"
+                  Uses="LOV_BankId" id="BankId1"/>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="Sha1Serial">
+      <AttrNames>
+        <Item Value="Sha1Serial"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="RetShtSerial">
+      <AttrNames>
+        <Item Value="RetShtSerial"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="CshShtSerial">
+      <AttrNames>
+        <Item Value="CshShtSerial"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractsViewIterator" id="TsExchRate">
+      <AttrNames>
+        <Item Value="TsExchRate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractLgsViewIterator" id="LgId">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callLGArchiveFunction" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callLGArchiveFunction"
+                  IsViewObjectMethod="true" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.ContractsModule.AccContractLgsView"
+                  ReturnName="data.ModModuleDataControl.methodResults.callLGArchiveFunction_ModModuleDataControl_dataProvider_Root_ContractsModule_AccContractLgsView_callLGArchiveFunction_result"
+                  IterBinding="AccContractLgsViewIterator">
+      <NamedData NDName="contractId" NDValue="#{bindings.Id.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="lgNo" NDValue="#{bindings.LgNo.inputValue}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction IterBinding="AccContractLgsViewIterator"
+                  id="callLGActiveProcedure" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callLGActiveProcedure"
+                  IsViewObjectMethod="true" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.ContractsModule.AccContractLgsView"
+                  ReturnName="data.ModModuleDataControl.methodResults.callLGActiveProcedure_ModModuleDataControl_dataProvider_Root_ContractsModule_AccContractLgsView_callLGActiveProcedure_result">
+      <NamedData NDName="lgStatus" NDValue="#{bindings.LgStatus.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="lgId" NDValue="#{bindings.Id1.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="lgType" NDValue="#{bindings.LgType.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="exchRate" NDValue="#{bindings.TsExchRate.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="contractNo" NDValue="#{bindings.ContractNo.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="contractSection"
+                 NDValue="#{bindings.ContractedSection.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="currId" NDValue="#{bindings.CurrId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="contractDate"
+                 NDValue="#{bindings.ContractDate.inputValue}"
+                 NDType="oracle.jbo.domain.Date"/>
+      <NamedData NDName="orgId" NDValue="#{userInfo.orgId}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="userId" NDValue="#{userInfo.userId}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="lang" NDValue="#{userInfo.language}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction IterBinding="AccContractLgsViewIterator"
+                  id="callLGExtendProcedure" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callLGExtendProcedure"
+                  IsViewObjectMethod="true" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.ContractsModule.AccContractLgsView"
+                  ReturnName="data.ModModuleDataControl.methodResults.callLGExtendProcedure_ModModuleDataControl_dataProvider_Root_ContractsModule_AccContractLgsView_callLGExtendProcedure_result">
+      <NamedData NDName="lastExtendDate"
+                 NDValue="#{bindings.LastExtendDate.inputValue}"
+                 NDType="oracle.jbo.domain.Date"/>
+      <NamedData NDName="endDate" NDValue="#{bindings.EndDate.inputValue}"
+                 NDType="oracle.jbo.domain.Date"/>
+      <NamedData NDName="lang" NDValue="#{userInfo.language}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction IterBinding="AccContractLgsViewIterator"
+                  id="callLGCashProcedure" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callLGCashProcedure"
+                  IsViewObjectMethod="true" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.ContractsModule.AccContractLgsView"
+                  ReturnName="data.ModModuleDataControl.methodResults.callLGCashProcedure_ModModuleDataControl_dataProvider_Root_ContractsModule_AccContractLgsView_callLGCashProcedure_result">
+      <NamedData NDName="lgStatus" NDType="java.lang.String"
+                 NDValue="#{bindings.LgStatus.inputValue}"/>
+      <NamedData NDName="Sht1Id" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{bindings.Sht1Id.inputValue}"/>
+      <NamedData NDName="lgId" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{bindings.Id1.inputValue}"/>
+      <NamedData NDName="cashDate" NDType="oracle.jbo.domain.Date"
+                 NDValue="#{bindings.CashDate.inputValue}"/>
+      <NamedData NDName="startDate" NDType="oracle.jbo.domain.Date"
+                 NDValue="#{bindings.StartDate.inputValue}"/>
+      <NamedData NDName="lgNo" NDType="java.lang.String"
+                 NDValue="#{bindings.LgNo.inputValue}"/>
+      <NamedData NDName="lgType" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{bindings.LgType.inputValue}"/>
+      <NamedData NDName="contractNo" NDType="java.lang.String"
+                 NDValue="#{bindings.ContractNo.inputValue}"/>
+      <NamedData NDName="currId" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{bindings.CurrId.inputValue}"/>
+      <NamedData NDName="exchRate" NDType="java.lang.String"
+                 NDValue="#{bindings.TsExchRate.inputValue}"/>
+      <NamedData NDName="contractedSection" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{bindings.ContractedSection.inputValue}"/>
+      <NamedData NDName="contractDate" NDType="oracle.jbo.domain.Date"
+                 NDValue="#{bindings.ContractDate.inputValue}"/>
+      <NamedData NDName="orgId" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{userInfo.orgId}"/>
+      <NamedData NDName="userId" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{userInfo.userId}"/>
+      <NamedData NDName="lang" NDType="java.lang.String"
+                 NDValue="#{userInfo.language}"/>
+    </methodAction>
+    <methodAction IterBinding="AccContractLgsViewIterator"
+                  id="callLGDeliverProcedure" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callLGDeliverProcedure"
+                  IsViewObjectMethod="true" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.ContractsModule.AccContractLgsView"
+                  ReturnName="data.ModModuleDataControl.methodResults.callLGDeliverProcedure_ModModuleDataControl_dataProvider_Root_ContractsModule_AccContractLgsView_callLGDeliverProcedure_result">
+      <NamedData NDName="lgStatus" NDType="java.lang.String"
+                 NDValue="#{bindings.LgStatus.inputValue}"/>
+      <NamedData NDName="lgId" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{bindings.Id1.inputValue}"/>
+      <NamedData NDName="lgNo" NDType="java.lang.String"
+                 NDValue="#{bindings.LgNo.inputValue}"/>
+      <NamedData NDName="lgType" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{bindings.LgType.inputValue}"/>
+      <NamedData NDName="contractId" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{bindings.Id.inputValue}"/>
+      <NamedData NDName="contractNo" NDType="java.lang.String"
+                 NDValue="#{bindings.ContractNo.inputValue}"/>
+      <NamedData NDName="currId" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{bindings.CurrId.inputValue}"/>
+      <NamedData NDName="contractDate" NDType="oracle.jbo.domain.Date"
+                 NDValue="#{bindings.ContractDate.inputValue}"/>
+      <NamedData NDName="contractedSection" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{bindings.ContractedSection.inputValue}"/>
+      <NamedData NDName="exchRate" NDType="java.lang.String"
+                 NDValue="#{bindings.TsExchRate.inputValue}"/>
+      <NamedData NDName="sht1Id" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{bindings.Sht1Id.inputValue}"/>
+      <NamedData NDName="deliverDate" NDType="oracle.jbo.domain.Date"
+                 NDValue="#{bindings.DeliverDate.inputValue}"/>
+      <NamedData NDName="startDate" NDType="oracle.jbo.domain.Date"
+                 NDValue="#{bindings.StartDate.inputValue}"/>
+      <NamedData NDName="orgId" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{userInfo.orgId}"/>
+      <NamedData NDName="userId" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{userInfo.userId}"/>
+      <NamedData NDName="lang" NDType="java.lang.String"
+                 NDValue="#{userInfo.language}"/>
+    </methodAction>
+    <action IterBinding="AccContractLgsViewIterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <attributeValues IterBinding="AccContractLgsViewIterator"
+                     id="DiAmountLocal">
+      <AttrNames>
+        <Item Value="DiAmountLocal"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="MaterialValue1">
+      <AttrNames>
+        <Item Value="MaterialValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="ExecutionValue1">
+      <AttrNames>
+        <Item Value="ExecutionValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="ConstructionValue1">
+      <AttrNames>
+        <Item Value="ConstructionValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="DelvValue1">
+      <AttrNames>
+        <Item Value="DelvValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="SparePartsValue1">
+      <AttrNames>
+        <Item Value="SparePartsValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="MaintenanceValue1">
+      <AttrNames>
+        <Item Value="MaintenanceValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="Others1">
+      <AttrNames>
+        <Item Value="Others"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="DeductionDetailViewIterator" id="ExecuteWithParams"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="ContractIdBind" NDValue="#{bindings.Id.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </action>
+    <tree IterBinding="AccContractPaysAccViewIterator"
+          id="AccContractPaysAccView">
+      <nodeDefinition DefName="com.mod.financial.model.contracts.views.up.AccContractPaysAccView"
+                      Name="AccContractPaysAccView0">
+        <AttrNames>
+          <Item Value="Tiaccno"/>
+          <Item Value="Diaccname"/>
+          <Item Value="PaidValue"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="BdgAdvancedPayment1">
+      <AttrNames>
+        <Item Value="BdgAdvancedPayment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="BdgPenaltyValue1">
+      <AttrNames>
+        <Item Value="BdgPenaltyValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="BdgLateValue1">
+      <AttrNames>
+        <Item Value="BdgLateValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="BdgGuranteeValue1">
+      <AttrNames>
+        <Item Value="BdgGuranteeValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="BdgInsuranceValue1">
+      <AttrNames>
+        <Item Value="BdgInsuranceValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="BdgTaxValue1">
+      <AttrNames>
+        <Item Value="BdgTaxValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="BdgOthers1">
+      <AttrNames>
+        <Item Value="BdgOthers"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="WpnAdvancedPayment1">
+      <AttrNames>
+        <Item Value="WpnAdvancedPayment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="WpnAllocatedGurantee1">
+      <AttrNames>
+        <Item Value="WpnAllocatedGurantee"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="WpnPreviouslyPayments1">
+      <AttrNames>
+        <Item Value="WpnPreviouslyPayments"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="WpnStops1">
+      <AttrNames>
+        <Item Value="WpnStops"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator"
+                     id="WpnPenaltyValue1">
+      <AttrNames>
+        <Item Value="WpnPenaltyValue"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="WpnLabFees1">
+      <AttrNames>
+        <Item Value="WpnLabFees"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="WpnOthers1">
+      <AttrNames>
+        <Item Value="WpnOthers"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="FiscalYear1">
+      <AttrNames>
+        <Item Value="FiscalYear1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="FiscalYear2">
+      <AttrNames>
+        <Item Value="FiscalYear2"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction IterBinding="AccContractPaysViewIterator"
+                  id="callCancelPayProc" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="callCancelPayProc"
+                  IsViewObjectMethod="true" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.ContractsModule.AccContractPaysView"
+                  ReturnName="data.ModModuleDataControl.methodResults.callCancelPayProc_ModModuleDataControl_dataProvider_Root_ContractsModule_AccContractPaysView_callCancelPayProc_result">
+      <NamedData NDName="fiscalYear1"
+                 NDValue="#{bindings.FiscalYear1.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="fiscalYear2"
+                 NDValue="#{bindings.FiscalYear2.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="payType" NDValue="#{bindings.PayType.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="contractId" NDValue="#{bindings.Id.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="payId" NDValue="#{bindings.PayId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="payNo" NDValue="#{bindings.PayNo.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="payStatus" NDValue="#{bindings.PayStatus.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="payRef" NDValue="#{bindings.PayRef.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="bdgOther" NDValue="#{bindings.BdgOthers.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="bdgTaxVal" NDValue="#{bindings.BdgTaxValue.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="bdgInsuranceVal"
+                 NDValue="#{bindings.BdgInsuranceValue.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="bdgGuaranteeVal"
+                 NDValue="#{bindings.BdgGuranteeValue.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="bdgLateVal"
+                 NDValue="#{bindings.BdgLateValue.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="bdgAdvPay"
+                 NDValue="#{bindings.BdgAdvancedPayment.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="wpnOther" NDValue="#{bindings.WpnOthers.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="wpnLabFees" NDValue="#{bindings.WpnLabFees.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="wpnPenaltyVal"
+                 NDValue="#{bindings.WpnPenaltyValue.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="wpnStops" NDValue="#{bindings.WpnStops.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="wpnPrevPay"
+                 NDValue="#{bindings.WpnPreviouslyPayments.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="allocGuarantee"
+                 NDValue="#{bindings.WpnAllocatedGurantee.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="wpnAdvPay"
+                 NDValue="#{bindings.WpnAdvancedPayment.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="payActVal" NDValue="#{bindings.PayActValue.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="orgId"
+                 NDValue="adf.context.expressionEvaluator.evaluate ('#{userInfo.orgId}')"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="lang"
+                 NDValue="adf.context.expressionEvaluator.evaluate ('#{userInfo.language}')"
+                 NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="PayRef">
+      <AttrNames>
+        <Item Value="PayRef"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="PayId">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="PayStatus">
+      <AttrNames>
+        <Item Value="PayStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="PayType">
+      <AttrNames>
+        <Item Value="PayType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="PayNo">
+      <AttrNames>
+        <Item Value="PayNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="PayActValue">
+      <AttrNames>
+        <Item Value="PayActValue"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction IterBinding="AccContractPaysViewIterator" id="callDelPayProc"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="callDelPayProc" IsViewObjectMethod="true"
+                  DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.ContractsModule.AccContractPaysView"
+                  ReturnName="data.ModModuleDataControl.methodResults.callDelPayProc_ModModuleDataControl_dataProvider_Root_ContractsModule_AccContractPaysView_callDelPayProc_result">
+      <NamedData NDName="contractId" NDValue="#{bindings.Id.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="contractType"
+                 NDValue="#{bindings.ContractType.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="payid" NDValue="#{bindings.PayId.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="fiscalYear1"
+                 NDValue="#{bindings.FiscalYear1.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="fiscalYear2"
+                 NDValue="#{bindings.FiscalYear2.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="invValue" NDValue=""
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="accExchRate"
+                 NDValue="#{bindings.AccExchRate.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="payExchRate"
+                 NDValue="#{bindings.PayExchRate.inputValue}"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="orgId"
+                 NDValue="adf.context.expressionEvaluator.evaluate ('#{userInfo.orgId}')"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="userId"
+                 NDValue="adf.context.expressionEvaluator.evaluate ('#{userInfo.userId}')"
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="currentForm" NDValue=""
+                 NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="lang"
+                 NDValue="adf.context.expressionEvaluator.evaluate ('#{userInfo.language}')"
+                 NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+    <attributeValues IterBinding="AccContractsViewIterator" id="AccExchRate">
+      <AttrNames>
+        <Item Value="ExchRate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AccContractPaysViewIterator" id="PayExchRate">
+      <AttrNames>
+        <Item Value="ExchRate"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callCheckContractsHaveLGsProc" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="callCheckContractsHaveLGsProc"
+                  IsViewObjectMethod="false" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.ContractsModule"
+                  ReturnName="data.ModModuleDataControl.methodResults.callCheckContractsHaveLGsProc_ModModuleDataControl_dataProvider_Root_ContractsModule_callCheckContractsHaveLGsProc_result">
+      <NamedData NDName="lang" NDValue="#{userInfo.language}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<JavaBean xmlns="http://xmlns.oracle.com/adfm/beanmodel" version="11.1.1.64.93"
+          id="accountattachlistpayload"
+          Package="DoCashierPaymentUI_DoCashierPayment"
+          BeanClass="DoCashierPaymentUI_DoCashierPayment.accountattachlistpayload"
+          isJavaBased="false">
+  <AccessorAttribute id="accountAttachmentRec" IsCollection="true"
+                     BeanClass="DoCashierPaymentUI_DoCashierPayment.accountattachRec"
+                     CollectionBeanClass="DoCashierPaymentUI_DoCashierPayment.accountattachRec_accountAttachmentRec_Operations">
+    <Properties>
+      <Property Name="minOccurs" Value="0"/>
+      <Property Name="maxOccurs" Value="2147483640"/>
+      <Property Name="LABEL" Value="Account Attachment Rec"/>
+      <Property Name="nillable" Value="false"/>
+      <Property Name="originalName" Value="accountAttachmentRec"/>
+      <Property Name="targetNamespace" Value="http://PaymentData"/>
+    </Properties>
+  </AccessorAttribute>
+</JavaBean>

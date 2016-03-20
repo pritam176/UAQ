@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelStretchLayout id="psl1" inlineStyle="background-color:#f9f9f9;border: 1px solid #E1E1E8;display:block;">
+    <f:facet name="center">
+      <af:panelGroupLayout layout="scroll"
+                           xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+                           id="pgl1">
+        <af:panelHeader text="#{rs.common_label_myData}" id="pb1">
+          <af:spacer width="10" height="10" id="s1"/>
+          <af:panelFormLayout id="pfl1">
+            <f:facet name="footer"/>
+            <af:inputText value="#{bindings.Pwd.inputValue}"
+                          label="#{bindings.Pwd.hints.label}"
+                          required="#{bindings.Pwd.hints.mandatory}"
+                          columns="#{bindings.Pwd.hints.displayWidth}"
+                          maximumLength="#{bindings.Pwd.hints.precision}"
+                          shortDesc="#{bindings.Pwd.hints.tooltip}" id="it1"
+                          secret="true" contentStyle="width:193px !important;">
+              <f:validator binding="#{bindings.Pwd.validator}"/>
+            </af:inputText>
+            <af:selectOneChoice label="#{rs.myAccount_theme}" id="soc1"
+                                value="#{userInfo.themeName}"
+                                contentStyle="width:200px !important;">
+              <af:selectItem label="Fusion Fx" value="fusionFx" id="si1"/>
+              <af:selectItem label="fusion-11.1.1.3.0" value="fusion-11.1.1.3.0"
+                             id="selectItem1"/>
+              <af:selectItem label="fusion" value="fusion" id="selectItem2"/>
+              <af:selectItem label="blafplus-medium" value="blafplus-medium"
+                             id="selectItem3"/>
+              <af:selectItem label="blafplus-rich" value="blafplus-rich"
+                             id="selectItem4"/>
+              <af:selectItem label="Simple" value="simple" id="selectItem5"/>
+              <af:selectItem id="si2" value="skyros" label="Skyros"/>
+              <af:selectItem label="MOD Theme1" id="si3" value="mod1"/>
+            </af:selectOneChoice>
+            <af:selectOneChoice label="#{rs.myAccount_language}"
+                                id="selectOneChoice1"
+                                value="#{userInfo.language}"
+                                contentStyle="width:200px !important;">
+              <af:selectItem label="#{rs.ARABIC_LANG}" value="ar"
+                             id="selectItem10"/>
+              <af:selectItem label="#{rs.ENGLISH_LANG}" value="en"
+                             id="selectItem11"/>
+            </af:selectOneChoice>
+            <af:commandButton id="cb1" action="#{myAccountBean.save_action}"
+                              icon="/images/save.png"
+                              text="#{rs.common_button_save}"/>
+          </af:panelFormLayout>
+        </af:panelHeader>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:panelStretchLayout>
+  <!--oracle-jdev-comment:preferred-managed-bean-name:myAccountBean-->
+</jsp:root>

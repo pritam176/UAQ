@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="corDocDeleteDetailsPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CommonModule.CommonLovVO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CommonLovVO1Iterator"/>
+    <iterator Binds="Root.CorresModule.CorDocJoinAndEmpViewRO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDocJoinAndEmpViewRO1Iterator"/>
+  </executables>
+  <bindings>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_SectionIdLov" id="SectionIdLov"/>
+    <attributeValues IterBinding="CommonLovVO1Iterator" id="SectionName">
+      <AttrNames>
+        <Item Value="SectionName"/>
+      </AttrNames>
+    </attributeValues>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_DocRef" id="DocRef"/>
+    <listOfValues StaticList="false" IterBinding="CommonLovVO1Iterator"
+                  Uses="LOV_SubjIdLov" id="SubjIdLov"/>
+    <attributeValues IterBinding="CommonLovVO1Iterator" id="SubjectName">
+      <AttrNames>
+        <Item Value="SubjectName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocJoinAndEmpViewRO1Iterator" id="EmpNo">
+      <AttrNames>
+        <Item Value="EmpNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocJoinAndEmpViewRO1Iterator" id="JoinId">
+      <AttrNames>
+        <Item Value="JoinId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocJoinAndEmpViewRO1Iterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocJoinAndEmpViewRO1Iterator" id="EmpName">
+      <AttrNames>
+        <Item Value="EmpName"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="callDeleteDocsDetailsFunction" RequiresUpdateModel="true"
+                  Action="invokeMethod"
+                  MethodName="callDeleteDocsDetailsFunction"
+                  IsViewObjectMethod="false" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.CorresModule"
+                  ReturnName="data.ModModuleDataControl.methodResults.callDeleteDocsDetailsFunction_ModModuleDataControl_dataProvider_Root_CorresModule_callDeleteDocsDetailsFunction_result">
+      <NamedData NDName="docRef" NDType="java.lang.String"/>
+      <NamedData NDName="sectionId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="subjectId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="lineNo" NDType="java.lang.String"/>
+      <NamedData NDName="lang" NDType="java.lang.String"/>
+    </methodAction>
+    <action IterBinding="CorDocJoinAndEmpViewRO1Iterator"
+            id="GetJoinAndEmployee"
+            RequiresUpdateModel="true" Action="executeWithParams">
+      <NamedData NDName="pLineNo" NDValue="" NDType="java.lang.String"/>
+      <NamedData NDName="pDocRef" NDValue="" NDType="java.lang.String"/>
+      <NamedData NDName="pSectionId" NDValue="" NDType="java.lang.String"/>
+      <NamedData NDName="pSubjectId" NDValue="" NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

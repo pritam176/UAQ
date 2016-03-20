@@ -1,0 +1,49 @@
+10
+
+dir
+6948
+https://192.168.1.174:8443/svn/UAQ/Development/EServices/SharedServices/CashierPayment/DoCashierPaymentUI/src/com/uaq/pos
+https://192.168.1.174:8443/svn/UAQ
+
+
+
+2016-02-16T13:02:29.625346Z
+6940
+ehelal
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a9ce5786-9db1-1842-8c21-73aab5e95907
+
+test
+dir
+
+model
+dir
+
+service
+dir
+
+dao
+dir
+
+pojo
+dir
+
+util
+dir
+
+exception
+dir
+

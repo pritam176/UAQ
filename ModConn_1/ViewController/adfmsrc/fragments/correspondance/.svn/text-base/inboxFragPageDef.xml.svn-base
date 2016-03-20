@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="inboxFragPageDef"
+                Package="fragments.correspondance">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CorresModule.UserInboxViewByUserId"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              id="UserInboxViewByUserIdIterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="UserInboxViewByUserIdIterator"
+          id="UserInboxViewByUserId">
+      <nodeDefinition DefName="com.mod.financial.model.inbox.views.ro.UserTasksViewVO"
+                      Name="UserInboxViewByUserId0">
+        <AttrNames>
+          <Item Value="SubjName"/>
+          <Item Value="SectionName"/>
+          <Item Value="DocNo"/>
+          <Item Value="RcvDate"/>
+          <Item Value="CreateDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

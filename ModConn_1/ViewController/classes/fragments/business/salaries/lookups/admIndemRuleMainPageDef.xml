@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admIndemRuleMainPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmIndemRuleView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmIndemRuleView1Iterator"/>
+    <searchRegion Criteria="AdmIndemRuleViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmIndemRuleView1Iterator"
+                  id="AdmIndemRuleViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmIndemRuleView1Iterator" id="AdmIndemRuleView1">
+      <nodeDefinition DefName="com.mod.financial.model.salaries.views.up.AdmIndemRuleView"
+                      Name="AdmIndemRuleView10">
+        <AttrNames>
+          <Item Value="First5Years"/>
+          <Item Value="Sec5Years"/>
+          <Item Value="ExtraYears"/>
+          <Item Value="CreateDate"/>
+          <Item Value="JoinId"/>
+          <Item Value="Name"/>
+          <Item Value="Id"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="AdmIndemRuleView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action IterBinding="AdmIndemRuleView1Iterator" id="CreateWithParams"
+            RequiresUpdateModel="true" Action="createWithParams">
+            <NamedData NDName="CreateUser" NDType="java.lang.String" NDValue="#{userInfo.userName}"/>
+            </action>
+    <tree IterBinding="AdmIndemRuleView1Iterator" id="AdmIndemRuleView11">
+      <nodeDefinition DefName="com.mod.financial.model.salaries.views.up.AdmIndemRuleView"
+                      Name="AdmIndemRuleView110">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="JoinId"/>
+          <Item Value="Name"/>
+          <Item Value="First5Years"/>
+          <Item Value="Sec5Years"/>
+          <Item Value="ExtraYears"/>
+          <Item Value="CreateDate"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AdmIndemRuleView1Iterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

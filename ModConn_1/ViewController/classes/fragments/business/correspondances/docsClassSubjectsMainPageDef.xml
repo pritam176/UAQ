@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="docsClassSubjectsMainPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CorresModule.CorDocMasterView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDocMasterView1Iterator"/>
+    <searchRegion Criteria="CorDocMasterViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="CorDocMasterView1Iterator"
+                  id="CorDocMasterViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <action IterBinding="CorDocMasterView1Iterator" id="DeleteMaster"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues IterBinding="CorDocMasterView1Iterator" id="DocNo">
+      <AttrNames>
+        <Item Value="DocNo"/>
+      </AttrNames>
+    </attributeValues>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action IterBinding="CorDocMasterView1Iterator" id="CreateWithParams"
+            RequiresUpdateModel="true" Action="createWithParams">
+      <NamedData NDName="ReceivedBy" NDType="java.lang.String"
+                 NDValue="#{userInfo.userId}"/>
+      <NamedData NDName="RcvUserName" NDType="java.lang.String"
+                 NDValue="#{userInfo.name}"/>
+    </action>
+    <tree IterBinding="CorDocMasterView1Iterator" id="CorDocMasterView11">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.up.CorDocMasterView"
+                      Name="CorDocMasterView110">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="OrgId"/>
+          <Item Value="SectionId"/>
+          <Item Value="DocNo"/>
+          <Item Value="OsectionId"/>
+          <Item Value="DocRef"/>
+          <Item Value="DocType"/>
+          <Item Value="DocDest"/>
+          <Item Value="SubjId"/>
+          <Item Value="RefId"/>
+          <Item Value="DocDate"/>
+          <Item Value="RcvDate"/>
+          <Item Value="DocPri"/>
+          <Item Value="AnsReq"/>
+          <Item Value="DocStatus"/>
+          <Item Value="ArchiveType"/>
+          <Item Value="ArchNo"/>
+          <Item Value="NoPage"/>
+          <Item Value="WhoDest"/>
+          <Item Value="OutSubjDetail"/>
+          <Item Value="CreateDate"/>
+          <Item Value="CreateUser"/>
+          <Item Value="Status"/>
+          <Item Value="LastChangeDate"/>
+          <Item Value="LastChangeUser"/>
+          <Item Value="OutDocDest"/>
+          <Item Value="DocTitle"/>
+          <Item Value="SheetNo"/>
+          <Item Value="ReceivedBy"/>
+          <Item Value="Name"/>
+          <Item Value="SubjName"/>
+          <Item Value="OrderDate"/>
+          <Item Value="OrderDesc"/>
+          <Item Value="Id1"/>
+          <Item Value="HdId"/>
+          <Item Value="UserId"/>
+          <Item Value="RcvUserName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="CorDocMasterView1Iterator" id="DocRef">
+      <AttrNames>
+        <Item Value="DocRef"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

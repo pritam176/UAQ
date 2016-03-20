@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="departmentsFragPageDef"
+                Package="fragments.administration">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.AdministrationModule.AdmDeptView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmDeptViewIterator"/>
+    <searchRegion Criteria="AdmDeptViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmDeptViewIterator" id="AdmDeptViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmDeptViewIterator" id="AdmDeptView">
+      <nodeDefinition DefName="com.mod.financial.model.administration.views.up.AdmDeptView"
+                      Name="AdmDeptView0">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="Name"/>
+          <Item Value="CreateDate"/>
+          <Item Value="CreateUser"/>
+          <Item Value="Status"/>
+          <Item Value="LastChangeDate"/>
+          <Item Value="LastChangeUser"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="AdmDeptViewIterator" id="CreateInsert"
+            InstanceName="ModModuleDataControl.Root.AdministrationModule.AdmDeptView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="createInsertRow"/>
+    <action IterBinding="AdmDeptViewIterator" id="Delete"
+            InstanceName="ModModuleDataControl.Root.AdministrationModule.AdmDeptView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="false"
+            Action="removeCurrentRow"/>
+    <action id="Commit" DataControl="ModModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action id="Rollback" DataControl="ModModuleDataControl"
+            RequiresUpdateModel="false" Action="rollbackTransaction"/>
+    <attributeValues IterBinding="AdmDeptViewIterator" id="Id">
+      <AttrNames>
+        <Item Value="Id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmDeptViewIterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

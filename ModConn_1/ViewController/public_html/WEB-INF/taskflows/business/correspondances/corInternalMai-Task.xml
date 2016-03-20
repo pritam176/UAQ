@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="corInternalMai-Task">
+    <default-activity id="__1">corInternalMail</default-activity>
+    <view id="corInternalMail">
+      <page>/fragments/business/correspondances/corInternalMail.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

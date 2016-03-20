@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="sentDocsRedirection-Task">
+    <default-activity id="__1">sentDocsRedirection</default-activity>
+    <managed-bean id="__5">
+      <managed-bean-name id="__2">sentDocsRedirectionBean</managed-bean-name>
+      <managed-bean-class id="__4">com.mod.financial.view.managed.business.correspondances.executeRedirection</managed-bean-class>
+      <managed-bean-scope id="__3">view</managed-bean-scope>
+    </managed-bean>
+    <view id="sentDocsRedirection">
+      <page>/fragments/business/correspondances/sentDocsRedirection.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

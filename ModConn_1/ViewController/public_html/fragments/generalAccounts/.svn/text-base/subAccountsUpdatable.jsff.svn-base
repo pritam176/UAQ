@@ -1,0 +1,193 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelBox text="PanelBox1" id="pb1">
+    <f:facet name="toolbar">
+      <af:toolbar id="t1">
+        <af:commandToolbarButton
+                                 id="ctb1" icon="/images/save.png"
+                                 text="#{rs.common_button_save}"
+                                 actionListener="#{bindings.Commit.execute}"/>
+        <af:commandToolbarButton
+                                 immediate="true" id="ctb2"
+                                 icon="/images/cancel.gif"
+                                 text="#{rs.common_button_cancel}"
+                                 action="#{subAccountsUpdatableBean.cancel_action}">
+          <af:resetActionListener/>
+        </af:commandToolbarButton>
+        <af:commandToolbarButton id="commandToolbarButton1"
+                                 icon="/images/arrow_undo.png"
+                                 text="#{rs.bankBranch_buttonBankBack}"
+                                 action="#{subAccountsUpdatableBean.back_action}"/>
+      </af:toolbar>
+    </f:facet>
+    <af:panelFormLayout id="pfl2" rows="99999" labelWidth="150"
+                        labelAlignment="start">
+      <af:inputText value="#{bindings.SaccNo.inputValue}"
+                    label="#{bindings.SaccNo.hints.label}"
+                    required="#{bindings.SaccNo.hints.mandatory}"
+                    columns="#{bindings.SaccNo.hints.displayWidth}"
+                    maximumLength="#{bindings.SaccNo.hints.precision}"
+                    shortDesc="#{bindings.SaccNo.hints.tooltip}" id="it3"
+                    contentStyle="width:200px !important;">
+        <f:validator binding="#{bindings.SaccNo.validator}"/>
+      </af:inputText>
+      <af:spacer width="10" height="10" id="s1"/>
+      <af:inputText value="#{bindings.SaccName.inputValue}"
+                    label="#{bindings.SaccName.hints.label}"
+                    required="#{bindings.SaccName.hints.mandatory}"
+                    columns="#{bindings.SaccName.hints.displayWidth}"
+                    maximumLength="#{bindings.SaccName.hints.precision}"
+                    shortDesc="#{bindings.SaccName.hints.tooltip}" id="it4"
+                    contentStyle="width:200px !important;">
+        <f:validator binding="#{bindings.SaccName.validator}"/>
+      </af:inputText>
+      <af:spacer width="10" height="10" id="s2"/>
+      <af:panelLabelAndMessage label="#{bindings.AccNo1.hints.label}" id="plam1">
+        <af:panelGroupLayout id="pgl1" layout="horizontal">
+          <af:inputListOfValues id="accNoId"
+                                popupTitle="Search and Select: #{bindings.AccNo1.hints.label}"
+                                value="#{bindings.AccNo1.inputValue}"
+                                model="#{bindings.AccNo1.listOfValuesModel}"
+                                required="#{bindings.AccNo1.hints.mandatory}"
+                                columns="#{bindings.AccNo1.hints.displayWidth}"
+                                shortDesc="#{bindings.AccNo1.hints.tooltip}"
+                                autoSubmit="true"
+                                contentStyle="width:200px !important;">
+            <f:validator binding="#{bindings.AccNo1.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AccNo1.format}"/>
+          </af:inputListOfValues>
+          <af:inputText value="#{bindings.AccName.inputValue}"
+                        required="#{bindings.AccName.hints.mandatory}"
+                        columns="#{bindings.AccName.hints.displayWidth}"
+                        maximumLength="#{bindings.AccName.hints.precision}"
+                        shortDesc="#{bindings.AccName.hints.tooltip}" id="it5"
+                        partialTriggers="accNoId"
+                        contentStyle="width:200px !important;" disabled="true">
+            <f:validator binding="#{bindings.AccName.validator}"/>
+          </af:inputText>
+        </af:panelGroupLayout>
+      </af:panelLabelAndMessage>
+      <af:spacer width="10" height="10" id="s7"/>
+      <af:panelLabelAndMessage label="#{bindings.ParentAccNo.hints.label}"
+                               id="plam2">
+        <af:panelGroupLayout id="pgl2" layout="horizontal">
+          <af:inputListOfValues id="parentAccNoId"
+                                popupTitle="Search and Select: #{bindings.ParentAccNo.hints.label}"
+                                value="#{bindings.ParentAccNo.inputValue}"
+                                required="#{bindings.ParentAccNo.hints.mandatory}"
+                                columns="#{bindings.ParentAccNo.hints.displayWidth}"
+                                shortDesc="#{bindings.ParentAccNo.hints.tooltip}"
+                                autoSubmit="true"
+                                model="#{bindings.ParentAccNo.listOfValuesModel}"
+                                contentStyle="width:200px !important;">
+            <f:validator binding="#{bindings.ParentAccNo.validator}"/>
+          </af:inputListOfValues>
+          <af:inputText value="#{bindings.ParentAccName.inputValue}"
+                        required="#{bindings.ParentAccName.hints.mandatory}"
+                        columns="#{bindings.ParentAccName.hints.displayWidth}"
+                        maximumLength="#{bindings.ParentAccName.hints.precision}"
+                        shortDesc="#{bindings.ParentAccName.hints.tooltip}"
+                        id="it1" partialTriggers="parentAccNoId" contentStyle="width:200px !important;"
+                        disabled="true">
+            <f:validator binding="#{bindings.ParentAccName.validator}"/>
+          </af:inputText>
+        </af:panelGroupLayout>
+      </af:panelLabelAndMessage>
+      <af:spacer width="10" height="10" id="s8"/>
+      <af:panelLabelAndMessage label="#{bindings.BankName.hints.label}"
+                               id="plam3">
+        <af:panelGroupLayout id="pgl3" layout="horizontal">
+          <af:inputListOfValues id="bankIdId"
+                                popupTitle="Search and Select: #{bindings.BankId.hints.label}"
+                                value="#{bindings.BankId.inputValue}"
+                                model="#{bindings.BankId.listOfValuesModel}"
+                                required="#{bindings.BankId.hints.mandatory}"
+                                columns="#{bindings.BankId.hints.displayWidth}"
+                                shortDesc="#{bindings.BankId.hints.tooltip}"
+                                autoSubmit="true"
+                                contentStyle="width:200px !important;">
+            <f:validator binding="#{bindings.BankId.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.BankId.format}"/>
+          </af:inputListOfValues>
+          <af:inputText value="#{bindings.BankName.inputValue}"
+                        required="#{bindings.BankName.hints.mandatory}"
+                        columns="#{bindings.BankName.hints.displayWidth}"
+                        maximumLength="#{bindings.BankName.hints.precision}"
+                        shortDesc="#{bindings.BankName.hints.tooltip}"
+                        partialTriggers="bankIdId" id="it6"
+                        contentStyle="width:200px !important;" disabled="true">
+            <f:validator binding="#{bindings.BankName.validator}"/>
+          </af:inputText>
+        </af:panelGroupLayout>
+      </af:panelLabelAndMessage>
+      <af:spacer width="10" height="10" id="s9"/>
+      <af:selectOneChoice value="#{bindings.SaccType.inputValue}"
+                          label="#{bindings.SaccType.label}"
+                          required="#{bindings.SaccType.hints.mandatory}"
+                          shortDesc="#{bindings.SaccType.hints.tooltip}"
+                          id="soc1" contentStyle="width:200px !important;">
+        <f:selectItems value="#{bindings.SaccType.items}" id="si3"/>
+      </af:selectOneChoice>
+      <af:spacer width="10" height="10" id="s3"/>
+      <af:selectOneChoice value="#{bindings.SaccStatus.inputValue}"
+                          label="#{bindings.SaccStatus.label}"
+                          required="#{bindings.SaccStatus.hints.mandatory}"
+                          shortDesc="#{bindings.SaccStatus.hints.tooltip}"
+                          id="soc4" contentStyle="width:200px !important;">
+        <f:selectItems value="#{bindings.SaccStatus.items}" id="si5"/>
+      </af:selectOneChoice>
+      <af:spacer width="10" height="10" id="s4"/>
+      <af:selectOneChoice value="#{bindings.SaccLevel.inputValue}"
+                          label="#{bindings.SaccLevel.label}"
+                          required="#{bindings.SaccLevel.hints.mandatory}"
+                          shortDesc="#{bindings.SaccLevel.hints.tooltip}"
+                          id="soc3" contentStyle="width:200px !important;">
+        <f:selectItems value="#{bindings.SaccLevel.items}" id="si1"/>
+      </af:selectOneChoice>
+      <af:spacer width="10" height="10" id="s6"/>
+      <af:inputText value="#{bindings.BankNumber.inputValue}"
+                    label="#{bindings.BankNumber.hints.label}"
+                    required="#{bindings.BankNumber.hints.mandatory}"
+                    columns="#{bindings.BankNumber.hints.displayWidth}"
+                    maximumLength="#{bindings.BankNumber.hints.precision}"
+                    shortDesc="#{bindings.BankNumber.hints.tooltip}" id="it2"
+                    contentStyle="width:200px !important;">
+        <f:validator binding="#{bindings.BankNumber.validator}"/>
+      </af:inputText>
+      <af:spacer width="10" height="10" id="s5"/>
+      <af:panelLabelAndMessage id="plam4"
+                               label="#{bindings.TConvertDebit.label}">
+        <af:panelGroupLayout id="pgl4" valign="middle" halign="center"
+                             layout="horizontal">
+          <af:selectBooleanCheckbox value="#{bindings.TConvertDebit.inputValue}"
+                                    shortDesc="#{bindings.TConvertDebit.hints.tooltip}"
+                                    id="sbc1"
+                                    valueChangeListener="#{subAccountsUpdatableBean.OnCheckChanged}"/>
+          <af:spacer width="10" height="10" id="spacer1"/>
+          <af:inputText value="#{bindings.ConvertDebitUser.inputValue}"
+                        label="#{bindings.ConvertDebitUser.hints.label}"
+                        required="#{bindings.ConvertDebitUser.hints.mandatory}"
+                        columns="#{bindings.ConvertDebitUser.hints.displayWidth}"
+                        maximumLength="#{bindings.ConvertDebitUser.hints.precision}"
+                        shortDesc="#{bindings.ConvertDebitUser.hints.tooltip}"
+                        id="it7" partialTriggers="ctb1" disabled="true">
+            <f:validator binding="#{bindings.ConvertDebitUser.validator}"/>
+          </af:inputText>
+        </af:panelGroupLayout>
+      </af:panelLabelAndMessage>
+      <af:spacer width="10" height="10" id="s10"/>
+      <af:selectOneRadio value="#{bindings.SaccNature.inputValue}"
+                         label="#{bindings.SaccNature.label}"
+                         required="#{bindings.SaccNature.hints.mandatory}"
+                         shortDesc="#{bindings.SaccNature.hints.tooltip}"
+                         id="sor1">
+        <f:selectItems value="#{bindings.SaccNature.items}" id="si2"/>
+      </af:selectOneRadio>
+    </af:panelFormLayout>
+  </af:panelBox>
+  <!--oracle-jdev-comment:preferred-managed-bean-name:subAccountsUpdatableBean-->
+</jsp:root>

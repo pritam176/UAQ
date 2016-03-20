@@ -1,0 +1,29 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<BC4JConfig version="11.1" xmlns="http://xmlns.oracle.com/bc4j/configuration">
+   <AppModuleConfigBag ApplicationName="ae.payment.model.UaqAppModule">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="ae.payment.model.Model" name="UaqAppModuleLocal" ApplicationName="ae.payment.model.UaqAppModule">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="ae.payment.model.UaqAppModule"/>
+         <Custom JDBCDataSource="jdbc/LocalUAQDB"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="ae.payment.model.Model" name="UaqAppModuleShared" ApplicationName="ae.payment.model.UaqAppModule">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="ae.payment.model.UaqAppModule"/>
+         <Custom JDBCDataSource="jdbc/LocalUAQDB"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+   <AppModuleConfigBag ApplicationName="ae.payment.model.ErpAppModule">
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="ae.payment.model.Model" name="ErpAppModuleLocal" ApplicationName="ae.payment.model.ErpAppModule">
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="ae.payment.model.ErpAppModule"/>
+         <Custom JDBCDataSource="jdbc/uqaerp_db"/>
+      </AppModuleConfig>
+      <AppModuleConfig DeployPlatform="LOCAL" jbo.project="ae.payment.model.Model" name="ErpAppModuleShared" ApplicationName="ae.payment.model.ErpAppModule">
+         <AM-Pooling jbo.ampool.dynamicjdbccredentials="false" jbo.ampool.isuseexclusive="false" jbo.ampool.maxpoolsize="1" jbo.ampool.resetnontransactionalstate="false"/>
+         <Database jbo.locking.mode="optimistic"/>
+         <Security AppModuleJndiName="ae.payment.model.ErpAppModule"/>
+         <Custom JDBCDataSource="jdbc/uqaerp_db"/>
+      </AppModuleConfig>
+   </AppModuleConfigBag>
+</BC4JConfig>

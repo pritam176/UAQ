@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="treeMenusFragPageDef"
+                Package="common">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SecurityModule.TreeMenusROView"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              id="TreeMenusROViewIterator" Refresh="ifNeeded"/>
+    <iterator Binds="Root.CommonModule.AdmUsersFavoritesView"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              id="AdmUsersFavoritesViewIterator" Refresh="ifNeeded"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="TreeMenusROViewIterator" id="TreeMenusROView">
+      <nodeDefinition DefName="com.mod.financial.model.security.views.ro.TreeMenusROView"
+                      Name="TreeMenusROView0">
+        <AttrNames>
+          <Item Value="ArMenuTitle"/>
+          <Item Value="EnMenuTitle"/>
+          <Item Value="TitleKey"/>
+          <Item Value="FormCommand"/>
+          <Item Value="MenuIdFav"/>
+          <Item Value="ActionString"/>
+          <Item Value="ReportId"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="MenuIdTreeMenusROView"/>
+        </Accessors>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="AdmUsersFavoritesViewIterator"
+          id="AdmUsersFavoritesView">
+      <nodeDefinition DefName="com.mod.financial.model.commonbc.views.up.AdmUsersFavoritesView"
+                      Name="AdmUsersFavoritesView0">
+        <AttrNames>
+          <Item Value="ArMenuTitle"/>
+          <Item Value="EnMenuTitle"/>
+          <Item Value="Id"/>
+          <Item Value="MenuId"/>
+          <Item Value="UserId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="TreeMenusROViewIterator" id="MenuId">
+      <AttrNames>
+        <Item Value="MenuId"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmUsersFavoritesViewIterator" id="ExecuteWithParams"
+            InstanceName="ModModuleDataControl.Root.CommonModule.AdmUsersFavoritesView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="bindUserId" NDValue="#{userInfo.userId}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </action>
+    <action IterBinding="TreeMenusROViewIterator" id="ExecuteWithParams1"
+            InstanceName="ModModuleDataControl.Root.SecurityModule.TreeMenusROView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="bindUserId" NDValue="#{userInfo.userId}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </action>
+    <action id="Commit" DataControl="ModModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action IterBinding="AdmUsersFavoritesViewIterator"
+            id="Createwithparameters"
+            InstanceName="ModModuleDataControl.Root.CommonModule.AdmUsersFavoritesView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="createWithParams">
+      <NamedData NDName="MenuId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="UserId" NDType="oracle.jbo.domain.Number"
+                 NDValue="#{userInfo.userId}"/>
+    </action>
+    <action IterBinding="AdmUsersFavoritesViewIterator" id="removeRowWithKey"
+            InstanceName="ModModuleDataControl.Root.CommonModule.AdmUsersFavoritesView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="false"
+            Action="removeRowWithKey">
+      <NamedData NDName="rowKey" NDValue="" NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="TreeMenusROViewIterator" id="FavId">
+      <AttrNames>
+        <Item Value="FavId"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmUsersFavoritesViewIterator"
+            id="setCurrentRowWithKeyValue"
+            InstanceName="ModModuleDataControl.Root.CommonModule.AdmUsersFavoritesView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="false"
+            Action="setCurrentRowWithKeyValue">
+      <NamedData NDName="rowKey" NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="AdmUsersFavoritesViewIterator" id="MenuId1">
+      <AttrNames>
+        <Item Value="MenuId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="AdmUsersFavoritesViewIterator" id="ReportId">
+      <AttrNames>
+        <Item Value="ReportId"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

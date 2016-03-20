@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt4">
+    <f:facet name="Master">
+      <af:panelGroupLayout id="pgl1">
+        <af:panelGroupLayout id="pfl2" partialTriggers="allowIdId"
+                             layout="horizontal">
+          <af:inputListOfValues id="allowIdId"
+                                popupTitle="#{rs.common_label_search_select} #{bindings.AllowId.hints.label}"
+                                value="#{bindings.AllowId.inputValue}"
+                                label="#{bindings.AllowId.hints.label}"
+                                model="#{bindings.AllowId.listOfValuesModel}"
+                                required="true"
+                                columns="#{bindings.AllowId.hints.displayWidth}"
+                                shortDesc="#{bindings.AllowId.hints.tooltip}"
+                                autoSubmit="true">
+            <f:validator binding="#{bindings.AllowId.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AllowId.format}"/>
+          </af:inputListOfValues>
+          <af:spacer width="5px" id="s1"/>
+          <af:inputText value="#{bindings.Name.inputValue}"
+                        simple="true"
+                        required="#{bindings.Name.hints.mandatory}"
+                        columns="#{bindings.Name.hints.displayWidth}"
+                        maximumLength="#{bindings.Name.hints.precision}"
+                        shortDesc="#{bindings.Name.hints.tooltip}" id="it1"
+                        contentStyle="width:250px !important;" disabled="true">
+            <f:validator binding="#{bindings.Name.validator}"/>
+          </af:inputText>
+        </af:panelGroupLayout>
+        <af:panelFormLayout id="pfl3">
+          <af:selectOneChoice value="#{bindings.NationId.inputValue}"
+                              label="#{bindings.NationId.label}" required="true"
+                              shortDesc="#{bindings.NationId.hints.tooltip}"
+                              id="soc1" contentStyle="width:250px !important;"
+                              autoSubmit="true"
+                              unselectedLabel="#{rs.SELECT_FROM_LIST}">
+            <f:selectItems value="#{bindings.NationId.items}" id="si1"/>
+          </af:selectOneChoice>
+        </af:panelFormLayout>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="MasterToolbar">
+      <af:panelGroupLayout layout="horizontal" id="pgl12">
+        <af:commandButton actionListener="#{bindings.Commit.execute}"
+                          icon="/images/save.png"
+                          text="#{rs.common_button_save}" partialSubmit="true"
+                          id="cb4"/>
+        <af:spacer width="5px" id="s7"/>
+        <af:commandButton icon="/images/arrow_undo.png"
+                          actionListener="#{bindings.Rollback.execute}"
+                          action="back" text="#{rs.bankBranch_buttonBankBack}"
+                          immediate="true" id="cb6"/>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

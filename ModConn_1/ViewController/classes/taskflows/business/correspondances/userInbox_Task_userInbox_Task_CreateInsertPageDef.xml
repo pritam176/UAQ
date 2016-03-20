@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="userInbox_Task_userInbox_Task_CreateInsertPageDef"
+                Package="taskflows.business.correspondances"
+                SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Root.CorresModule.AccSpcDocMainView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccSpcDocMainView1Iterator"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AccSpcDocMainView1Iterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+  </bindings>
+</pageDefinition>

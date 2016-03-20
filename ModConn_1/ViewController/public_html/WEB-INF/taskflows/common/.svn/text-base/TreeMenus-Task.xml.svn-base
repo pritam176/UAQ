@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="TreeMenus-Task">
+    <default-activity id="__1">AdmTreeMenuExecuteWithParams</default-activity>
+    <data-control-scope id="__30">
+      <shared/>
+    </data-control-scope>
+    <input-parameter-definition id="__15">
+      <name id="__14">tabContext</name>
+      <value id="__29">#{pageFlowScope.tabContext}</value>
+      <class id="__28">oracle.ui.pattern.dynamicShell.TabContext</class>
+    </input-parameter-definition>
+    <return-value-definition id="__12">
+      <name id="__13">tabContext</name>
+      <value id="__27">#{pageFlowScope.tabContext}</value>
+    </return-value-definition>
+    <managed-bean id="__5" >
+      <managed-bean-name id="__3">treeMenusFragBean</managed-bean-name>
+      <managed-bean-class id="__4">com.mod.financial.view.managed.common.TreeMenus</managed-bean-class>
+      <managed-bean-scope id="__2">pageFlow</managed-bean-scope>
+    </managed-bean>
+    <view id="treeMenusFrag">
+      <page id="__22">/common/treeMenus.jsff</page>
+    </view>
+    <method-call id="AdmUserMenusExecuteWithParams">
+      <method id="__23">#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__6">
+        <fixed-outcome id="__24">ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <method-call id="AdmTreeMenuExecuteWithParams">
+      <method id="__25">#{bindings.ExecuteWithParams.execute}</method>
+      <outcome id="__16">
+        <fixed-outcome id="__26">ExecuteWithParams</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__7">
+      <from-activity-id id="__8">AdmUserMenusExecuteWithParams</from-activity-id>
+      <control-flow-case id="__9">
+        <from-outcome id="__11">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__10">treeMenusFrag</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__17">
+      <from-activity-id id="__18">AdmTreeMenuExecuteWithParams</from-activity-id>
+      <control-flow-case id="__21">
+        <from-outcome id="__20">ExecuteWithParams</from-outcome>
+        <to-activity-id id="__19">AdmUserMenusExecuteWithParams</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

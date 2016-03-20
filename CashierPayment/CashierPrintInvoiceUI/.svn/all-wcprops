@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI
+END
+CashierPrintInvoiceUI.jpr
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/UAQ/!svn/ver/6948/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/CashierPrintInvoiceUI.jpr
+END
+ADF_Library_Dependencies.library
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/UAQ/!svn/ver/6939/Development/EServices/SharedServices/CashierPayment/CashierPrintInvoiceUI/ADF_Library_Dependencies.library
+END

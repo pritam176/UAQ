@@ -1,0 +1,38 @@
+pos.ws.username=pos
+pos.ws.password=pos
+pos.ws.host=localhost
+pos.ws.port=8080
+pos.ws.method=/uaqwsfd/pos/doTransaction/
+
+#sequences for service per department
+SEQ_301 = PS_SEQ_TRAN
+SEQ_302 = PS_SEQ_TRAN
+SEQ_303 = PS_SEQ_TRAN
+SEQ_304 = PS_SEQ_TRAN
+SEQ_305 = PS_SEQ_TRAN
+SEQ_306 = PS_SEQ_TRAN
+
+SEQ_501 = EGD_SEQ_TRAN
+SEQ_502 = EGD_SEQ_TRAN
+
+SEQ_405 = LP_SEQ_TRAN
+SEQ_403 = LP_SEQ_TRAN
+SEQ_404 = LP_SEQ_TRAN
+SEQ_401 = LP_SEQ_TRAN
+
+#comment and uncomment the below depending upon the deployment environment
+
+#dev
+erp.table.name=APPS.XX_UAQ_ESERVICE_INTEG_TBL
+environment.id=1
+
+#stg
+#erp.table.name=APPS.XX_UAQ_ESERVICE_INTEG_TBL
+#environment.id=3
+
+#prod
+#erp.table.name=APPS.XX_UAQ_ESERVICE_INTEG_TBL
+#environment.id=4
+
+
+

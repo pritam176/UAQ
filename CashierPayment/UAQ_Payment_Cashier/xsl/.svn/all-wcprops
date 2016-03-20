@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsl
+END
+PaymentDataDetails_GetLookUpsFrmDBInput_msg.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 146
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsl/PaymentDataDetails_GetLookUpsFrmDBInput_msg.xsl
+END
+PaymentDataDetails_SaveServiceAndAppFeesinERPInp.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 151
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsl/PaymentDataDetails_SaveServiceAndAppFeesinERPInp.xsl
+END
+PaymentDataDetails_SaveDetailscashierpaymentDetailsCollection.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 164
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsl/PaymentDataDetails_SaveDetailscashierpaymentDetailsCollection.xsl
+END
+GetLookUpsFrmDBOutputCollection_PaymentDataOutputDetails.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsl/GetLookUpsFrmDBOutputCollection_PaymentDataOutputDetails.xsl
+END
+PaymentDataDetails_Savedetails_Output_PaymentDataDetails.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsl/PaymentDataDetails_Savedetails_Output_PaymentDataDetails.xsl
+END
+GetAccountattachmentsCollection_PaymentDataOutputDetails.xsl
+K 25
+svn:wc:ra_dav:version-url
+V 159
+/svn/UAQ/!svn/ver/6892/Development/EServices/SharedServices/CashierPayment/UAQ_Payment_Cashier/xsl/GetAccountattachmentsCollection_PaymentDataOutputDetails.xsl
+END

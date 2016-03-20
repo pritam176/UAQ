@@ -1,0 +1,1153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="taskDetails1PageDef"
+                Package="docashierpaymentui.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variable Type="java.lang.Number" Name="getSequenceNumber_return"
+                IsQueriable="false" IsUpdateable="0"
+                DefaultValue="${bindings.getSequenceNumber.result}"/>
+      <variable Type="java.lang.String" Name="getSequenceNumber_sequenceName"
+                IsQueriable="false"/>
+    </variableIterator>
+    <methodIterator Binds="getTaskDetails.result"
+                    DataControl="DoCashierPaymentUI_DoCashierPayment"
+                    RangeSize="25"
+                    BeanClass="DoCashierPaymentUI_DoCashierPayment.getTaskDetails"
+                    id="getTaskDetailsIterator"/>
+    <accessorIterator MasterBinding="getTaskDetailsIterator" Binds="task"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.task"
+                      id="taskIterator" StateValidation="false"/>
+    <accessorIterator MasterBinding="taskIterator" Binds="systemAttributes"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.systemAttributesType"
+                      id="systemAttributesIterator"/>
+    <accessorIterator MasterBinding="systemAttributesIterator"
+                      Binds="systemActions" RangeSize="50"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.actionType"
+                      id="systemActionsIterator" StateValidation="false"/>
+    <accessorIterator MasterBinding="systemAttributesIterator"
+                      Binds="customActions" RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.actionType"
+                      id="customActionsIterator"/>
+    <accessorIterator MasterBinding="systemAttributesIterator" Binds="fromUser"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.identityType"
+                      id="fromUserIterator"/>
+    <accessorIterator MasterBinding="systemAttributesIterator" Binds="assignees"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.identityType"
+                      id="assigneesIterator" StateValidation="false"/>
+    <accessorIterator MasterBinding="taskIterator" Binds="payload"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.DoCashierPaymentPayloadType"
+                      id="payloadIterator"/>
+    <accessorIterator MasterBinding="payloadIterator" Binds="Input"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.InputPayload"
+                      id="InputIterator"/>
+    <accessorIterator MasterBinding="InputIterator" Binds="UserDetails"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.UserDetailsPayload"
+                      id="UserDetailsIterator"/>
+    <accessorIterator MasterBinding="InputIterator" Binds="RequestDetails"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.RequestDetailsPayLoad"
+                      id="RequestDetailsIterator"/>
+    <accessorIterator MasterBinding="InputIterator" Binds="PaymentDetails"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.PaymentDetailsPayload"
+                      id="PaymentDetailsIterator"/>
+    <accessorIterator MasterBinding="InputIterator" Binds="POSDetails"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.POSDetailsPayLoad"
+                      id="POSDetailsIterator"/>
+    <accessorIterator MasterBinding="taskIterator" Binds="userComment"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.commentType"
+                      id="userCommentIterator" StateValidation="false"/>
+    <accessorIterator MasterBinding="userCommentIterator" Binds="updatedBy"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.identityType"
+                      id="updatedByIterator" StateValidation="false"/>
+    <accessorIterator MasterBinding="taskIterator" Binds="attachment"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.attachmentType"
+                      id="attachmentIterator" StateValidation="false"/>
+    <accessorIterator MasterBinding="attachmentIterator" Binds="ucmMetadataItem"
+                      RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.ucmMetadataItemType"
+                      id="ucmMetadataItemIterator" StateValidation="false"/>
+    <accessorIterator MasterBinding="InputIterator"
+                      Binds="AccountIdentityAttachmentList" RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.accountattachlistpayload"
+                      id="AccountIdentityAttachmentListIterator"/>
+    <accessorIterator MasterBinding="AccountIdentityAttachmentListIterator"
+                      Binds="accountAttachmentRec" RangeSize="25"
+                      DataControl="DoCashierPaymentUI_DoCashierPayment"
+                      BeanClass="DoCashierPaymentUI_DoCashierPayment.accountattachRec"
+                      id="accountAttachmentRecIterator"/>
+    <methodIterator Binds="getTaskDetails1.result"
+                    DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                    RangeSize="25"
+                    BeanClass="CashierPrintInvoiceUI_PrintInvoice.getTaskDetails"
+                    id="getTaskDetails1Iterator"/>
+    <accessorIterator MasterBinding="getTaskDetails1Iterator" Binds="task"
+                      RangeSize="25"
+                      DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                      BeanClass="CashierPrintInvoiceUI_PrintInvoice.task"
+                      id="taskIterator1"/>
+    <accessorIterator MasterBinding="taskIterator1" Binds="payload"
+                      RangeSize="25"
+                      DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                      BeanClass="CashierPrintInvoiceUI_PrintInvoice.PrintInvoicePayloadType"
+                      id="payloadIterator1"/>
+    <accessorIterator MasterBinding="payloadIterator1" Binds="Input"
+                      RangeSize="25"
+                      DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                      BeanClass="CashierPrintInvoiceUI_PrintInvoice.InputPayload"
+                      id="InputIterator1"/>
+    <accessorIterator MasterBinding="InputIterator1" Binds="POSDetails"
+                      RangeSize="25"
+                      DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                      BeanClass="CashierPrintInvoiceUI_PrintInvoice.POSDetailsPayLoad"
+                      id="POSDetailsIterator1"/>
+    <iterator Binds="CashierPaymentDetailsView1" RangeSize="25"
+              DataControl="UaqAppModuleDataControl"
+              id="CashierPaymentDetailsView1Iterator"/>
+    <iterator Binds="XxUaqEserviceIntegTblView1" RangeSize="25"
+              DataControl="ErpAppModuleDataControl"
+              id="XxUaqEserviceIntegTblView1Iterator"/>
+    <iterator id="BrokenTransactionsInParticularPOSIterator"
+              Binds="BrokenTransactionsInParticularPOS"
+              DataControl="UaqAppModuleDataControl" RangeSize="25"/>
+    <iterator id="TransactionInProgressAnotherPOSIterator"
+              Binds="TransactionInProgressAnotherPOS"
+              DataControl="UaqAppModuleDataControl" RangeSize="25"/>
+    <iterator Binds="PosPaymentView1" RangeSize="10"
+              DataControl="UaqAppModuleDataControl"
+              id="PosPaymentView1Iterator"/>
+    <iterator Binds="EServicesMatrixView1" RangeSize="10"
+              DataControl="UaqAppModuleDataControl"
+              id="EServicesMatrixView1Iterator"/>
+    <iterator Binds="PaymentServiceCodeView1" RangeSize="10"
+              DataControl="UaqAppModuleDataControl"
+              id="PaymentServiceCodeView1Iterator"/>
+    <iterator Binds="PosPaymentTransactionView1" RangeSize="10"
+              DataControl="UaqAppModuleDataControl"
+              id="PosPaymentTransactionView1Iterator"/>
+  </executables>
+  <bindings>
+    <methodAction id="getTaskDetails" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getTaskDetails"
+                  IsViewObjectMethod="false"
+                  DataControl="DoCashierPaymentUI_DoCashierPayment"
+                  InstanceName="DoCashierPaymentUI_DoCashierPayment"
+                  ReturnName="data.DoCashierPaymentUI_DoCashierPayment.methodResults.getTaskDetails_DoCashierPaymentUI_DoCashierPayment_getTaskDetails_result">
+      <NamedData NDName="bpmWorklistContext" NDType="java.lang.String"
+                 NDValue=""/>
+      <NamedData NDName="bpmWorklistTaskId" NDType="java.lang.String"
+                 NDValue=""/>
+      <NamedData NDName="bpmWorklistTaskVersion" NDType="java.lang.String"
+                 NDValue=""/>
+    </methodAction>
+    <methodAction IterBinding="taskIterator" id="UpdateAction"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="UpdateAction" IsViewObjectMethod="false"
+                  DataControl="DoCashierPaymentUI_DoCashierPayment"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider"
+                  IsLocalObjectReference="true">
+      <NamedData NDName="action" NDType="java.lang.String" NDValue=""/>
+    </methodAction>
+    <attributeValues IterBinding="taskIterator" id="title">
+      <AttrNames>
+        <Item Value="title"/>
+      </AttrNames>
+    </attributeValues>
+    <navigationlist IterBinding="systemActionsIterator"
+                    ListOperMode="navigation" ListIter="systemActionsIterator"
+                    id="systemActions">
+      <AttrNames>
+        <Item Value="action"/>
+        <Item Value="displayName"/>
+      </AttrNames>
+    </navigationlist>
+    <attributeValues IterBinding="systemAttributesIterator"
+                     id="digitalSignatureRequired">
+      <AttrNames>
+        <Item Value="digitalSignatureRequired"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator"
+                     id="passwordRequiredOnUpdate">
+      <AttrNames>
+        <Item Value="passwordRequiredOnUpdate"/>
+      </AttrNames>
+    </attributeValues>
+    <navigationlist IterBinding="customActionsIterator"
+                    ListOperMode="navigation" ListIter="customActionsIterator"
+                    id="customActions">
+      <AttrNames>
+        <Item Value="action"/>
+        <Item Value="displayName"/>
+      </AttrNames>
+    </navigationlist>
+    <methodAction IterBinding="taskIterator" id="Claim"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="Claim" IsViewObjectMethod="false"
+                  DataControl="DoCashierPaymentUI_DoCashierPayment"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider"
+                  IsLocalObjectReference="true"/>
+    <methodAction IterBinding="taskIterator" id="Acknowledge"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="Acknowledge" IsViewObjectMethod="false"
+                  DataControl="DoCashierPaymentUI_DoCashierPayment"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider"
+                  IsLocalObjectReference="true"/>
+    <methodAction IterBinding="taskIterator" id="Resume"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="Resume" IsViewObjectMethod="false"
+                  DataControl="DoCashierPaymentUI_DoCashierPayment"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider"
+                  IsLocalObjectReference="true"/>
+    <methodAction IterBinding="taskIterator" id="Withdraw"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="Withdraw" IsViewObjectMethod="false"
+                  DataControl="DoCashierPaymentUI_DoCashierPayment"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider"
+                  IsLocalObjectReference="true"/>
+    <methodAction IterBinding="taskIterator" id="POS" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="POS"
+                  IsViewObjectMethod="false"
+                  DataControl="DoCashierPaymentUI_DoCashierPayment"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider"
+                  IsLocalObjectReference="true"/>
+    <methodAction IterBinding="taskIterator" id="Cash"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="Cash" IsViewObjectMethod="false"
+                  DataControl="DoCashierPaymentUI_DoCashierPayment"
+                  InstanceName="bindings.taskIterator.currentRow.dataProvider"
+                  IsLocalObjectReference="true"/>
+    <attributeValues IterBinding="taskIterator" id="creator">
+      <AttrNames>
+        <Item Value="creator"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="taskIterator" id="ownerUser">
+      <AttrNames>
+        <Item Value="ownerUser"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="taskIterator" id="priority">
+      <AttrNames>
+        <Item Value="priority"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="taskIterator" id="dueDate">
+      <AttrNames>
+        <Item Value="dueDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="taskIterator" id="creatorDisplayName">
+      <AttrNames>
+        <Item Value="creatorDisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="taskIterator" id="ownerUserDisplayName">
+      <AttrNames>
+        <Item Value="ownerUserDisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="acquiredBy">
+      <AttrNames>
+        <Item Value="acquiredBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="assignedDate">
+      <AttrNames>
+        <Item Value="assignedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="createdDate">
+      <AttrNames>
+        <Item Value="createdDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="expirationDate">
+      <AttrNames>
+        <Item Value="expirationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="outcome">
+      <AttrNames>
+        <Item Value="outcome"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="state">
+      <AttrNames>
+        <Item Value="state"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="taskNumber">
+      <AttrNames>
+        <Item Value="taskNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="updatedDate">
+      <AttrNames>
+        <Item Value="updatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator"
+                     id="taskViewContext">
+      <AttrNames>
+        <Item Value="taskViewContext"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator"
+                     id="actionDisplayName">
+      <AttrNames>
+        <Item Value="actionDisplayName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="componentType">
+      <AttrNames>
+        <Item Value="componentType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="activityId">
+      <AttrNames>
+        <Item Value="activityId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="fromUserIterator" id="id">
+      <AttrNames>
+        <Item Value="id"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="fromUserIterator" id="displayName">
+      <AttrNames>
+        <Item Value="displayName"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="assigneesIterator" id="assignees">
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.identityType"
+                      Name="assignees0">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="displayName"/>
+          <Item Value="type"/>
+          <Item Value="systemVersionFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="UserDetailsIterator" id="Username">
+      <AttrNames>
+        <Item Value="Username"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="TypeOfUser">
+      <AttrNames>
+        <Item Value="TypeOfUser"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="Accountid">
+      <AttrNames>
+        <Item Value="Accountid"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="MobileNo">
+      <AttrNames>
+        <Item Value="MobileNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="EmailID">
+      <AttrNames>
+        <Item Value="EmailID"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="EmiratesId">
+      <AttrNames>
+        <Item Value="EmiratesId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="TradeLienceNo">
+      <AttrNames>
+        <Item Value="TradeLienceNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="FamilyBookNo">
+      <AttrNames>
+        <Item Value="FamilyBookNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="nationality">
+      <AttrNames>
+        <Item Value="nationality"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="Emirate">
+      <AttrNames>
+        <Item Value="Emirate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="FirstName">
+      <AttrNames>
+        <Item Value="FirstName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="MiddleName">
+      <AttrNames>
+        <Item Value="MiddleName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="LastName">
+      <AttrNames>
+        <Item Value="LastName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="Address1">
+      <AttrNames>
+        <Item Value="Address1"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="Address2">
+      <AttrNames>
+        <Item Value="Address2"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="Address3">
+      <AttrNames>
+        <Item Value="Address3"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="POBOX">
+      <AttrNames>
+        <Item Value="POBOX"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="DOB">
+      <AttrNames>
+        <Item Value="DOB"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="applicanttypeid">
+      <AttrNames>
+        <Item Value="applicanttypeid"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="applicanttype_en">
+      <AttrNames>
+        <Item Value="applicanttype_en"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="applicanttype_ar">
+      <AttrNames>
+        <Item Value="applicanttype_ar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="nationality_en">
+      <AttrNames>
+        <Item Value="nationality_en"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="nationality_ar">
+      <AttrNames>
+        <Item Value="nationality_ar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="emirate_en">
+      <AttrNames>
+        <Item Value="emirate_en"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="emirate_ar">
+      <AttrNames>
+        <Item Value="emirate_ar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="typeofuser_en">
+      <AttrNames>
+        <Item Value="typeofuser_en"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="typeofuser_ar">
+      <AttrNames>
+        <Item Value="typeofuser_ar"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="ServiceId">
+      <AttrNames>
+        <Item Value="ServiceId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="ServiceName">
+      <AttrNames>
+        <Item Value="ServiceName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="RequestType">
+      <AttrNames>
+        <Item Value="RequestType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="RequestDate">
+      <AttrNames>
+        <Item Value="RequestDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="FeeTypeCode">
+      <AttrNames>
+        <Item Value="FeeTypeCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="UserType">
+      <AttrNames>
+        <Item Value="UserType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="Letter">
+      <AttrNames>
+        <Item Value="Letter"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="RequestNumber">
+      <AttrNames>
+        <Item Value="RequestNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="RequestStatus">
+      <AttrNames>
+        <Item Value="RequestStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="TotalAmount">
+      <AttrNames>
+        <Item Value="TotalAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="GeneralAmount">
+      <AttrNames>
+        <Item Value="GeneralAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator"
+                     id="ApplicationAmount">
+      <AttrNames>
+        <Item Value="ApplicationAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="ServiceAmount">
+      <AttrNames>
+        <Item Value="ServiceAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="specificDeptCode">
+      <AttrNames>
+        <Item Value="specificDeptCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="GeneralDeptCode">
+      <AttrNames>
+        <Item Value="GeneralDeptCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="SpecificFeeId">
+      <AttrNames>
+        <Item Value="SpecificFeeId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="GeneralFeeId">
+      <AttrNames>
+        <Item Value="GeneralFeeId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="PaymentMethod">
+      <AttrNames>
+        <Item Value="PaymentMethod"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="DepartmentName">
+      <AttrNames>
+        <Item Value="DepartmentName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="Amount">
+      <AttrNames>
+        <Item Value="Amount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="EcrIdNo">
+      <AttrNames>
+        <Item Value="EcrIdNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="ServiceCode">
+      <AttrNames>
+        <Item Value="ServiceCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="TransactionType">
+      <AttrNames>
+        <Item Value="TransactionType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="TerminalNo">
+      <AttrNames>
+        <Item Value="TerminalNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="MerchantId">
+      <AttrNames>
+        <Item Value="MerchantId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="PaymentId">
+      <AttrNames>
+        <Item Value="PaymentId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="FeeId">
+      <AttrNames>
+        <Item Value="FeeId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="CustomerId">
+      <AttrNames>
+        <Item Value="CustomerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="CustomerName">
+      <AttrNames>
+        <Item Value="CustomerName"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="userCommentIterator" id="userComment">
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.commentType"
+                      Name="userComment0">
+        <AttrNames>
+          <Item Value="comment"/>
+          <Item Value="updatedDate"/>
+          <Item Value="displayNameLanguage"/>
+          <Item Value="action"/>
+          <Item Value="systemVersionFlag"/>
+          <Item Value="acl"/>
+          <Item Value="doesBelongToParent"/>
+          <Item Value="isSystemComment"/>
+          <Item Value="taskId"/>
+          <Item Value="commentScope"/>
+          <Item Value="id"/>
+          <Item Value="operation"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="updatedBy"/>
+        </Accessors>
+      </nodeDefinition>
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.identityType"
+                      Name="userComment1">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="displayName"/>
+          <Item Value="type"/>
+          <Item Value="systemVersionFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="userCommentIterator" id="CreateInsert"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="userCommentIterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues IterBinding="userCommentIterator" id="comment">
+      <AttrNames>
+        <Item Value="comment"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="userCommentIterator" id="commentScope">
+      <AttrNames>
+        <Item Value="commentScope"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="updatedByIterator" id="updatedBy">
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.identityType"
+                      Name="updatedBy0">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="displayName"/>
+          <Item Value="type"/>
+          <Item Value="systemVersionFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="attachmentIterator" id="attachment">
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.attachmentType"
+                      Name="attachment0">
+        <AttrNames>
+          <Item Value="content"/>
+          <Item Value="mimeType"/>
+          <Item Value="name"/>
+          <Item Value="updatedBy"/>
+          <Item Value="URI"/>
+          <Item Value="systemVersionFlag"/>
+          <Item Value="taskId"/>
+          <Item Value="version"/>
+          <Item Value="acl"/>
+          <Item Value="doesBelongToParent"/>
+          <Item Value="updatedDate"/>
+          <Item Value="correlationId"/>
+          <Item Value="size"/>
+          <Item Value="description"/>
+          <Item Value="storageType"/>
+          <Item Value="ucmDocType"/>
+          <Item Value="securityGroup"/>
+          <Item Value="account"/>
+          <Item Value="revision"/>
+          <Item Value="releaseDate"/>
+          <Item Value="expirationDate"/>
+          <Item Value="title"/>
+          <Item Value="attachmentScope"/>
+          <Item Value="isContentEncoded"/>
+          <Item Value="updatedByDisplayName"/>
+          <Item Value="id"/>
+          <Item Value="operation"/>
+        </AttrNames>
+      </nodeDefinition>
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.ucmMetadataItemType"
+                      Name="attachment1">
+        <AttrNames>
+          <Item Value="name"/>
+          <Item Value="value"/>
+          <Item Value="type"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="attachmentIterator" id="CreateInsert1"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="attachmentIterator" id="Delete1"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <attributeValues IterBinding="attachmentIterator" id="content">
+      <AttrNames>
+        <Item Value="content"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="mimeType">
+      <AttrNames>
+        <Item Value="mimeType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="name">
+      <AttrNames>
+        <Item Value="name"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="updatedBy1">
+      <AttrNames>
+        <Item Value="updatedBy"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="URI">
+      <AttrNames>
+        <Item Value="URI"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="updatedDate1">
+      <AttrNames>
+        <Item Value="updatedDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="ucmDocType">
+      <AttrNames>
+        <Item Value="ucmDocType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="securityGroup">
+      <AttrNames>
+        <Item Value="securityGroup"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="account">
+      <AttrNames>
+        <Item Value="account"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="revision">
+      <AttrNames>
+        <Item Value="revision"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="releaseDate">
+      <AttrNames>
+        <Item Value="releaseDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="expirationDate1">
+      <AttrNames>
+        <Item Value="expirationDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="attachmentIterator" id="attachmentScope">
+      <AttrNames>
+        <Item Value="attachmentScope"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="ucmMetadataItemIterator" id="CreateInsert2"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action IterBinding="ucmMetadataItemIterator" id="Delete2"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="ucmMetadataItemIterator" id="ucmMetadataItem">
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.ucmMetadataItemType"
+                      Name="ucmMetadataItem0">
+        <AttrNames>
+          <Item Value="name"/>
+          <Item Value="value"/>
+          <Item Value="type"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="systemAttributesIterator"
+                     id="numberOfTimesModified">
+      <AttrNames>
+        <Item Value="numberOfTimesModified"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="systemAttributesIterator" id="version">
+      <AttrNames>
+        <Item Value="version"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="userCommentIterator" id="userComment1">
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.commentType"
+                      Name="userComment10">
+        <AttrNames>
+          <Item Value="comment"/>
+          <Item Value="updatedDate"/>
+          <Item Value="displayNameLanguage"/>
+          <Item Value="action"/>
+          <Item Value="systemVersionFlag"/>
+          <Item Value="acl"/>
+          <Item Value="doesBelongToParent"/>
+          <Item Value="isSystemComment"/>
+          <Item Value="taskId"/>
+          <Item Value="commentScope"/>
+          <Item Value="id"/>
+          <Item Value="operation"/>
+        </AttrNames>
+        <Accessors>
+          <Item Value="updatedBy"/>
+        </Accessors>
+      </nodeDefinition>
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.identityType"
+                      Name="userComment11">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="displayName"/>
+          <Item Value="type"/>
+          <Item Value="systemVersionFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="updatedByIterator" id="updatedBy2">
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.identityType"
+                      Name="updatedBy20">
+        <AttrNames>
+          <Item Value="id"/>
+          <Item Value="displayName"/>
+          <Item Value="type"/>
+          <Item Value="systemVersionFlag"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="attachmentIterator" id="attachment1">
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.attachmentType"
+                      Name="attachment10">
+        <AttrNames>
+          <Item Value="content"/>
+          <Item Value="mimeType"/>
+          <Item Value="name"/>
+          <Item Value="updatedBy"/>
+          <Item Value="URI"/>
+          <Item Value="systemVersionFlag"/>
+          <Item Value="taskId"/>
+          <Item Value="version"/>
+          <Item Value="acl"/>
+          <Item Value="doesBelongToParent"/>
+          <Item Value="updatedDate"/>
+          <Item Value="correlationId"/>
+          <Item Value="size"/>
+          <Item Value="description"/>
+          <Item Value="storageType"/>
+          <Item Value="ucmDocType"/>
+          <Item Value="securityGroup"/>
+          <Item Value="account"/>
+          <Item Value="revision"/>
+          <Item Value="releaseDate"/>
+          <Item Value="expirationDate"/>
+          <Item Value="title"/>
+          <Item Value="attachmentScope"/>
+          <Item Value="isContentEncoded"/>
+          <Item Value="updatedByDisplayName"/>
+          <Item Value="id"/>
+          <Item Value="operation"/>
+        </AttrNames>
+      </nodeDefinition>
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.ucmMetadataItemType"
+                      Name="attachment11">
+        <AttrNames>
+          <Item Value="name"/>
+          <Item Value="value"/>
+          <Item Value="type"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="ucmMetadataItemIterator" id="ucmMetadataItem1">
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.ucmMetadataItemType"
+                      Name="ucmMetadataItem10">
+        <AttrNames>
+          <Item Value="name"/>
+          <Item Value="value"/>
+          <Item Value="type"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <tree IterBinding="accountAttachmentRecIterator" id="accountAttachmentRec">
+      <nodeDefinition DefName="DoCashierPaymentUI_DoCashierPayment.accountattachRec"
+                      Name="accountAttachmentRec0">
+        <AttrNames>
+          <Item Value="doctype_en"/>
+          <Item Value="viewurl"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction id="getTaskDetails1" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getTaskDetails"
+                  IsViewObjectMethod="false"
+                  DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                  InstanceName="CashierPrintInvoiceUI_PrintInvoice"
+                  ReturnName="data.CashierPrintInvoiceUI_PrintInvoice.methodResults.getTaskDetails_CashierPrintInvoiceUI_PrintInvoice_getTaskDetails_result">
+      <NamedData NDName="bpmWorklistContext" NDType="java.lang.String"/>
+      <NamedData NDName="bpmWorklistTaskId" NDType="java.lang.String"/>
+      <NamedData NDName="bpmWorklistTaskVersion" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="POSDetailsIterator1" id="EcrIdNo1">
+      <AttrNames>
+        <Item Value="EcrIdNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator1" id="PaymentId1">
+      <AttrNames>
+        <Item Value="PaymentId"/>
+      </AttrNames>
+    </attributeValues>
+    <tree IterBinding="XxUaqEserviceIntegTblView1Iterator"
+          id="XxUaqEserviceIntegTblView1">
+      <nodeDefinition DefName="ae.payment.model.views.XxUaqEserviceIntegTblView"
+                      Name="XxUaqEserviceIntegTblView10">
+        <AttrNames>
+          <Item Value="CurrencyCode"/>
+          <Item Value="Amount"/>
+          <Item Value="DepartmentCode"/>
+          <Item Value="ReceiptMethodType"/>
+          <Item Value="BankAccount"/>
+          <Item Value="RevenueAccount"/>
+          <Item Value="Activity"/>
+          <Item Value="ServiceTransactionId"/>
+          <Item Value="FeesId"/>
+          <Item Value="CustomerId"/>
+          <Item Value="CustomerName"/>
+          <Item Value="TransactionDate"/>
+          <Item Value="EdirhamReferenceNumber"/>
+          <Item Value="RefundStatus"/>
+          <Item Value="FlagSecurityDesposit"/>
+          <Item Value="SecurityDepositAmount"/>
+          <Item Value="SecDepositReferenceNumber"/>
+          <Item Value="ImportFlag"/>
+          <Item Value="ErrorMsg"/>
+          <Item Value="RowID"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="XxUaqEserviceIntegTblView1Iterator" id="InsertErpData"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <tree IterBinding="CashierPaymentDetailsView1Iterator"
+          id="CashierPaymentDetailsView1">
+      <nodeDefinition DefName="ae.payment.model.views.CashierPaymentDetailsView"
+                      Name="CashierPaymentDetailsView10">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="UserId"/>
+          <Item Value="RequestNo"/>
+          <Item Value="ReqId"/>
+          <Item Value="TypeOfPaymentId"/>
+          <Item Value="Amount"/>
+          <Item Value="Status"/>
+          <Item Value="Createdby"/>
+          <Item Value="Modifiedby"/>
+          <Item Value="CreatedDate"/>
+          <Item Value="ModifiedDate"/>
+          <Item Value="ServiceId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="CashierPaymentDetailsView1Iterator"
+            id="InsertCashierPymnt"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="UaqAppModuleDataControl"/>
+    <action id="Commit1" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ErpAppModuleDataControl"/>
+    <methodAction id="getSequenceNumber" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getSequenceNumber"
+                  IsViewObjectMethod="false"
+                  DataControl="UaqAppModuleDataControl"
+                  InstanceName="UaqAppModuleDataControl.dataProvider"
+                  ReturnName="data.UaqAppModuleDataControl.methodResults.getSequenceNumber_UaqAppModuleDataControl_dataProvider_getSequenceNumber_result">
+      <NamedData NDName="sequenceName" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="Imagelogopath">
+      <AttrNames>
+        <Item Value="Imagelogopath"/>
+      </AttrNames>
+    </attributeValues>
+    <methodAction id="getBrokenTransactionOnParticularPOS"
+                  InstanceName="UaqAppModuleDataControl.dataProvider"
+                  DataControl="UaqAppModuleDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="getBrokenTransactionOnParticularPOS"
+                  IsViewObjectMethod="false">
+      <NamedData NDName="merchantId" NDValue="#{bindings.MerchantId.inputValue}"
+                 NDType="java.lang.String"/>
+      <NamedData NDName="terminalNo" NDValue="#{bindings.TerminalNo.inputValue}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="isPaymentInProgressOnAnotherPOS"
+                  InstanceName="UaqAppModuleDataControl.dataProvider"
+                  DataControl="UaqAppModuleDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="getPaymentInProgressOnAnotherPOS"
+                  IsViewObjectMethod="false"
+                  ReturnName="data.UaqAppModuleDataControl.methodResults.isPaymentInProgressOnAnotherPOS_UaqAppModuleDataControl_dataProvider_getPaymentInProgressOnAnotherPOS_result">
+      <NamedData NDName="paymentId" NDValue="#{bindings.PaymentId.inputValue}"
+                 NDType="java.lang.String"/>
+    </methodAction>
+    <methodAction id="getSequenceNumber1"
+                  InstanceName="UaqAppModuleDataControl.dataProvider"
+                  DataControl="UaqAppModuleDataControl"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="getSequenceNumber" IsViewObjectMethod="false"
+                  ReturnName="data.UaqAppModuleDataControl.methodResults.getSequenceNumber1_UaqAppModuleDataControl_dataProvider_getSequenceNumber_result">
+      <NamedData NDName="sequenceName" NDValue="" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="PosPaymentView1Iterator" id="PaymentId2">
+      <AttrNames>
+        <Item Value="PaymentId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentView1Iterator" id="PaymentStatus">
+      <AttrNames>
+        <Item Value="PaymentStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentView1Iterator" id="ServiceCode1">
+      <AttrNames>
+        <Item Value="ServiceCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentView1Iterator" id="Amount1">
+      <AttrNames>
+        <Item Value="Amount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentView1Iterator"
+                     id="PaymentInProgress">
+      <AttrNames>
+        <Item Value="PaymentInProgress"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentView1Iterator" id="ServiceId1">
+      <AttrNames>
+        <Item Value="ServiceId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentView1Iterator" id="DepartmentId">
+      <AttrNames>
+        <Item Value="DepartmentId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentView1Iterator" id="FeeId1">
+      <AttrNames>
+        <Item Value="FeeId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentView1Iterator" id="CustomerId1">
+      <AttrNames>
+        <Item Value="CustomerId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentView1Iterator" id="CustomerName1">
+      <AttrNames>
+        <Item Value="CustomerName"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="EServicesMatrixView1Iterator" id="getFeeDetails"
+            InstanceName="UaqAppModuleDataControl.EServicesMatrixView1"
+            DataControl="UaqAppModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="p_feeId" NDValue="" NDType="java.lang.String"/>
+    </action>
+    <action IterBinding="PaymentServiceCodeView1Iterator"
+            id="getPaymentServiceCode"
+            InstanceName="UaqAppModuleDataControl.PaymentServiceCodeView1"
+            DataControl="UaqAppModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="p_serviceId" NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="PosPaymentTransactionView1Iterator"
+                     id="TransactionId">
+      <AttrNames>
+        <Item Value="TransactionId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentTransactionView1Iterator"
+                     id="TransactionType1">
+      <AttrNames>
+        <Item Value="TransactionType"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentTransactionView1Iterator"
+                     id="PaymentId3">
+      <AttrNames>
+        <Item Value="PaymentId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentTransactionView1Iterator"
+                     id="TerminalNo1">
+      <AttrNames>
+        <Item Value="TerminalNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PosPaymentTransactionView1Iterator"
+                     id="MerchantId1">
+      <AttrNames>
+        <Item Value="MerchantId"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

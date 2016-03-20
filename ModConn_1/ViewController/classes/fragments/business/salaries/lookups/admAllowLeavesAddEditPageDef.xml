@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admAllowLeavesAddEditPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmAllowsLeavesView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmAllowsLeavesView1Iterator"/>
+    <iterator Binds="Root.SalariesModule.AdmLeavesViewRO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmLeavesViewRO1Iterator"/>
+  </executables>
+  <bindings>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <action IterBinding="AdmAllowsLeavesView1Iterator" id="CreateWithParams"
+            RequiresUpdateModel="true" Action="createWithParams">
+      <NamedData NDName="CreateUser" NDType="java.lang.String"
+                 NDValue="#{userInfo.userName}"/>
+    </action>
+    <tree IterBinding="AdmAllowsLeavesView1Iterator" id="AdmAllowsLeavesView1">
+      <nodeDefinition DefName="com.mod.financial.model.salaries.views.up.AdmAllowsLeavesView"
+                      Name="AdmAllowsLeavesView10">
+        <AttrNames>
+          <Item Value="AllowId"/>
+          <Item Value="Name"/>
+          <Item Value="PayFactor"/>
+          <Item Value="RevFactor"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AdmAllowsLeavesView1Iterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmAllowsLeavesView1Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <list IterBinding="AdmLeavesViewRO1Iterator" ListOperMode="navigation"
+          ListIter="AdmLeavesViewRO1Iterator" id="AdmLeavesViewRO1"
+          DTSupportsMRU="true">
+      <AttrNames>
+        <Item Value="LeaveId"/>
+        <Item Value="LeaveName"/>
+      </AttrNames>
+    </list>
+  </bindings>
+</pageDefinition>

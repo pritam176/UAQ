@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+ <jsp:directive.page contentType="text/html;charset=UTF-8"/>
+  
+
+
+  <f:view beforePhase="#{PrintBean.beforePhaseMethod}">
+  <af:document id="d1">
+   <af:messages id="m1"/>
+   <af:form id="f1">
+    <header style="border:1px solid #999; padding:20px 5px; margin: 0 0 1.5em;">
+     <h1>إيصال دفع Payment receipt</h1>
+     
+     <af:outputText value="#{bindings.Imagelogopath.inputValue}" id="ot14"
+                    visible="false"/>
+     <table border="0">
+      <tr>
+       <td style="border:0px !important;">
+        <img alt="" src="${bindings.Imagelogopath.inputValue}" height="150" width="1338"/>
+       </td>
+      </tr>
+     </table>
+     <table border="0" class="arabic">
+      <tr>
+       <th width="30%" height="40">
+        <span contenteditable1=""
+              style="margin:0.1em; font-size:16px; font-weight: 700;">رقم
+                                                                      الإيصال </span>
+        <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:13px; font-weight: 400;">Receipt
+                                                                                                     No</span>
+       </th>
+       <td width="50%" height="40">
+        <span style="margin:0.1em; font-size: 14px; "/>
+        <af:outputText value="#{(bindings.PaymentMethod==&quot;POS&quot; )? bindings.PaymentId.inputValue : bindings.ReceiptNumber.inputValue}" id="ot13"/>
+             </td>
+       <td style="border:0px;" width="20%" height="40"></td>
+      </tr><af:outputText value="#{bindings.PaymentId.inputValue}" id="ot2"
+                          visible="false"/>
+       <tr>
+       <th>
+        <span contenteditable1=""
+              style="margin:0.1em; font-size:16px; font-weight: 700;">الاسم</span>
+       </th>
+       <td>
+        <span style="margin:0.1em; font-size: 14px; "><af:outputText value="#{bindings.FirstName.inputValue}"
+                                                                                  id="ot1"/></span>
+       </td>
+       <th>
+        <span contenteditable1=""
+              style="margin:0.1em; font-size:13px; font-weight: 400;">Name</span>
+       </th>
+      </tr>
+     </table>
+    </header>
+    <article style="float:left; width:100%;">
+     <table>
+      <thead>
+       <tr>
+        <td style="text-align:right; font-size:16px; font-weight:700; background-color: #EEE;"
+            height="36">
+         اسم البيان 
+         <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:13px; font-weight: 400;">Title</span>
+        </td>
+        <!-- statement name -->
+        <td width="20%"
+            style="font-size:16px; font-weight:700; background-color: #EEE;"
+            height="36">
+         القيمة 
+         <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:13px; font-weight: 400;">Amount </span>
+        </td>
+        <!-- the value -->
+       
+       </tr>
+      </thead>
+       
+      <tbody>
+       <tr>
+        <td style="text-align:right; font-size:16px; font-weight:700;">
+         تجديد مورد 
+         <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:13px; font-weight: 400;"> 
+          <af:outputText value="#{( bindings.FeeTypeCode.inputValue == 'A001') ? 'Application Fees' : 'Service Fees' }" id="ot10"/></span>
+        </td>
+        <td width="20%"> <af:outputText value="#{bindings.TotalAmount.inputValue}"
+                                        id="ot11"/></td>
+       </tr>
+      </tbody>
+     </table>
+     <table class="width:50%; margin-top:10px; border-spacing:1px; border-radius:0px;">
+      <!-- payment details table starts here -->
+      <tbody>
+       <tr>
+        <th style="padding: 0.5em; background-color:#fff;">
+         <span contenteditable1="" style="font-size:14px; font-weight:700;">رسوم
+                                                                            المعاملة </span>
+         <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:12px; font-weight: 400; float: right;">Transaction
+                                                                                                                    fees</span>
+        </th>
+        <td style="padding: 0.5em;">
+         <span style="padding-top:4px;">
+          <af:outputText value="#{bindings.ServiceAmount.inputValue}" id="ot8"/></span>
+        </td>
+       </tr>
+       <tr>
+        <th style="background-color:#fff; font-size:14px; font-weight:700; padding: 0.6em;">
+         <span contenteditable1="">عمولة النظام</span>
+         <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:12px; font-weight: 400; float: right;">E-dirham
+                                                                                                                    service
+                                                                                                                    fees</span>
+        </th>
+        <td style="padding: 0.5em;">
+         <span style="padding-top:4px;">
+          <af:outputText value="#{(bindings.PaymentMethod.inputValue == 'Cash')? '0' : '3'}" id="ot6"/></span>
+        </td>
+       </tr>
+       <tr>
+       
+        <th style="background-color:#fff; font-size:14px; font-weight:700; padding: 0.6em;">
+         <span contenteditable1="">رسوم الخدمات الالكترونية</span>
+         <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:12px; font-weight: 400; float: right;">E-service
+                                                                                                                    fees</span>
+        </th>
+        <td style="padding: 0.5em;">
+         <span style="padding-top:4px;"><af:outputText value="#{(bindings.PaymentMethod.inputValue == 'Cash')? '0' : '7'}"
+                                                                                               id="ot7"/></span>
+        </td>
+       </tr>
+       <tr>
+        <th style="background-color: #EEE; font-size:14px; font-weight:700; padding: 0.6em;">
+         <span contenteditable1="">المجموع الكلى</span>
+         <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:12px; font-weight: 400;float: right;">Total</span>
+        </th>
+        <td style="padding: 0.5em;">
+         <span style="padding-top:4px;"><af:outputText value="#{bindings.TotalAmount.inputValue}"
+                                                          id="ot12"/></span>
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <table class="width:80%; margin-top:10px; border-spacing:1px; border-radius:0px;">
+      <!-- payment type details table starts here -->
+      <tr>
+       <th style="padding: 0.5em;">
+        <span contenteditable1="" style="font-size:14px; font-weight:700;">نوع
+                                                                           السداد </span>
+        <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:12px; font-weight: 400; float: right;">Payment
+                                                                                                                   type</span>
+       </th>
+       <td style="padding: 0.5em;">
+        <span contenteditable1=""
+              style="font-size:14px; font-weight:700; text-align: right;"><af:outputText value="#{(bindings.PaymentMethod.inputValue == 'Cash') ? 'نقدى' : 'إلكتروني'}"
+                                                                                                                                            id="ot78"/></span>
+         
+        <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:12px; font-weight: 400; float: right;"><af:outputText value="#{(bindings.PaymentMethod.inputValue=='POS')?  'EDirham' : bindings.PaymentMethod.inputValue }"
+                                                                                                                                            id="ot3"/></span>
+       </td>
+      </tr>
+       
+      <tr>
+       <th style="padding: 0.5em;">
+        <span contenteditable1="" style="font-size:14px; font-weight:700;">ايصال
+                                                                           السداد </span>
+        <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:12px; font-weight: 400; float: right;">Payment
+                                                                                                                   Receipt</span>
+       </th>
+       <td style="padding: 0.5em;">
+        <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:12px; font-weight: 400; float: right;">
+         <af:outputText value="#{(bindings.PaymentMethod.inputValue == 'Cash')? 'N/A' : bindings.EcrIdNo.inputValue}" id="ot4"/></span>
+       </td>
+      </tr>
+     </table>
+     <table style="margin-top:10px; width:75%; float:left">
+      <tbody>
+       <tr>
+        <td style="text-align:center; font-size:15px; font-weight:700; background-color: #EEE;">
+         الموظف المسؤول 
+         <span style="padding: 0px; margin: 0px; padding-top: 3px; font-size:12px; font-weight: 400;">Employee
+                                                                                                      in
+                                                                                                      charge</span>
+        </td>
+        <!-- responsible officer -->
+       </tr>
+       <tr>
+        <td style="text-align:right; font-size:16px; font-weight:700;">
+         الاسم:<span style="margin-right:8px; font-size:12px; font-weight: 700; float:left;"> :Name</span><!-- dynamic name goes here ! --><af:outputText value="#{securityContext.userName}"
+                                                                                                                                                          id="ot9"/>
+        </td>
+       </tr>
+       <tr>
+        <td style="text-align:right; font-size:16px; font-weight:700;">
+         التوقيع: 
+         <span style="margin-right:8px; font-size:12px; font-weight: 700; float:left;"> :Signature</span>
+        </td>
+       </tr>
+      </tbody>
+     </table>
+     <div style="text-align:left; margin-top:20px; font-size: 14px; float:left;">
+     
+        
+      <span style="font-weight:700;margin-left: 10px;">تاريخ الطباعة :</span><span style="font-size:12px; font-weight: 400; float:left; margin-right: 10px;">:Printing
+                                                                                                                                                             date</span>
+                                                                            
+       <af:outputText value="#{currentDate}"        id="ot5">
+       <af:convertDateTime type="date" pattern="dd/MM/YYYY"/>
+      </af:outputText>
+            
+      </div>
+    </article>
+    <br/>
+    <br/>
+    <div style="text-align:center;">
+     <af:commandButton text="Print" id="cb1"
+                       inlineStyle="padding: 6px; font-size: 14px; font-weight: bold; margin-right: 8px;">
+      <af:showPrintablePageBehavior/>
+     </af:commandButton>
+      
+     <af:commandButton text="Back" id="cb3"
+                       inlineStyle="padding: 6px; font-size: 14px; font-weight: bold; margin-right: 8px;"
+                       action="back"/>
+    </div>
+    <div class="footer"></div>
+   </af:form>
+  
+   <af:resource type="css">/* reset */ * { border: 0; box-sizing: content-box;
+                           color: inherit; font-family: inherit; font-size:
+                           inherit; font-style: inherit; font-weight: inherit;
+                           line-height: inherit; list-style: none; margin: 0;
+                           padding: 0; text-decoration: none; vertical-align:
+                           top; direction:rtl; } /* content editable */
+                           *[contenteditable1] { border-radius: 0.25em;
+                           min-width: 1em; outline: 0; } *[contenteditable1] {
+                           cursor: pointer; width: 100%; }
+                           span[contenteditable1] { display: inline-block;
+                           text-align: left;} /* heading */ h1 { font: bold 100%
+                           sans-serif; letter-spacing: 0.5em; text-align:
+                           center; text-transform: uppercase; } /* table */
+                           table { font-size: 75%; table-layout: fixed; width:
+                           100%; } table { border-collapse: separate;
+                           border-spacing: 2px; } th, td { border-width: 1px;
+                           padding: 0.4em; position: relative; text-align: left;
+                           } th, td { border-radius: 0.25em; border-style:
+                           solid; } th { background: #EEE; border-color: #BBB; }
+                           td { border-color: #DDD; } .arabic th { background:
+                           #EEE; border-color: #BBB; } .arabic td {
+                           border-color: #DDD; background: #FEFEFE;} .arabic th
+                           span[contenteditable1]{ float:right;
+                           text-align:right; } .arabic td span{ float:right;} /*
+                           page */ html { font: 16px/1 'Open Sans', sans-serif;
+                           overflow: auto; padding: 0.5in; } html { background:
+                           #999; cursor: default; } body { box-sizing:
+                           border-box !important; height: 15in !important;
+                           margin: 0 auto !important; overflow: hidden
+                           !important; padding: 0.8in !important; width: 8.5in
+                           !important; } body { background: #FFF !important;
+                           border-radius: 1px !important; box-shadow: 0 0 1in
+                           -0.25in rgba(0, 0, 0, 0.5) !important; } /* header */
+                           header { margin: 0 0 2.5em; } header:after { clear:
+                           both; content: ""; display: table; } header h1 {
+                           background: #b3161b; border-radius: 0.25em; color:
+                           #FFF; margin: 0; padding: 0.5em 0;
+                           letter-spacing: 0em;} header address { float: left;
+                           font-size: 75%; font-style: normal; line-height:
+                           1.25; margin: 0 1em 1em 0; } header address p {
+                           margin: 0 0 0.25em; } header span, header img {
+                           display: block; float: right; } header span { margin:
+                           0 0 1em 1em; max-height: 25%; max-width: 60%;
+                           position: relative; } header img { max-height: 100%;
+                           max-width: 100%; } header input { cursor: pointer;
+                           -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+                           height: 100%; left: 0; opacity: 0; position:
+                           absolute; top: 0; width: 100%; } /* article */
+                           article, article address, table.meta, table.inventory
+                           { margin: 0 0 3em; } article:after { clear: both;
+                           content: ""; display: table; } article h1 { clip:
+                           rect(0 0 0 0); position: absolute; } article address
+                           { float: left; font-size: 125%; font-weight: bold; }
+                           /* table meta &amp; balance */ table.meta,
+                           table.balance { float: left; width: 100%; float:
+                           left; width: 100%; font-size: 12px; margin: 0px; }
+                           table.meta:after, table.balance:after { clear: both;
+                           content: ""; display: table; } /* table meta */
+                           table.meta th { width: 40%; padding: 15px 0px 0px
+                           10px;} table.meta td { width: 60%; padding: 15px 0px
+                           0px 10px;} /* table items */ table.inventory { clear:
+                           both; width: 100%; } table.inventory th {
+                           font-weight: bold; text-align: center; }
+                           table.inventory td:nth-child(1) { width: 26%; }
+                           table.inventory td:nth-child(2) { width: 38%; }
+                           table.inventory td:nth-child(3) { text-align: right;
+                           width: 12%; } table.inventory td:nth-child(4) {
+                           text-align: right; width: 12%; } table.inventory
+                           td:nth-child(5) { text-align: right; width: 12%; } /*
+                           table balance */ table.balance th, table.balance td {
+                           width: 50%; } table.balance td { text-align: right; }
+                           /* aside */ aside h1 { border: none; border-width: 0
+                           0 1px; margin: 0 0 1em; } aside h1 { border-color:
+                           #999; border-bottom-style: solid; } /* javascript */
+                           .add, .cut { border-width: 1px; display: block;
+                           font-size: .8rem; padding: 0.25em 0.5em; float: left;
+                           text-align: center; width: 0.6em; } .add, .cut {
+                           background: #9AF; box-shadow: 0 1px 2px
+                           rgba(0,0,0,0.2); background-image:
+                           -moz-linear-gradient(#00ADEE 5%, #0078A5 100%);
+                           background-image: -webkit-linear-gradient(#00ADEE 5%,
+                           #0078A5 100%); border-radius: 0.5em; border-color:
+                           #0076A3; color: #FFF; cursor: pointer; font-weight:
+                           bold; text-shadow: 0 -1px 2px rgba(0,0,0,0.333); }
+                           .add { margin: -2.5em 0 0; } .add:hover { background:
+                           #00ADEE; } .cut { opacity: 0; position: absolute;
+                           top: 0; left: -1.5em; } .cut { -webkit-transition:
+                           opacity 100ms ease-in; } tr:hover .cut { opacity: 1;
+                           } @media print { * { -webkit-print-color-adjust:
+                           exact; } html { background: #FFF; padding: 0; } body
+                           { box-shadow: none; margin: 0; } span:empty {
+                           display: none; } .add, .cut { display: none; } }
+                           @page { margin: 0; } .headertd{ padding: 16px; }
+                           .headertd p{ font-size: 18px; text-align: center;
+                           font-weight: bold; text-transform: uppercase; }
+                           .footer{ position: relative; display: block; height:
+                           98px; } .footer aside{ position: absolute; bottom:
+                           2px; width: 100%; } .barcode-holder{
+                           text-align:center; margin: 0 0 2.2em;}
+                           article,aside,details,figcaption,figure,footer,header,hgroup,nav,section{display:block}audio[controls],canvas,video{display:inline-block}[hidden],audio{display:none}mark{background:#FF0;color:#000}</af:resource>
+   
+  </af:document>
+ </f:view>
+</jsp:root>

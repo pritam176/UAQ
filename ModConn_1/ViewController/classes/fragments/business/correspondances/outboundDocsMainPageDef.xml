@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="outboundDocsMainPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CorresModule.CorDocMasterOutboundDocsView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CorDocMasterOutboundDocsView1Iterator"/>
+    <searchRegion Binds="CorDocMasterOutboundDocsView1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="CorDocMasterOutboundDocsView1Query"/>
+    <searchRegion Criteria="CorDocMasterOutboundDocsViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="CorDocMasterOutboundDocsView1Iterator"
+                  id="CorDocMasterOutboundDocsViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="CorDocMasterOutboundDocsView1Iterator"
+          id="CorDocMasterOutboundDocsView1">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.up.CorDocMasterOutboundDocsView"
+                      Name="CorDocMasterOutboundDocsView10">
+        <AttrNames>
+          <Item Value="DocNo"/>
+          <Item Value="SectionName"/>
+          <Item Value="DocDate"/>
+          <Item Value="DocRef"/>
+          <Item Value="OSectionName"/>
+          <Item Value="SubjName"/>
+          <Item Value="OutDocDest"/>
+          <Item Value="RefId"/>
+          <Item Value="OutSubjDetail"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="CorDocMasterOutboundDocsView1Iterator"
+            id="CreateWithParams" RequiresUpdateModel="true"
+            Action="createWithParams">
+      <NamedData NDName="CreateUser" NDType="java.lang.String"
+                 NDValue="#{userInfo.userId}"/>
+    </action>
+    <attributeValues IterBinding="CorDocMasterOutboundDocsView1Iterator"
+                     id="DocRef">
+      <AttrNames>
+        <Item Value="DocRef"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="CorDocMasterOutboundDocsView1Iterator"
+            id="DeleteMaster"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+  </bindings>
+</pageDefinition>

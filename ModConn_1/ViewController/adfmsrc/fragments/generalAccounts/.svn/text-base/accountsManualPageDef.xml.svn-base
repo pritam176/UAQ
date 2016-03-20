@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="accountsManualPageDef"
+                Package="fragments.generalAccounts">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.GeneralAccountsModule.AccAccountsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccAccountsViewIterator"/>
+    <searchRegion Criteria="AccAccountsViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AccAccountsViewIterator"
+                  id="AccAccountsViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AccAccountsViewIterator" id="AccAccountsView">
+      <nodeDefinition DefName="com.mod.financial.model.generalAccounts.views.up.AccAccountsView"
+                      Name="AccAccountsView0">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="OrgId"/>
+          <Item Value="AccNo"/>
+          <Item Value="AccMain"/>
+          <Item Value="AccProg"/>
+          <Item Value="AccChapter"/>
+          <Item Value="AccGroup"/>
+          <Item Value="AccItem"/>
+          <Item Value="AccType"/>
+          <Item Value="AccCd"/>
+          <Item Value="AccName"/>
+          <Item Value="AccStatus"/>
+          <Item Value="AccountType"/>
+          <Item Value="AccNature"/>
+          <Item Value="CreateDate"/>
+          <Item Value="CreateUser"/>
+          <Item Value="Status"/>
+          <Item Value="LastChangeDate"/>
+          <Item Value="LastChangeUser"/>
+          <Item Value="AccountsGroups"/>
+          <Item Value="AccDesc"/>
+          <Item Value="ProgName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

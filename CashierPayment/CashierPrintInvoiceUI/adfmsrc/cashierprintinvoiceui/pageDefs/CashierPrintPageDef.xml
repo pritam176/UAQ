@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="CashierPrintPageDef"
+                Package="cashierprintinvoiceui.pageDefs">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <methodIterator Binds="getTaskDetails.result"
+                    DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                    RangeSize="25"
+                    BeanClass="CashierPrintInvoiceUI_PrintInvoice.getTaskDetails"
+                    id="getTaskDetailsIterator"/>
+    <accessorIterator MasterBinding="getTaskDetailsIterator" Binds="task"
+                      RangeSize="25"
+                      DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                      BeanClass="CashierPrintInvoiceUI_PrintInvoice.task"
+                      id="taskIterator"/>
+    <accessorIterator MasterBinding="taskIterator" Binds="payload"
+                      RangeSize="25"
+                      DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                      BeanClass="CashierPrintInvoiceUI_PrintInvoice.PrintInvoicePayloadType"
+                      id="payloadIterator"/>
+    <accessorIterator MasterBinding="payloadIterator" Binds="Input"
+                      RangeSize="25"
+                      DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                      BeanClass="CashierPrintInvoiceUI_PrintInvoice.InputPayload"
+                      id="InputIterator"/>
+    <accessorIterator MasterBinding="InputIterator" Binds="UserDetails"
+                      RangeSize="25"
+                      DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                      BeanClass="CashierPrintInvoiceUI_PrintInvoice.UserDetailsPayload"
+                      id="UserDetailsIterator"/>
+    <accessorIterator MasterBinding="InputIterator" Binds="PaymentDetails"
+                      RangeSize="25"
+                      DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                      BeanClass="CashierPrintInvoiceUI_PrintInvoice.PaymentDetailsPayload"
+                      id="PaymentDetailsIterator"/>
+    <accessorIterator MasterBinding="InputIterator" Binds="RequestDetails"
+                      RangeSize="25"
+                      DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                      BeanClass="CashierPrintInvoiceUI_PrintInvoice.RequestDetailsPayLoad"
+                      id="RequestDetailsIterator"/>
+    <accessorIterator MasterBinding="InputIterator" Binds="POSDetails"
+                      RangeSize="25"
+                      DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                      BeanClass="CashierPrintInvoiceUI_PrintInvoice.POSDetailsPayLoad"
+                      id="POSDetailsIterator"/>
+  </executables>
+  <bindings>
+    <methodAction id="getTaskDetails" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="getTaskDetails"
+                  IsViewObjectMethod="false"
+                  DataControl="CashierPrintInvoiceUI_PrintInvoice"
+                  InstanceName="CashierPrintInvoiceUI_PrintInvoice"
+                  ReturnName="data.CashierPrintInvoiceUI_PrintInvoice.methodResults.getTaskDetails_CashierPrintInvoiceUI_PrintInvoice_getTaskDetails_result">
+      <NamedData NDName="bpmWorklistContext" NDType="java.lang.String"/>
+      <NamedData NDName="bpmWorklistTaskId" NDType="java.lang.String"/>
+      <NamedData NDName="bpmWorklistTaskVersion" NDType="java.lang.String"/>
+    </methodAction>
+    <attributeValues IterBinding="UserDetailsIterator" id="FirstName">
+      <AttrNames>
+        <Item Value="FirstName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="UserDetailsIterator" id="LastName">
+      <AttrNames>
+        <Item Value="LastName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="DepartmentName">
+      <AttrNames>
+        <Item Value="DepartmentName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator"
+                     id="ApplicationAmount">
+      <AttrNames>
+        <Item Value="ApplicationAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="GeneralAmount">
+      <AttrNames>
+        <Item Value="GeneralAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="ServiceAmount">
+      <AttrNames>
+        <Item Value="ServiceAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="FeeTypeCode">
+      <AttrNames>
+        <Item Value="FeeTypeCode"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="RequestNumber">
+      <AttrNames>
+        <Item Value="RequestNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="PaymentMethod">
+      <AttrNames>
+        <Item Value="PaymentMethod"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="EcrIdNo">
+      <AttrNames>
+        <Item Value="EcrIdNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="TotalAmount">
+      <AttrNames>
+        <Item Value="TotalAmount"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="ReceiptNumber">
+      <AttrNames>
+        <Item Value="ReceiptNumber"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="RequestDetailsIterator" id="ServiceId">
+      <AttrNames>
+        <Item Value="ServiceId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="PaymentDetailsIterator" id="Imagelogopath">
+      <AttrNames>
+        <Item Value="Imagelogopath"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="POSDetailsIterator" id="PaymentId">
+      <AttrNames>
+        <Item Value="PaymentId"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

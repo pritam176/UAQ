@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="currencies-Task">
+    <default-activity id="__1">currencyFrag</default-activity>
+    <managed-bean id="__3">
+      <managed-bean-name id="__2">currencyBean</managed-bean-name>
+      <managed-bean-class id="__5">com.mod.financial.view.managed.administration.CurrencyBean</managed-bean-class>
+      <managed-bean-scope id="__4">request</managed-bean-scope>
+    </managed-bean>
+    <view id="currencyFrag">
+      <page id="__6">/fragments/administration/currency.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

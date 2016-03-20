@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">admLeaveBalanceRuleMain</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admLeaveBalanceRuleMain.jsff</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admLeaveBalanceRuleMain&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">214.39648</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">177.04688</property>
+   </View>
+   <View
+      id="View3">
+      <property
+         name="activityId">admLeaveBalanceRuleAddEdit</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admLeaveBalanceRuleAddEdit.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admLeaveBalanceRuleAddEdit&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">210.69531</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">477.05664</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="View2"
+      to="View3">
+      <property
+         name="fromOutcome">addEdit</property>
+      <property
+         name="sdm:polyPoints">R46,218.04688,210.5459,435.99722,206.84473,L46</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase5"
+      from="View3"
+      to="View2">
+      <property
+         name="fromOutcome">back</property>
+      <property
+         name="sdm:polyPoints">L54,436.05664,213.84473,218.1063,217.5459,R54</property>
+   </ControlFlowCase>
+</SDM>

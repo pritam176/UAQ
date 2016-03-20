@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="myFavoritesPageDef"
+                Package="fragments.common">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator id="AllMenusViewIterator"
+              Binds="Root.SecurityModule.AllMenusROView"
+              DataControl="ModModuleDataControl" RangeSize="-1"/>
+    <iterator id="AdmUsersFavoritesViewIterator"
+              Binds="Root.CommonModule.AdmUsersFavoritesView"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              ChangeEventPolicy="ppr"/>
+  </executables>
+  <bindings>
+    <action id="Commit" DataControl="ModModuleDataControl"
+            RequiresUpdateModel="true" Action="commitTransaction"/>
+    <action IterBinding="AdmUsersFavoritesViewIterator" id="ExecuteWithParams"
+            InstanceName="ModModuleDataControl.Root.CommonModule.AdmUsersFavoritesView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="bindUserId" NDValue="#{userInfo.userId}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </action>
+    <tree IterBinding="AdmUsersFavoritesViewIterator"
+          id="AdmUsersFavoritesView">
+      <nodeDefinition DefName="com.mod.financial.model.commonbc.views.up.AdmUsersFavoritesView"
+                      Name="AdmUsersFavoritesView0">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="ActionString"/>
+          <Item Value="ArMenuTitle"/>
+          <Item Value="EnMenuTitle"/>
+          <Item Value="FormCommand"/>
+          <Item Value="FormFlag"/>
+          <Item Value="MenuId"/>
+          <Item Value="TitleKey"/>
+          <Item Value="UserId"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <methodAction id="refreshMenuItemViews" RequiresUpdateModel="true"
+                  Action="invokeMethod" MethodName="refreshMenuItemViews"
+                  IsViewObjectMethod="false" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.SecurityModule">
+      <NamedData NDName="userId" NDValue="#{userInfo.userId}"
+                 NDType="oracle.jbo.domain.Number"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

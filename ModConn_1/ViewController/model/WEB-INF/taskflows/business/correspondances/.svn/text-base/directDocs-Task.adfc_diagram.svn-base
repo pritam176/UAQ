@@ -1,0 +1,63 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">addEditDirectDocs</property>
+      <property
+         name="page">/fragments/business/correspondances/addEditDirectDoc.jsff</property>
+      <property
+         name="start">false</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>addEditDirectDocs&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">-259.04297</property>
+      <property
+         name="x">508.5</property>
+      <property
+         name="pageFragment">true</property>
+   </View>
+   <View
+      id="View3">
+      <property
+         name="activityId">directDocsList</property>
+      <property
+         name="page">/fragments/business/correspondances/directDocsList.jsff</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>directDocsList&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">189.44824</property>
+      <property
+         name="x">140.67871</property>
+      <property
+         name="pageFragment">true</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="View3"
+      to="View2">
+      <property
+         name="fromOutcome">addDirectDoc</property>
+      <property
+         name="sdm:polyPoints">T44,137.17871,132.02934,505.0,-205.39355,B44</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase5"
+      from="View2"
+      to="View3">
+      <property
+         name="fromOutcome">back</property>
+      <property
+         name="sdm:polyPoints">B56,512.0,-202.33463,144.17871,135.09766,T56</property>
+   </ControlFlowCase>
+</SDM>

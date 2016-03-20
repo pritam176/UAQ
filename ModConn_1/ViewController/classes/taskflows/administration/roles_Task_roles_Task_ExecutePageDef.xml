@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93"
+                id="roles_Task_roles_Task_ExecutePageDef"
+                Package="taskflows.administration" SkipValidation="true">
+  <parameters/>
+  <executables>
+    <iterator Binds="Root.SecurityModule.AllMenusByNodeTypeROView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AllMenusByNodeTypeROViewIterator" Refresh="ifNeeded"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AllMenusByNodeTypeROViewIterator"
+            id="ExecuteWithParams"
+            InstanceName="ModModuleDataControl.Root.SecurityModule.AllMenusByNodeTypeROView"
+            DataControl="ModModuleDataControl" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="bindUserId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="bindNodeType" NDType="java.lang.String"/>
+    </action>
+  </bindings>
+</pageDefinition>

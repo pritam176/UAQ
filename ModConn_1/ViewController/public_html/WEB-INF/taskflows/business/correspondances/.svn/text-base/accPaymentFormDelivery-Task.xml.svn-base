@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="accPaymentFormDelivery-Task">
+    <default-activity id="__1">accPaymentFormDelivery</default-activity>
+    <managed-bean id="__5">
+      <managed-bean-name id="__4">accPaymentFormDelBean</managed-bean-name>
+      <managed-bean-class id="__3">com.mod.financial.view.managed.business.correspondances.AccPaymentForm</managed-bean-class>
+      <managed-bean-scope id="__2">view</managed-bean-scope>
+    </managed-bean>
+    <view id="accPaymentFormDelivery">
+      <page>/fragments/business/correspondances/accPaymentFormDelivery.jsff</page>
+    </view>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

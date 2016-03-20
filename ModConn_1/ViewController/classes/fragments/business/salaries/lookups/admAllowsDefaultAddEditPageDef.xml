@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admAllowsDefaultAddEditPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmJoinsView1"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              id="AdmJoinsView1Iterator"/>
+    <iterator Binds="Root.SalariesModule.AdmAllowDefaultView2"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmAllowDefaultView2Iterator"/>
+    <searchRegion Binds="AdmAllowDefaultView2Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AdmAllowDefaultView2Query"/>
+  </executables>
+  <bindings>
+    <navigationlist IterBinding="AdmJoinsView1Iterator"
+                    ListOperMode="navigation" ListIter="AdmJoinsView1Iterator"
+                    id="AdmJoinsView1" DTSupportsMRU="false">
+      <AttrNames>
+        <Item Value="JoinId"/>
+        <Item Value="Name"/>
+      </AttrNames>
+    </navigationlist>
+    <action IterBinding="AdmAllowDefaultView2Iterator" id="CreateWithParams"
+            RequiresUpdateModel="true" Action="createWithParams">
+            <NamedData NDName="CreateUser" NDType="java.lang.String" NDValue="#{userInfo.userName}"/>
+            </action>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <action id="Rollback" RequiresUpdateModel="false"
+            Action="rollbackTransaction" DataControl="ModModuleDataControl"/>
+    <action IterBinding="AdmAllowDefaultView2Iterator" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <tree IterBinding="AdmAllowDefaultView2Iterator" id="AdmAllowDefaultView21">
+      <nodeDefinition DefName="com.mod.financial.model.salaries.views.up.AdmAllowDefaultView"
+                      Name="AdmAllowDefaultView210">
+        <AttrNames>
+          <Item Value="AllowId"/>
+          <Item Value="Name"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AdmAllowDefaultView2Iterator" id="Name">
+      <AttrNames>
+        <Item Value="Name"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<adfc-config xmlns="http://xmlns.oracle.com/adf/controller" version="1.2">
+  <task-flow-definition id="accountsManual-Task">
+    <default-activity id="__1">accountsManual</default-activity>
+    <managed-bean id="__25">
+      <managed-bean-name id="__27">accountManualBean</managed-bean-name>
+      <managed-bean-class id="__28">com.mod.financial.view.managed.accounts.AccountManual</managed-bean-class>
+      <managed-bean-scope id="__26">request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean id="__32">
+      <managed-bean-name id="__31">accountManualUpdatableBean</managed-bean-name>
+      <managed-bean-class id="__30">com.mod.financial.view.managed.accounts.AccountManualUpdatable</managed-bean-class>
+      <managed-bean-scope id="__29">request</managed-bean-scope>
+    </managed-bean>
+    <view id="accountsManual">
+      <page id="__2">/fragments/generalAccounts/accountsManual.jsff</page>
+    </view>
+    <view id="AccountsManualUpdatable">
+      <page id="__24">/fragments/generalAccounts/AccountsManualUpdatable.jsff</page>
+    </view>
+    <method-call id="CreateInsertAccountsManual">
+      <method id="__18">#{bindings.CreateInsert.execute}</method>
+      <outcome id="__3">
+        <fixed-outcome id="__17">CreateInsert</fixed-outcome>
+      </outcome>
+    </method-call>
+    <control-flow-rule id="__4">
+      <from-activity-id id="__5">accountsManual</from-activity-id>
+      <control-flow-case id="__7">
+        <from-outcome id="__8">new</from-outcome>
+        <to-activity-id id="__6">CreateInsertAccountsManual</to-activity-id>
+      </control-flow-case>
+      <control-flow-case id="__15">
+        <from-outcome id="__16">update</from-outcome>
+        <to-activity-id id="__14">AccountsManualUpdatable</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__9">
+      <from-activity-id id="__10">CreateInsertAccountsManual</from-activity-id>
+      <control-flow-case id="__12">
+        <from-outcome id="__11">CreateInsert</from-outcome>
+        <to-activity-id id="__13">AccountsManualUpdatable</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <control-flow-rule id="__19">
+      <from-activity-id id="__20">AccountsManualUpdatable</from-activity-id>
+      <control-flow-case id="__22">
+        <from-outcome id="__23">back</from-outcome>
+        <to-activity-id id="__21">accountsManual</to-activity-id>
+      </control-flow-case>
+    </control-flow-rule>
+    <use-page-fragments/>
+  </task-flow-definition>
+</adfc-config>

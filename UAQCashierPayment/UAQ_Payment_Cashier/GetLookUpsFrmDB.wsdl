@@ -1,0 +1,25 @@
+<?binding.jca GetLookUpsFrmDB_db.jca?>
+<wsdl:definitions name="GetLookUpsFrmDB" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/GetLookUpsFrmDB" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/GetLookUpsFrmDB" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/GetLookUpsFrmDB" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="GetLookUpsFrmDB_plt">
+        <plt:role name="GetLookUpsFrmDB_role">
+            <plt:portType name="tns:GetLookUpsFrmDB_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/GetLookUpsFrmDB" schemaLocation="xsd/GetLookUpsFrmDB.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="GetLookUpsFrmDBInput_msg">
+        <wsdl:part name="GetLookUpsFrmDBInput_msg" element="db:GetLookUpsFrmDBInput"/>
+    </wsdl:message>
+    <wsdl:message name="GetLookUpsFrmDBOutputCollection_msg">
+        <wsdl:part name="GetLookUpsFrmDBOutputCollection" element="db:GetLookUpsFrmDBOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="GetLookUpsFrmDB_ptt">
+        <wsdl:operation name="GetLookUpsFrmDB">
+            <wsdl:input message="tns:GetLookUpsFrmDBInput_msg"/>
+            <wsdl:output message="tns:GetLookUpsFrmDBOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

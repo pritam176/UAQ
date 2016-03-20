@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="windows-1252" ?>
+<!DOCTYPE AppModule SYSTEM "jbo_03_01.dtd">
+<!---->
+<AppModule xmlns="http://xmlns.oracle.com/bc4j" Name="UaqAppModule"
+           Version="11.1.1.64.93" InheritPersonalization="true"
+           ClearCacheOnRollback="true"
+           ComponentClass="ae.payment.model.UaqAppModuleImpl"
+           DefClass="ae.payment.model.UaqAppModuleDefImpl"
+           ComponentInterface="ae.payment.model.common.UaqAppModule"
+           ClientProxyName="ae.payment.model.client.UaqAppModuleClient">
+   <ViewUsage Name="TransactionInProgressAnotherPOS"
+              ViewObjectName="ae.payment.model.views.BrokenTransactionsView">
+      <ViewCriteriaUsage Name="TransactionInProgressAnotherPOSViewCriteria"
+                         FullName="ae.payment.model.views.BrokenTransactionsView.TransactionInProgressAnotherPOSViewCriteria"/>
+   </ViewUsage>
+   <ViewUsage Name="PosPaymentView1"
+              ViewObjectName="ae.payment.model.views.PosPaymentView"/>
+   <ViewUsage Name="EServicesMatrixView1"
+              ViewObjectName="ae.payment.model.views.EServicesMatrixView"/>
+   <ViewUsage Name="PaymentServiceCodeView1"
+              ViewObjectName="ae.payment.model.views.PaymentServiceCodeView"/>
+   <ViewUsage Name="PosPaymentTransactionView1"
+              ViewObjectName="ae.payment.model.views.PosPaymentTransactionView"/>
+   <DesignTime>
+      <Attr Name="_deployType" Value="0"/>
+      <Attr Name="_isCodegen" Value="true"/>
+      <Attr Name="_isDefCodegen" Value="true"/>
+   </DesignTime>
+   <Properties>
+      <SchemaBasedProperties>
+         <LABEL ResId="ae.payment.model.UaqAppModule_LABEL"/>
+      </SchemaBasedProperties>
+   </Properties>
+   <ViewUsage Name="CashierPaymentDetailsView1"
+              ViewObjectName="ae.payment.model.views.CashierPaymentDetailsView"/>
+   
+  <ViewUsage
+    Name="BrokenTransactionsInParticularPOS"
+    ViewObjectName="ae.payment.model.views.BrokenTransactionsView">
+    <ViewCriteriaUsage
+      Name="POSBrokenTransactionsViewCriteria"
+      FullName="ae.payment.model.views.BrokenTransactionsView.POSBrokenTransactionsViewCriteria"/>
+  </ViewUsage>
+    <ViewUsage
+    Name="AccountDetailsView1"
+    ViewObjectName="ae.payment.model.views.AccountDetailsView">
+    <ViewCriteriaUsage
+      Name="AccountDetailsViewCriteria"
+      FullName="ae.payment.model.views.AccountDetailsView.AccountDetailsViewCriteria"/>
+  </ViewUsage>
+  <ResourceBundle>
+      <PropertiesBundle PropertiesFile="ae.payment.model.ModelBundle"/>
+   </ResourceBundle>
+   <ClientInterface>
+      <Method Name="getSequenceNumber">
+         <Return Type="java.lang.Number"/>
+         <Parameter Name="sequenceName" Type="java.lang.String"/>
+      </Method>
+      <Method Name="getBrokenTransactionOnParticularPOS">
+         <Return Type="ae.payment.model.pojo.PaymentRequestECR"/>
+         <Parameter Name="merchantId" Type="java.lang.String"/>
+         <Parameter Name="terminalNo" Type="java.lang.String"/>
+      </Method>
+      <Method Name="getSequenceByDepartment">
+         <Return Type="java.lang.String"/>
+         <Parameter Name="sequenceName" Type="java.lang.String"/>
+      </Method>
+      <Method Name="getPaymentInProgressOnAnotherPOS">
+         <Return Type="ae.payment.model.pojo.PaymentRequestECR"/>
+         <Parameter Name="paymentId" Type="java.lang.String"/>
+      </Method>
+   </ClientInterface>
+</AppModule>

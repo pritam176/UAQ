@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/UAQ/!svn/ver/6709/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src
+END
+jdbc.properties
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/UAQ/!svn/ver/5508/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/jdbc.properties
+END
+Application.properties
+K 25
+svn:wc:ra_dav:version-url
+V 117
+/svn/UAQ/!svn/ver/6709/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/Application.properties
+END
+log4j.xml
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/UAQ/!svn/ver/6014/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/src/log4j.xml
+END

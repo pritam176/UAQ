@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="accPaymentFormDeliveryPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables">
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.AccPaymentFormDeliveryViewRO1.variablesMap.pOrgId"
+                     Name="ExecuteWithParams_pOrgId" IsQueriable="false"/>
+      <variableUsage DataControl="ModModuleDataControl"
+                     Binds="Root.CorresModule.AccPaymentFormDeliveryViewRO1.variablesMap.pCheckStatus"
+                     Name="ExecuteWithParams_pCheckStatus" IsQueriable="false"/>
+    </variableIterator>
+    <iterator Binds="Root.CorresModule.AccPaymentFormDeliveryViewRO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccPaymentFormDeliveryViewRO1Iterator"/>
+    <searchRegion Binds="AccPaymentFormDeliveryViewRO1Iterator" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AccPaymentFormDeliveryViewRO1Query"/>
+    <iterator Binds="Root.CommonModule.CommonLovVO1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="CommonLovVO1Iterator"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AccPaymentFormDeliveryViewRO1Iterator"
+          id="AccPaymentFormDeliveryViewRO1">
+      <nodeDefinition DefName="com.mod.financial.model.correspondances.views.ro.AccPaymentFormDeliveryViewRO"
+                      Name="AccPaymentFormDeliveryViewRO10">
+        <AttrNames>
+          <Item Value="DirectUserName"/>
+          <Item Value="CheckDate"/>
+          <Item Value="SheetId"/>
+          <Item Value="SheetStatus"/>
+          <Item Value="DueToName1"/>
+          <Item Value="DlevUserName"/>
+          <Item Value="DlevDate"/>
+          <Item Value="CancelUserName"/>
+          <Item Value="CancelDlevDate"/>
+          <Item Value="DlevUser"/>
+          <Item Value="CancelDlevUser"/>
+          <Item Value="DirectUser"/>
+          <Item Value="CancelChk" Binds="CancelChk"/>
+          <Item Value="DlevCheck" Binds="DlevCheck"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <action IterBinding="AccPaymentFormDeliveryViewRO1Iterator"
+            id="ExecuteWithParams" RequiresUpdateModel="true"
+            Action="executeWithParams">
+      <NamedData NDName="pOrgId" NDValue="1" NDType="java.lang.String"/>
+      <NamedData NDName="pCheckStatus"
+                 NDValue="${bindings.ExecuteWithParams_pCheckStatus}"
+                 NDType="java.lang.String"/>
+    </action>
+    <attributeValues IterBinding="variables" id="pOrgId">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pOrgId"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="variables" id="pCheckStatus">
+      <AttrNames>
+        <Item Value="ExecuteWithParams_pCheckStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <list IterBinding="CommonLovVO1Iterator" StaticList="false"
+          Uses="LOV_CheckStatus" id="CheckStatus" DTSupportsMRU="true"/>
+    <attributeValues IterBinding="CommonLovVO1Iterator" id="CheckStatus1">
+      <AttrNames>
+        <Item Value="CheckStatus"/>
+      </AttrNames>
+    </attributeValues>
+    <button IterBinding="AccPaymentFormDeliveryViewRO1Iterator" id="CancelChk"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="CancelChk"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="2"/>
+        <Item Value="1"/>
+      </ValueList>
+    </button>
+    <button IterBinding="AccPaymentFormDeliveryViewRO1Iterator" id="DlevCheck"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="DlevCheck"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="2"/>
+        <Item Value="1"/>
+      </ValueList>
+    </button>
+    <methodAction id="callExecuteAccPayFormDelFunction"
+                  RequiresUpdateModel="true" Action="invokeMethod"
+                  MethodName="callExecuteAccPayFormDelFunction"
+                  IsViewObjectMethod="false" DataControl="ModModuleDataControl"
+                  InstanceName="ModModuleDataControl.dataProvider.Root.CorresModule"
+                  ReturnName="data.ModModuleDataControl.methodResults.callExecuteAccPayFormDelFunction_ModModuleDataControl_dataProvider_Root_CorresModule_callExecuteAccPayFormDelFunction_result">
+      <NamedData NDName="checkStatus" NDType="java.lang.String"/>
+      <NamedData NDName="delvCheck" NDType="java.lang.String"/>
+      <NamedData NDName="cancelChk" NDType="java.lang.String"/>
+      <NamedData NDName="fiscalYear1" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="fiscalYear2" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="sheetId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="checkAmount" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="accCheckId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="orgId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="userId" NDType="oracle.jbo.domain.Number"/>
+      <NamedData NDName="lang" NDType="java.lang.String"/>
+    </methodAction>
+  </bindings>
+</pageDefinition>

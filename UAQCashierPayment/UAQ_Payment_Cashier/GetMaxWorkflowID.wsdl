@@ -1,0 +1,25 @@
+<?binding.jca GetMaxWorkflowID_db.jca?>
+<wsdl:definitions name="GetMaxWorkflowID" targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/GetMaxWorkflowID" xmlns:db="http://xmlns.oracle.com/pcbpel/adapter/db/GetMaxWorkflowID" xmlns:tns="http://xmlns.oracle.com/pcbpel/adapter/db/UAQPaymentProcesses/UAQ_Payment_Cashier/GetMaxWorkflowID" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:plt="http://schemas.xmlsoap.org/ws/2003/05/partner-link/">
+    <plt:partnerLinkType name="GetMaxWorkflowID_plt">
+        <plt:role name="GetMaxWorkflowID_role">
+            <plt:portType name="tns:GetMaxWorkflowID_ptt"/>
+        </plt:role>
+    </plt:partnerLinkType>
+    <wsdl:types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema">
+            <import namespace="http://xmlns.oracle.com/pcbpel/adapter/db/GetMaxWorkflowID" schemaLocation="xsd/GetMaxWorkflowID.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="GetMaxWorkflowIDInput_msg">
+        <wsdl:part name="GetMaxWorkflowIDInput_msg" element="db:GetMaxWorkflowIDInput"/>
+    </wsdl:message>
+    <wsdl:message name="GetMaxWorkflowIDOutputCollection_msg">
+        <wsdl:part name="GetMaxWorkflowIDOutputCollection" element="db:GetMaxWorkflowIDOutputCollection"/>
+    </wsdl:message>
+    <wsdl:portType name="GetMaxWorkflowID_ptt">
+        <wsdl:operation name="GetMaxWorkflowID">
+            <wsdl:input message="tns:GetMaxWorkflowIDInput_msg"/>
+            <wsdl:output message="tns:GetMaxWorkflowIDOutputCollection_msg"/>
+        </wsdl:operation>
+    </wsdl:portType>
+</wsdl:definitions>

@@ -1,0 +1,243 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:panelSplitter id="pt_headerPs" orientation="horizontal" firstBorder="skin"
+                    secondBorder="all" styleClass="AFBrandingSplitter"
+                    splitterPosition="430"
+                    collapsed="true" positionedFromEnd="true">
+    <f:facet name="first">
+      <af:panelGroupLayout layout="vertical" id="pgl1">
+        <af:panelBox id="pb1" text="#{rs.common_label_myTasks}"
+                     inlineStyle="height:600px !important;">
+          <af:spacer height="10px" id="s6"/>
+          <af:table value="#{bindings.UserInboxViewByUserId1.collectionModel}"
+                    var="row"
+                    rows="#{bindings.UserInboxViewByUserId1.rangeSize}"
+                    emptyText="#{rs.common_label_table_no_data}"
+                    fetchSize="#{bindings.UserInboxViewByUserId1.rangeSize}"
+                    rowBandingInterval="0"
+                    filterModel="#{bindings.UserInboxViewByUserId1Query.queryDescriptor}"
+                    queryListener="#{bindings.UserInboxViewByUserId1Query.processQuery}"
+                    filterVisible="true" varStatus="vs"
+                    selectedRowKeys="#{bindings.UserInboxViewByUserId1.collectionModel.selectedRow}"
+                    selectionListener="#{bindings.UserInboxViewByUserId1.collectionModel.makeCurrent}"
+                    rowSelection="single"  id="t1" columnStretching="column:c10"
+                    partialTriggers=":::rcvCd :::createCd :::cb1 :::cb2 ::cb1"
+                    binding="#{viewScope.inboxBean.docsTable}"
+                    styleClass="AFStretchWidth"
+                    inlineStyle="height:495px;">
+            <af:column sortable="false" headerText="#{rs.common_label_serial}"
+                       id="c17" width="38" align="center">
+              <af:outputText value="#{vs.index + 1}" id="ot8"/>
+            </af:column>
+            <af:column width="20" id="c9">
+              <af:commandImageLink id="cb3"
+                                   icon="#{row.bindings.LineStatus.inputValue == '1' ? '/images/openEnv.png' : '/images/closedEnv.png'}"
+                                   inlineStyle="width:15px; height:15px;"
+                                   windowHeight="15" windowWidth="15"/>
+            </af:column>
+            <af:column sortProperty="#{bindings.UserInboxViewByUserId1.hints.SectionName.name}"
+                       filterable="true" sortable="true"
+                       headerText="#{bindings.UserInboxViewByUserId1.hints.SectionName.label}"
+                       id="c14" width="250" noWrap="false">
+              <af:outputText value="#{row.bindings.SectionName.inputValue}"
+                            shortDesc="#{bindings.UserInboxViewByUserId1.hints.SectionName.tooltip}"
+                            id="it7">
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.UserInboxViewByUserId1.hints.DocNo.name}"
+                       filterable="true" sortable="true"
+                       headerText="#{bindings.UserInboxViewByUserId1.hints.DocNo.label}"
+                       id="c11" align="center" width="100">
+              <af:outputText value="#{row.bindings.DocNo.inputValue}"
+                            shortDesc="#{bindings.UserInboxViewByUserId1.hints.DocNo.tooltip}"
+                            id="it4">
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.UserInboxViewByUserId1.hints.DocNo.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.UserInboxViewByUserId1.hints.DocRef.name}"
+                       filterable="true" sortable="true"
+                       headerText="#{bindings.UserInboxViewByUserId1.hints.DocRef.label}"
+                       id="c16" align="center">
+              <af:outputText value="#{row.bindings.DocRef.inputValue}"
+                            shortDesc="#{bindings.UserInboxViewByUserId1.hints.DocRef.tooltip}"
+                            id="it1">
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.UserInboxViewByUserId1.hints.RcvDate.name}"
+                       filterable="true" sortable="true"
+                       headerText="#{bindings.UserInboxViewByUserId1.hints.RcvDate.label}"
+                       id="c15" noWrap="false" width="75" align="center">
+              <f:facet name="filter">
+                <af:inputDate value="#{vs.filterCriteria.RcvDate}" id="id4"/>
+              </f:facet>
+              <af:outputText value="#{row.bindings.RcvDate.inputValue}"
+                            shortDesc="#{bindings.UserInboxViewByUserId1.hints.RcvDate.tooltip}"
+                            id="id3">
+                <af:convertDateTime pattern="#{bindings.UserInboxViewByUserId1.hints.RcvDate.format}"/>
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.UserInboxViewByUserId1.hints.SubjName.name}"
+                       filterable="true" sortable="true"
+                       headerText="#{bindings.UserInboxViewByUserId1.hints.SubjName.label}"
+                       id="c10" noWrap="false">
+              <af:outputText value="#{row.bindings.SubjName.inputValue}"
+                            shortDesc="#{bindings.UserInboxViewByUserId1.hints.SubjName.tooltip}"
+                            id="it6">
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.UserInboxViewByUserId1.hints.DocDetail.name}"
+                       filterable="true" sortable="true"
+                       headerText="#{bindings.UserInboxViewByUserId1.hints.DocDetail.label}"
+                       id="c12" noWrap="false" align="center">
+              <af:outputText value="#{row.bindings.DocDetail.inputValue}"
+                            shortDesc="#{bindings.UserInboxViewByUserId1.hints.DocDetail.tooltip}"
+                            id="it5">
+              </af:outputText>
+            </af:column>
+            <af:column sortProperty="#{bindings.UserInboxViewByUserId1.hints.LineStatus.name}"
+                       filterable="true" sortable="true"
+                       headerText="#{bindings.UserInboxViewByUserId1.hints.LineStatus.label}"
+                       id="c13" noWrap="false" width="90" align="center">
+              <af:selectOneChoice value="#{row.bindings.LineStatus.inputValue}"
+                                  label="#{row.bindings.LineStatus.label}"
+                                  required="#{bindings.UserInboxViewByUserId1.hints.LineStatus.mandatory}"
+                                  shortDesc="#{bindings.UserInboxViewByUserId1.hints.LineStatus.tooltip}"
+                                  id="soc3" disabled="true">
+                <f:selectItems value="#{row.bindings.LineStatus.items}"
+                               id="si6"/>
+              </af:selectOneChoice>
+            </af:column>
+          </af:table>
+        </af:panelBox>
+      </af:panelGroupLayout>
+    </f:facet>
+    <f:facet name="second">
+      <af:panelGroupLayout layout="vertical" id="pgl2" rendered="true">
+      <af:panelBox id="pb2" text="#{rs.common_label_search}" type="default"
+                   inlineStyle="height:541px !important;">
+        <af:spacer height="15px" id="s5"/>
+        <af:panelGroupLayout layout="horizontal" id="pgl3">
+          <af:panelLabelAndMessage label="#{bindings.pCreateDate.hints.label}"
+                                   id="plam1">
+            <af:chooseDate id="createCd"
+                           clientComponent="true"
+                                   inlineStyle="background-color: #C6DCEF ;"/>
+          </af:panelLabelAndMessage>
+          <af:spacer width="20px" id="s2"/>
+          <af:panelLabelAndMessage label="#{bindings.pReceiveDate.hints.label}"
+                                   id="plam2" rendered="false">
+            <af:chooseDate id="rcvCd"
+                           clientComponent="true"/>
+          </af:panelLabelAndMessage>
+        </af:panelGroupLayout>
+        <af:spacer height="10px" id="s4"/>
+        <af:panelFormLayout id="pfl1" rows="2">
+          <af:inputText value="#{bindings.pDocNo.inputValue}"
+                        label="#{bindings.pDocNo.hints.label}"
+                        required="#{bindings.pDocNo.hints.mandatory}"
+                        columns="#{bindings.pDocNo.hints.displayWidth}"
+                        maximumLength="#{bindings.pDocNo.hints.precision}"
+                        shortDesc="#{bindings.pDocNo.hints.tooltip}" id="it2"
+                        contentStyle="width:110px !important;">
+            <f:validator binding="#{bindings.pDocNo.validator}"/>
+          </af:inputText>
+          <af:inputListOfValues id="secionIdLovId"
+                                popupTitle="#{rs.common_label_search_select} #{bindings.pSectionId.hints.label}"
+                                value="#{bindings.pSectionId.inputValue}"
+                                label="#{bindings.pSectionId.hints.label}"
+                                model="#{bindings.SectionIdLov.listOfValuesModel}"
+                                required="#{bindings.SectionIdLov.hints.mandatory}"
+                                shortDesc="#{bindings.SectionIdLov.hints.tooltip}"
+                                autoSubmit="true"
+                                contentStyle="width:110px !important;">
+            <f:validator binding="#{bindings.SectionIdLov.validator}"/>
+          </af:inputListOfValues>
+          <af:inputListOfValues id="subjectIdLovId"
+                                popupTitle="#{rs.common_label_search_select} #{bindings.pSubjId.hints.label}"
+                                value="#{bindings.pSubjId.inputValue}"
+                                label="#{bindings.pSubjId.hints.label}"
+                                model="#{bindings.SubjIdLov.listOfValuesModel}"
+                                required="#{bindings.SubjIdLov.hints.mandatory}"
+                                shortDesc="#{bindings.SubjIdLov.hints.tooltip}"
+                                autoSubmit="true"
+                                contentStyle="width:110px !important;">
+            <f:validator binding="#{bindings.SubjIdLov.validator}"/>
+          </af:inputListOfValues>
+          <af:inputText value="#{bindings.pDocPri.inputValue}"
+                        label="#{bindings.pDocPri.hints.label}"
+                        required="#{bindings.pDocPri.hints.mandatory}"
+                        columns="#{bindings.pDocPri.hints.displayWidth}"
+                        maximumLength="#{bindings.pDocPri.hints.precision}"
+                        shortDesc="#{bindings.pDocPri.hints.tooltip}" id="it3"
+                        rendered="false" contentStyle="width:110px !important;">
+            <f:validator binding="#{bindings.pDocPri.validator}"/>
+          </af:inputText>
+          <af:selectOneChoice value="#{bindings.pLineStatus.inputValue}"
+                              label="#{bindings.LineStatus.label}"
+                              required="#{bindings.LineStatus.hints.mandatory}"
+                              shortDesc="#{bindings.LineStatus.hints.tooltip}"
+                              id="soc1" autoSubmit="true"
+                              unselectedLabel="#{rs.SELECT_FROM_LIST}"
+                              contentStyle="width:110px !important;">
+            <f:selectItem itemLabel="#{rs.NEW}" itemValue="1" id="si1"/>
+            <f:selectItem itemLabel="#{rs.DISTRIBUTED}" itemValue="2" id="si3"/>
+            <f:selectItem itemLabel="#{rs.NOT_APPLICABLE}" itemValue="3"
+                          id="si4"/>
+            <f:selectItem itemLabel="#{rs.EXECUTED}" itemValue="4" id="si5"/>
+          </af:selectOneChoice>
+        </af:panelFormLayout>
+        <af:spacer height="5px" id="s3"/>
+        <af:panelGroupLayout id="pgl0" layout="horizontal" halign="center">
+          <af:commandButton actionListener="#{bindings.ExecuteWithParams.execute}"
+                            text="#{rs.common_label_search}" id="cb1">
+            <f:setPropertyActionListener target="#{bindings.P_USER_ID.inputValue}"
+                                         value="#{userInfo.userId}"/>
+          </af:commandButton>
+          <af:spacer width="5px" id="s1"/>
+          <af:commandButton text="#{rs.common_label_reassign}" id="cb2">
+            <f:setPropertyActionListener target="#{bindings.P_USER_ID.inputValue}"
+                                         value=""/>
+            <f:setPropertyActionListener target="#{bindings.pCreateDate.inputValue}"
+                                         value=""/>
+            <f:setPropertyActionListener target="#{bindings.pDocNo.inputValue}"
+                                         value=""/>
+            <f:setPropertyActionListener target="#{bindings.pDocPri.inputValue}"
+                                         value=""/>
+            <f:setPropertyActionListener target="#{bindings.pReceiveDate.inputValue}"
+                                         value=""/>
+            <f:setPropertyActionListener target="#{bindings.pSectionId.inputValue}"
+                                         value=""/>
+            <f:setPropertyActionListener target="#{bindings.pSubjId.inputValue}"
+                                         value=""/>
+            <f:setPropertyActionListener target="#{bindings.pLineStatus.inputValue}"
+                                         value=""/>
+          </af:commandButton>
+        </af:panelGroupLayout>
+        <af:inputDate value="#{bindings.pCreateDate.inputValue}"
+                      label="#{bindings.pCreateDate.hints.label}"
+                      required="#{bindings.pCreateDate.hints.mandatory}"
+                      shortDesc="#{bindings.pCreateDate.hints.tooltip}" id="id1"
+                      chooseId="createCd" visible="false" autoSubmit="true"
+                      valueChangeListener="#{viewScope.inboxBean.onCreateDateChange}">
+          <f:validator binding="#{bindings.pCreateDate.validator}"/>
+          <af:convertDateTime pattern="#{bindings.pCreateDate.format}"/>
+        </af:inputDate>
+        <af:inputDate value="#{bindings.pReceiveDate.inputValue}"
+                      label="#{bindings.pReceiveDate.hints.label}"
+                      required="#{bindings.pReceiveDate.hints.mandatory}"
+                      shortDesc="#{bindings.pReceiveDate.hints.tooltip}"
+                      id="id2" chooseId="rcvCd" visible="false"
+                      autoSubmit="true"
+                      valueChangeListener="#{viewScope.inboxBean.onRcvDateChange}">
+          <f:validator binding="#{bindings.pReceiveDate.validator}"/>
+          <af:convertDateTime pattern="#{bindings.pReceiveDate.format}"/>
+        </af:inputDate>
+        <af:spacer height="260" id="s8"/>
+      </af:panelBox>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:panelSplitter>
+</jsp:root>

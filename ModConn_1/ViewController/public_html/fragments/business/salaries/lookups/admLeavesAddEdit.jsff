@@ -1,0 +1,233 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/fragsTemplates/mdTemplate.jspx" id="pt4">
+    <f:facet name="Master">
+      <af:panelFormLayout id="pfl1" rows="8">
+        <af:inputText value="#{bindings.LeaveName.inputValue}"
+                      label="#{bindings.LeaveName.hints.label}"
+                      required="true"
+                      columns="#{bindings.LeaveName.hints.displayWidth}"
+                      maximumLength="#{bindings.LeaveName.hints.precision}"
+                      shortDesc="#{bindings.LeaveName.hints.tooltip}" id="it18"
+                      contentStyle="width:200px !important;">
+          <f:validator binding="#{bindings.LeaveName.validator}"/>
+        </af:inputText>
+        <af:selectOneRadio label="#{bindings.IntersecRequired.hints.label}"
+                           id="sor1"
+                           value="#{bindings.IntersecRequired.inputValue}"
+                           layout="horizontal" required="true"
+                           autoSubmit="true"
+                           contentStyle="width:200px !important;">
+          <af:selectItem label="#{rs.common_yes_label}" value="Y" id="si2"/>
+          <af:selectItem label="#{rs.common_no_label}" value="N" id="si3"/>
+        </af:selectOneRadio>
+        <af:selectOneChoice value="#{bindings.LeaveType.inputValue}"
+                            label="#{bindings.LeaveType.label}"
+                            required="#{bindings.LeaveType.hints.mandatory}"
+                            shortDesc="#{bindings.LeaveType.hints.tooltip}"
+                            id="soc1" contentStyle="width:200px !important;">
+          <f:selectItems value="#{bindings.LeaveType.items}" id="si11"/>
+        </af:selectOneChoice>
+        <af:selectOneChoice value="#{bindings.AdvpayType.inputValue}"
+                            label="#{bindings.AdvpayType.label}"
+                            required="#{bindings.AdvpayType.hints.mandatory}"
+                            shortDesc="#{bindings.AdvpayType.hints.tooltip}"
+                            id="soc2" contentStyle="width:200px !important;">
+          <f:selectItems value="#{bindings.AdvpayType.items}" id="si12"/>
+        </af:selectOneChoice>
+        <af:panelLabelAndMessage label="#{bindings.SubjectId.hints.label}"
+                                 partialTriggers="subjectIdId" id="plam1">
+        <af:panelGroupLayout id="pgl0" layout="horizontal">
+          <af:inputListOfValues id="subjectIdId"
+                                popupTitle="#{rs.common_label_search_select} #{bindings.SubjectId.hints.label}"
+                                value="#{bindings.SubjectId.inputValue}"
+                                model="#{bindings.SubjectId.listOfValuesModel}"
+                                partialTriggers="subjectIdId"
+                                columns="#{bindings.SubjectId.hints.displayWidth}"
+                                shortDesc="#{bindings.SubjectId.hints.tooltip}"
+                                autoSubmit="true"
+                                contentStyle="width:75px !important;"
+                                required="true">
+            <f:validator binding="#{bindings.SubjectId.validator}"/>
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.SubjectId.format}"/>
+          </af:inputListOfValues>
+          <af:inputText value="#{bindings.SubjName.inputValue}" simple="true"
+                        required="#{bindings.SubjName.hints.mandatory}"
+                        columns="#{bindings.SubjName.hints.displayWidth}"
+                        maximumLength="#{bindings.SubjName.hints.precision}"
+                        shortDesc="#{bindings.SubjName.hints.tooltip}"
+                        partialTriggers="subjectIdId" id="it19"
+                        contentStyle="width:200px !important;">
+            <f:validator binding="#{bindings.SubjName.validator}"/>
+          </af:inputText>
+        </af:panelGroupLayout>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="#{bindings.RevLeaveId.hints.label}"
+                                 partialTriggers="revLeaveIdId" id="plam2">
+          <af:panelGroupLayout id="pgl1" layout="horizontal">
+            <af:inputListOfValues id="revLeaveIdId"
+                                  popupTitle="#{rs.common_label_search_select}  #{bindings.RevLeaveId.hints.label}"
+                                  value="#{bindings.RevLeaveId.inputValue}"
+                                  model="#{bindings.RevLeaveId.listOfValuesModel}"
+                                  required="#{bindings.RevLeaveId.hints.mandatory}"
+                                  columns="#{bindings.RevLeaveId.hints.displayWidth}"
+                                  shortDesc="#{bindings.RevLeaveId.hints.tooltip}"
+                                  autoSubmit="true"
+                                  contentStyle="width:75px !important;">
+              <f:validator binding="#{bindings.RevLeaveId.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.RevLeaveId.format}"/>
+            </af:inputListOfValues>
+            <af:inputText value="#{bindings.RevLeaveName.inputValue}"
+                          simple="true"
+                          required="#{bindings.RevLeaveName.hints.mandatory}"
+                          columns="#{bindings.RevLeaveName.hints.displayWidth}"
+                          maximumLength="#{bindings.RevLeaveName.hints.precision}"
+                          shortDesc="#{bindings.RevLeaveName.hints.tooltip}"
+                          partialTriggers="revLeaveIdId" id="it14"
+                          contentStyle="width:200px !important;">
+              <f:validator binding="#{bindings.RevLeaveName.validator}"/>
+            </af:inputText>
+          </af:panelGroupLayout>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="#{bindings.RevDed1Code.hints.label}"
+                                 partialTriggers="revDed1CodeId" id="plam3">
+          <af:panelGroupLayout id="pgl2" layout="horizontal">
+            <af:inputListOfValues id="revDed1CodeId"
+                                  popupTitle="#{rs.common_label_search_select}  #{bindings.RevDed1Code.hints.label}"
+                                  value="#{bindings.RevDed1Code.inputValue}"
+                                  model="#{bindings.RevDed1Code.listOfValuesModel}"
+                                  required="#{bindings.RevDed1Code.hints.mandatory}"
+                                  columns="#{bindings.RevDed1Code.hints.displayWidth}"
+                                  shortDesc="#{bindings.RevDed1Code.hints.tooltip}"
+                                  autoSubmit="true"
+                                  contentStyle="width:75px !important;">
+              <f:validator binding="#{bindings.RevDed1Code.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.RevDed1Code.format}"/>
+            </af:inputListOfValues>
+            <af:inputText value="#{bindings.RevDed1Name.inputValue}"
+                          simple="true"
+                          required="#{bindings.RevDed1Name.hints.mandatory}"
+                          columns="#{bindings.RevDed1Name.hints.displayWidth}"
+                          maximumLength="#{bindings.RevDed1Name.hints.precision}"
+                          shortDesc="#{bindings.RevDed1Name.hints.tooltip}"
+                          partialTriggers="revDed1CodeId" id="it5"
+                          contentStyle="width:200px !important;">
+              <f:validator binding="#{bindings.RevDed1Name.validator}"/>
+            </af:inputText>
+          </af:panelGroupLayout>
+        </af:panelLabelAndMessage>
+        <af:panelLabelAndMessage label="#{bindings.RevDed2Code.hints.label}"
+                                 partialTriggers="revDed2CodeId" id="plam4">
+          <af:panelGroupLayout id="pgl3" layout="horizontal">
+            <af:inputListOfValues id="revDed2CodeId"
+                                  popupTitle="#{rs.common_label_search_select}  #{bindings.RevDed2Code.hints.label}"
+                                  value="#{bindings.RevDed2Code.inputValue}"
+                                  model="#{bindings.RevDed2Code.listOfValuesModel}"
+                                  required="#{bindings.RevDed2Code.hints.mandatory}"
+                                  columns="#{bindings.RevDed2Code.hints.displayWidth}"
+                                  shortDesc="#{bindings.RevDed2Code.hints.tooltip}"
+                                  autoSubmit="true"
+                                  contentStyle="width:75px !important;">
+              <f:validator binding="#{bindings.RevDed2Code.validator}"/>
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.RevDed2Code.format}"/>
+            </af:inputListOfValues>
+            <af:inputText value="#{bindings.RevDed2Name.inputValue}"
+                          simple="true"
+                          required="#{bindings.RevDed2Name.hints.mandatory}"
+                          columns="#{bindings.RevDed2Name.hints.displayWidth}"
+                          maximumLength="#{bindings.RevDed2Name.hints.precision}"
+                          shortDesc="#{bindings.RevDed2Name.hints.tooltip}"
+                          partialTriggers="revDed2CodeId" id="it12"
+                          contentStyle="width:200px !important;">
+              <f:validator binding="#{bindings.RevDed2Name.validator}"/>
+            </af:inputText>
+          </af:panelGroupLayout>
+        </af:panelLabelAndMessage>
+        <af:inputText value="#{bindings.Period.inputValue}"
+                      label="#{bindings.Period.hints.label}"
+                      required="#{bindings.Period.hints.mandatory}"
+                      columns="#{bindings.Period.hints.displayWidth}"
+                      maximumLength="#{bindings.Period.hints.precision}"
+                      shortDesc="#{bindings.Period.hints.tooltip}" id="it20"
+                      contentStyle="width:200px !important;">
+          <f:validator binding="#{bindings.Period.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.Period.format}"/>
+        </af:inputText>
+        <af:selectOneRadio label="#{bindings.PayDed.hints.label}" id="sor2"
+                           value="#{bindings.PayDed.inputValue}"
+                           layout="horizontal" autoSubmit="true"
+                           contentStyle="width:200px !important;">
+          <af:selectItem label="#{rs.PAYMENT}" value="1" id="si1"/>
+          <af:selectItem label="#{rs.DEDUCTION}" value="2" id="si4"/>
+        </af:selectOneRadio>
+        <af:inputText value="#{bindings.Recurr.inputValue}"
+                      label="#{bindings.Recurr.hints.label}"
+                      required="#{bindings.Recurr.hints.mandatory}"
+                      columns="#{bindings.Recurr.hints.displayWidth}"
+                      maximumLength="#{bindings.Recurr.hints.precision}"
+                      shortDesc="#{bindings.Recurr.hints.tooltip}" id="it15"
+                      contentStyle="width:200px !important;">
+          <f:validator binding="#{bindings.Recurr.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.Recurr.format}"/>
+        </af:inputText>
+        <af:selectOneRadio label="#{bindings.SalaryStop.hints.label}" id="sor3"
+                           value="#{bindings.SalaryStop.inputValue}"
+                           layout="horizontal" autoSubmit="true"
+                           contentStyle="width:200px !important;">
+          <af:selectItem label="#{rs.common_yes_label}" value="Y" id="si5"/>
+          <af:selectItem label="#{rs.common_no_label}" value="N" id="si6"/>
+        </af:selectOneRadio>
+        <af:selectOneRadio label="#{bindings.SalaryResume.hints.label}"
+                           id="sor4" value="#{bindings.SalaryResume.inputValue}"
+                           layout="horizontal" autoSubmit="true"
+                           contentStyle="width:200px !important;">
+          <af:selectItem label="#{rs.common_yes_label}" value="Y" id="si7"/>
+          <af:selectItem label="#{rs.common_no_label}" value="N" id="si8"/>
+        </af:selectOneRadio>
+        <af:inputText value="#{bindings.MaxDays.inputValue}"
+                      label="#{bindings.MaxDays.hints.label}"
+                      required="#{bindings.MaxDays.hints.mandatory}"
+                      columns="#{bindings.MaxDays.hints.displayWidth}"
+                      maximumLength="#{bindings.MaxDays.hints.precision}"
+                      shortDesc="#{bindings.MaxDays.hints.tooltip}" id="it6"
+                      contentStyle="width:200px !important;">
+          <f:validator binding="#{bindings.MaxDays.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.MaxDays.format}"/>
+        </af:inputText>
+        <af:inputText value="#{bindings.MinDays.inputValue}"
+                      label="#{bindings.MinDays.hints.label}"
+                      required="#{bindings.MinDays.hints.mandatory}"
+                      columns="#{bindings.MinDays.hints.displayWidth}"
+                      maximumLength="#{bindings.MinDays.hints.precision}"
+                      shortDesc="#{bindings.MinDays.hints.tooltip}" id="it17"
+                      contentStyle="width:200px !important;">
+          <f:validator binding="#{bindings.MinDays.validator}"/>
+          <af:convertNumber groupingUsed="false"
+                            pattern="#{bindings.MinDays.format}"/>
+        </af:inputText>
+      </af:panelFormLayout>
+    </f:facet>
+    <f:facet name="MasterToolbar">
+      <af:panelGroupLayout layout="horizontal" id="pgl12">
+        <af:commandButton actionListener="#{bindings.Commit.execute}"
+                          icon="/images/save.png"
+                          text="#{rs.common_button_save}" partialSubmit="true"
+                          id="cb4"/>
+        <af:spacer width="5px" id="s7"/>
+        <af:commandButton icon="/images/arrow_undo.png"
+                          actionListener="#{bindings.Rollback.execute}"
+                          action="back" text="#{rs.bankBranch_buttonBankBack}"
+                          immediate="true" id="cb6"/>
+      </af:panelGroupLayout>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

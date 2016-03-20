@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="contractsMainPageDef"
+                Package="fragments.business.contracts">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.ContractsModule.AccContractsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccContractsViewIterator"/>
+    <searchRegion Criteria="#{pageFlowScope.pageTypeFlag eq 'pays' ? 'AccContractsPaysViewCriteria' : 'AccContractsViewCriteria'}"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AccContractsViewIterator"
+                  id="AccContractsViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <action IterBinding="AccContractsViewIterator" id="InsertContract"
+            RequiresUpdateModel="true" Action="createInsertRow"/>
+    <tree IterBinding="AccContractsViewIterator" id="AccContractsView">
+      <nodeDefinition DefName="com.mod.financial.model.contracts.views.up.AccContractsView"
+                      Name="AccContractsView0">
+        <AttrNames>
+          <Item Value="ContractNo"/>
+          <Item Value="ContractDate"/>
+          <Item Value="ContractedSection"/>
+          <Item Value="ContractValue"/>
+          <Item Value="CurrYearValue"/>
+          <Item Value="ContractStartDate"/>
+          <Item Value="ContractEndDate"/>
+          <Item Value="ContractType"/>
+          <Item Value="ContarctStatus"/>
+          <Item Value="Status"/>
+          <Item Value="PayPeriod"/>
+          <Item Value="PaidAmount"/>
+          <Item Value="CurrId"/>
+          <Item Value="ReqSection"/>
+          <Item Value="MainType"/>
+          <Item Value="CompName"/>
+          <Item Value="GuranteeValueSacc"/>
+          <Item Value="InsuranceValueSacc"/>
+          <Item Value="TaxValueSacc"/>
+          <Item Value="ContractDesc"/>
+          <Item Value="WBankName"/>
+          <Item Value="WBankDept"/>
+          <Item Value="WBankAcc"/>
+          <Item Value="ExchRate"/>
+          <Item Value="PaidAmountLocal"/>
+          <Item Value="ContSerial"/>
+          <Item Value="CompId"/>
+          <Item Value="PayMethod"/>
+          <Item Value="PayNature"/>
+          <Item Value="ContractLocalValue"/>
+          <Item Value="CurrName"/>
+          <Item Value="Symbol"/>
+          <Item Value="Id"/>
+          <Item Value="Flags"/>
+          <Item Value="ChkAdvancPay"/>
+          <Item Value="ChkContNoLgs"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AccContractsViewIterator" id="ContractNo">
+      <AttrNames>
+        <Item Value="ContractNo"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="corInternalMailPageDef"
+                Package="fragments.business.correspondances">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.CorresModule.CorDocInternalMailViewRO1"
+              DataControl="ModModuleDataControl" RangeSize="-1"
+              id="CorDocInternalMailViewRO1Iterator" ChangeEventPolicy="ppr"/>
+  </executables>
+  <bindings>
+    <attributeValues IterBinding="CorDocInternalMailViewRO1Iterator" id="DocNo">
+      <AttrNames>
+        <Item Value="DocNo"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocInternalMailViewRO1Iterator"
+                     id="RcvDate">
+      <AttrNames>
+        <Item Value="RcvDate"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocInternalMailViewRO1Iterator"
+                     id="DocRef">
+      <AttrNames>
+        <Item Value="DocRef"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocInternalMailViewRO1Iterator"
+                     id="OutSubjDetail">
+      <AttrNames>
+        <Item Value="OutSubjDetail"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="CorDocInternalMailViewRO1Iterator" id="First"
+            RequiresUpdateModel="true" Action="first"/>
+    <action IterBinding="CorDocInternalMailViewRO1Iterator" id="Previous"
+            RequiresUpdateModel="true" Action="previous"/>
+    <action IterBinding="CorDocInternalMailViewRO1Iterator" id="Next"
+            RequiresUpdateModel="true" Action="next"/>
+    <action IterBinding="CorDocInternalMailViewRO1Iterator" id="Last"
+            RequiresUpdateModel="true" Action="last"/>
+    <attributeValues IterBinding="CorDocInternalMailViewRO1Iterator"
+                     id="SendUserLogName">
+      <AttrNames>
+        <Item Value="SendUserLogName"/>
+      </AttrNames>
+    </attributeValues>
+    <attributeValues IterBinding="CorDocInternalMailViewRO1Iterator"
+                     id="SendUserName">
+      <AttrNames>
+        <Item Value="SendUserName"/>
+      </AttrNames>
+    </attributeValues>
+  </bindings>
+</pageDefinition>

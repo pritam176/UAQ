@@ -1,0 +1,61 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<SDM>
+   <OverallProperties
+      id="OverallProperties1"/>
+   <View
+      id="View2">
+      <property
+         name="activityId">admInsuranceRatesMain</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admInsuranceRatesMain.jsff</property>
+      <property
+         name="start">true</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admInsuranceRatesMain&lt;/b> (Default Activity)&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">179.79883</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">207.7002</property>
+   </View>
+   <View
+      id="View3">
+      <property
+         name="activityId">admInsuranceRatesAddEdit</property>
+      <property
+         name="page">/fragments/business/salaries/lookups/admInsuranceRatesAddEdit.jsff</property>
+      <property
+         name="description">&lt;html>&lt;p>&lt;b>admInsuranceRatesAddEdit&lt;/b>&lt;/p>&lt;p>Activity Type:  View&lt;/p></property>
+      <property
+         name="exceptionHandler">false</property>
+      <property
+         name="y">177.09766</property>
+      <property
+         name="pageFragment">true</property>
+      <property
+         name="x">528.70996</property>
+   </View>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase4"
+      from="View2"
+      to="View3">
+      <property
+         name="fromOutcome">addEdit</property>
+      <property
+         name="sdm:polyPoints">R46,248.7002,175.94824,487.6704,173.24707,L46</property>
+   </ControlFlowCase>
+   <ControlFlowCase
+      islink="true"
+      id="ControlFlowCase5"
+      from="View3"
+      to="View2">
+      <property
+         name="fromOutcome">back</property>
+      <property
+         name="sdm:polyPoints">L54,487.70996,180.24707,248.73975,182.94824,R54</property>
+   </ControlFlowCase>
+</SDM>

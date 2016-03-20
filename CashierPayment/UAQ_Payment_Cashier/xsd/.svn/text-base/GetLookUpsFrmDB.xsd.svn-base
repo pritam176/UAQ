@@ -1,0 +1,42 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/GetLookUpsFrmDB" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/GetLookUpsFrmDB" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="GetLookUpsFrmDBInput" type="GetLookUpsFrmDBInput"/>
+   <xs:complexType name="GetLookUpsFrmDBInput">
+      <xs:sequence>
+         <xs:element name="ownernationality" type="xs:decimal" nillable="true"/>
+         <xs:element name="usrnationality" type="xs:decimal" nillable="true"/>
+         <xs:element name="emirate_id" type="xs:decimal" nillable="true"/>
+         <xs:element name="typeofuserid1" type="xs:string" nillable="true"/>
+         <xs:element name="typeofuserid2" type="xs:string" nillable="true"/>
+         <xs:element name="sourcetype1" type="xs:string" nillable="true"/>
+         <xs:element name="sourcetype2" type="xs:string" nillable="true"/>
+         <xs:element name="apptype1" type="xs:string" nillable="true"/>
+         <xs:element name="apptype2" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="GetLookUpsFrmDBOutputCollection" type="GetLookUpsFrmDBOutputCollection"/>
+   <xs:complexType name="GetLookUpsFrmDBOutputCollection">
+      <xs:sequence>
+         <xs:element name="GetLookUpsFrmDBOutput" type="GetLookUpsFrmDBOutput" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="GetLookUpsFrmDBOutput">
+      <xs:sequence>
+         <xs:element name="ownernatEng" type="xs:string" nillable="true"/>
+         <xs:element name="ownernatArb" type="xs:string" nillable="true"/>
+         <xs:element name="ownernatId" type="xs:decimal" nillable="true"/>
+         <xs:element name="usernatEng" type="xs:string" nillable="true"/>
+         <xs:element name="usernatArb" type="xs:string" nillable="true"/>
+         <xs:element name="usernatId" type="xs:decimal" nillable="true"/>
+         <xs:element name="emirateEng" type="xs:string" nillable="true"/>
+         <xs:element name="emirateArb" type="xs:string" nillable="true"/>
+         <xs:element name="emirateid" type="xs:decimal" nillable="true"/>
+         <xs:element name="typeofuserEngName" type="xs:string" nillable="true"/>
+         <xs:element name="typeofuserArabicname" type="xs:string" nillable="true"/>
+         <xs:element name="sourcetypeEngName" type="xs:string" nillable="true"/>
+         <xs:element name="sourcetypeArabicname" type="xs:string" nillable="true"/>
+         <xs:element name="apptypeEngname" type="xs:string" nillable="true"/>
+         <xs:element name="apptypeArbname" type="xs:string" nillable="true"/>
+      </xs:sequence>
+   </xs:complexType>
+</xs:schema>

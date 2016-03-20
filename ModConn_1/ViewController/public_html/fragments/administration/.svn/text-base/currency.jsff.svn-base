@@ -1,0 +1,164 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+          <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3" >
+    <f:facet name="Query">
+      <af:query id="qryId1" headerText="#{rs.currency_queryPanel_Search}"
+                disclosed="true"
+                value="#{bindings.AdmCurrenciesSearchViewCriteriaQuery.queryDescriptor}"
+                model="#{bindings.AdmCurrenciesSearchViewCriteriaQuery.queryModel}"
+                queryListener="#{bindings.AdmCurrenciesSearchViewCriteriaQuery.processQuery}"
+                queryOperationListener="#{bindings.AdmCurrenciesSearchViewCriteriaQuery.processQueryOperation}"
+                resultComponentId="::pc1" saveQueryMode="hidden"
+                modeChangeVisible="false" rows="3" maxColumns="2"/>
+    </f:facet>
+    <f:attribute name="Title" value="#{rs.currency_panelHeader_title}"/>
+    <f:facet name="Result">
+      <af:table value="#{bindings.AdmCurrenciesView.collectionModel}" var="row"
+                rows="#{bindings.AdmCurrenciesView.rangeSize}"
+                emptyText="#{rs.common_label_table_no_data}"
+                fetchSize="#{bindings.AdmCurrenciesView.rangeSize}"
+                rowBandingInterval="0"
+                selectedRowKeys="#{bindings.AdmCurrenciesView.collectionModel.selectedRow}"
+                selectionListener="#{bindings.AdmCurrenciesView.collectionModel.makeCurrent}"
+                rowSelection="single" id="resId1">
+        <af:column sortProperty="#{bindings.AdmCurrenciesView.hints.Id.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmCurrenciesView.hints.Id.label}"
+                   id="resId1c6" width="170">
+          <af:outputText value="#{row.Id}" id="ot1">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmCurrenciesView.hints.Id.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmCurrenciesView.hints.CurrName.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmCurrenciesView.hints.CurrName.label}"
+                   id="resId1c4" width="250">
+          <af:outputText value="#{row.CurrName}" id="ot4"/>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmCurrenciesView.hints.CurrDecimal.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmCurrenciesView.hints.CurrDecimal.label}"
+                   id="resId1c3" width="170">
+          <af:outputText value="#{row.CurrDecimal}" id="ot7">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmCurrenciesView.hints.CurrDecimal.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmCurrenciesView.hints.ExchRate.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmCurrenciesView.hints.ExchRate.label}"
+                   id="resId1c5" width="170">
+          <af:outputText value="#{row.ExchRate}" id="ot11">
+            <af:convertNumber groupingUsed="false"
+                              pattern="#{bindings.AdmCurrenciesView.hints.ExchRate.format}"/>
+          </af:outputText>
+        </af:column>
+        <af:column sortProperty="#{bindings.AdmCurrenciesView.hints.Symbol.name}"
+                   sortable="true"
+                   headerText="#{bindings.AdmCurrenciesView.hints.Symbol.label}"
+                   id="resId1c11" width="160">
+          <af:outputText value="#{row.Symbol}" id="ot8"/>
+        </af:column>
+        <af:column id="c1" width="25" align="center">
+          <af:commandLink id="cl1">
+            <af:image source="/images/edit.png" id="i1"/>
+            <af:showPopupBehavior popupId="::p1"/>
+          </af:commandLink>
+        </af:column>
+        <af:column id="c2" width="25" align="center">
+          <af:commandLink id="commandLink1">
+            <af:image source="/images/delete.gif" id="image1"/>
+            <af:showPopupBehavior popupId="::p2"/>
+          </af:commandLink>
+        </af:column>
+      </af:table>
+    </f:facet>
+    <f:facet name="Popup">
+      <af:group id="g1">
+        <af:popup id="p2" contentDelivery="lazyUncached">
+          <af:dialog id="d2" title="#{rs['currency_dialog_deleteTitle']}"
+                     dialogListener="#{currencyBean.deleteServicesDialogListener}">
+            <af:panelGroupLayout id="pg" layout="horizontal">
+              <af:outputText value="#{rs['common_delete_Message']}"
+                             id="outputText1"
+                             inlineStyle="color:Red; font-size:small;"/>
+              <af:spacer width="5" height="10" id="s2"/>
+              <af:outputText value="#{bindings.CurrName.inputValue}" id="ot20"
+                             inlineStyle="color:Red; font-size:small;"/>
+              <af:outputText value=" ?" id="outputText3"
+                             inlineStyle="color:Red; font-size:small;"/>
+            </af:panelGroupLayout>
+          </af:dialog>
+        </af:popup>
+        <af:popup id="p1" contentDelivery="lazyUncached"
+                  popupCanceledListener="#{currencyBean.cancelListener}"
+                  binding="#{currencyBean.currencyPopup}">
+          <af:dialog id="d1" title="#{rs.currency_dialog_title}"
+                     closeIconVisible="false"
+                     dialogListener="#{currencyBean.saveListener}">
+            <af:panelFormLayout id="pfl1">
+              <af:inputText value="#{bindings.Id.inputValue}"
+                            label="#{bindings.Id.hints.label}"
+                            required="#{bindings.Id.hints.mandatory}"
+                            columns="#{bindings.Id.hints.displayWidth}"
+                            maximumLength="#{bindings.Id.hints.precision}"
+                            shortDesc="#{bindings.Id.hints.tooltip}" id="it4">
+                <f:validator binding="#{bindings.Id.validator}"/>
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.Id.format}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.CurrName.inputValue}"
+                            label="#{bindings.CurrName.hints.label}"
+                            required="#{bindings.CurrName.hints.mandatory}"
+                            columns="#{bindings.CurrName.hints.displayWidth}"
+                            maximumLength="#{bindings.CurrName.hints.precision}"
+                            shortDesc="#{bindings.CurrName.hints.tooltip}"
+                            id="it5">
+                <f:validator binding="#{bindings.CurrName.validator}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.CurrDecimal.inputValue}"
+                            label="#{bindings.CurrDecimal.hints.label}"
+                            required="#{bindings.CurrDecimal.hints.mandatory}"
+                            columns="#{bindings.CurrDecimal.hints.displayWidth}"
+                            maximumLength="#{bindings.CurrDecimal.hints.precision}"
+                            shortDesc="#{bindings.CurrDecimal.hints.tooltip}"
+                            id="it3">
+                <f:validator binding="#{bindings.CurrDecimal.validator}"/>
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.CurrDecimal.format}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.ExchRate.inputValue}"
+                            label="#{bindings.ExchRate.hints.label}"
+                            required="#{bindings.ExchRate.hints.mandatory}"
+                            columns="#{bindings.ExchRate.hints.displayWidth}"
+                            maximumLength="#{bindings.ExchRate.hints.precision}"
+                            shortDesc="#{bindings.ExchRate.hints.tooltip}"
+                            id="it1">
+                <f:validator binding="#{bindings.ExchRate.validator}"/>
+                <af:convertNumber groupingUsed="false"
+                                  pattern="#{bindings.ExchRate.format}"/>
+              </af:inputText>
+              <af:inputText value="#{bindings.Symbol.inputValue}"
+                            label="#{bindings.Symbol.hints.label}"
+                            required="#{bindings.Symbol.hints.mandatory}"
+                            columns="#{bindings.Symbol.hints.displayWidth}"
+                            maximumLength="#{bindings.Symbol.hints.precision}"
+                            shortDesc="#{bindings.Symbol.hints.tooltip}"
+                            id="it2">
+                <f:validator binding="#{bindings.Symbol.validator}"/>
+              </af:inputText>
+            </af:panelFormLayout>
+          </af:dialog>
+        </af:popup>
+      </af:group>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:commandToolbarButton id="ctb1" icon="/images/add.png"
+                               action="#{currencyBean.create_action}"/>
+    </f:facet>
+  </af:pageTemplate>
+  <!--oracle-jdev-comment:preferred-managed-bean-name:currencyBean-->
+</jsp:root>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="subAccountsPageDef"
+                Package="fragments.generalAccounts">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.GeneralAccountsModule.AccSubAccountsView"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AccSubAccountsViewIterator"/>
+    <searchRegion Criteria="AccSubAccountsViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AccSubAccountsViewIterator"
+                  id="AccSubAccountsViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AccSubAccountsViewIterator" id="AccSubAccountsView">
+      <nodeDefinition DefName="com.mod.financial.model.generalAccounts.views.up.AccSubAccountsView"
+                      Name="AccSubAccountsView0">
+        <AttrNames>
+          <Item Value="SaccNo"/>
+          <Item Value="SaccName"/>
+          <Item Value="SaccType"/>
+          <Item Value="SaccStatus"/>
+          <Item Value="SaccParent"/>
+          <Item Value="SaccLevel"/>
+          <Item Value="SaccNature"/>
+          <Item Value="BankNumber"/>
+          <Item Value="Description"/>
+          <Item Value="AccName"/>
+          <Item Value="AccNo"/>
+          <Item Value="ParentAccNo"/>
+          <Item Value="ParentAccName"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+  </bindings>
+</pageDefinition>

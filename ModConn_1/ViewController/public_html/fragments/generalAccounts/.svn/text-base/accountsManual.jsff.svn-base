@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich">
+ <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+  <f:facet name="Query">
+    <af:query id="qryId1" headerText="#{rs.common_label_search}" disclosed="true"
+              value="#{bindings.AccAccountsViewCriteriaQuery.queryDescriptor}"
+              model="#{bindings.AccAccountsViewCriteriaQuery.queryModel}"
+              queryListener="#{bindings.AccAccountsViewCriteriaQuery.processQuery}"
+              queryOperationListener="#{bindings.AccAccountsViewCriteriaQuery.processQueryOperation}"
+              resultComponentId="::pc1:resId1"/>
+  </f:facet>
+  <f:facet name="Result">
+   <af:table value="#{bindings.AccAccountsView.collectionModel}" var="row"
+             rows="#{bindings.AccAccountsView.rangeSize}"
+             emptyText="#{bindings.AccAccountsView.viewable ? 'No data to display.' : 'Access Denied.'}"
+             fetchSize="#{bindings.AccAccountsView.rangeSize}"
+             rowBandingInterval="0"
+             filterModel="#{bindings.AccAccountsViewCriteriaQuery.queryDescriptor}"
+             queryListener="#{bindings.AccAccountsViewCriteriaQuery.processQuery}"
+             filterVisible="true" varStatus="vs"
+             selectedRowKeys="#{bindings.AccAccountsView.collectionModel.selectedRow}"
+             selectionListener="#{bindings.AccAccountsView.collectionModel.makeCurrent}"
+             rowSelection="single" id="resId1"
+             columnStretching="column:resId1c22">
+    <af:column sortProperty="#{bindings.AccAccountsView.hints.AccName.name}"
+               filterable="true" sortable="true"
+               headerText="#{bindings.AccAccountsView.hints.AccName.label}"
+               id="resId1c11" width="150">
+     <af:outputText value="#{row.AccName}" id="ot15"/>
+    </af:column>
+    <af:column sortProperty="#{bindings.AccAccountsView.hints.AccNo.name}"
+               filterable="true" sortable="true"
+               headerText="#{bindings.AccAccountsView.hints.AccNo.label}"
+               id="resId1c3">
+     <af:outputText value="#{row.AccNo}" id="ot8"/>
+    </af:column>
+    <af:column sortProperty="#{bindings.AccAccountsView.hints.AccType.name}"
+               filterable="true" sortable="true"
+               headerText="#{bindings.AccAccountsView.hints.AccType.label}"
+               id="resId1c9">
+     <af:outputText value="#{row.AccType}" id="ot11">
+      <af:convertNumber groupingUsed="false"
+                        pattern="#{bindings.AccAccountsView.hints.AccType.format}"/>
+     </af:outputText>
+    </af:column>
+    <af:column sortProperty="#{bindings.AccAccountsView.hints.AccCd.name}"
+               filterable="true" sortable="true"
+               headerText="#{bindings.AccAccountsView.hints.AccCd.label}"
+               id="resId1c10">
+     <af:outputText value="#{row.AccCd}" id="ot1">
+      <af:convertNumber groupingUsed="false"
+                        pattern="#{bindings.AccAccountsView.hints.AccCd.format}"/>
+     </af:outputText>
+    </af:column>
+    <af:column sortProperty="#{bindings.AccAccountsView.hints.AccStatus.name}"
+               filterable="true" sortable="true"
+               headerText="#{bindings.AccAccountsView.hints.AccStatus.label}"
+               id="resId1c12">
+     <af:selectOneChoice value="#{row.bindings.AccStatus.inputValue}"
+                         label="#{row.bindings.AccStatus.label}"
+                         required="#{bindings.AccAccountsView.hints.AccStatus.mandatory}"
+                         shortDesc="#{bindings.AccAccountsView.hints.AccStatus.tooltip}"
+                         id="soc1" readOnly="true">
+      <f:selectItems value="#{row.bindings.AccStatus.items}" id="si1"/>
+     </af:selectOneChoice>
+    </af:column>
+    <af:column sortProperty="#{bindings.AccAccountsView.hints.AccountType.name}"
+               filterable="true" sortable="true"
+               headerText="#{bindings.AccAccountsView.hints.AccountType.label}"
+               id="resId1c13">
+     <af:selectOneChoice value="#{row.bindings.AccountType.inputValue}"
+                         label="#{row.bindings.AccountType.label}"
+                         required="#{bindings.AccAccountsView.hints.AccountType.mandatory}"
+                         shortDesc="#{bindings.AccAccountsView.hints.AccountType.tooltip}"
+                         id="soc2" readOnly="true">
+      <f:selectItems value="#{row.bindings.AccountType.items}" id="si2"/>
+     </af:selectOneChoice>
+    </af:column>
+    <af:column sortProperty="#{bindings.AccAccountsView.hints.AccNature.name}"
+               filterable="true" sortable="true"
+               headerText="#{bindings.AccAccountsView.hints.AccNature.label}"
+               id="resId1c14">
+     <af:selectOneChoice value="#{row.bindings.AccNature.inputValue}"
+                         label="#{row.bindings.AccNature.label}"
+                         required="#{bindings.AccAccountsView.hints.AccNature.mandatory}"
+                         shortDesc="#{bindings.AccAccountsView.hints.AccNature.tooltip}"
+                         id="soc3" readOnly="true">
+      <f:selectItems value="#{row.bindings.AccNature.items}" id="si3"/>
+     </af:selectOneChoice>
+    </af:column>
+    <af:column sortProperty="#{bindings.AccAccountsView.hints.ProgName.name}"
+               filterable="true" sortable="true"
+               headerText="#{bindings.AccAccountsView.hints.ProgName.label}"
+               id="resId1c22">
+     <af:outputText value="#{row.ProgName}" id="ot7"/>
+    </af:column>
+    <af:column id="c1" width="25" align="center">
+     <af:commandLink id="cl1" action="update">
+      <af:image source="/images/edit.png" id="i1"/>
+     </af:commandLink>
+    </af:column>
+    <af:column id="c2" width="25" align="center">
+     <af:commandLink id="commandLink1">
+      <af:image source="/images/delete.gif" id="image1"/>
+     </af:commandLink>
+    </af:column>
+   </af:table>
+  </f:facet>
+  <f:facet name="ToolbarButton">
+   <af:toolbar id="t1">
+    <af:commandToolbarButton id="ctb1" text="#{rs.common_button_new}"
+                             icon="/images/add.png" action="new"/>
+   </af:toolbar>
+  </f:facet>
+  <f:attribute name="Title" value="#{rs.acc_account_title}"/>
+ </af:pageTemplate>
+
+
+</jsp:root>

@@ -1,0 +1,172 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<jsp:root xmlns:jsp="http://java.sun.com/JSP/Page" version="2.1"
+          xmlns:af="http://xmlns.oracle.com/adf/faces/rich"
+          xmlns:f="http://java.sun.com/jsf/core">
+  <af:pageTemplate viewId="/templates/MODLookupTemplate.jspx" id="pt3">
+    <f:facet name="Query">
+      <af:group id="g1">
+        <af:panelGroupLayout layout="vertical" id="pgl1" halign="center">
+              <af:query id="qryId1" headerText="#{rs.common_label_search}"
+                    disclosed="true" rows="1" maxColumns="2"
+                        value="#{bindings.AdmLeavesViewCriteriaQuery.queryDescriptor}"
+                        model="#{bindings.AdmLeavesViewCriteriaQuery.queryModel}"
+                        queryListener="#{bindings.AdmLeavesViewCriteriaQuery.processQuery}"
+                        queryOperationListener="#{bindings.AdmLeavesViewCriteriaQuery.processQueryOperation}"
+                    saveQueryMode="hidden" modeChangeVisible="false"
+                    resultComponentId="::pc1:t1"/>
+        </af:panelGroupLayout>
+      </af:group>
+    </f:facet>
+    <f:facet name="Result">
+        <af:table value="#{bindings.AdmLeavesView1.collectionModel}" var="row"
+                  rows="#{bindings.AdmLeavesView1.rangeSize}"
+                  emptyText="#{rs.common_label_table_no_data}"
+                  fetchSize="#{bindings.AdmLeavesView1.rangeSize}"
+                  rowBandingInterval="0"
+                  filterModel="#{bindings.AdmLeavesView1Query1.Query.queryDescriptor}"
+                  queryListener="#{bindings.AdmLeavesView1Query1.processQuery}"
+                  filterVisible="true" varStatus="vs"
+                  selectedRowKeys="#{bindings.AdmLeavesView1.collectionModel.selectedRow}"
+                  selectionListener="#{bindings.AdmLeavesView1.collectionModel.makeCurrent}"
+                  rowSelection="single" id="t1" styleClass="AFStretchWidth" columnStretching="column:c1"
+                  partialTriggers="::ctb1">
+          <af:column width="40" align="center"
+                     headerText="#{rs.common_label_serial}" id="c19"
+                     noWrap="false">
+            <af:outputText value="#{vs.index + 1}" id="ot6"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesView1.hints.LeaveName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesView1.hints.LeaveName.label}"
+                     id="c1" noWrap="false">
+            <af:outputText value="#{row.bindings.LeaveName.inputValue}"
+                          shortDesc="#{bindings.AdmLeavesView1.hints.LeaveName.tooltip}"
+                          id="it14">
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesView1.hints.IntersecRequired.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesView1.hints.IntersecRequired.label}"
+                     id="c4" noWrap="false" align="center" width="55">
+          <af:selectBooleanCheckbox value="#{row.bindings.IntersecRequired.inputValue}"
+                                    label="#{row.bindings.IntersecRequired.label}"
+                                    shortDesc="#{bindings.AdmLeavesView1.hints.IntersecRequired.tooltip}"
+                                    id="sbc1" disabled="true"/>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesView1.hints.LeaveType.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesView1.hints.LeaveType.label}"
+                     id="c12" noWrap="false" align="center">
+            <af:selectOneChoice value="#{row.bindings.LeaveType.inputValue}"
+                                label="#{row.bindings.LeaveType.label}"
+                                required="#{bindings.AdmLeavesView1.hints.LeaveType.mandatory}"
+                                shortDesc="#{bindings.AdmLeavesView1.hints.LeaveType.tooltip}"
+                                id="soc2" disabled="true">
+              <f:selectItems value="#{row.bindings.LeaveType.items}" id="si1"/>
+            </af:selectOneChoice>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesView1.hints.AdvpayType.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesView1.hints.AdvpayType.label}"
+                     id="c3" noWrap="false" width="112" align="center">
+            <af:selectOneChoice value="#{row.bindings.AdvpayType.inputValue}"
+                                label="#{row.bindings.AdvpayType.label}"
+                                required="#{bindings.AdmLeavesView1.hints.AdvpayType.mandatory}"
+                                shortDesc="#{bindings.AdmLeavesView1.hints.AdvpayType.tooltip}"
+                                id="soc1" disabled="true">
+              <f:selectItems value="#{row.bindings.AdvpayType.items}" id="si2"/>
+            </af:selectOneChoice>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesView1.hints.SubjName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesView1.hints.SubjName.label}"
+                     id="c10" noWrap="false" width="115">
+            <af:outputText value="#{row.bindings.SubjName.inputValue}"
+                          shortDesc="#{bindings.AdmLeavesView1.hints.SubjName.tooltip}"
+                          id="it13">
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesView1.hints.RevLeaveName.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesView1.hints.RevLeaveName.label}"
+                     id="c7" noWrap="false" width="115">
+            <af:outputText value="#{row.bindings.RevLeaveName.inputValue}"
+                          shortDesc="#{bindings.AdmLeavesView1.hints.RevLeaveName.tooltip}"
+                          id="it2">
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesView1.hints.RevDed1Name.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesView1.hints.RevDed1Name.label}"
+                     id="c2" noWrap="false" width="115">
+            <af:outputText value="#{row.bindings.RevDed1Name.inputValue}"
+                          shortDesc="#{bindings.AdmLeavesView1.hints.RevDed1Name.tooltip}"
+                          id="it12">
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesView1.hints.RevDed2Name.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesView1.hints.RevDed2Name.label}"
+                     id="c5" noWrap="false" width="115">
+            <af:outputText value="#{row.bindings.RevDed2Name.inputValue}"
+                          shortDesc="#{bindings.AdmLeavesView1.hints.RevDed2Name.tooltip}"
+                          id="it9">
+            </af:outputText>
+          </af:column>
+          <af:column sortProperty="#{bindings.AdmLeavesView1.hints.Period.name}"
+                     filterable="true" sortable="true"
+                     headerText="#{bindings.AdmLeavesView1.hints.Period.label}"
+                     id="c8" width="35" noWrap="false" rendered="false">
+            <af:outputText value="#{row.bindings.Period.inputValue}"
+                          shortDesc="#{bindings.AdmLeavesView1.hints.Period.tooltip}"
+                          id="it1">
+              <af:convertNumber groupingUsed="false"
+                                pattern="#{bindings.AdmLeavesView1.hints.Period.format}"/>
+            </af:outputText>
+          </af:column>
+          <af:column id="c6" width="25" align="center" noWrap="false">
+            <af:commandLink id="cl1" action="addEdit">
+              <af:image source="/images/edit.png" id="i1"/>
+            </af:commandLink>
+          </af:column>
+          <af:column id="c9" width="25" align="center" rendered="false">
+            <af:commandLink id="commandLink1">
+              <af:image source="/images/delete.gif" id="image1"/>
+              <af:showPopupBehavior popupId="::p2"/>
+            </af:commandLink>
+          </af:column>
+        </af:table>
+    </f:facet>
+    <f:facet name="Popup">
+      <af:popup id="p2" contentDelivery="lazyUncached">
+        <af:dialog id="d2" title="#{rs['leave_dialog_deleteTitle']}"
+                   closeIconVisible="false" type="none">
+          <af:panelGroupLayout id="pg" layout="horizontal">
+            <af:outputText value="#{rs['common_delete_Message']}"
+                           id="outputText1"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:spacer width="5" height="10" id="s2"/>
+            <af:outputText value="#{bindings.LeaveName.inputValue}" id="ot20"
+                           inlineStyle="color:Red; font-size:small;"/>
+            <af:outputText value=" ?" id="outputText3"
+                           inlineStyle="color:Red; font-size:small;"/>
+          </af:panelGroupLayout>
+          <af:spacer height="5px" id="s1"/>
+          <af:commandButton actionListener="#{bindings.Delete.execute}"
+                            text="#{rs.ok}" id="cb1"
+                            action="#{bindings.Commit.execute}"/>
+          <af:spacer width="5px" id="s3"/>
+          <af:commandButton text="#{rs.common_button_cancel}" id="cb2"/>
+        </af:dialog>
+      </af:popup>
+    </f:facet>
+    <f:facet name="ToolbarButton">
+      <af:toolbar id="t2">
+        <af:commandToolbarButton actionListener="#{bindings.CreateWithParams.execute}"
+                                 icon="/images/add.png"
+                                 action="addEdit"
+                                 id="ctb1"/>
+      </af:toolbar>
+    </f:facet>
+  </af:pageTemplate>
+</jsp:root>

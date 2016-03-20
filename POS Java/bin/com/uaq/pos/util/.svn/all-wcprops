@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/UAQ/!svn/ver/5508/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/bin/com/uaq/pos/util
+END
+DateUtil.class
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/UAQ/!svn/ver/5508/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/bin/com/uaq/pos/util/DateUtil.class
+END
+PosUtil.class
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/UAQ/!svn/ver/5508/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/bin/com/uaq/pos/util/PosUtil.class
+END
+ConfUtils.class
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/UAQ/!svn/ver/5508/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/bin/com/uaq/pos/util/ConfUtils.class
+END
+UAQLogger.class
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn/UAQ/!svn/ver/5508/Development/DepartmentWebSite/Sites%20Development/PaymentGatewayPOS/bin/com/uaq/pos/util/UAQLogger.class
+END

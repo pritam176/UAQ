@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<skins xmlns="http://myfaces.apache.org/trinidad/skin">
+  <skin>
+    <id>mySkin.desktop</id>
+    <family>mod1</family>
+    <extends>fusionFx-v1.2.desktop</extends>
+    
+    <style-sheet-name>/css/mod1.css</style-sheet-name>
+  </skin>
+</skins> 

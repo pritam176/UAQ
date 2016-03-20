@@ -1,0 +1,66 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<xs:schema targetNamespace="http://xmlns.oracle.com/pcbpel/adapter/db/top/Applicant_Request_Service" xmlns="http://xmlns.oracle.com/pcbpel/adapter/db/top/Applicant_Request_Service" elementFormDefault="qualified" attributeFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+   <xs:element name="ApplicantRequestCollection" type="ApplicantRequestCollection"/>
+   <xs:complexType name="ApplicantRequestCollection">
+      <xs:sequence>
+         <xs:element name="ApplicantRequest" type="ApplicantRequest" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:complexType name="ApplicantRequest">
+      <xs:sequence>
+         <xs:element name="requestId" type="xs:decimal" nillable="true"/>
+         <xs:element name="requestNo" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="statusId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="requestType" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="source" type="xs:string" minOccurs="0" nillable="true"/>
+         <xs:element name="endDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="userName" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="serviceId" type="xs:decimal" minOccurs="0" nillable="true"/>
+         <xs:element name="userComment" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="createdDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="modifiedDate" type="xs:dateTime" minOccurs="0" nillable="true"/>
+         <xs:element name="createdby" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+         <xs:element name="modifiedby" minOccurs="0" nillable="true">
+            <xs:simpleType>
+               <xs:restriction base="xs:string">
+                  <xs:maxLength value="200"/>
+               </xs:restriction>
+            </xs:simpleType>
+         </xs:element>
+      </xs:sequence>
+   </xs:complexType>
+   <xs:element name="Applicant_Request_ServiceSelectInputParameters" type="Applicant_Request_ServiceSelect"/>
+   <xs:complexType name="Applicant_Request_ServiceSelect">
+      <xs:sequence/>
+   </xs:complexType>
+</xs:schema>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pageDefinition xmlns="http://xmlns.oracle.com/adfm/uimodel"
+                version="11.1.1.64.93" id="admLeavesMainPageDef"
+                Package="fragments.business.salaries.lookups">
+  <parameters/>
+  <executables>
+    <variableIterator id="variables"/>
+    <iterator Binds="Root.SalariesModule.AdmLeavesView1"
+              DataControl="ModModuleDataControl" RangeSize="25"
+              id="AdmLeavesView1Iterator1"/>
+    <searchRegion Binds="AdmLeavesView1Iterator1" Criteria=""
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  id="AdmLeavesView1Query1"/>
+    <searchRegion Criteria="AdmLeavesViewCriteria"
+                  Customizer="oracle.jbo.uicli.binding.JUSearchBindingCustomizer"
+                  Binds="AdmLeavesView1Iterator1"
+                  id="AdmLeavesViewCriteriaQuery"/>
+  </executables>
+  <bindings>
+    <tree IterBinding="AdmLeavesView1Iterator1" id="AdmLeavesView1">
+      <nodeDefinition DefName="com.mod.financial.model.salaries.views.up.AdmLeavesView"
+                      Name="AdmLeavesView10">
+        <AttrNames>
+          <Item Value="Id"/>
+          <Item Value="IntersecRequired" Binds="IntersecRequired"/>
+          <Item Value="LeaveName"/>
+          <Item Value="SubjectId"/>
+          <Item Value="CreateDate"/>
+          <Item Value="CreateUser"/>
+          <Item Value="Status"/>
+          <Item Value="LastChangeDate"/>
+          <Item Value="LastChangeUser"/>
+          <Item Value="LeaveType"/>
+          <Item Value="PayDed"/>
+          <Item Value="AdvpayType"/>
+          <Item Value="Period"/>
+          <Item Value="Recurr"/>
+          <Item Value="SalaryStop"/>
+          <Item Value="SalaryResume"/>
+          <Item Value="MaxDays"/>
+          <Item Value="RevLeaveId"/>
+          <Item Value="RevDed1Code"/>
+          <Item Value="RevDed2Code"/>
+          <Item Value="MinDays"/>
+          <Item Value="SubjName"/>
+          <Item Value="RevLeaveName"/>
+          <Item Value="RevDed1Name"/>
+          <Item Value="RevDed2Name"/>
+        </AttrNames>
+      </nodeDefinition>
+    </tree>
+    <attributeValues IterBinding="AdmLeavesView1Iterator1" id="LeaveName">
+      <AttrNames>
+        <Item Value="LeaveName"/>
+      </AttrNames>
+    </attributeValues>
+    <action IterBinding="AdmLeavesView1Iterator1" id="Delete"
+            RequiresUpdateModel="false" Action="removeCurrentRow"/>
+    <action id="Commit" RequiresUpdateModel="true" Action="commitTransaction"
+            DataControl="ModModuleDataControl"/>
+    <button IterBinding="AdmLeavesView1Iterator1" id="IntersecRequired"
+            DTSupportsMRU="false" StaticList="true">
+      <AttrNames>
+        <Item Value="IntersecRequired"/>
+      </AttrNames>
+      <ValueList>
+        <Item Value="Y"/>
+        <Item Value="N"/>
+      </ValueList>
+    </button>
+    <action IterBinding="AdmLeavesView1Iterator1" id="CreateWithParams"
+            RequiresUpdateModel="true" Action="createWithParams">
+      <NamedData NDName="CreateUser" NDType="java.lang.String"
+                 NDValue="#{userInfo.userName}"/>
+            </action>
+  </bindings>
+</pageDefinition>
