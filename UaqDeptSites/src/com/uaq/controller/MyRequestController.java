@@ -33,6 +33,7 @@ import static com.uaq.common.UAQURLConstant.PROCEED_TO_ISSUE_SITEPLAN_URL;
 import static com.uaq.common.UAQURLConstant.PROCEED_TO_RESUBMIT_URL;
 import static com.uaq.common.UAQURLConstant.SUBMIT_LICENCE_URL;
 import static com.uaq.common.UAQURLConstant.SUBMIT_NOC_URL;
+import static com.uaq.common.StatusNameConstant.RESUBMIT_AD;
 import static com.uaq.common.WebServiceConstant.SOAP_USERNAME_ARGUMENT;
 
 import java.math.BigDecimal;
@@ -273,6 +274,9 @@ public class MyRequestController extends BaseController {
 				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_RESUBMIT_URL;
 				break;
 			case WAITING_AD:
+				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_RESUBMIT_URL;
+				break;
+			case RESUBMIT_AD:
 				url = URL_SEPARATOR + languageCode + URL_SEPARATOR + PROCEED_RESUBMIT_URL;
 				break;
 			

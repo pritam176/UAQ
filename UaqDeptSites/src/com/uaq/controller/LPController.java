@@ -183,14 +183,16 @@ public class LPController extends BaseController {
 		if (logininfo != null && logininfo.getAcountId() != null) {
 			int serviceId = Integer.parseInt(request.getParameter("serviceId"));
 			String requestNumber = (String) request.getParameter("requestNumber");
+			String statusId = (String) request.getParameter("statusId");
 			Service service = getService(serviceId);
 			AccountDetailsViewSDO accountDetails = LPServiceLookUp.getAccountDetails(logininfo.getAcountId());
 			initialParams.put("accountDetails", accountDetails);
 			initialParams.put("requestNumber", requestNumber);
 			initialParams.put("serviceId", serviceId);
+			initialParams.put("statusId", statusId);
 
 			try {
-				validatePrerequisites(modelMap, servicePhase, requestNumber, service, accountDetails);
+				validatePrerequisites(modelMap, servicePhase, requestNumber, service, accountDetails, statusId);
 				List<ServiceField> serviceFields = service.getHandlerClass().getServicePreparationFields(servicePhase, LPServiceLookUp, languageCode, initialParams);
 				for (Iterator<ServiceField> iterator = serviceFields.iterator(); iterator.hasNext();) {
 					ServiceField serviceField = iterator.next();
@@ -304,8 +306,9 @@ public class LPController extends BaseController {
 		if (tokenValid && loginInfo != null && loginInfo.getAcountId() != null) {
 
 			try {
+				String statusId = (String) request.getParameter("statusId");
 				AccountDetailsViewSDO accountDetails = LPServiceLookUp.getAccountDetails(loginInfo.getAcountId());
-				validatePrerequisites(modelMap, serviceForm.getServicePhase(), serviceForm.getRequestNumber(), service, accountDetails);
+				validatePrerequisites(modelMap, serviceForm.getServicePhase(), serviceForm.getRequestNumber(), service, accountDetails,statusId);
 				params.put("serviceId", "" + service.getId());
 				params.put("serviceDept", service.getDept());
 				if (serviceForm.getServicePhase() != null && !serviceForm.getServicePhase().isEmpty()) {
@@ -314,7 +317,7 @@ public class LPController extends BaseController {
 					modelMap.addAttribute("statusId", "33");
 				}
 				DAOManager daoManager = new DAOManager();
-				Map<String,String> feeServiceMap = feeIdService.getServiceFee(null, ""+service.getId(), accountDetails.getTypeOfUser(), String.valueOf(accountDetails.getApplicanttypeid()), service.isInitiatableAfterSave()?"18":"33", daoManager.getConnection());
+				Map<String,String> feeServiceMap = feeIdService.getServiceFee(null, ""+service.getId(), accountDetails.getTypeOfUser(), accountDetails.getApplicanttypeid().getValue()==null?null:accountDetails.getApplicanttypeid().getValue().toString(), service.isInitiatableAfterSave()?"18":"33", daoManager.getConnection());
 				daoManager.closeConnection();
 				if(feeServiceMap!=null)
 					params.put("feeAmount", feeServiceMap.get("amount"));
@@ -373,8 +376,9 @@ public class LPController extends BaseController {
 		params.put("serviceId", "" + service.getId());
 
 		try {
+			String statusId = (String) request.getParameter("statusId");
 			AccountDetailsViewSDO accountDetails = LPServiceLookUp.getAccountDetails(loginInfo.getAcountId());
-			validatePrerequisites(modelMap, "ApplicationPaymentDone", requestNumber, service, accountDetails);
+			validatePrerequisites(modelMap, "ApplicationPaymentDone", requestNumber, service, accountDetails,statusId);
 
 			service.getHandlerClass().issueServiceRequest(accountDetails, LPServiceLookUp, languageCode, params);
 			modelMap.addAttribute("messageId", "label.requestIssuedSuccessfully");
@@ -409,8 +413,9 @@ public class LPController extends BaseController {
 		params.put("requestNumber", requestNumber);
 
 		try {
+			String statusId = (String) request.getParameter("statusId");
 			AccountDetailsViewSDO accountDetails = LPServiceLookUp.getAccountDetails(loginInfo.getAcountId());
-			validatePrerequisites(modelMap, "SevicePaymentDone", requestNumber, service, accountDetails);
+			validatePrerequisites(modelMap, "SevicePaymentDone", requestNumber, service, accountDetails,statusId);
 			service.getHandlerClass().proceedWithServiceAfterPayment(params);
 			modelMap.addAttribute("messageId", "label.paymentCompletedSuccessfully");
 			modelMap.addAttribute("messageParams", requestNumber);
@@ -432,7 +437,7 @@ public class LPController extends BaseController {
 		return loginInfo;
 	}
 
-	private void validatePrerequisites(ModelMap modelMap, String servicePhase, String requestNumber, Service service, AccountDetailsViewSDO accountDetails) throws Exception {
+	private void validatePrerequisites(ModelMap modelMap, String servicePhase, String requestNumber, Service service, AccountDetailsViewSDO accountDetails,String statusId) throws Exception {
 		// Prerequisite validation:
 		// check user is the owner,
 		// the card status,
@@ -449,17 +454,11 @@ public class LPController extends BaseController {
 				modelMap.addAttribute("messageId", "error.service.notAuthorized");
 				isValid = false;
 			} else {
-				if (servicePhase != null && !servicePhase.isEmpty()) {
-					if (servicePhase.equals("Resubmit") && applicantRequest.getStatusId().getValue() != null && !( applicantRequest.getStatusId().getValue().intValue() == 5 || applicantRequest.getStatusId().getValue().intValue() == 6)) {
+				if (statusId != null && !statusId.isEmpty()) {
+					if (applicantRequest.getStatusId().getValue() != null && !statusId.equals(applicantRequest.getStatusId().getValue().toString())) {
 						modelMap.addAttribute("messageId", "error.service.invalidState");
 						isValid = false;
-					} else if (servicePhase.equals("ApplicationPaymentDone") && (applicantRequest.getStatusId().getValue() == null || applicantRequest.getStatusId().getValue().intValue() != 33)) {
-						modelMap.addAttribute("messageId", "error.service.invalidState");
-						isValid = false;
-					} else if (servicePhase.equals("SevicePaymentDone") && (applicantRequest.getStatusId().getValue() == null || applicantRequest.getStatusId().getValue().intValue() != 18)) {
-						modelMap.addAttribute("messageId", "error.service.invalidState");
-						isValid = false;
-					}
+					} 
 				}
 			}
 		}

@@ -366,7 +366,7 @@
 													
 												</c:if>
 												
-												<c:if test="${item.serviceId ==408 &&  item.sorceType == 1 && ( item.statusId ==44 || item.statusId ==5 || item.statusId ==6 || item.statusId ==33 || item.statusId ==18 )}">
+												<c:if test="${item.serviceId ==408 &&  item.sorceType == 1 && ( item.statusId ==44 || item.statusId ==52  || item.statusId ==5 || item.statusId ==6 || item.statusId ==33 || item.statusId ==18 )}">
 													
 													<a href="${item.url}?serviceId=${item.serviceId}&requestNo=${item.requestNo}&statusId=${item.statusId}&letter=${item.letter}&typeOfUser=${item.userType}" class="link-btn">
 													<c:if test="${item.statusId ==5}">

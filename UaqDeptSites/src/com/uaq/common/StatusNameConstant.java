@@ -68,4 +68,6 @@ public class StatusNameConstant {
 	public static final int INITIATE_ACOUNT_ACTIVATE_ID = 41;
 	
 	public static final int WAITING_AD = 44;
+	
+	public static final int RESUBMIT_AD = 52;
 }

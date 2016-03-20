@@ -39,19 +39,19 @@ public class LostDocumentServiceHandler extends ServiceHandler {
 		if (initialParams == null)
 			initialParams = new HashMap<String, Object>();
 		boolean isStep1 = phase != null && phase.equals("Step1");
-
+		String statusId = (String) initialParams.get("statusId");
 		ServiceField f1 = new ServiceField("documenType", "ld.field.documenType", FieldTypeEnum.Select, phase == null);
 		ServiceField f2 = new ServiceField(isStep1 ? "" : "policeReport", "ld.field.policeReport", FieldTypeEnum.File, phase == null);
 		ServiceField f3 = new ServiceField(isStep1 ? "" : "lostDocumentCopy", "ld.field.lostDocumentCopy", FieldTypeEnum.File, phase == null);
-		ServiceField f4 = new ServiceField("adNewspaper", "ld.field.adNewspaper", FieldTypeEnum.File, true);
+		ServiceField f4 = new ServiceField("adNewspaper", "ld.field.adNewspaper", FieldTypeEnum.File, "Step1".equals(phase)&& "44".equals(statusId));
 
 		// In case of readOnly/ disabled I need to display lookup String value
 		// not Id value
 		Map<String, String> lostDocumentTypes = lookUpDataDropDown(lookupServiceEN_AR, LookupTypeEnum.LostDocumentType, languageCode, null);
 		f1.setFieldLkValues(lostDocumentTypes);
-		f1.setFieldValue(lpLostDocRequest == null ? (String) initialParams.get(f1.getFieldName()) : lostDocumentTypes.get(lostDocId));
+		f1.setFieldValue(lpLostDocRequest == null ? (String) initialParams.get(f1.getFieldName()) : lostDocId);
 		f1.setDisabled(lpLostDocRequest != null);
-		f1.setFieldIdValue(lpLostDocRequest != null? lostDocId : null);
+//		f1.setFieldIdValue(lpLostDocRequest != null? lostDocId : null);
 
 		f2.setPanelHeader("service.label.attachments");
 		f2.setDocType("153", "PoliceLostReport");
@@ -73,9 +73,11 @@ public class LostDocumentServiceHandler extends ServiceHandler {
 		}
 
 		if (sendBackInfo != null) {
+			
 			f2.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f2.getDocTypeId()));
 			f3.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f3.getDocTypeId()));
-			if (phase.equals("Step1")) {
+			f4.setAttachmentValue(sendBackInfo.getLatestApplicantAttachment().get(f4.getDocTypeId()));
+			if (phase.equals("Step1")&& "44".equals(statusId)) {
 				getReviewerResponse(sendBackInfo, "ld.field.newspaperAdLetter", "150", serviceFields);
 			} else {
 				getReviewerResponse(sendBackInfo, serviceFields);

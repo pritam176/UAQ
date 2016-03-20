@@ -244,7 +244,7 @@ public class MyRequestResubmitController extends BaseController {
 			}
 
 			viewname = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + "/showServicePhase.html?serviceId=" + LOST_DOCUMENT + "&requestNumber="
-					+ inputVO.getAttributeValue() + "&servicePhase="+("44".equals(statusId)?"Step1":"Resubmit")+ "&statusId="+statusId;
+					+ inputVO.getAttributeValue() + "&servicePhase="+("44".equals(statusId) || "52".equals(statusId)?"Step1":"Resubmit")+ "&statusId="+statusId;
 
 		}
 		else if (serviceId.equals(GRAND_LAND_REQUEST)) {
