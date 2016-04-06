@@ -85,7 +85,7 @@
 													<!-- text box -->
 													<div class="form-group cf">
 														<div class="col-md-5">
-															<label for="plan-number" class="form-lbl mandatory_lbl"><spring:message code="label.ps.siteplanNo" /> <span class="form-lbl-subtxt">
+															<label for="plan-number" class="form-lbl "><spring:message code="label.ps.siteplanNo" /> <span class="form-lbl-subtxt">
 																<%-- <spring:message code="label.ps.land.owned" /> --%>	</span>
 															</label>
 														</div>
@@ -407,9 +407,9 @@
 			                                            <div class="col-md-9">
 		                                                   <c:forEach items="${attachmentPayLoad}" var="attachments">
 																	
-		                                                    <c:if test="${attachments.createdby=='Site Plan Document'}">
+		                                                    <c:if test="${attachments.createdby.value=='Site Plan Document'}">
 																	<div class="col-md-12 remove-pad attachment-btm">
-																		<a href="${attachments.downloadurl}" target="_blank" alt="${attachments.fileName}" title="${attachments.fileName}"> ${attachments.fileName}</a> <!-- please update link and file name/some name -->
+																		<a href="${attachments.downloadurl.value}" target="_blank" alt="${attachments.fileName.value}" title="${attachments.fileName.value}"> ${attachments.fileName.value}</a> <!-- please update link and file name/some name -->
 																	</div>
 																 	</c:if> 
 															</c:forEach>
@@ -428,11 +428,11 @@
 			                                            <div class="col-md-9">
 														
 		                                                   <c:forEach items="${attachmentPayLoad}" var="attachments">
-																	<c:if test="${attachments.createdby=='Reviewer Supportive Attachment'}"> 
+																	
 																	<div class="col-md-12 remove-pad attachment-btm">
-																		<a href="${attachments.downloadurl}" target="_blank" alt="${attachments.fileName}" title="${attachments.fileName}"> ${attachments.fileName}</a> <!-- please update link and file name/some name -->
+																		<a href="${attachments.downloadurl.value}" target="_blank" alt="${attachments.fileName.value}" title="${attachments.fileName.value}"> ${attachments.createdby.value}</a> <!-- please update link and file name/some name -->
 																	</div>
-																	</c:if> 
+																	
 															</c:forEach>
 		                                                </div>
 	                                            	</div>

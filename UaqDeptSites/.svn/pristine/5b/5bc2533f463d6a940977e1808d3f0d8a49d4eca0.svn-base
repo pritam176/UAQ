@@ -1,0 +1,213 @@
+package com.uaq.controller;
+
+import static com.uaq.common.ApplicationConstants.*;
+import static com.uaq.common.TilesViewConstant.*;
+import static com.uaq.common.UAQURLConstant.*;
+
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.uaq.command.WasteContainerCommand;
+
+import com.uaq.common.PropertiesUtil;
+import com.uaq.common.ServiceNameConstant;
+import com.uaq.common.ViewPath;
+import com.uaq.controller.mapper.PWSDataMapper;
+import com.uaq.controller.mapper.PortalDataMapper;
+import com.uaq.logger.UAQLogger;
+import com.uaq.service.PWSRequestService;
+import com.uaq.service.PortalUtil;
+
+import com.uaq.vo.AccountDetailTokenOutputVO;
+import com.uaq.vo.LoginOutputVO;
+import com.uaq.vo.PageMetadataVO;
+import com.uaq.vo.UserDeatilVO;
+import com.uaq.vo.WasteContainerRequestInputVO;
+import com.uaq.vo.WasteContainerRequestOutputVO;
+
+@Controller
+public class PWSController extends BaseController {
+
+	public static transient UAQLogger logger = new UAQLogger(PWSController.class);
+
+	@Autowired
+	@Qualifier("pWSRequestService")
+	private PWSRequestService pWSRequestService;
+
+	@Autowired
+	private MessageSource messageSource;
+
+	@Autowired
+	private PortalUtil portalUtil;
+
+	@RequestMapping(value = ViewPath.PWS_WASTE_CONTAINER_REQUEST, method = RequestMethod.GET)
+	public String handleWasteContainer(HttpServletRequest request, HttpServletResponse response, ModelMap model) {
+		logger.info("Waste container request controller | handle Request");
+		super.handleRequest(request, model);
+		String viewname = "";
+		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
+		Locale locale = new Locale(languageCode);
+		PageMetadataVO pageMetadataVO = new PageMetadataVO();
+		pageMetadataVO.setPageTitle(messageSource.getMessage("label.pws.wastecontainer.pagetitle", null, locale));
+		pageMetadataVO.setPageDescription(messageSource.getMessage("label.pws.wastecontainer.pagedescription", null, locale));
+		pageMetadataVO.setPageKeywords(messageSource.getMessage("label.pws.wastecontainer.pagekeyword", null, locale));
+		LoginOutputVO logininfo = null;
+		String typeOfUser = "";
+		if (portalUtil.isMobile(request, response)) {
+			// mobile site handle
+			viewname = MOBILE_LOGIN_AGAIN;
+			logininfo = portalUtil.getLoginDetailFromMobileRequest(request);
+			if (logininfo != null) {
+				logger.debug("Mobile My Request URl.Login info Should from URL=" + logininfo.toString());
+				if (portalUtil.validateToken(logininfo)) {
+					typeOfUser = logininfo.getTypeOfUser();
+					model.addAttribute("typeOfUser", typeOfUser);
+					if (typeOfUser.equals(INDIVIDUAL_USER)) {
+						request.getSession().setAttribute(SESSION_LOGIN_INFO_MOBILE, logininfo);
+						logger.info("Success    |    Token Validated");
+						WasteContainerCommand command = new WasteContainerCommand();
+						command.setServiceType("New Container");
+						command.setIgnore("true");
+						viewname = "pws.wasteContainer.mobile";
+						model.addAttribute("wasteContainerCommand", command);
+					}
+				}
+			}
+
+			if (viewname.equals(MOBILE_LOGIN_AGAIN)) {
+				// request.getSession().invalidate();
+				logger.info("Failure    |  User Not Loged In   ");
+
+			}
+
+		} else {
+			// Desktop site handle
+			logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
+			viewname = PORTAL_LOGIN_AGAIN;
+			if (logininfo != null) {
+				if (portalUtil.validateToken(logininfo)) {
+					typeOfUser = logininfo.getTypeOfUser();
+					model.addAttribute("typeOfUser", typeOfUser);
+					if (typeOfUser.equals(INDIVIDUAL_USER)) {
+						logger.info("Success    |    Token Validated");
+						WasteContainerCommand command = new WasteContainerCommand();
+						command.setServiceType("New Container");
+						command.setIgnore("true");
+						viewname = "pws.wasteContainer";
+						model.addAttribute("wasteContainerCommand", command);
+					}
+				}
+
+			}
+			if (viewname.equals(PORTAL_LOGIN_AGAIN)) {
+				logger.info("Failure    |    User Not Loged In ");
+				request.getSession().invalidate();
+
+			}
+			model.addAttribute("pagelable", "dept.lbl.pws.wastcont");
+		}
+		model.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
+		model.addAttribute(PAGE_META_DATA, pageMetadataVO);
+		return viewname;
+
+	}
+
+	@RequestMapping(value = ViewPath.PWS_WASTE_CONTAINER_REQUEST, method = RequestMethod.POST)
+	public String submitWasteContainer(@ModelAttribute("wasteContainerCommand") WasteContainerCommand command, ModelMap model, HttpServletResponse response, HttpServletRequest request) {
+		logger.enter("Waste Container Submit controller | handle Request");
+		super.handleRequest(request, model);
+		String languageCode = request.getParameter(PARAM_LANGUAGE_CODE);
+
+		Locale locale = new Locale(languageCode);
+		PageMetadataVO pageMetadataVO = new PageMetadataVO();
+		pageMetadataVO.setPageTitle(messageSource.getMessage("label.pws.wastecontainer.pagetitle", null, locale));
+		pageMetadataVO.setPageDescription(messageSource.getMessage("label.pws.wastecontainer.pagedescription", null, locale));
+		pageMetadataVO.setPageKeywords(messageSource.getMessage("label.pws.wastecontainer.pagekeyword", null, locale));
+
+		String view = "";
+		LoginOutputVO logininfo = null;
+		if (portalUtil.isMobile(request, response)) {
+			model.addAttribute(ISMOBILE, "true");
+			view = MOBILE_LOGIN_AGAIN;
+			logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_MOBILE);
+			if (logininfo != null) {
+				logger.debug("Mobile  Request URL.Login info Should from URL=" + logininfo.toString());
+				if (portalUtil.validateToken(logininfo)) {
+					logger.info("Success    |    Token Validated");
+					AccountDetailTokenOutputVO accountDetailfromToken = portalUtil.getAccountDetailForMobile(logininfo);
+					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
+						logger.debug("Account Detail from login info- " + accountDetailfromToken.toString());
+						view = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						WasteContainerRequestInputVO wasteContainerRequestInputVO = PWSDataMapper.setcommandToVO(command);
+						UserDeatilVO userdeatilVO = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
+
+						wasteContainerRequestInputVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
+						WasteContainerRequestOutputVO outputVO = pWSRequestService.submitContainer(wasteContainerRequestInputVO, userdeatilVO);
+						if (!outputVO.getStatus().equals(SERVICE_FAILED)) {
+							logger.debug("Request Succesfully Submited  | " + outputVO.getRequestId());
+							model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? outputVO.getMessage_EN() : outputVO.getMessage_AR());
+							model.addAttribute(ISMOBILE, "true");
+							model.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
+							view = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+//							new ReportsService().generateRequestReport(ServiceNameConstant.NEW_WASTE_CONTAINER, outputVO.getRequestNo().split("-")[3], outputVO.getRequestNo(), userdeatilVO.getUsername(), userdeatilVO.getAccountid(),ServiceNameConstant.NEW_WASTE_CONTAINER_NAME);
+							// view = MOBILE_THANKU_VIEW;
+						}
+
+					}
+				}
+			}
+			if (view.equals(MOBILE_LOGIN_AGAIN)) {
+				request.getSession().invalidate();
+				logger.info("Failure    |  User Not Loged In   ");
+
+			}
+
+		} else {
+			model.addAttribute(ISMOBILE, "false");
+			view = PORTAL_LOGIN_AGAIN;
+			logininfo = (LoginOutputVO) request.getSession().getAttribute(SESSION_LOGIN_INFO_PORTAL);
+			if (logininfo != null) {
+				if (portalUtil.validateToken(logininfo)) {
+					AccountDetailTokenOutputVO accountDetailfromToken = portalUtil.getAccountDetailForMobile(logininfo);
+					if (accountDetailfromToken != null && accountDetailfromToken.getAccountId() != null) {
+						logger.debug("Account Detail from login info- " + accountDetailfromToken.toString());
+						WasteContainerRequestInputVO wasteContainerRequestInputVO = PWSDataMapper.setcommandToVO(command);
+						view = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + SERVICES_ERROR_PAGE;
+						UserDeatilVO userdeatilVO = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
+						wasteContainerRequestInputVO.setLanguageId(PortalDataMapper.getLanguageId(languageCode));
+						WasteContainerRequestOutputVO outputVO = pWSRequestService.submitContainer(wasteContainerRequestInputVO, userdeatilVO);
+						if (!outputVO.getStatus().equals(SERVICE_FAILED)) {
+							logger.debug("Request Succesfully Submited  | " + outputVO.getMessage_EN());
+							model.addAttribute(RESPONCE_KEY, (languageCode.equals(LANG_ENGLISH)) ? outputVO.getMessage_EN() : outputVO.getMessage_AR());
+							model.addAttribute(ISMOBILE, "false");
+							model.addAttribute(LANGUAGE_TRANSFORMATION_IGNORE, "true");
+							view = SPRING_REDIRECT + PropertiesUtil.getProperty(UAQ_URL) + URL_SEPARATOR + languageCode + THANKYOU_PAGE;
+//							new ReportsService().generateRequestReport(ServiceNameConstant.NEW_WASTE_CONTAINER, outputVO.getRequestNo().split("-")[3], outputVO.getRequestNo(), userdeatilVO.getUsername(), userdeatilVO.getAccountid(),ServiceNameConstant.NEW_WASTE_CONTAINER_NAME);
+						}
+					}
+				}
+			}
+			if (view.equals(MOBILE_LOGIN_AGAIN)) {
+				logger.info("Failure    |    User Not Loged In ");
+				request.getSession().invalidate();
+
+			}
+			model.addAttribute(PAGE_LABEL, "dept.lbl.pws.wastcont");
+		}
+		model.addAttribute(PAGE_META_DATA, pageMetadataVO);
+		return view;
+
+	}
+
+}

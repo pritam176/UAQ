@@ -1,0 +1,402 @@
+package com.uaq.service;
+
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import uaq.db.si.model.common.AccountDetailsViewSDO;
+import uaq.db.si.model.common.ApplicantRequestViewSDO;
+
+import com.uaq.common.ServiceNameConstant;
+import com.uaq.controller.mapper.PSDataMapper;
+import com.uaq.controller.mapper.PortalDataMapper;
+import com.uaq.logger.UAQLogger;
+import com.uaq.service.mapper.ReviewerServiceBrokenTranasactionDataMapper;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+import com.uaq.vo.LandInputVO;
+import com.uaq.vo.LandOutputVO;
+import com.uaq.vo.NewSupplierRegistrationVO;
+import com.uaq.vo.PSResubmissonOutputVO;
+import com.uaq.vo.PaymentTransactionDetailVO;
+import com.uaq.vo.ReSubmiisionInputVO;
+import com.uaq.vo.UserDeatilVO;
+import com.uaq.vo.WhomItmayConcernVO;
+
+import static com.uaq.common.ApplicationConstants.SERVICE_FAILED;
+import static com.uaq.common.ApplicationConstants.SERVICE_SUCCESS;
+import static com.uaq.common.ServiceNameConstant.*;
+import static com.uaq.common.StatusNameConstant.*;
+import static com.uaq.common.WebServiceConstant.*;
+
+public class ReviewerServiceBrokenTracaction {
+
+	private static transient UAQLogger logger = new UAQLogger(ReviewerServiceBrokenTracaction.class);
+
+	private PSReSubmissionRequestService pSReSubmissionRequestService;
+
+	private PSAfterServicePayment pSAfterServicePayment;
+
+	private LPReSubmissionRequestService lPReSubmissionRequestService;
+
+	private EGDAfterServicePayment eGDAfterServicePayment;
+
+	private PSFindRequestService pSFindRequestService;
+
+	private LPServiceLookUp lPServiceLookUp;
+
+	public LandOutputVO invokeRevierIneceator(AccountDetailTokenOutputVO accountDetailfromToken, PaymentTransactionDetailVO paymentTransactionDetailVO) throws Exception {
+
+		LandOutputVO landOutputVO = new LandOutputVO();
+
+		pSReSubmissionRequestService = new PSReSubmissionRequestService();
+		pSAfterServicePayment = new PSAfterServicePayment();
+		lPReSubmissionRequestService = new LPReSubmissionRequestService();
+		eGDAfterServicePayment = new EGDAfterServicePayment();
+		pSFindRequestService = new PSFindRequestService();
+		lPServiceLookUp = new LPServiceLookUp();
+
+		String requestNo = paymentTransactionDetailVO.getRequestNo();
+		String requestId = paymentTransactionDetailVO.getRequestId();
+		String serviceId = paymentTransactionDetailVO.getServiceId();
+		String languageCode = accountDetailfromToken.getLanguageId();
+		String status = paymentTransactionDetailVO.getStatusId();
+
+		logger.debug("Request NO-" + requestNo + " | serviceId - " + serviceId + " | languageCode -" + languageCode + "  | status" + status);
+
+		ReSubmiisionInputVO inputVO = new ReSubmiisionInputVO();
+		inputVO.setAttributeName(SOAP_REQUESTNO_ARGUMENT);
+		inputVO.setAttributeValue(requestNo);
+		
+		AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+		Map<String, Object> notificationParams = new HashMap<String, Object>();
+		notificationParams.put("accountDetails", accountDetails);
+		notificationParams.put("requestNumber", requestNo);
+		notificationParams.put("requestId", requestId);
+		notificationParams.put("applicantId", accountDetailfromToken.getAccountId());
+		notificationParams.put("applicantName", accountDetailfromToken.getFirstName());
+		notificationParams.put("transactionId", paymentTransactionDetailVO.getTransactionId());
+		notificationParams.put("amount", paymentTransactionDetailVO.getTransactionAmount());
+		notificationParams.put("status", status);
+
+		if (serviceId.equals(ADD_LAND_REQUEST)) {
+			logger.enter(ADD_LAND_REQUEST);
+			UserDeatilVO user = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
+			LandInputVO addLandRequest = ReviewerServiceBrokenTranasactionDataMapper.setReviewDataToAddLandVO(accountDetailfromToken, requestNo);
+			addLandRequest.setLanguageId(languageCode);
+			addLandRequest.setTransactionId(paymentTransactionDetailVO.getTransactionId());
+			addLandRequest.setTransationStatus(paymentTransactionDetailVO.getTransactionStatus());
+			addLandRequest.setTransationAmount(paymentTransactionDetailVO.getTransactionAmount());
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
+				landOutputVO = pSReSubmissionRequestService.reSubmitAddLand(user, addLandRequest);
+			} else if (status.equals(AFTER_SERVICE_PAYMENT)) {
+				landOutputVO = pSAfterServicePayment.servicePaymentAddlandRequest(user, addLandRequest);
+			}
+			logger.exit(ADD_LAND_REQUEST);
+		} else if (serviceId.equals(ISSUE_SITE_PLAN_DOCUMENT_REQUEST)) {
+			logger.enter(ISSUE_SITE_PLAN_DOCUMENT_REQUEST);
+			UserDeatilVO user = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
+			LandInputVO inputVo = ReviewerServiceBrokenTranasactionDataMapper.settingServiceToToIssueSitePlanDocVO(accountDetailfromToken, requestNo);
+			inputVo.setStatus("2");
+			inputVo.setLanguageId(languageCode);
+			inputVo.setTransactionId(paymentTransactionDetailVO.getTransactionId());
+			inputVo.setTransationStatus(paymentTransactionDetailVO.getTransactionStatus());
+			inputVo.setTransationAmount(paymentTransactionDetailVO.getTransactionAmount());
+			landOutputVO = pSReSubmissionRequestService.reSubmitissueSitePlanDocument(user, inputVo);
+			logger.exit(ISSUE_SITE_PLAN_DOCUMENT_REQUEST);
+		} else if (serviceId.equals(LAND_DEMACRATION_REQUEST)) {
+			logger.enter(LAND_DEMACRATION_REQUEST);
+			UserDeatilVO user = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
+			LandInputVO inputVo = ReviewerServiceBrokenTranasactionDataMapper.settingServiceToDemarcationVO(accountDetailfromToken, requestNo);
+			inputVo.setLanguageId(languageCode);
+			inputVo.setTransactionId(paymentTransactionDetailVO.getTransactionId());
+			inputVo.setTransationStatus(paymentTransactionDetailVO.getTransactionStatus());
+			inputVo.setTransationAmount(paymentTransactionDetailVO.getTransactionAmount());
+			landOutputVO = pSReSubmissionRequestService.reSubmitLandDemarcationPalnDocument(user, inputVo);
+			logger.exit(LAND_DEMACRATION_REQUEST);
+		} else if (serviceId.equals(NEW_SUPPLIER_REGISTRATION)) {
+			logger.enter(NEW_SUPPLIER_REGISTRATION);
+			UserDeatilVO user = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
+			NewSupplierRegistrationVO supplierDetails = ReviewerServiceBrokenTranasactionDataMapper.setSupplierDataForAfterPayment(accountDetailfromToken, requestNo);
+			supplierDetails.setLanguageId(languageCode);
+			// Tranasction ID
+			supplierDetails.setEdirhamServCode(paymentTransactionDetailVO.getTransactionId());
+			supplierDetails.setServiceFee(paymentTransactionDetailVO.getTransactionAmount());
+			landOutputVO = eGDAfterServicePayment.submitAfterPayment(user, supplierDetails);
+			logger.exit(NEW_SUPPLIER_REGISTRATION);
+		} else if (serviceId.equals(RENEW_SUPPLIER_REGISTRATION)) {
+			logger.enter(RENEW_SUPPLIER_REGISTRATION);
+			UserDeatilVO user = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
+			NewSupplierRegistrationVO supplierDetails = ReviewerServiceBrokenTranasactionDataMapper.setSupplierDataForAfterPayment(accountDetailfromToken, requestNo);
+			supplierDetails.setServiceId("502");
+			supplierDetails.setLanguageId(languageCode);
+			// Tranasction ID
+			supplierDetails.setEdirhamServCode(paymentTransactionDetailVO.getTransactionId());
+			supplierDetails.setServiceFee(paymentTransactionDetailVO.getTransactionAmount());
+			landOutputVO = eGDAfterServicePayment.submitAfterPayment(user, supplierDetails);
+			logger.exit(RENEW_SUPPLIER_REGISTRATION);
+		} else if (serviceId.equals(ServiceNameConstant.ISSUE_TO_WHOME_IT_MAY_CERTIFICATE)) {
+			logger.enter(ISSUE_TO_WHOME_IT_MAY_CERTIFICATE);
+			UserDeatilVO user = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
+			WhomItmayConcernVO whomItmayConcernVO = ReviewerServiceBrokenTranasactionDataMapper.getWhomItmayConcernVOForProceedToOperator(accountDetailfromToken, requestNo);
+			whomItmayConcernVO.setLanguageId(languageCode);
+			whomItmayConcernVO.setEdirhamServCode(paymentTransactionDetailVO.getTransactionId());
+			whomItmayConcernVO.setServiceFee(paymentTransactionDetailVO.getTransactionAmount());
+			landOutputVO = lPReSubmissionRequestService.reSubmitWhomItMayConcern(user, whomItmayConcernVO);
+			logger.exit(ISSUE_TO_WHOME_IT_MAY_CERTIFICATE);
+		} else if (serviceId.equals(EXTENTION_OF_GRANT_LAND_REQUEST)) {
+			logger.enter(EXTENTION_OF_GRANT_LAND_REQUEST);
+			PSResubmissonOutputVO resubmitdata = pSFindRequestService.findExtentionGrandLandRequest(inputVO);
+			if (!SERVICE_FAILED.equals(resubmitdata.getStatus())) {
+				UserDeatilVO user = PortalDataMapper.getUserDetailFrom(accountDetailfromToken);
+				LandInputVO addLandRequest = PSDataMapper.setReviewDataToExtentionGrandLandVO(resubmitdata, accountDetailfromToken);
+				addLandRequest.setLanguageId(languageCode);
+				addLandRequest.setTransactionId(paymentTransactionDetailVO.getTransactionId());
+				addLandRequest.setTransationStatus(paymentTransactionDetailVO.getTransactionStatus());
+				addLandRequest.setTransationAmount(paymentTransactionDetailVO.getTransactionAmount());
+				landOutputVO = pSAfterServicePayment.servicePaymentExtensionGrandLandRequest(user, addLandRequest);
+			} else {
+				logger.error("findExtentionGrandLandRequest return Null");
+			}
+			logger.exit(EXTENTION_OF_GRANT_LAND_REQUEST);
+		} else if (serviceId.equals(ISSUE_NEW_PRO_REQUEST)) {
+//			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+//			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+//			String requestId = applicantRequest.getRequestId().toString();
+			// int serviceIdIssUNewPro =
+			// applicantRequest.getServiceId().getValue().intValue();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + ISSUE_NEW_PRO_REQUEST);
+
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
+				notificationParams.put("stepAction", "Applicant Fee Paymant");
+				notificationParams.put("stepName", "AFTER_APP_FEES");
+				notificationParams.put("status", "29");
+				new ProCardIssuerServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+			}
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
+				notificationParams.put("stepAction", "Service Fee Paymant");
+				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
+				notificationParams.put("status", "30");
+				new ProCardIssuerServiceHandler().proceedWithServiceAfterPayment(params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+
+			}
+			WebServiceInvoker.sendSmsAndEMail(notificationParams);
+
+		} else if (serviceId.equals(RENEW_PRO_REQUEST)) {
+//			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+//			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+//			String requestId = applicantRequest.getRequestId().toString();
+			// int serviceIdIssUNewPro =
+			// applicantRequest.getServiceId().getValue().intValue();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + ISSUE_NEW_PRO_REQUEST);
+
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
+				notificationParams.put("stepAction", "Applicant Fee Paymant");
+				notificationParams.put("stepName", "AFTER_APP_FEES");
+				notificationParams.put("status", "29");
+				new ProCardRenewerServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+			}
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
+				notificationParams.put("stepAction", "Service Fee Paymant");
+				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
+				notificationParams.put("status", "30");
+				new ProCardRenewerServiceHandler().proceedWithServiceAfterPayment(params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+
+			}
+			WebServiceInvoker.sendSmsAndEMail(notificationParams);
+
+		} else if (serviceId.equals(LAND_PROPERTY_VALUTION_REQUEST)) {
+//			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+//			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+//			String requestId = applicantRequest.getRequestId().toString();
+			// int serviceIdIssUNewPro =
+			// applicantRequest.getServiceId().getValue().intValue();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + LAND_PROPERTY_VALUTION_REQUEST);
+
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
+				notificationParams.put("stepAction", "Applicant Fee Paymant");
+				notificationParams.put("stepName", "AFTER_APP_FEES");
+				notificationParams.put("status", "29");
+				new LandAndPropertyValuationServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+			}
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
+				notificationParams.put("stepAction", "Service Fee Paymant");
+				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
+				notificationParams.put("status", "30");
+				new LandAndPropertyValuationServiceHandler().proceedWithServiceAfterPayment(params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+
+			}
+			WebServiceInvoker.sendSmsAndEMail(notificationParams);
+
+		} else if (serviceId.equals(NEW_REAL_ESTATE)) {
+//			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+//			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+//			String requestId = applicantRequest.getRequestId().toString();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + NEW_REAL_ESTATE);
+
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
+				notificationParams.put("stepAction", "Applicant Fee Paymant");
+				notificationParams.put("stepName", "AFTER_APP_FEES");
+				notificationParams.put("status", "29");
+				new RealEstateOfficeIssuerServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+			}
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
+				notificationParams.put("stepAction", "Service Fee Paymant");
+				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
+				notificationParams.put("status", "30");
+				new RealEstateOfficeIssuerServiceHandler().proceedWithServiceAfterPayment(params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+
+			}
+			WebServiceInvoker.sendSmsAndEMail(notificationParams);
+
+		} else if (serviceId.equals(RENEW_REAL_ESTATE)) {
+			
+//			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+//			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+//			String requestId = applicantRequest.getRequestId().toString();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + RENEW_REAL_ESTATE);
+
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
+				notificationParams.put("stepAction", "Applicant Fee Paymant");
+				notificationParams.put("stepName", "AFTER_APP_FEES");
+				notificationParams.put("status", "29");
+				new RealEstateOfficeRenewerServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+			}
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
+				notificationParams.put("stepAction", "Service Fee Paymant");
+				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
+				notificationParams.put("status", "30");
+				new RealEstateOfficeRenewerServiceHandler().proceedWithServiceAfterPayment(params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+			}
+			WebServiceInvoker.sendSmsAndEMail(notificationParams);
+
+		} else if (serviceId.equals(GRANT_LAND_REQUEST)) {
+//			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+//			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+//			String requestId = applicantRequest.getRequestId().toString();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + GRANT_LAND_REQUEST);
+
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
+				notificationParams.put("stepAction", "Applicant Fee Paymant");
+				notificationParams.put("stepName", "AFTER_APP_FEES");
+				notificationParams.put("status", "29");
+				new GrantLandRequestIssuerServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+			}
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
+				notificationParams.put("stepAction", "Service Fee Paymant");
+				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
+				notificationParams.put("status", "30");
+				new GrantLandRequestIssuerServiceHandler().proceedWithServiceAfterPayment(params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+
+			}
+			WebServiceInvoker.sendSmsAndEMail(notificationParams);
+
+		} else if (serviceId.equals(GRANT_LAND_EXCEPTION_REQUEST)) {
+//			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+//			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+//			String requestId = applicantRequest.getRequestId().toString();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + GRANT_LAND_REQUEST);
+
+//			if (status.equals(PROCEED_TO_REVEWER)) {
+//				notificationParams.put("stepAction", "Applicant Fee Paymant");
+//				notificationParams.put("stepName", "AFTER_APP_FEES");
+//				notificationParams.put("status", "29");
+//				new GrantLandRequestIssuerServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+//				landOutputVO.setStatus(SERVICE_SUCCESS);
+//				String message = messageSource.getMessage("label.paymentCompletedSuccessfully", new String[] { requestNo }, new Locale(languageCode));
+//				landOutputVO.setStatus_EN(message);
+//				landOutputVO.setStatus_AR(message);
+//			}
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
+				notificationParams.put("stepAction", "Service Fee Paymant");
+				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
+				notificationParams.put("status", "30");
+				new GrantLandRequestExceptionServiceHandler().proceedWithServiceAfterPayment(params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+
+			}
+			WebServiceInvoker.sendSmsAndEMail(notificationParams);
+
+		} else if (serviceId.equals(LOST_DOCUMENT)) {
+//			ApplicantRequestViewSDO applicantRequest = lPServiceLookUp.getApplicantRequestByRequestNumber(requestNo);
+//			AccountDetailsViewSDO accountDetails = lPServiceLookUp.getAccountDetails(accountDetailfromToken.getAccountId());
+//			String requestId = applicantRequest.getRequestId().toString();
+			Map<String, String> params = new HashMap<String, String>();
+			params.put("requestId", requestId);
+			params.put("requestNumber", requestNo);
+			params.put("serviceId", "" + LOST_DOCUMENT);
+
+			if (status.equals(AFTER_APPLICANT_PAYMENT)) {
+				notificationParams.put("stepAction", "Applicant Fee Paymant");
+				notificationParams.put("stepName", "AFTER_APP_FEES");
+				notificationParams.put("status", "29");
+				new LostDocumentServiceHandler().issueServiceRequest(accountDetails, lPServiceLookUp, languageCode, params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+			}
+			if (status.equals(AFTER_SERVICE_PAYMENT)) {
+				notificationParams.put("stepAction", "Service Fee Paymant");
+				notificationParams.put("stepName", "AFTER_SERVICE_FEES");
+				notificationParams.put("status", "30");
+				new LostDocumentServiceHandler().proceedWithServiceAfterPayment(params);
+				landOutputVO.setStatus(SERVICE_SUCCESS);
+				
+
+			}
+			WebServiceInvoker.sendSmsAndEMail(notificationParams);
+
+		}
+		return landOutputVO;
+
+	}
+}

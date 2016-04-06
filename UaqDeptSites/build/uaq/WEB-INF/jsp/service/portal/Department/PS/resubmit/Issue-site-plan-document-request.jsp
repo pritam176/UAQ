@@ -103,11 +103,11 @@
 														<!-- text box -->
 														<div class="form-group cf">
 			                                                <div class="col-md-5">
-			                                                    <label for="plan-number" class="form-lbl mandatory_lbl"><spring:message code="label.ps.siteplanNo" />    <span class="form-lbl-subtxt"><%-- <spring:message code="label.ps.land.owned" /> --%></span>
+			                                                    <label for="plan-number" class="form-lbl "><spring:message code="label.ps.siteplanNo" />    <span class="form-lbl-subtxt"><%-- <spring:message code="label.ps.land.owned" /> --%></span>
 			                                                    </label>
 				                                            </div>
 				                                            <div class="col-md-7">
-																	<form:input path="sitePlanNumber" id="plan-number" name="plan-number" type="text"  class="form-control required" data-msg-required="${siteplanReq}" data-mask="0000000000"/>
+																	<form:input path="sitePlanNumber" id="plan-number" name="plan-number" type="text"  class="form-control " data-msg-required="${siteplanReq}" data-mask="0000000000"/>
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -378,8 +378,8 @@
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
 																	<div class="col-md-12 remove-pad attachment-btm">
-																	<c:if test="${fn:trim(attachments.modifiedby) ne fn:trim('Reviewer Supportive Attachment')}">
-																		<a href="${attachments.downloadurl}" target="_blank"> ${attachments.modifiedby}</a> 
+																	<c:if test="${fn:trim(attachments.modifiedby.value) ne fn:trim('Reviewer Supportive Attachment')}">
+																		<a href="${attachments.downloadurl.value}" target="_blank"> ${attachments.modifiedby.value}</a> 
 																		</c:if>
 																	</div>
 																	</c:forEach>
@@ -404,8 +404,8 @@
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
 																	<div class="col-md-12 remove-pad attachment-btm">
-																	<c:if test="${fn:containsIgnoreCase(fn:trim(attachments.modifiedby), fn:trim('Reviewer Supportive Attachment'))}">
-																		<a href="${attachments.downloadurl}" target="_blank"> ${attachments.modifiedby}</a> 
+																	<c:if test="${fn:containsIgnoreCase(fn:trim(attachments.modifiedby.value), fn:trim('Reviewer Supportive Attachment'))}">
+																		<a href="${attachments.downloadurl.value}" target="_blank"> ${attachments.modifiedby.value}</a> 
 																	</c:if>
 																	</div>
 																	</c:forEach>

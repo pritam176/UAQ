@@ -108,7 +108,10 @@
 													<c:if test="${item.statusId ==18}">
 													<spring:message code="label.payment.paynow"/>
 													</c:if>
-													<c:if test="${item.statusId !=5 && item.statusId !=6 && item.statusId !=18}">
+													<c:if test="${item.statusId ==33}">
+													<spring:message code="label.payment.paynow"/>
+													</c:if>
+													<c:if test="${item.statusId !=5 && item.statusId !=6 && item.statusId !=18 && item.statusId !=33}">
 													${item.statusName}
 													</c:if>
 													</a>
@@ -324,7 +327,7 @@
 												
 												
 												<!-- LPV -->
-												<c:if test="${item.serviceId ==406 &&  item.sorceType == 1 && ( item.statusId ==31 ||item.statusId ==5 || item.statusId ==6 || item.statusId ==33 || item.statusId ==18 )}">
+												<c:if test="${item.serviceId ==406 &&  item.sorceType == 1 && ( item.statusId ==55 ||item.statusId ==31 ||item.statusId ==5 || item.statusId ==6 || item.statusId ==33 || item.statusId ==18 )}">
 													
 													<a href="${item.url}?serviceId=${item.serviceId}&requestNo=${item.requestNo}&statusId=${item.statusId}&letter=${item.letter}&typeOfUser=${item.userType}" class="link-btn">
 													<c:if test="${item.statusId ==5}">
@@ -338,14 +341,20 @@
 													</c:if><c:if test="${item.statusId ==18}">
 													<spring:message code="label.payment.paynow"/>
 													</c:if>
-													<c:if test="${item.statusId !=5 && item.statusId !=6 && item.statusId !=33 && item.statusId !=18}">
+													<c:if test="${item.statusId ==55}">
+													<spring:message code="label.trade.resubmit"/>
+													</c:if>
+													<c:if test="${item.statusId ==31}">
+													<spring:message code="label.trade.submit"/>
+													</c:if>
+													<c:if test="${item.statusId !=5 && item.statusId !=6 && item.statusId !=33 && item.statusId !=18 && item.statusId !=55 && item.statusId !=31}">
 													${item.statusName}
 													</c:if>
 													</a>
 													
 												</c:if>
 												
-												<c:if test="${item.serviceId ==407 &&  item.sorceType == 1 && ( item.statusId ==31 ||item.statusId ==5 || item.statusId ==6 || item.statusId ==33 || item.statusId ==18 )}">
+												<c:if test="${item.serviceId ==407 &&  item.sorceType == 1 && ( item.statusId ==55 ||item.statusId ==31 ||item.statusId ==5 || item.statusId ==6 || item.statusId ==33 || item.statusId ==18 )}">
 													
 													<a href="${item.url}?serviceId=${item.serviceId}&requestNo=${item.requestNo}&statusId=${item.statusId}&letter=${item.letter}&typeOfUser=${item.userType}" class="link-btn">
 													<c:if test="${item.statusId ==5}">
@@ -359,14 +368,20 @@
 													</c:if><c:if test="${item.statusId ==18}">
 													<spring:message code="label.payment.paynow"/>
 													</c:if>
-													<c:if test="${item.statusId !=5 && item.statusId !=6 && item.statusId !=33 && item.statusId !=18}">
+													<c:if test="${item.statusId ==31}">
+													<spring:message code="label.trade.submit"/>
+													</c:if>
+													<c:if test="${item.statusId ==55}">
+													<spring:message code="label.trade.resubmit"/>
+													</c:if>
+													<c:if test="${item.statusId !=5 && item.statusId !=6 && item.statusId !=33 && item.statusId !=18 && item.statusId !=55 && item.statusId !=31}">
 													${item.statusName}
 													</c:if>
 													</a>
 													
 												</c:if>
 												
-												<c:if test="${item.serviceId ==408 &&  item.sorceType == 1 && ( item.statusId ==44 || item.statusId ==5 || item.statusId ==6 || item.statusId ==33 || item.statusId ==18 )}">
+												<c:if test="${item.serviceId ==408 &&  item.sorceType == 1 && ( item.statusId ==44 || item.statusId ==52  || item.statusId ==5 || item.statusId ==6 || item.statusId ==33 || item.statusId ==18 )}">
 													
 													<a href="${item.url}?serviceId=${item.serviceId}&requestNo=${item.requestNo}&statusId=${item.statusId}&letter=${item.letter}&typeOfUser=${item.userType}" class="link-btn">
 													<c:if test="${item.statusId ==5}">
@@ -380,7 +395,13 @@
 													</c:if><c:if test="${item.statusId ==18}">
 													<spring:message code="label.payment.paynow"/>
 													</c:if>
-													<c:if test="${item.statusId !=5 && item.statusId !=6 && item.statusId !=33 && item.statusId !=18}">
+													<c:if test="${item.statusId ==44}">
+													<spring:message code="label.ad.submit"/>
+													</c:if>
+													<c:if test="${item.statusId ==52}">
+													<spring:message code="label.ad.resubmit"/>
+													</c:if>
+													<c:if test="${item.statusId !=5 && item.statusId !=6 && item.statusId !=33 && item.statusId !=18 && item.statusId !=44 && item.statusId !=52}">
 													${item.statusName}
 													</c:if>
 													</a>

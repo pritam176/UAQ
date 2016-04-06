@@ -1,0 +1,85 @@
+package com.uaq.soap.warpper;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.xml.namespace.QName;
+
+import com.uaq.logger.UAQLogger;
+import com.uaq.proxies.LandDemarcationServiceForOut.LandDemarcationServiceForOutPortType;
+import com.uaq.proxies.LandDemarcationServiceForOut.LandDemarcationServiceForOutService;
+import com.uaq.proxies.getlanddemarcationreqdetails_client_ep.GetLandDemarcationReqDetails;
+import com.uaq.proxies.getlanddemarcationreqdetails_client_ep.Getlanddemarcationreqdetails_client_ep;
+import com.uaq.proxies.getlanddemarcationreqdetails_client_ep.types.InputPayload;
+import com.uaq.proxies.landdemarcationbpelservice_client_ep.LandDemarcationBPELService;
+import com.uaq.proxies.landdemarcationbpelservice_client_ep.Landdemarcationbpelservice_client_ep;
+import com.uaq.proxies.landdemarcationbpelservice_client_ep.types.Inputpayload;
+
+
+
+
+public class WebServiceWarpper {
+	
+	protected static UAQLogger logger = new UAQLogger(WebServiceWarpper.class);
+	
+	public  com.uaq.proxies.landdemarcationbpelservice_client_ep.types.OutputPayload submitLandDemarcation( Inputpayload payload,String wsdl, String username,String password) throws MalformedURLException {
+		logger.enter("submitLandDemarcation");
+		URL endPoint = new URL(wsdl);
+
+	    Landdemarcationbpelservice_client_ep ep =new Landdemarcationbpelservice_client_ep(endPoint,new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_PS_LandDemarcation/LandDemarcationBPELService",
+                "landdemarcationbpelservice_client_ep"));
+	    
+	    LandDemarcationBPELService service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getLandDemarcationBPELService_pt();
+		return service.process(payload);
+	}
+	
+	public com.uaq.proxies.LandDemarcationServiceForOut.types.OutputPayload reSubmitLandDemarcationRequestORPayment(com.uaq.proxies.LandDemarcationServiceForOut.types.Inputpayload payload,String wsdl, String username,String password) throws MalformedURLException {
+		logger.enter("reSubmitLandDemarcationRequestORPayment");
+		URL endPoint = new URL(wsdl);
+
+	    LandDemarcationServiceForOutService ep =new LandDemarcationServiceForOutService(endPoint,  new QName("http://xmlns.oracle.com/bpmn/bpmnProcess/LandDemarcationServiceForOut",
+                "LandDemarcationServiceForOut.service"));
+	    
+		LandDemarcationServiceForOutPortType service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getLandDemarcationServiceForOutPort();
+		return service.start(payload);
+//		LandDemarcationServiceForOutServiceLocator locator =new LandDemarcationServiceForOutServiceLocator();
+//		locator.setLandDemarcationServiceForOutPortEndpointAddress(wsdl);
+//		addSecurityHeader(locator, username, password);
+//		
+//		return locator.getLandDemarcationServiceForOutPort().start(payload);
+		}
+	
+	public com.uaq.proxies.getlanddemarcationreqdetails_client_ep.types.OutputPayload findLandDemacration(InputPayload payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("findLandDemacration");
+		URL endPoint = new URL(wsdl);
+
+	    Getlanddemarcationreqdetails_client_ep ep =new Getlanddemarcationreqdetails_client_ep(endPoint,new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_PS_LandDemarcation/GetLandDemarcationReqDetails",
+                "getlanddemarcationreqdetails_client_ep"));
+	    
+	    GetLandDemarcationReqDetails service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getGetLandDemarcationReqDetails_pt();
+		return service.process(payload);
+	}
+	
+	/*private void addSecurityHeader(org.apache.axis.client.Service locator, String username, String password) throws ServiceException{
+		Map config = new HashMap();
+		config.put("username", username);
+		config.put("password", password);
+		HandlerRegistry registry = locator.getHandlerRegistry();
+		List chain = registry
+				.getHandlerChain((QName) locator.getPorts().next());
+		HandlerInfo handlerInfo = new HandlerInfo();
+		handlerInfo.setHandlerConfig(config);
+		handlerInfo.setHandlerClass(HeaderHandlerResolver.class);
+		chain.add(handlerInfo);
+	}*/
+
+}

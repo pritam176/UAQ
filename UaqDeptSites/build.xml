@@ -11,6 +11,8 @@
 		<delete dir="${build.dir}" />
 	</target>
 	
+	
+	
 	<!-- Copy the configuration files into the classes directory  -->
 	<target name="copy-configs" description="Copies the Configuration files into the Destination Directory.">
 		<copy todir="${class.dir}" filtering="true">
@@ -21,6 +23,7 @@
 			</fileset>
 		</copy>	
 	</target>
+	
 	<!-- Copy the Environment configuration files into the classes directory  -->
 	<target name="copy-environment-configs" description="Copies the configuration files into the Destination directory">
 		<echo description="${environment}" />
@@ -70,6 +73,7 @@
 	        <zip destfile="${dist.dir}/UaqSites.war">
 	            <fileset dir="${build.dir}/uaq" />
 	        </zip>
-	    	<copy file="${dist.dir}/UaqSites.war" todir="E:\\JAVA\\tomcat\\apache-tomcat-6.0.35\\webapps" />
+		<copy file="${dist.dir}/UaqSites.war" todir="E:\\JAVA\\tomcat\\apache-tomcat-6.0.35\\webapps" /> 
+		<!--	<copy file="${dist.dir}/UaqSites.war" todir="E:\\JAVA\\tomcat\\Deploye" /> -->
 	    </target>	
 </project>

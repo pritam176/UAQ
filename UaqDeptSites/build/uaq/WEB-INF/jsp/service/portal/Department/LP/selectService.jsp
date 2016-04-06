@@ -7,6 +7,7 @@
 <c:set var ="filesize"><spring:message code="filesizemsg"/></c:set>
 					<c:set var ="fileextention"><spring:message code="fileextentionmsg"/></c:set>
 					<c:set var ="fileerror"><spring:message code="fileerrormsg"/></c:set>
+					<c:set var ="charactersOnly"><spring:message code="charactersOnly"/></c:set>
 <c:set var ="fieldmsg"><spring:message code="field.validate"/></c:set>
 
 <div class="container-fluid">
@@ -61,6 +62,7 @@
 									<input type="hidden" name="serviceId" value="${selectedService.id}" />
 									<input type="hidden" name="servicePhase" value="${servicePhase}" />
 									<input type="hidden" name="requestNumber" value="${requestNumber}" />
+									<input type="hidden" name="requestStatus" value="${requestStatus}" />
 									
 									<div class="row"></div>
 									
@@ -92,7 +94,8 @@
 												</c:choose>
 												
 												<!-- text box -->
-												<div id="serviceField-${status.index}" class="form-group cf <c:if test='${fields[status.index].notifierField}'>notifierFieldClass</c:if>" <c:if test="${fields[status.index].requiredUpon_FieldName != null}">${fields[status.index].requiredUpon_FieldName}='${fields[status.index].requiredUpon_FieldValue}'</c:if>>
+												<div id="serviceField-${status.index}" class="form-group cf <c:if test='${fields[status.index].notifierField}'>notifierFieldClass</c:if>" <c:if test="${fields[status.index].requiredUpon_FieldName != null}">${fields[status.index].requiredUpon_FieldName}='${fields[status.index].requiredUpon_FieldValue}'</c:if> 
+												<c:if test="${fields[status.index].mandatoryUpon_FieldName != null}">required_${fields[status.index].mandatoryUpon_FieldName}='${fields[status.index].mandatoryUpon_FieldValue}'</c:if>>
 													<div class="${labelDivClass}">
 														<label for="params['${fields[status.index].fieldName}']"  class="form-lbl ${fields[status.index].required?'mandatory_lbl':''}"><spring:message code="${fields[status.index].displayKey}"/>
 															<c:if test="${fields[status.index].infoMessage != null}">
@@ -160,14 +163,14 @@
 																    <c:if test="${fields[status.index].fieldName != null && fields[status.index].fieldName != '' && param.statusId != '6'}">
 																		<input name="files['${fields[status.index].fieldName}'].docTypeId" type="hidden" value="${fields[status.index].docTypeId}"/>
 																		<input name="files['${fields[status.index].fieldName}'].docTypeName" type="hidden" value="${fields[status.index].docTypeName}"/>
-																		<input type="text" class="form-control  other-form-file file-upload-option-view  <c:if test='${fields[status.index].attachmentValue == null}'>required</c:if>" name ="files['${fields[status.index].fieldName}'].attachmentFile"  data-msg-required="${fieldmsg}" readonly="readonly" />
+																		<input type="text" class="form-control  other-form-file file-upload-option-view  <c:if test='${fields[status.index].required == true}'>required</c:if>" name ="files['${fields[status.index].fieldName}'].attachmentFile"  data-msg-required="${fieldmsg}" readonly="readonly" />
 																		<span class="input-group-btn">
 																			<span class="btn btn-file">
 																				<spring:message code="file.browse" />&hellip; 
 																				<input name="files['${fields[status.index].fieldName}'].attachmentFile" type="file" class="form-control file-upload-option file-upload-no-ajax" accept="image/jpg, image/JPG, image/JPEG, image/jpeg,image/jpeg,image/gif,image/png, application/pdf,image/x-eps, application/msword" error-size="${filesize}" error-extention="${fileextention}" error-failed="${fileerror}" />
 																			</span>
 																		</span>
-																		<c:set var="attachmentValueStyle" value="position: absolute; margin: 35px -270px"/>
+																		<c:set var="attachmentValueStyle" value="position: absolute; top: 35px; left:0;"/>
 																    </c:if>
 																    
 																	<span style="${attachmentValueStyle}">
@@ -195,7 +198,7 @@
 															    	</c:if>
 																</c:when>
 																<c:otherwise>
-																	<input data-msg-required="${fieldmsg}"  name="params['${fields[status.index].fieldName}']" type="${fields[status.index].fieldType}" value="${fields[status.index].fieldValue}" maxlength="${fields[status.index].length}" class="${fields[status.index].fieldName} form-control required" placeholder="" />
+																	<input data-msg-required="${fieldmsg}"  name="params['${fields[status.index].fieldName}']" type="${fields[status.index].fieldType}" value="${fields[status.index].fieldValue}" maxlength="${fields[status.index].length}" class="${fields[status.index].fieldName} form-control <c:if test='${fields[status.index].required == true}'>required</c:if> " <c:if test='${fields[status.index].charactersOnly == true}'>data-rule-onlycharacterspace="true"</c:if> min="${fields[status.index].minValue}"  data-msg-onlycharacterspace="${charactersOnly}" placeholder="" />
 																    <form:errors path="params['${fields[status.index].fieldName}']" class="error"/>
 																</c:otherwise>
 																</c:choose>
@@ -247,9 +250,20 @@
 <script>
 
 jQuery(function($) { 
+	$.validator.addMethod("onlycharacterspace", function(value, element) {
+		return this.optional(element) || /^([a-zA-Z ])+$/i.test(value);
+	});
+
  $(".proIdExpiryDate").datepicker({
 	 minDate:1
  });
  $("#serviceFormId").validate();
+ $('.form-control.file-upload-option.file-upload-no-ajax').on('click',function(e) {
+	var parentItem = $(this).parent().parent().parent('.input-group.file-upload');
+	if($(parentItem).find('label.error').length>0){
+		$(parentItem).children('label.error').remove();
+	}
+});
+
 });
 </script>

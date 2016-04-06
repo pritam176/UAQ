@@ -1,0 +1,152 @@
+package com.uaq.util;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+
+import javax.xml.datatype.DatatypeConfigurationException;
+import javax.xml.datatype.DatatypeFactory;
+import javax.xml.datatype.XMLGregorianCalendar;
+
+import com.uaq.common.ApplicationConstants;
+
+public class DateUtil {
+
+	private static final SimpleDateFormat formatter = new SimpleDateFormat(ApplicationConstants.DATE_TIME_FORMAT);
+
+	private final static DateFormat df = new SimpleDateFormat(ApplicationConstants.DATE_FORMAT);
+
+	private final static DateFormat df1 = new SimpleDateFormat(ApplicationConstants.DD_MM_YYYY);
+
+	private final static DateFormat df2 = new SimpleDateFormat(ApplicationConstants.MM_DD_YYYY);
+
+	public static String getDateXML() { // current, xml dateTime equivalent
+		String strDate = null;
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+		strDate = formatter.format(new Date());
+		strDate = strDate.substring(0, strDate.indexOf('T') + 1).concat("00:00:00"); // required
+																						// for
+																						// prayer
+																						// times
+																						// webservice
+		return strDate;
+	}
+
+	public static String getTimeFromXML(String dateTime) {
+		String strDate = null;
+		strDate = dateTime.substring(dateTime.indexOf('T') + 1, dateTime.indexOf('T') + 6);
+		return strDate;
+	}
+
+	public static Date getSqlDateFromStringDate(String strDate) throws ParseException {
+		SimpleDateFormat format = new SimpleDateFormat("ddMMyyyyHHmmss");
+		Date parsed = format.parse(strDate);
+		return parsed;
+	}
+
+	public static String getUAQFormattedDate(Date date, String dateFormat, String locale) {
+		SimpleDateFormat sdf = new SimpleDateFormat(dateFormat, new Locale(locale));
+		String formatedDate = sdf.format(date);
+		return formatedDate;
+	}
+
+	public static Date getDateFromString(String strDate) throws ParseException {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date parsed = df.parse(strDate);
+		return parsed;
+	}
+
+	public static String gregorianCaltoString(XMLGregorianCalendar xmlGregorianCalendar) {
+		Calendar cal = xmlGregorianCalendar.toGregorianCalendar();
+		formatter.setTimeZone(cal.getTimeZone());
+		String date = formatter.format(cal.getTime());
+		return date;
+
+	}
+
+	public static Date getDateFromDate(String strDate) throws ParseException {
+		DateFormat df = new SimpleDateFormat("dd-MMM-yyyy hh:mm:a");
+		Date parsed = df.parse(strDate);
+		return parsed;
+	}
+
+	public static Calendar toCalendar(String dateString) throws DatatypeConfigurationException, ParseException {
+		Date date = null;
+		date = df.parse(dateString);
+		GregorianCalendar gCalendar = new GregorianCalendar();
+		gCalendar.setTime(date);
+		XMLGregorianCalendar xmlCalendar = null;
+		xmlCalendar = DatatypeFactory.newInstance().newXMLGregorianCalendar(gCalendar);
+		Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(xmlCalendar.toGregorianCalendar().getTimeInMillis());
+		return c;
+	}
+
+	public static Calendar fromDDMMYYtoCalendar(String dateString) throws ParseException {
+
+		// Date date = null;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(df1.parse(dateString));
+		return cal;
+	}
+
+	public static Calendar fromMMDDYYtoCalendar(String dateString) throws ParseException {
+
+		// Date date = null;
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(df2.parse(dateString));
+		return cal;
+	}
+
+	public static XMLGregorianCalendar convertDateToXMLGregorianCalendar(Date date) throws DatatypeConfigurationException {
+		if (date == null) {
+			return null;
+		}
+		DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		return datatypeFactory.newXMLGregorianCalendar(cal);
+	}
+
+	/**
+	 * This will convert STring date to XMLGregorianCalendar
+	 * 
+	 * Date format Should Be MM/dd/yyyy
+	 * 
+	 * @param String
+	 * @return UserDeatilVO
+	 */
+	public static XMLGregorianCalendar convertStringToXMLGregorianCalendar(String date) throws DatatypeConfigurationException, ParseException {
+		if (StringUtil.isEmpty(date)) {
+			return null;
+		}
+		DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
+		GregorianCalendar cal = new GregorianCalendar();
+		cal.setTime(df2.parse(date));
+		return datatypeFactory.newXMLGregorianCalendar(cal);
+	}
+
+	public static String converXMLCalenderTOString(XMLGregorianCalendar xmlcalender) {
+		if(xmlcalender==null){
+			return null;
+		}
+		Calendar calendar = xmlcalender.toGregorianCalendar();
+		return df2.format(calendar.getTime());
+	}
+
+	
+	
+	public static XMLGregorianCalendar getXMLGregorianCalendarFromCalendar(GregorianCalendar cal) throws DatatypeConfigurationException{
+		if(cal == null)
+			return null;
+		DatatypeFactory datatypeFactory = DatatypeFactory.newInstance();
+		return datatypeFactory.newXMLGregorianCalendar(cal);
+	}
+	
+	
+	
+}

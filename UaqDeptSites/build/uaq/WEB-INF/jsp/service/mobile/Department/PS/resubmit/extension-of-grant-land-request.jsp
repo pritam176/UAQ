@@ -90,13 +90,13 @@
 											<!-- text box -->
 											<div class="form-group cf">
 												<div class="col-md-5">
-													<label for="plan-number" class="form-lbl mandatory_lbl"><spring:message code="label.ps.siteplanNo" /> <span class="form-lbl-subtxt">
+													<label for="plan-number" class="form-lbl "><spring:message code="label.ps.siteplanNo" /> <span class="form-lbl-subtxt">
 														<%-- <spring:message code="label.ps.land.owned" /> --%>	</span>
 													</label>
 												</div>
 												<div class="col-md-7">
 													<form:input id="plan-number" path="sitePlanNumber"
-														type="text" class="form-control required" data-msg-required="${siteplanReq}"  data-mask="0000000000" />
+														type="text" class="form-control " data-msg-required="${siteplanReq}"  data-mask="0000000000" />
 												</div>
 											</div>
 											<!-- /text box -->
@@ -322,7 +322,7 @@
 														<div class="col-md-12 col-xs-12 remove-pad">
 														<div class="custom-select-box cf">
 															<form:select path="landUsage" class="required1 required"
-																id="area-select" name="landUsage"  data-msg-required="${landUsageReq}">
+																id="landUsage" name="landUsage"  data-msg-required="${landUsageReq}">
 																<form:option value=""><spring:message code="option.select"/> </form:option> 
 																<form:options items="${landType}" />
 															</form:select>
@@ -418,9 +418,9 @@
 																</div>
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
-																	<c:if test="${fn:trim(attachments.createdby) eq  fn:trim('Site Plan Document')}">
+																	<c:if test="${fn:trim(attachments.createdby.value) eq  fn:trim('Site Plan Document')}">
 																	<div class="col-md-12 remove-pad attachment-btm">
-																		<a href="${attachments.downloadurl}" target="_blank"> ${attachments.createdby}</a>
+																		<a href="${attachments.downloadurl.value}" target="_blank"> ${attachments.createdby.value}</a>
 																	</div>
 																	</c:if>
 																	
@@ -444,9 +444,9 @@
 																</div>
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
-																	<c:if test="${fn:trim(attachments.createdby) ne fn:trim('Site Plan Document')}">
+																	<c:if test="${fn:trim(attachments.createdby.value) ne fn:trim('Site Plan Document')}">
 																	<div class="col-md-12 remove-pad attachment-btm">
-																		<a href="${attachments.downloadurl}" target="_blank"> ${attachments.createdby}</a>
+																		<a href="${attachments.downloadurl.value}" target="_blank"> ${attachments.createdby.value}</a>
 																	</div>
 																	</c:if>
 																	</c:forEach>

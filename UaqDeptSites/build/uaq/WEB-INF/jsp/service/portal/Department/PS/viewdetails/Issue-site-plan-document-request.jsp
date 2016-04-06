@@ -332,8 +332,8 @@
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
 																	<div class="col-md-12 remove-pad attachment-btm">
-																	<c:if test="${fn:trim(attachments.modifiedby) ne fn:trim('Reviewer Supportive Attachment')}">
-																		<a href="${attachments.downloadurl}" target="_blank"> ${attachments.modifiedby}</a> 
+																	<c:if test="${fn:trim(attachments.modifiedby.value) ne fn:trim('Reviewer Supportive Attachment')}">
+																		<a href="${attachments.downloadurl.value}" target="_blank"> ${attachments.modifiedby.value}</a> 
 																		</c:if>
 																	</div>
 																	</c:forEach>
@@ -358,8 +358,8 @@
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
 																	<div class="col-md-12 remove-pad attachment-btm">
-																	<c:if test="${fn:containsIgnoreCase(fn:trim(attachments.modifiedby), fn:trim('Reviewer Supportive Attachment'))}">
-																		<a href="${attachments.downloadurl}" target="_blank"> ${attachments.modifiedby}</a> 
+																	<c:if test="${fn:containsIgnoreCase(fn:trim(attachments.modifiedby.value), fn:trim('Reviewer Supportive Attachment'))}">
+																		<a href="${attachments.downloadurl.value}" target="_blank"> ${attachments.modifiedby.value}</a> 
 																	</c:if>
 																	</div>
 																	</c:forEach>
@@ -424,8 +424,7 @@
 						$("#landusage").attr("disabled", true);
 						$("label.error").hide();
 					
-					
+			}	
 			});
-			
 	    </script>
 		<!-- /script -->

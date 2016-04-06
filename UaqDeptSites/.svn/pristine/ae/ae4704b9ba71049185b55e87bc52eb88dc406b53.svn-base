@@ -1,0 +1,365 @@
+package com.uaq.soap.warpper;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.List;
+
+import javax.xml.namespace.QName;
+
+import com.uaq.common.PropertiesUtil;
+import com.uaq.logger.UAQLogger;
+import com.uaq.proxies.ExtensionOfGrantLandAfterServicePaymentForOut.ExtensionOfGrantLandAfterServicePaymentForOutPortType;
+import com.uaq.proxies.ExtensionOfGrantLandAfterServicePaymentForOut.ExtensionOfGrantLandAfterServicePaymentForOutService;
+import com.uaq.proxies.ExtensionOfGrantLandProcessForOut.ExtensionOfGrantLandProcessForOutPortType;
+import com.uaq.proxies.ExtensionOfGrantLandProcessForOut.ExtensionOfGrantLandProcessForOutService;
+import com.uaq.proxies.IssueSitePlanDocSystemizedServiceForOut.IssueSitePlanDocSystemizedServiceForOutPortType;
+import com.uaq.proxies.IssueSitePlanDocSystemizedServiceForOut.IssueSitePlanDocSystemizedServiceForOutService;
+import com.uaq.proxies.LandDemarcationServiceForOut.LandDemarcationServiceForOutPortType;
+import com.uaq.proxies.LandDemarcationServiceForOut.LandDemarcationServiceForOutService;
+import com.uaq.proxies.activateuseraccountbpel_client_ep.ActivateUserAccountBPEL;
+import com.uaq.proxies.activateuseraccountbpel_client_ep.Activateuseraccountbpel_client_ep;
+import com.uaq.proxies.changepasswordbpel_client_ep.ChangePasswordBPEL;
+import com.uaq.proxies.changepasswordbpel_client_ep.Changepasswordbpel_client_ep;
+import com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.CheckForgetPasswordAccountValidityBPEL;
+import com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.Checkforgetpasswordaccountvaliditybpel_client_ep;
+import com.uaq.proxies.extensionofgrantlandservice_client_ep.ExtensionOfGrantLandService;
+import com.uaq.proxies.extensionofgrantlandservice_client_ep.Extensionofgrantlandservice_client_ep;
+import com.uaq.proxies.forgetusernamebpel_client_ep.ForgetUsernameBPEL;
+import com.uaq.proxies.forgetusernamebpel_client_ep.Forgetusernamebpel_client_ep;
+import com.uaq.proxies.generateotpbpel_client_ep.GenerateOTPBPEL;
+import com.uaq.proxies.generateotpbpel_client_ep.Generateotpbpel_client_ep;
+import com.uaq.proxies.getaccountdetailsbpel_client_ep.GetAccountDetailsBPEL;
+import com.uaq.proxies.getaccountdetailsbpel_client_ep.Getaccountdetailsbpel_client_ep;
+import com.uaq.proxies.getextensionofgrantlandbpelprocess_client_ep.GetExtensionOfGrantLandBPELProcess;
+import com.uaq.proxies.getextensionofgrantlandbpelprocess_client_ep.Getextensionofgrantlandbpelprocess_client_ep;
+import com.uaq.proxies.getissuesiteplanreqdetails_client_ep.GetIssueSitePlanReqDetails;
+import com.uaq.proxies.getissuesiteplanreqdetails_client_ep.Getissuesiteplanreqdetails_client_ep;
+import com.uaq.proxies.getlanddemarcationreqdetails_client_ep.GetLandDemarcationReqDetails;
+import com.uaq.proxies.getlanddemarcationreqdetails_client_ep.Getlanddemarcationreqdetails_client_ep;
+import com.uaq.proxies.getlanddemarcationreqdetails_client_ep.types.InputPayload;
+import com.uaq.proxies.issuesiteplandocreqbpel_client_ep.IssueSitePlanDocReqBPEL;
+import com.uaq.proxies.issuesiteplandocreqbpel_client_ep.Issuesiteplandocreqbpel_client_ep;
+import com.uaq.proxies.issuesiteplandocreqbpel_client_ep.types.OutputPayload;
+import com.uaq.proxies.landdemarcationbpelservice_client_ep.LandDemarcationBPELService;
+import com.uaq.proxies.landdemarcationbpelservice_client_ep.Landdemarcationbpelservice_client_ep;
+import com.uaq.proxies.landdemarcationbpelservice_client_ep.types.Inputpayload;
+import com.uaq.proxies.mobile_paymenthistory_bpel_client_ep.Mobile_PaymentHistory_BPEL;
+import com.uaq.proxies.mobile_paymenthistory_bpel_client_ep.Mobile_paymenthistory_bpel_client_ep;
+import com.uaq.proxies.mobile_paymenthistory_bpel_client_ep.types.ProcessResponseListType;
+import com.uaq.proxies.userloginbpel_client_ep.UserLoginBPEL;
+import com.uaq.proxies.userloginbpel_client_ep.Userloginbpel_client_ep;
+import com.uaq.proxies.userlogoutbpel_client_ep.UserLogoutBPEL;
+import com.uaq.proxies.userlogoutbpel_client_ep.Userlogoutbpel_client_ep;
+import com.uaq.proxies.validateauthenticationtokenbpel_client_ep.ValidateAuthenticationTokenBPEL;
+import com.uaq.proxies.validateauthenticationtokenbpel_client_ep.Validateauthenticationtokenbpel_client_ep;
+import com.uaq.proxies.validateotpbpel_client_ep.ValidateOTPBPEL;
+import com.uaq.proxies.validateotpbpel_client_ep.Validateotpbpel_client_ep;
+
+public class WebServiceWarpper {
+
+	protected static UAQLogger logger = new UAQLogger(WebServiceWarpper.class);
+
+	public com.uaq.proxies.landdemarcationbpelservice_client_ep.types.OutputPayload submitLandDemarcation(Inputpayload payload, String wsdl, String username, String password)
+			throws MalformedURLException {
+		logger.enter("submitLandDemarcation");
+		URL endPoint = new URL(wsdl);
+
+		Landdemarcationbpelservice_client_ep ep = new Landdemarcationbpelservice_client_ep(endPoint, new QName(
+				"http://xmlns.oracle.com/UAQBusinessProcess/UAQ_PS_LandDemarcation/LandDemarcationBPELService", "landdemarcationbpelservice_client_ep"));
+
+		LandDemarcationBPELService service = null;
+		HeaderHandlerResolver handlerResolver = new HeaderHandlerResolver(username, password);
+		ep.setHandlerResolver(handlerResolver);
+		service = ep.getLandDemarcationBPELService_pt();
+		return service.process(payload);
+	}
+
+	public com.uaq.proxies.LandDemarcationServiceForOut.types.OutputPayload reSubmitLandDemarcationRequestORPayment(com.uaq.proxies.LandDemarcationServiceForOut.types.Inputpayload payload,
+			String wsdl, String username, String password) throws MalformedURLException {
+		logger.enter("reSubmitLandDemarcationRequestORPayment");
+		URL endPoint = new URL(wsdl);
+
+		LandDemarcationServiceForOutService ep = new LandDemarcationServiceForOutService(endPoint, new QName("http://xmlns.oracle.com/bpmn/bpmnProcess/LandDemarcationServiceForOut",
+				"LandDemarcationServiceForOut.service"));
+
+		LandDemarcationServiceForOutPortType service = null;
+		HeaderHandlerResolver handlerResolver = new HeaderHandlerResolver(username, password);
+		ep.setHandlerResolver(handlerResolver);
+		service = ep.getLandDemarcationServiceForOutPort();
+		return service.start(payload);
+
+	}
+
+	public com.uaq.proxies.getlanddemarcationreqdetails_client_ep.types.OutputPayload findLandDemacration(InputPayload payload, String wsdl, String username, String password)
+			throws MalformedURLException {
+		logger.enter("findLandDemacration");
+		URL endPoint = new URL(wsdl);
+
+		Getlanddemarcationreqdetails_client_ep ep = new Getlanddemarcationreqdetails_client_ep(endPoint, new QName(
+				"http://xmlns.oracle.com/UAQBusinessProcess/UAQ_PS_LandDemarcation/GetLandDemarcationReqDetails", "getlanddemarcationreqdetails_client_ep"));
+
+		GetLandDemarcationReqDetails service = null;
+		HeaderHandlerResolver handlerResolver = new HeaderHandlerResolver(username, password);
+		ep.setHandlerResolver(handlerResolver);
+		service = ep.getGetLandDemarcationReqDetails_pt();
+		return service.process(payload);
+	}
+
+	public OutputPayload subitIssusitePlan(com.uaq.proxies.issuesiteplandocreqbpel_client_ep.types.Inputpayload payload, String wsdl, String username, String password) throws MalformedURLException {
+		logger.enter("subitIssusitePlan");
+		URL endPoint = new URL(wsdl);
+
+		Issuesiteplandocreqbpel_client_ep ep = new Issuesiteplandocreqbpel_client_ep(endPoint, new QName(
+				"http://xmlns.oracle.com/UAQBusinessProcess/UAQ_PS_IssueSitePlanDocumentReq/IssueSitePlanDocReqBPEL", "issuesiteplandocreqbpel_client_ep"));
+		IssueSitePlanDocReqBPEL service = null;
+		HeaderHandlerResolver handlerResolver = new HeaderHandlerResolver(username, password);
+		ep.setHandlerResolver(handlerResolver);
+		service = ep.getIssueSitePlanDocReqBPEL_pt();
+		return service.process(payload);
+	}
+
+	public com.uaq.proxies.IssueSitePlanDocSystemizedServiceForOut.types.OutputPayload resubmitOrPaymentIssueSitepLan(
+			com.uaq.proxies.IssueSitePlanDocSystemizedServiceForOut.types.Inputpayload payload, String wsdl, String username, String password) throws MalformedURLException {
+		logger.enter("resubmitOrPaymentIssueSitepLan");
+		URL endPoint = new URL(wsdl);
+
+		IssueSitePlanDocSystemizedServiceForOutPortType service = null;
+
+		IssueSitePlanDocSystemizedServiceForOutService ep = new IssueSitePlanDocSystemizedServiceForOutService(endPoint, new QName(
+				"http://xmlns.oracle.com/bpmn/bpmnProcess/IssueSitePlanDocSystemizedServiceForOut", "IssueSitePlanDocSystemizedServiceForOut.service"));
+
+		HeaderHandlerResolver handlerResolver = new HeaderHandlerResolver(username, password);
+		ep.setHandlerResolver(handlerResolver);
+		service = ep.getIssueSitePlanDocSystemizedServiceForOutPort();
+		return service.start(payload);
+	}
+
+	public com.uaq.proxies.getissuesiteplanreqdetails_client_ep.types.OutputPayload getIssuSItePalnRequestDetail(com.uaq.proxies.getissuesiteplanreqdetails_client_ep.types.InputPayload payload,
+			String wsdl, String username, String password) throws MalformedURLException {
+		logger.enter("getIssuSItePalnRequestDetail");
+		URL endPoint = new URL(wsdl);
+
+		Getissuesiteplanreqdetails_client_ep ep = new Getissuesiteplanreqdetails_client_ep(endPoint, new QName(
+				"http://xmlns.oracle.com/UAQBusinessProcess/UAQ_PS_IssueSitePlanDocumentReq/GetIssueSitePlanReqDetails", "getissuesiteplanreqdetails_client_ep"));
+
+		HeaderHandlerResolver handlerResolver = new HeaderHandlerResolver(username, password);
+		ep.setHandlerResolver(handlerResolver);
+		GetIssueSitePlanReqDetails service = ep.getGetIssueSitePlanReqDetails_pt();
+		return service.process(payload);
+
+	}
+
+	public com.uaq.proxies.extensionofgrantlandservice_client_ep.types.OutputPayload submitExtGrandLand(com.uaq.proxies.extensionofgrantlandservice_client_ep.types.Inputpayload payload, String wsdl,
+			String username, String password) throws MalformedURLException {
+		logger.enter("submitExtGrandLand");
+		URL endPoint = new URL(wsdl);
+
+		Extensionofgrantlandservice_client_ep ep = new Extensionofgrantlandservice_client_ep(endPoint, new QName(
+				"http://xmlns.oracle.com/UAQBusinessProcess/UAQ_PS_Extension_Of_Grant_Land/ExtensionOfGrantLandService", "extensionofgrantlandservice_client_ep"));
+
+		HeaderHandlerResolver handlerResolver = new HeaderHandlerResolver(username, password);
+		ep.setHandlerResolver(handlerResolver);
+		ExtensionOfGrantLandService service = ep.getExtensionOfGrantLandService_pt();
+		return service.process(payload);
+	}
+
+	public com.uaq.proxies.ExtensionOfGrantLandProcessForOut.types.OutputPayload resubmitExtGrandLand(com.uaq.proxies.ExtensionOfGrantLandProcessForOut.types.Inputpayload payload, String wsdl,
+			String username, String password) throws MalformedURLException {
+		logger.enter("resubmitExtGrandLand");
+		URL endPoint = new URL(wsdl);
+		ExtensionOfGrantLandProcessForOutService ep = new ExtensionOfGrantLandProcessForOutService(endPoint, new QName("http://xmlns.oracle.com/bpmn/bpmnProcess/ExtensionOfGrantLandProcessForOut",
+				"ExtensionOfGrantLandProcessForOut.service"));
+		HeaderHandlerResolver handlerResolver = new HeaderHandlerResolver(username, password);
+		ep.setHandlerResolver(handlerResolver);
+		ExtensionOfGrantLandProcessForOutPortType service = ep.getExtensionOfGrantLandProcessForOutPort();
+		return service.start(payload);
+	}
+
+	public com.uaq.proxies.ExtensionOfGrantLandAfterServicePaymentForOut.types.OutputPayload servicePaymentDoneExtGrandLand(
+			com.uaq.proxies.ExtensionOfGrantLandAfterServicePaymentForOut.types.Inputpayload payload, String wsdl, String username, String password) throws MalformedURLException {
+		logger.enter("servicePaymentDoneExtGrandLand");
+		URL endPoint = new URL(wsdl);
+
+		com.uaq.proxies.ExtensionOfGrantLandAfterServicePaymentForOut.ExtensionOfGrantLandAfterServicePaymentForOutService ep = new ExtensionOfGrantLandAfterServicePaymentForOutService(endPoint,
+				new QName("http://xmlns.oracle.com/bpmn/bpmnProcess/ExtensionOfGrantLandAfterServicePaymentForOut", "ExtensionOfGrantLandAfterServicePaymentForOut.service"));
+
+		HeaderHandlerResolver handlerResolver = new HeaderHandlerResolver(username, password);
+		ep.setHandlerResolver(handlerResolver);
+		ExtensionOfGrantLandAfterServicePaymentForOutPortType service = ep.getExtensionOfGrantLandAfterServicePaymentForOutPort();
+		return service.start(payload);
+	}
+
+	public com.uaq.proxies.getextensionofgrantlandbpelprocess_client_ep.types.OutputPayload getExtGrandLandDetail(
+			com.uaq.proxies.getextensionofgrantlandbpelprocess_client_ep.types.InputPayload payload, String wsdl, String username, String password) throws MalformedURLException {
+		logger.enter("getExtGrandLandDetail");
+		URL endPoint = new URL(wsdl);
+
+		Getextensionofgrantlandbpelprocess_client_ep ep = new Getextensionofgrantlandbpelprocess_client_ep(endPoint, new QName(
+				"http://xmlns.oracle.com/PushNotification_App/UAQ_PS_Extension_Of_Grant_Land/GetExtensionOfGrantLandBPELProcess", "getextensionofgrantlandbpelprocess_client_ep"));
+
+		HeaderHandlerResolver handlerResolver = new HeaderHandlerResolver(username, password);
+		ep.setHandlerResolver(handlerResolver);
+
+		GetExtensionOfGrantLandBPELProcess service = ep.getGetExtensionOfGrantLandBPELProcess_pt();
+
+		return service.process(payload);
+	}
+
+	
+	
+	
+	public List<ProcessResponseListType> getPaymentHistoryList( String payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("findLandDemacration");
+		URL endPoint = new URL(wsdl);
+
+	    Mobile_paymenthistory_bpel_client_ep ep =new Mobile_paymenthistory_bpel_client_ep(endPoint,          new QName("http://xmlns.oracle.com/Mobile_PaymentHistory/Mobile_PaymentHistory_pjr/Mobile_PaymentHistory_BPEL",
+                "mobile_paymenthistory_bpel_client_ep"));
+	    
+	    Mobile_PaymentHistory_BPEL service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getMobile_PaymentHistory_BPEL_pt();
+		return service.process(payload);
+	}
+	
+	public com.uaq.proxies.userloginbpel_client_ep.types.OutputPayload userLogin( com.uaq.proxies.userloginbpel_client_ep.types.InputPayload payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("user Login");
+		URL endPoint = new URL(wsdl);
+
+	   Userloginbpel_client_ep ep = new Userloginbpel_client_ep( endPoint, new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_REG_UserLogin/UserLoginBPEL",
+               "userloginbpel_client_ep"));
+	    
+	    UserLoginBPEL service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getUserLoginBPEL_pt();
+		return service.process(payload);
+	}
+	
+	
+	public com.uaq.proxies.userlogoutbpel_client_ep.types.OutputPayload userLogout(com.uaq.proxies.userlogoutbpel_client_ep.types.Inputpayload payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("user Login");
+		URL endPoint = new URL(wsdl);
+
+	   Userlogoutbpel_client_ep ep = new Userlogoutbpel_client_ep( endPoint,           new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_REG_UserLogout/UserLogoutBPEL",
+               "userlogoutbpel_client_ep"));
+	    
+	    UserLogoutBPEL service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getUserLogoutBPEL_pt();
+		return service.process(payload);
+	}
+	
+	public com.uaq.proxies.validateotpbpel_client_ep.types.OutputPayload validateOTP(com.uaq.proxies.validateotpbpel_client_ep.types.InputPayload payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("user Login");
+		URL endPoint = new URL(wsdl);
+
+	   Validateotpbpel_client_ep ep = new Validateotpbpel_client_ep( endPoint,          new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_REG_ValidateOTP/ValidateOTPBPEL",
+               "validateotpbpel_client_ep"));
+	    
+	    ValidateOTPBPEL service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getValidateOTPBPEL_pt();
+		return service.process(payload);
+	}
+	
+	public com.uaq.proxies.generateotpbpel_client_ep.types.OutputPayload generateOTP(com.uaq.proxies.generateotpbpel_client_ep.types.InputPayload payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("user Login");
+		URL endPoint = new URL(wsdl);
+
+	   Generateotpbpel_client_ep ep = new Generateotpbpel_client_ep( endPoint,          new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_REG_GenerateOTP/GenerateOTPBPEL",
+               "generateotpbpel_client_ep"));
+	    
+	    GenerateOTPBPEL service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getGenerateOTPBPEL_pt();
+		return service.process(payload);
+	}
+	
+	public com.uaq.proxies.forgetusernamebpel_client_ep.types.OutputPayload forgotUsername(com.uaq.proxies.forgetusernamebpel_client_ep.types.InputPayload payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("user Login");
+		URL endPoint = new URL(wsdl);
+
+	   Forgetusernamebpel_client_ep ep = new Forgetusernamebpel_client_ep( endPoint,          new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_REG_ForgetUserName/ForgetUsernameBPEL",
+               "forgetusernamebpel_client_ep"));
+	    
+	    ForgetUsernameBPEL service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getForgetUsernameBPEL_pt();
+		return service.process(payload);
+	}
+	
+	public com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.types.OutputPayload  checkForgetPasswordAccountValidity(com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.types.InputPayload payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("user Login");
+		URL endPoint = new URL(wsdl);
+
+		Checkforgetpasswordaccountvaliditybpel_client_ep ep = new Checkforgetpasswordaccountvaliditybpel_client_ep( endPoint,          new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_REG_ForgetPassword/CheckForgetPasswordAccountValidityBPEL",
+               "checkforgetpasswordaccountvaliditybpel_client_ep"));
+	    
+	   CheckForgetPasswordAccountValidityBPEL service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getCheckForgetPasswordAccountValidityBPEL_pt();
+		return service.process(payload);
+	}
+	
+	public com.uaq.proxies.changepasswordbpel_client_ep.types.OutputPayload  changePassword(com.uaq.proxies.changepasswordbpel_client_ep.types.InputPayload payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("user Login");
+		URL endPoint = new URL(wsdl);
+
+		Changepasswordbpel_client_ep ep = new Changepasswordbpel_client_ep( endPoint,           new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_REG_ForgetPassword/ChangePasswordBPEL",
+                "changepasswordbpel_client_ep"));
+	    
+		ChangePasswordBPEL service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getChangePasswordBPEL_pt();
+		return service.process(payload);
+	}
+	
+	public com.uaq.proxies.activateuseraccountbpel_client_ep.types.OutputPayload  activateUserAccount(com.uaq.proxies.activateuseraccountbpel_client_ep.types.InputPayload payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("user Login");
+		URL endPoint = new URL(wsdl);
+
+		Activateuseraccountbpel_client_ep ep = new Activateuseraccountbpel_client_ep( endPoint,           new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_REG_ActivateAccount/ActivateUserAccountBPEL",
+                "activateuseraccountbpel_client_ep"));
+	    
+		ActivateUserAccountBPEL service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getActivateUserAccountBPEL_pt();
+		return service.process(payload);
+	}
+	
+	public com.uaq.proxies.getaccountdetailsbpel_client_ep.types.OutputPayload  getAccountDetails(com.uaq.proxies.getaccountdetailsbpel_client_ep.types.InputPayload payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("user Login");
+		URL endPoint = new URL(wsdl);
+
+		Getaccountdetailsbpel_client_ep ep = new Getaccountdetailsbpel_client_ep( endPoint,           new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_REG_ActivateAccount/ActivateUserAccountBPEL",
+                "activateuseraccountbpel_client_ep"));
+	    
+		GetAccountDetailsBPEL service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getGetAccountDetailsBPEL_pt();
+		return service.process(payload);
+	}
+	
+	public com.uaq.proxies.validateauthenticationtokenbpel_client_ep.types.OutputPayload  validateToken(com.uaq.proxies.validateauthenticationtokenbpel_client_ep.types.InputPayload payload,String wsdl, String username,String password) throws MalformedURLException{
+		logger.enter("user Login");
+		URL endPoint = new URL(wsdl);
+
+		Validateauthenticationtokenbpel_client_ep ep = new Validateauthenticationtokenbpel_client_ep( endPoint,           new QName("http://xmlns.oracle.com/UAQBusinessProcess/UAQ_ValidateAuthenticationToken/ValidateAuthenticationTokenBPEL",
+                "validateauthenticationtokenbpel_client_ep"));
+	    
+		ValidateAuthenticationTokenBPEL service=null;
+		HeaderHandlerResolver handlerResolver =new HeaderHandlerResolver(username,password);
+		ep.setHandlerResolver(handlerResolver);
+		service=ep.getValidateAuthenticationTokenBPEL_pt();
+		return service.process(payload);
+	}
+}

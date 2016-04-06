@@ -1,0 +1,368 @@
+package com.uaq.service;
+
+import static com.uaq.common.ApplicationConstants.SERVICE_FAILED;
+
+import java.math.BigDecimal;
+
+import org.springframework.stereotype.Service;
+
+import com.uaq.common.PropertiesUtil;
+import com.uaq.common.ServiceNameConstant;
+import com.uaq.controller.mapper.PortalDataMapper;
+import com.uaq.logger.UAQLogger;
+import com.uaq.proxies.getlanddemarcationreqdetails_client_ep.types.InputPayload;
+import com.uaq.proxies.getlanddemarcationreqdetails_client_ep.types.OutputPayload;
+import com.uaq.soap.warpper.WebServiceWarpper;
+import com.uaq.vo.PSResubmissonOutputVO;
+import com.uaq.vo.ReSubmiisionInputVO;
+
+
+/**
+ * Service class for Get Detail of PS Department Request on WSDL Calling. methods- 1-Add
+ * Land Request 2-createLandValuationPropertyRequest 3-ExtensionOfGrantLand
+ *  5-landDemarcationRequest
+ * 
+ * Jar Name-UAQProxy.jar
+ *
+ *  Note -WSDL URL May be changed depend on environment.
+ * URL will load from Application.property file.
+ * @author Pritam
+ * 
+ */
+@Service("pSFindRequestService")
+public class PSFindRequestService {
+
+	protected static UAQLogger logger = new UAQLogger(PSFindRequestService.class);
+
+	private WebServiceWarpper webServiceWarpper = new WebServiceWarpper();
+
+	public PSResubmissonOutputVO findAddLandRequest(ReSubmiisionInputVO inputVO) {
+
+		logger.enter("findAddLandRequest");
+		PSResubmissonOutputVO psReSubmissonOuputVO = new PSResubmissonOutputVO();
+		/*
+		 * createStub();
+		 * 
+		 * OutputPayload outputPayload = null; GetAllRequestDetails.InputPayload
+		 * inputPayLoad = new InputPayload();
+		 * inputPayLoad.setRequestId(inputVO.getAttributeValue().split("-")[3]);
+		 * inputPayLoad.setRequestNo(inputVO.getAttributeValue());
+		 * 
+		 * 
+		 * try { outputPayload = stub.getAddlandAllDetails(inputPayLoad,
+		 * userContext); } catch (RemoteException e) {
+		 * psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+		 * logger.error(e.getMessage()); }
+		 * 
+		 * if (outputPayload != null) {
+		 * 
+		 * psReSubmissonOuputVO.setNocAttachment(outputPayload.getRequestNOCList(
+		 * )); psReSubmissonOuputVO.setServiceAttachments(outputPayload.
+		 * getAttachemntList());
+		 * psReSubmissonOuputVO.setOptionalComments(outputPayload
+		 * .getAddlandRec().getOptionalcomment());
+		 * psReSubmissonOuputVO.setStatus(outputPayload.getStatus());
+		 * psReSubmissonOuputVO
+		 * .setAreaBlock(outputPayload.getAddlandRec().getAreaBlock());
+		 * psReSubmissonOuputVO
+		 * .setAreaNo(outputPayload.getAddlandRec().getAreaNo());
+		 * psReSubmissonOuputVO
+		 * .setAreaPlotNo(outputPayload.getAddlandRec().getAreaPlotNo());
+		 * psReSubmissonOuputVO
+		 * .setAreaSubArea(outputPayload.getAddlandRec().getAreaSubArea());
+		 * psReSubmissonOuputVO
+		 * .setAssignedtousername(outputPayload.getAddlandRec
+		 * ().getAssignedtousername());
+		 * psReSubmissonOuputVO.setCommiteeRemarks(outputPayload
+		 * .getAddlandRec().getCommiteeRemarks());
+		 * psReSubmissonOuputVO.setCreatedby
+		 * (outputPayload.getAddlandRec().getCreatedby());
+		 * psReSubmissonOuputVO.setCreateddate
+		 * (outputPayload.getAddlandRec().getCreateddate());
+		 * psReSubmissonOuputVO
+		 * .setModifiedby(outputPayload.getAddlandRec().getModifiedby());
+		 * psReSubmissonOuputVO
+		 * .setModifieddate(outputPayload.getAddlandRec().getModifieddate());
+		 * psReSubmissonOuputVO.setId(outputPayload.getAddlandRec().getId());
+		 * psReSubmissonOuputVO
+		 * .setLandUsage(outputPayload.getAddlandRec().getLandUsage());
+		 * psReSubmissonOuputVO
+		 * .setLandValue(outputPayload.getAddlandRec().getLandValue());
+		 * psReSubmissonOuputVO
+		 * .setOwnerId(outputPayload.getAddlandRec().getOwnerId());
+		 * psReSubmissonOuputVO
+		 * .setOwnername(outputPayload.getAddlandRec().getOwnername());
+		 * psReSubmissonOuputVO
+		 * .setOwnerNationalityid(outputPayload.getAddlandRec
+		 * ().getOwnerNationalityid());
+		 * psReSubmissonOuputVO.setRequestNo(outputPayload
+		 * .getAddlandRec().getRequestNo());
+		 * psReSubmissonOuputVO.setRequestNocLetterid
+		 * (outputPayload.getAddlandRec().getRequestNocLetterid());
+		 * psReSubmissonOuputVO
+		 * .setSecPlotNo(outputPayload.getAddlandRec().getSecPlotNo());
+		 * psReSubmissonOuputVO
+		 * .setSecSectorNo(outputPayload.getAddlandRec().getSecSectorNo());
+		 * psReSubmissonOuputVO
+		 * .setSectorBlock(outputPayload.getAddlandRec().getSectorBlock());
+		 * psReSubmissonOuputVO
+		 * .setServiceId(outputPayload.getAddlandRec().getServiceId());
+		 * psReSubmissonOuputVO
+		 * .setSitePlanDate(outputPayload.getAddlandRec().getSitePlanDate());
+		 * psReSubmissonOuputVO
+		 * .setSiteplanDocId(outputPayload.getAddlandRec().getSiteplanDocId());
+		 * psReSubmissonOuputVO
+		 * .setSitePlanNo(outputPayload.getAddlandRec().getSitePlanNo());
+		 * psReSubmissonOuputVO
+		 * .setSourcetype(outputPayload.getAddlandRec().getSourcetype());
+		 * psReSubmissonOuputVO
+		 * .setStatusid(outputPayload.getAddlandRec().getStatusid());
+		 * psReSubmissonOuputVO
+		 * .setSubmittednocid(outputPayload.getAddlandRec().getSubmittednocid
+		 * ());
+		 * psReSubmissonOuputVO.setSubSectorNo(outputPayload.getAddlandRec()
+		 * .getSubSectorNo());
+		 * psReSubmissonOuputVO.setSurveReportDocid(outputPayload
+		 * .getAddlandRec().getSurveReportDocid());
+		 * psReSubmissonOuputVO.setSurveyorReport
+		 * (outputPayload.getAddlandRec().getSurveyorReport());
+		 * psReSubmissonOuputVO
+		 * .setTrueSitePlanDocumentid(outputPayload.getAddlandRec
+		 * ().getTrueSitePlanDocumentid()); } else {
+		 * psReSubmissonOuputVO.setStatus(SERVICE_FAILED); logger.info(
+		 * "Failure  | stub.findPsAddLandReqView1(findCriteria, findControl); return null"
+		 * ); } logger.exit("findAddLandRequest");
+		 */
+
+		return psReSubmissonOuputVO;
+	}
+	
+	/**
+	 * This Method is responsible for getting the  LandDemarcation request detail
+	 * 
+	 * WSDL -http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_LandDemarcation/getlanddemarcationreqdetails_client_ep?WSDL
+	 * JAR-UAQProxy
+	 * 
+	 * @author Pritam
+	 * 
+	 */
+
+	public PSResubmissonOutputVO findLandDemacration(ReSubmiisionInputVO inputVO) {
+
+		logger.enter("findLandDemacration");
+
+		OutputPayload outputPayload = null;
+		InputPayload inputPayLoad = new InputPayload();
+
+		inputPayLoad.setRequestId(inputVO.getAttributeValue().split("-")[3]);
+		inputPayLoad.setRequestNo(inputVO.getAttributeValue());
+		inputPayLoad.setServiceId("302");
+
+		PSResubmissonOutputVO psReSubmissonOuputVO = new PSResubmissonOutputVO();
+		try {
+			outputPayload = webServiceWarpper.findLandDemacration(inputPayLoad, PropertiesUtil.getProperty("SOA_URL_PS_LANDDEMACRATION_GETDETAIL"), PropertiesUtil.getProperty("SOA_USERNAME"),
+					PropertiesUtil.getProperty("SOA_PASSWORD"));
+
+			if (outputPayload != null) {
+				psReSubmissonOuputVO.setLandDemarcationAttachments(outputPayload.getAttachmentList());
+				psReSubmissonOuputVO.setOptionalComments(outputPayload.getLandDemarcationReC().getOptionalcomment().getValue());
+				psReSubmissonOuputVO.setStatus(outputPayload.getLandDemarcationReC().getStatusid().toString());
+				psReSubmissonOuputVO.setAreaBlock(outputPayload.getLandDemarcationReC().getAreaBlock().getValue());
+				psReSubmissonOuputVO.setAreaNo(outputPayload.getLandDemarcationReC().getAreaNo().getValue());
+				psReSubmissonOuputVO.setAreaPlotNo(outputPayload.getLandDemarcationReC().getAreaPlotNo().getValue());
+				psReSubmissonOuputVO.setAreaSubArea(outputPayload.getLandDemarcationReC().getAreaSubArea().getValue());
+				psReSubmissonOuputVO.setAssignedtousername(outputPayload.getLandDemarcationReC().getAssignedtousername().getValue());
+				psReSubmissonOuputVO.setCreatedby(outputPayload.getLandDemarcationReC().getCreatedby().getValue());
+				// psReSubmissonOuputVO.setLandDemarcationCreatedDate(outputPayload.getLandDemarcationReC().getCreateddate());
+				psReSubmissonOuputVO.setModifiedby(outputPayload.getLandDemarcationReC().getModifiedby().getValue());
+				// psReSubmissonOuputVO.setLandDemarcationModifiedDate(outputPayload.getLandDemarcationReC().getModifieddate());
+				psReSubmissonOuputVO.setId(outputPayload.getLandDemarcationReC().getId());
+				psReSubmissonOuputVO.setLandUsage(outputPayload.getLandDemarcationReC().getLandUsage().getValue());
+				psReSubmissonOuputVO.setOwnerId(outputPayload.getLandDemarcationReC().getOwnerId().getValue());
+				psReSubmissonOuputVO.setOwnername(outputPayload.getLandDemarcationReC().getOwnername().getValue());
+				psReSubmissonOuputVO.setOwnerNationalityid(outputPayload.getLandDemarcationReC().getOwnerNationalityid().getValue());
+				psReSubmissonOuputVO.setRequestNo(outputPayload.getLandDemarcationReC().getRequestNo().getValue());
+				psReSubmissonOuputVO.setSecPlotNo(outputPayload.getLandDemarcationReC().getSecPlotNo().getValue());
+				psReSubmissonOuputVO.setSecSectorNo(outputPayload.getLandDemarcationReC().getSecSectorNo().getValue());
+				psReSubmissonOuputVO.setSectorBlock(outputPayload.getLandDemarcationReC().getSectorBlock().getValue());
+				psReSubmissonOuputVO.setServiceId(outputPayload.getLandDemarcationReC().getServiceId().getValue());
+				// psReSubmissonOuputVO.setSitePlanDate(outputPayload.getLandDemarcationReC().getSitePlanDate());
+				psReSubmissonOuputVO.setSiteplanDocId(new BigDecimal(00));
+				psReSubmissonOuputVO.setSitePlanNo(outputPayload.getLandDemarcationReC().getSitePlanNo().getValue());
+				psReSubmissonOuputVO.setSourcetype(outputPayload.getLandDemarcationReC().getSourcetype().getValue());
+				psReSubmissonOuputVO.setStatusid(outputPayload.getLandDemarcationReC().getStatusid().getValue());
+				psReSubmissonOuputVO.setSubmittednocid(new BigDecimal(00));
+				psReSubmissonOuputVO.setSubSectorNo(outputPayload.getLandDemarcationReC().getSubSectorNo().getValue());
+				psReSubmissonOuputVO.setSurveReportDocid(outputPayload.getLandDemarcationReC().getSurveReportDocid().getValue());
+				psReSubmissonOuputVO.setSurveyorReport(outputPayload.getLandDemarcationReC().getSurveyorReport().getValue());
+				psReSubmissonOuputVO.setTrueSitePlanDocumentid(new BigDecimal(00));
+			} else {
+				psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+				logger.info("Failure  | stub.getAllLandDemarcationDetails(findCriteria, findControl); return null");
+			}
+		} catch (Exception e) {
+			psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+			logger.info("Failure  | stub.getAllLandDemarcationDetails(findCriteria, findControl); return null");
+		}
+		logger.exit("findLandDemacration");
+		return psReSubmissonOuputVO;
+	}
+
+	/**
+	 * This Method is responsible for getting the  IssueSitePlanDocument request detail
+	 * 
+	 * WSDL -http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_IssueSitePlanDocumentReq/getissuesiteplanreqdetails_client_ep?WSDL
+	 * JAR-UAQProxy
+	 * 
+	 * @author Pritam
+	 * 
+	 */
+	public PSResubmissonOutputVO findIssueSitePlanDocRequest(ReSubmiisionInputVO inputVO) {
+
+		logger.enter("findIssueSitePlanDocRequest");
+		PSResubmissonOutputVO psReSubmissonOuputVO = new PSResubmissonOutputVO();
+
+		com.uaq.proxies.getissuesiteplanreqdetails_client_ep.types.OutputPayload outputPayload = null;
+
+		com.uaq.proxies.getissuesiteplanreqdetails_client_ep.types.InputPayload inputPayLoad = new com.uaq.proxies.getissuesiteplanreqdetails_client_ep.types.InputPayload();
+		inputPayLoad.setRequestId(inputVO.getAttributeValue().split("-")[3]);
+		inputPayLoad.setRequestNo(inputVO.getAttributeValue());
+
+		try {
+
+			outputPayload = webServiceWarpper.getIssuSItePalnRequestDetail(inputPayLoad, PropertiesUtil.getProperty("SOA_URL_PS_ISSUESITEPLAN_GETDETAIL"), PropertiesUtil.getProperty("SOA_USERNAME"),
+					PropertiesUtil.getProperty("SOA_PASSWORD"));
+
+			if (outputPayload != null) {
+				psReSubmissonOuputVO.setIssueSitePlnAttachments(outputPayload.getAttachmentList());
+				psReSubmissonOuputVO.setOptionalComments(outputPayload.getIssueSitePlanRec().getOptionalcomment().getValue());
+				psReSubmissonOuputVO.setStatus("");
+				psReSubmissonOuputVO.setAreaBlock(outputPayload.getIssueSitePlanRec().getAreaBlock().getValue());
+				psReSubmissonOuputVO.setAreaNo(outputPayload.getIssueSitePlanRec().getAreaNo().getValue());
+				psReSubmissonOuputVO.setAreaPlotNo(outputPayload.getIssueSitePlanRec().getAreaPlotNo().getValue());
+				psReSubmissonOuputVO.setAreaSubArea(outputPayload.getIssueSitePlanRec().getAreaSubArea().getValue());
+				psReSubmissonOuputVO.setAssignedtousername("");
+				psReSubmissonOuputVO.setCreatedby(outputPayload.getIssueSitePlanRec().getCreatedby().getValue());
+				psReSubmissonOuputVO.setModifiedby(outputPayload.getIssueSitePlanRec().getModifiedby().getValue());
+				psReSubmissonOuputVO.setId(outputPayload.getIssueSitePlanRec().getId());
+				psReSubmissonOuputVO.setLandUsage(outputPayload.getIssueSitePlanRec().getLandUsage().getValue());
+				psReSubmissonOuputVO.setOwnerId(outputPayload.getIssueSitePlanRec().getOwnerid().getValue());
+				psReSubmissonOuputVO.setOwnername(outputPayload.getIssueSitePlanRec().getOwnername().getValue());
+				psReSubmissonOuputVO.setOwnerNationalityid(outputPayload.getIssueSitePlanRec().getOwnerNationalityId().getValue());
+				psReSubmissonOuputVO.setRequestNo(outputPayload.getIssueSitePlanRec().getRequestNo().getValue());
+				psReSubmissonOuputVO.setSecPlotNo(outputPayload.getIssueSitePlanRec().getSecPlotNo().getValue());
+				psReSubmissonOuputVO.setSecSectorNo(outputPayload.getIssueSitePlanRec().getSecSectorNo().getValue());
+				psReSubmissonOuputVO.setSectorBlock(outputPayload.getIssueSitePlanRec().getSectorBlock().getValue());
+				psReSubmissonOuputVO.setServiceId(outputPayload.getIssueSitePlanRec().getServiceId().getValue());
+				// psReSubmissonOuputVO
+				// .setSitePlanDate(outputPayload.getIssueSitePlanRec
+				// ().getSitePlanDate().getValue());
+				// psReSubmissonOuputVO.setSiteplanDocId(new
+				// BigDecimal(00));
+				psReSubmissonOuputVO.setSitePlanNo(outputPayload.getIssueSitePlanRec().getSitePlanNo().getValue());
+				psReSubmissonOuputVO.setSourcetype(outputPayload.getIssueSitePlanRec().getSourcetype().getValue());
+				psReSubmissonOuputVO.setStatusid(outputPayload.getIssueSitePlanRec().getStatusid().getValue());
+				psReSubmissonOuputVO.setSubmittednocid(new BigDecimal(00));
+				psReSubmissonOuputVO.setSubSectorNo(outputPayload.getIssueSitePlanRec().getSubSectorNo().getValue()); //
+				/*
+				 * psReSubmissonOuputVO.setSurveReportDocid(outputPayload.
+				 * getIssueSitePlanRec().getSupportiveattachdocid() == null ?
+				 * new // BigDecimal("0") : new //
+				 * BigDecimal(outputPayload.getIssueSitePlanRec
+				 * ().getSupportiveattachdocid().getValue()));
+				 */
+				psReSubmissonOuputVO.setSurveyorReport(outputPayload.getIssueSitePlanRec().getSurveReport().getValue());
+				psReSubmissonOuputVO.setTrueSitePlanDocumentid(new BigDecimal(00));
+			} else {
+				psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+				logger.info("getAllIssueSitePlanDetails Service returns null");
+			}
+
+		} catch (Exception e) {
+			psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+			logger.info("getAllIssueSitePlanDetails throwns Service Exception :: " + e.getMessage()); // e.printStackTrace();
+																										// }
+		}
+
+		logger.exit("findIssueSitePlanDocRequest");
+		return psReSubmissonOuputVO;
+	}
+	
+	/**
+	 * This Method is responsible for getting the Extension_Of_Grant_Land request detail
+	 * 
+	 * WSDL -http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_Extension_Of_Grant_Land/getextensionofgrantlandbpelprocess_client_ep?WSDL
+	 * JAR-UAQProxy
+	 * 
+	 * @author Pritam
+	 * 
+	 */
+
+	public PSResubmissonOutputVO findExtentionGrandLandRequest(ReSubmiisionInputVO inputVO) {
+		logger.enter("findExtentionGrandLandRequest");
+
+		PSResubmissonOutputVO psReSubmissonOuputVO = new PSResubmissonOutputVO();
+
+		com.uaq.proxies.getextensionofgrantlandbpelprocess_client_ep.types.InputPayload inputPayLoad = new com.uaq.proxies.getextensionofgrantlandbpelprocess_client_ep.types.InputPayload();
+		inputPayLoad.setRequestId(inputVO.getAttributeValue().split("-")[3]);
+		inputPayLoad.setRequestNo(inputVO.getAttributeValue());
+		inputPayLoad.setServiceId(ServiceNameConstant.EXTENTION_OF_GRANT_LAND_REQUEST);
+
+		com.uaq.proxies.getextensionofgrantlandbpelprocess_client_ep.types.OutputPayload output = null;
+		try {
+			output = webServiceWarpper.getExtGrandLandDetail(inputPayLoad, PropertiesUtil.getProperty("SOA_URL_PS_EXTENTIONGRANDLAND_GETDETAIL"), PropertiesUtil.getProperty("SOA_USERNAME"),
+					PropertiesUtil.getProperty("SOA_PASSWORD"));
+
+			if (output != null) {
+				psReSubmissonOuputVO.setRequestNo(output.getExtensionOfGrantLandRec().getRequestNo());
+				psReSubmissonOuputVO.setExtentionAttachmentList(output.getAttachmentList());
+				psReSubmissonOuputVO.setStatus("Success");
+				psReSubmissonOuputVO.setAreaBlock(output.getExtensionOfGrantLandRec().getAreaBlock().getValue());
+				psReSubmissonOuputVO.setAreaNo(output.getExtensionOfGrantLandRec().getAreaName().getValue());
+				psReSubmissonOuputVO.setAreaPlotNo(output.getExtensionOfGrantLandRec().getAreaPlotNo().getValue());
+				psReSubmissonOuputVO.setAreaSubArea(output.getExtensionOfGrantLandRec().getAreaSubArea().getValue());
+				psReSubmissonOuputVO.setOptionalComments(output.getExtensionOfGrantLandRec().getOptionalcomment().getValue()); //
+				// psReSubmissonOuputVO.setCommiteeRemarks(output.getExtensionOfGrantLandRec().getC);
+				psReSubmissonOuputVO.setCreatedby(output.getExtensionOfGrantLandRec().getCreatedby());
+				// psReSubmissonOuputVO.setCreateddate(output.getExtensionOfGrantLandRec().getCreateddate());
+				psReSubmissonOuputVO.setModifiedby(output.getExtensionOfGrantLandRec().getModifiedby());
+				// psReSubmissonOuputVO.setModifieddate(output.getExtensionOfGrantLandRec().getModifieddate());
+				psReSubmissonOuputVO.setId(output.getExtensionOfGrantLandRec().getId());
+				psReSubmissonOuputVO.setLandUsage(output.getExtensionOfGrantLandRec().getLandUsage()); //
+				// psReSubmissonOuputVO.setLandValue(output.getExtensionOfGrantLandRec().getLandValue().getValue());
+				psReSubmissonOuputVO.setOwnerId(output.getExtensionOfGrantLandRec().getOwnerid().getValue());
+				psReSubmissonOuputVO.setOwnername(output.getExtensionOfGrantLandRec().getOwnername().getValue());
+				psReSubmissonOuputVO.setOwnerNationalityid(output.getExtensionOfGrantLandRec().getOwnerNationalityId().getValue());
+				// psReSubmissonOuputVO.setRequestNo(output.getExtensionOfGrantLandRec().getExtensionOfGrantLandRec().getRequestNo());
+				// //
+				// psReSubmissonOuputVO.setRequestNocLetterid(output.getExtensionOfGrantLandRec().getRequestNocLetterid().getValue());
+				psReSubmissonOuputVO.setSecPlotNo(output.getExtensionOfGrantLandRec().getSecPlotNo().getValue());
+				psReSubmissonOuputVO.setSecSectorNo(output.getExtensionOfGrantLandRec().getSecSectorName().getValue());
+				psReSubmissonOuputVO.setSectorBlock(output.getExtensionOfGrantLandRec().getSectorBlock().getValue());
+				psReSubmissonOuputVO.setServiceId(output.getExtensionOfGrantLandRec().getServiceId());
+				// psReSubmissonOuputVO.setSitePlanDate(output.getExtensionOfGrantLandRec().getSitePlanDate());
+
+				// psReSubmissonOuputVO.setSiteplanDocId(output.getExtensionOfGrantLandRec().getSitePlanDocumentid().getValue());
+				psReSubmissonOuputVO.setSitePlanNo(output.getExtensionOfGrantLandRec().getSitePlanNo().getValue()!=null?output.getExtensionOfGrantLandRec().getSitePlanNo().getValue().toString():"");
+				psReSubmissonOuputVO.setSourcetype(output.getExtensionOfGrantLandRec().getSourcetype());
+				psReSubmissonOuputVO.setStatusid(output.getExtensionOfGrantLandRec().getStatusid()); //
+				// psReSubmissonOuputVO.setSubmittednocid(output.getExtensionOfGrantLandRec().getSubmittednocid().getValue());
+				psReSubmissonOuputVO.setSubSectorNo(output.getExtensionOfGrantLandRec().getSubSectorNo().getValue());
+				psReSubmissonOuputVO.setGrandExpiryDate(PortalDataMapper.converXMLCalenderTOString(output.getExtensionOfGrantLandRec().getGrantExpiryDate().getValue()));
+				psReSubmissonOuputVO.setGranIssueDate(PortalDataMapper.converXMLCalenderTOString(output.getExtensionOfGrantLandRec().getGrantIssuanceDate().getValue()));
+
+				logger.info("Success Return Request |" + output.getExtensionOfGrantLandRec().getRequestNo());
+			} else {
+				psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+				logger.info("Failure  | output.getExtensionOfGrantLandRec(); return null");
+			}
+
+		} catch (Exception e) {
+			psReSubmissonOuputVO.setStatus(SERVICE_FAILED);
+			logger.info("Failed   | " + e.getMessage());
+		}
+
+		return psReSubmissonOuputVO;
+	}
+
+}

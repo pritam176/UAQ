@@ -524,11 +524,16 @@
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
 																	
-																	<c:if test="${fn:trim(attachments.docTypeId) ne fn:trim('Reviewer Supportive Attachment')}">
-																		<div class="col-md-12 remove-pad attachment-btm">
-																		<a href="${attachments.downloadUrl}" target="_blank"> ${attachments.docTypeId}</a>
-																		</div>
-																		</c:if>
+																	<c:if test="${param.languageCode eq 'en' }">
+																	<div class="col-md-12 remove-pad attachment-btm">
+																	<a href="${attachments.viewURL}" target="_blank"> ${attachments.attachmentType_EN}</a>
+																	</div>
+																	</c:if>
+																	<c:if test="${param.languageCode eq 'ar' }">
+																	<div class="col-md-12 remove-pad attachment-btm">
+																	<a href="${attachments.viewURL}" target="_blank"> ${attachments.attachmentType_AR}</a>
+																	</div>
+																	</c:if>
 																		
 																	
 																	</c:forEach>

@@ -177,10 +177,10 @@ HomeVO homeVO = (HomeVO) request.getSession().getAttribute("homeVO");
 		<div class="well ">
 			<div class="appIcons">
 				<div class="apple">
-					<a href="https://itunes.apple.com/ae/app/uaq-guide/id920507395?mt=8" target="_blank"><img src="/img/aple.png" class="socialimg" alt=""></a>
+					<a href="https://itunes.apple.com/ae/developer/umm-al-quwain-egovernment/id949828648" target="_blank"><img src="/img/aple.png" class="socialimg" alt=""></a>
 				</div>
 				<div class="googleplay ">
-					<a href="https://play.google.com/store/apps/details?id=euaq.gov.ae&hl=en" target="_blank"><img src="/img/googlePlay.png" class="socialimg"
+					<a href="https://play.google.com/store/apps/developer?id=Electronic%20Government%20of%20Umm%20Al%20Quwain&hl=en" target="_blank"><img src="/img/googlePlay.png" class="socialimg"
 						alt=""></a>
 				</div>
 				<div class="windows ">

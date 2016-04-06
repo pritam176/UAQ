@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="UaqSites" default="build" basedir=".">
+	 
+	<description>
+		Build WAR file for UAQ application
+	</description>
+	<property file="${basedir}/build.properties" />	
+	
+	<!-- Cleaning the build directory -->
+	<target name="clean">
+		<delete dir="${build.dir}" />
+	</target>
+	
+	
+	
+	<!-- Copy the configuration files into the classes directory  -->
+	<target name="copy-configs" description="Copies the Configuration files into the Destination Directory.">
+		<copy todir="${class.dir}" filtering="true">
+			<fileset dir="${conf.dir}/common" >
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />
+				<include name="**/*.vm" />
+			</fileset>
+		</copy>	
+	</target>
+	
+	<!-- Copy the Environment configuration files into the classes directory  -->
+	<target name="copy-environment-configs" description="Copies the configuration files into the Destination directory">
+		<echo description="${environment}" />
+		<copy todir="${class.dir}">
+			<fileset dir="${conf.dir}/${environment}">
+				<include name="**/*.properties" />
+				<include name="**/*.xml" />			
+			</fileset>
+		</copy>
+	</target>
+	<!-- Compile the Project -->
+	<target name="compile">
+		<mkdir dir="build/classes" />
+		<javac srcdir="src" destdir="${class.dir}" debug="on" nowarn="on" >
+			<compilerarg line="-XDignore.symbol.file"/>
+			<classpath>
+				<fileset dir="lib/common">
+					<include name="*.jar" />
+				</fileset>
+				<fileset dir="lib/${environment}">
+					<include name="*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+	
+	<target name="build" depends="clean,compile,copy-configs,copy-environment-configs" description="Builds WAR file">
+	        <copy todir="${build.dir}/uaq">
+	            <fileset dir="WebContent" />
+	        </copy>  	
+
+	        <copy todir="${build.dir}/uaq/WEB-INF/lib">
+	        	<fileset dir="lib/${environment}">
+	        						<include name="*.jar" />
+	        					</fileset>
+	            <fileset dir="lib/common">
+	                <exclude name="servlet-api.jar" />
+	                <exclude name="log4j-1.2.16.jar" />
+	            	<exclude name="slf4j-api-1.5.8.jar" />
+	            </fileset>
+	        </copy>
+
+	        <copy todir="build/uaq/WEB-INF/classes">
+	            <fileset dir="${class.dir}" />
+	        </copy>
+	    	   	
+	        <zip destfile="${dist.dir}/UaqSites.war">
+	            <fileset dir="${build.dir}/uaq" />
+	        </zip>
+	    	<copy file="${dist.dir}/UaqSites.war" todir="E:\\JAVA\\tomcat\\apache-tomcat-6.0.35\\webapps" />
+	    </target>	
+</project>

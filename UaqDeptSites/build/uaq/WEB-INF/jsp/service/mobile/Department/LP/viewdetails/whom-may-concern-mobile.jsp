@@ -113,11 +113,22 @@
 																</div>
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
-																	<c:if test="${attachments.docTypeId ne '6' }">
+																	
+																	<c:if test="${attachments.attachmentType ne '6' }">
+																	
+																	<c:if test="${param.languageCode eq 'en' }">
 																	<div class="col-md-12 remove-pad attachment-btm">
-																		<a href="${attachments.url}" target="_blank"> ${attachments.filename}</a>
+																	<a href="${attachments.viewURL}" target="_blank"> ${attachments.attachmentType_EN}</a>
 																	</div>
 																	</c:if>
+																	<c:if test="${param.languageCode eq 'ar' }">
+																	<div class="col-md-12 remove-pad attachment-btm">
+																	<a href="${attachments.viewURL}" target="_blank"> ${attachments.attachmentType_AR}</a>
+																	</div>
+																	</c:if>
+																	
+																	</c:if>
+																	
 																	</c:forEach>
 																</div>
 															</div>
@@ -140,10 +151,19 @@
 																<div class="col-md-7">
 																	<c:forEach items="${attachmentPayLoad}" var="attachments">
 																	
-																	<c:if test="${attachments.docTypeId == '6' }">
+																	<c:if test="${attachments.attachmentType eq '6' }">
+																	
+																	<c:if test="${param.languageCode eq 'en' }">
 																	<div class="col-md-12 remove-pad attachment-btm">
-																	<a href="${attachments.url}" target="_blank"> ${attachments.filename}</a>
+																	<a href="${attachments.viewURL}" target="_blank"> ${attachments.attachmentType_EN}</a>
 																	</div>
+																	</c:if>
+																	<c:if test="${param.languageCode eq 'ar' }">
+																	<div class="col-md-12 remove-pad attachment-btm">
+																	<a href="${attachments.viewURL}" target="_blank"> ${attachments.attachmentType_AR}</a>
+																	</div>
+																	</c:if>
+																	
 																	</c:if>
 																	
 																	</c:forEach>

@@ -1,0 +1,215 @@
+globalUrl=http://94.57.252.237
+
+egd_csSiteName=EGovernment
+mun_csSiteName=Municipality
+ded_csSiteName=EconomicDevelopment
+lap_csSiteName=LandsProperties
+pas_csSiteName=PlanningSurvey
+pws_csSiteName=PublicWorksService
+aah_csSiteName=ArchaeologyHeritage
+dfm_csSiteName=FalajMunicipality
+ica_csSiteName=IndustrialCityAuthority
+pcf_csSiteName=PortsCustomsFreeZone
+dec_csSiteName=ExecutiveCouncil
+faa_csSiteName=FinanceAdministration
+dfa_csSiteName=FinancialAuditing
+uaq_csSiteName=UAQInternetPortal
+
+csUrl=http://172.16.16.84:8080/cs
+csUsername=fwadmin
+csPassword=xceladmin
+
+uaq.url=http://94.57.252.237
+egd.url=http://egd.uaq.ae
+lap.url=http://lap.uaq.ae
+ded.url=http://ded.uaq.ae
+dec.url=http://dec.uaq.ae
+aah.url=http://aah.uaq.ae
+mun.url=http://mun.uaq.ae
+pas.url=http://pas.uaq.ae
+pws.url=http://pws.uaq.ae
+dfm.url=http://dfm.uaq.ae
+ica.url=http://ica.uaq.ae
+pcf.url=http://pcf.uaq.ae
+faa.url=http://faa.uaq.ae
+dfa.url=http://dfa.uaq.ae
+
+erp.table.name=APPS.XX_UAQ_ESERVICE_INTEG_TBL
+
+501=S001
+502=S001
+304_1=A001,1
+304_2=A001,2
+
+#for Add Land Payment feeKey.for Service ,application 
+303_33_1 =A001,1
+303_33_2 =A001,2
+
+303_18_1 =S001,1
+303_18_2 =S001,2
+
+302_33_1 =A001,1
+302_33_2 =A001,2
+
+405_1 = S001,Social Affairs
+405_2 = S001,Charity
+405_3 = S001,Other
+
+#Abdelaziz
+#ServiceId,statusId = FEE_TYPE_CODE
+403_33_2 = A001,2
+403_18_2 = S001,2
+
+404_33_2 = A001,2
+404_18_2 = S001,2
+
+
+406_33_1 = A001,1
+406_18_1 = S001,1
+
+407_33_1 = A001,1
+407_18_1 = S001,1
+
+408_33_1 =A001,1
+408_33_2 =A001,2
+
+408_18_1 =S001,1
+408_18_2 =S001,2
+
+305_33_1 =A001,1
+305_33_2 =A001,2
+
+305_18_1 =S001,1
+305_18_2 =S001,2
+
+306_18_1 =S001,1
+306_18_2 =S001,2
+
+
+#ServiceId_statusId_OwnerType = FEE_TYPE_CODE,LAND_TYPE
+401_33 = A001
+401_18_7 = S001,7
+401_18_6 = S001,6
+401_18_1 = S001,5
+401_18_2 = S001,1 
+401_18_3 = S001,2
+401_18_4 = S001,3 
+401_18_5 = S001,4  
+#Abdelaziz
+
+SEQ_301 = PS_SEQ_TRAN
+SEQ_302 = PS_SEQ_TRAN
+SEQ_303 = PS_SEQ_TRAN
+SEQ_304 = PS_SEQ_TRAN
+SEQ_305 = PS_SEQ_TRAN
+SEQ_306 = PS_SEQ_TRAN
+
+
+SEQ_501 = EGD_SEQ_TRAN
+SEQ_502 = EGD_SEQ_TRAN
+
+SEQ_405 = LP_SEQ_TRAN
+SEQ_403 = LP_SEQ_TRAN
+SEQ_404 = LP_SEQ_TRAN
+SEQ_401 = LP_SEQ_TRAN
+
+#Abdelaziz
+SEQ_406 = LP_SEQ_TRAN
+SEQ_407 = LP_SEQ_TRAN
+SEQ_408 = LP_SEQ_TRAN
+#Abdelaziz
+
+
+ENV_ID = 2
+
+#Extention Grand Land Service_ID & UserType
+301_1 =S001,1
+301_2 =S001,2
+
+22=Emirates Id Front
+23=Emirates Id Back
+20=Family Book
+24=Passport Front
+1=Trade License
+2=Signatory Attestation
+
+news.pagesize = 3
+news.paginationsetsize = 5
+news.numberofyear = 2
+
+pagination.pagesize = 3
+pagination.setsize = 3
+
+rss.feeds.pagesize = 10
+
+#Email Configuration
+email.host=exmail.eim.ae
+email.from=sendemail@tacme.ae
+email.password=send123
+email.port=25
+email.to.uaq=gkumar@tacme.com
+email.to.lap=gkumar@tacme.com
+email.to.pws=gkumar@tacme.com
+email.to.ded=gkumar@tacme.com
+email.to.pas=gkumar@tacme.com
+email.to.aah=gkumar@tacme.com
+email.to.mun=gkumar@tacme.com
+email.to.egd=gkumar@tacme.com
+email.to.dfm=gkumar@tacme.com
+email.to.dfa=gkumar@tacme.com
+email.to.dec=gkumar@tacme.com
+email.to.ica=gkumar@tacme.com
+email.to.pcf=gkumar@tacme.com
+email.to.aah=gkumar@tacme.com
+careers.email=testmail@abc.com
+
+careers.email=testmail@abc.com
+
+#Webservice Details.
+related.services = http://94.57.252.237:8080/uaqws/service/getServicesByDepartment/egd/en/
+
+
+SOA_URL_GETCARD_DETAIL = http://soavm2:8001/soa-infra/services/default/ServiceDatabaseQueriesProject/ServiceDatabaseQueriesProcess.service?WSDL
+
+SOA_URL_ISSUE_PROCARD = http://soavm2:8001/soa-infra/services/LP/IssueNewProCardProject/IssueNewProCardProcess.service?WSDL
+
+SOA_URL_ISSUE_NEW_PROCARD = http://soavm2:8001/soa-infra/services/LP/RenewProCardProject/RenewProCardProcess.service?WSDL
+
+SOA_URL_LAND&PROPERTY = http://soavm2:8001/soa-infra/services/LP/LandAndPropertyValuationProject/LandAndPropertyValuationProcess.service?WSDL
+
+
+SOA_URL_LP_LOSTDOC=http://soavm2:8001/soa-infra/services/LP/LpProject/RequestLostDocumentReplacementProcess.service?WSDL
+SOA_URL_ISSUE_REALESTATE=http://soavm2:8001/soa-infra/services/LP/LpProject/NewRealEstateOfficeProcess.service?WSDL
+SOA_URL_RENEW_REALESTATE=http://soavm2:8001/soa-infra/services/LP/LpProject/RenewRealEstateOfficeProcess.service?WSDL
+SOA_URL_GRANTLAND_REQ=http://soa:8001/soa-infra/services/PS_Department/GrantLandRequestProcess/Process.service?WSDL
+SOA_URL_APPLICANT_NOTIFICATION=http://soavm2:8001/soa-infra/services/default/ApplicantNotificationProject/ApplicantNotificationProcess.service?WSDL
+SOA_URL_GRANTLAND_EXCEP_REQ=http://94.57.252.234:8001/soa-infra/services/LP/GrantLandRequestException/GrantLandRequestExceptionProcess.service?WSDL
+
+SOA_URL_GENRATE_OTP=http://soa:8001/soa-infra/services/default/UAQ_REG_GenerateOTP/generateotpbpel_client_ep?WSDL
+
+
+ucm.ip=94.57.252.233:16200
+
+SOA_USERNAME =uaqdev
+SOA_PASSWORD =welcome1
+
+#PS Department
+SOA_URL_PS_LANDDEMACRATION_SUBMIT = http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_LandDemarcation/landdemarcationbpelservice_client_ep?WSDL
+
+SOA_URL_PS_LANDDEMACRATION_RESUBMIT =http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_LandDemarcation/LandDemarcationServiceForOut.service?WSDL
+
+SOA_URL_PS_LANDDEMACRATION_GETDETAIL = http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_LandDemarcation/getlanddemarcationreqdetails_client_ep?WSDL
+
+SOA_URL_PS_ISSUESITEPLAN_SUBMIT = http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_IssueSitePlanDocumentReq/issuesiteplandocreqbpel_client_ep?WSDL
+
+SOA_URL_PS_ISSUESITEPLAN_RESUBMIT = http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_IssueSitePlanDocumentReq/IssueSitePlanDocSystemizedServiceForOut.service?WSDL
+
+SOA_URL_PS_ISSUESITEPLAN_GETDETAIL = http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_IssueSitePlanDocumentReq/getissuesiteplanreqdetails_client_ep?WSDL
+
+SOA_URL_PS_EXTENTIONGRANDLAND_GETDETAIL = http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_Extension_Of_Grant_Land/getextensionofgrantlandbpelprocess_client_ep?WSDL
+
+SOA_URL_PS_EXTENTIONGRANDLAND_SERVICEPAYMENT_DONE = http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_Extension_Of_Grant_Land/ExtensionOfGrantLandAfterServicePaymentForOut.service?WSDL
+
+SOA_URL_PS_EXTENTIONGRANDLAND_SUBMIT = http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_Extension_Of_Grant_Land/extensionofgrantlandservice_client_ep?WSDL
+
+SOA_URL_PS_EXTENTIONGRANDLAND_RESUBMIT = http://soa:8001/soa-infra/services/PS_Department/UAQ_PS_Extension_Of_Grant_Land/ExtensionOfGrantLandProcessForOut.service?WSDL

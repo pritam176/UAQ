@@ -471,7 +471,7 @@
 	                                        </div>
 											<!-- /captcha part Starts here -->
 											<!-- check newsletter -->
-											<div class="row">
+											<%-- <div class="row">
 												<div class="col-md-12 remove-pad">
 															<div class="col-md-5 remove-pad">
 																<!-- text box -->
@@ -489,7 +489,7 @@
 																<!-- /text box -->
 															</div>
 												</div>
-											</div>
+											</div> --%>
 											<!-- /check newsletter -->
 											<!-- Terms and conditions -->
 											<div class="row">

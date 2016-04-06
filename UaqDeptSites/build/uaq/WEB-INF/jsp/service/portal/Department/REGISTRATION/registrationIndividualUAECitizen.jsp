@@ -882,7 +882,7 @@
 												</div>
 	                                        </div>
 											<!-- /captcha part Starts here -->
-											<div class="col-md-12 remove-pad">
+											<%-- <div class="col-md-12 remove-pad">
 														<div class="col-md-5 remove-pad">
 															<!-- text box -->
 															<div class="form-group cf">
@@ -899,7 +899,7 @@
 															</div>
 															<!-- /text box -->
 														</div>
-												</div>
+												</div> --%>
 											
 										<!-- Terms and conditions -->
 											<div class="row">

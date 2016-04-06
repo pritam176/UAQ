@@ -1,0 +1,118 @@
+/**
+ * 
+ */
+package com.uaq.service;
+
+import static com.uaq.common.ApplicationConstants.SERVICE_FAILED;
+
+import javax.xml.datatype.XMLGregorianCalendar;
+import javax.xml.ws.Holder;
+
+import org.springframework.stereotype.Service;
+
+import com.uaq.common.PropertiesUtil;
+import com.uaq.controller.mapper.PortalDataMapper;
+import com.uaq.logger.UAQLogger;
+import com.uaq.proxies.getsupplierdetailsbpel_client_ep.types.RegistrationTypeListType;
+import com.uaq.soap.warpper.WebServiceWarpper;
+import com.uaq.vo.EGDResubmissionVO;
+import com.uaq.vo.ReSubmiisionInputVO;
+
+/**
+ * @author WINDOS
+ * 
+ */
+@Service("eGDFindRequestService")
+public class EGDFindRequestService {
+
+	protected static UAQLogger logger = new UAQLogger(EGDFindRequestService.class);
+
+	private WebServiceWarpper webServiceWarpper = new WebServiceWarpper();
+
+	public EGDResubmissionVO findNewSupplierRequest(ReSubmiisionInputVO inputVO, String languageCode) {
+
+		EGDResubmissionVO eGDResubmissionVO = new EGDResubmissionVO();
+
+		com.uaq.proxies.getsupplierdetailsbpel_client_ep.types.CommonRequestBPMType commonRequestBPMType = new com.uaq.proxies.getsupplierdetailsbpel_client_ep.types.CommonRequestBPMType();
+		com.uaq.proxies.getsupplierdetailsbpel_client_ep.types.SuppRegisterRenewReqType suppDetails = new com.uaq.proxies.getsupplierdetailsbpel_client_ep.types.SuppRegisterRenewReqType();
+		com.uaq.proxies.getsupplierdetailsbpel_client_ep.types.UserDetailsPayload userDetailsPayload = new com.uaq.proxies.getsupplierdetailsbpel_client_ep.types.UserDetailsPayload();
+		
+		RegistrationTypeListType regRecType = new RegistrationTypeListType();
+
+		suppDetails.setRegistrationTypeList(regRecType);
+
+		commonRequestBPMType.setRequestId(new Integer(inputVO.getAttributeValue().split("-")[3]));
+		commonRequestBPMType.setRequestNo(inputVO.getAttributeValue());
+		commonRequestBPMType.setStateId(2);
+
+		userDetailsPayload.setLanguage((PortalDataMapper.getLanguageId(languageCode)));
+		userDetailsPayload.setAccountid("");
+		userDetailsPayload.setAddress1("");
+		userDetailsPayload.setAddress2("");
+		userDetailsPayload.setDOB(null);
+		userDetailsPayload.setEDIAExpirtyDate(null);
+		userDetailsPayload.setEiratesCode("");
+		userDetailsPayload.setEmailID("");
+		userDetailsPayload.setEmirate("");
+		userDetailsPayload.setEmiratesId("");
+		userDetailsPayload.setFamilyBookNo("");
+		userDetailsPayload.setFirstName("");
+		userDetailsPayload.setHomePhone("");
+		userDetailsPayload.setLanguage("");
+		userDetailsPayload.setLastName("");
+		userDetailsPayload.setMiddleName("");
+		userDetailsPayload.setMobileNo("");
+		userDetailsPayload.setNationality("");
+		// userDetailsPayload.setNationalityID("0");
+		userDetailsPayload.setPOBOX(null);
+		userDetailsPayload.setTradeLienceNo("");
+		userDetailsPayload.setTypeOfUser("");
+		userDetailsPayload.setUsername("");
+
+		Holder<com.uaq.proxies.getsupplierdetailsbpel_client_ep.types.UserDetailsPayload> userDetailsH = new Holder<com.uaq.proxies.getsupplierdetailsbpel_client_ep.types.UserDetailsPayload>();
+
+		Holder<String> statusEN = new Holder<String>();
+		Holder<String> statusAR = new Holder<String>();
+		Holder<String> requestNo = new Holder<String>();
+		Holder<String> reviewerComments = new Holder<String>();
+		Holder<String> requestId = new Holder<String>();
+		Holder<String> establishmentName = new Holder<String>();
+		Holder<String> tradeLicenceNo = new Holder<String>();
+		Holder<XMLGregorianCalendar> expiryDate = new Holder<XMLGregorianCalendar>();
+		Holder<com.uaq.proxies.getsupplierdetailsbpel_client_ep.types.AttachmentListPayload> attachmentList = new Holder<com.uaq.proxies.getsupplierdetailsbpel_client_ep.types.AttachmentListPayload>();
+
+		Holder<String> suppCategoryEn = new Holder<String>();
+
+		Holder<String> suppRegistrationTypeEn = new Holder<String>();
+
+		try {
+			webServiceWarpper.getSupllierData(suppDetails, attachmentList, commonRequestBPMType, userDetailsH, null, null, null, statusEN, statusAR, requestNo, requestId, establishmentName,
+					tradeLicenceNo, expiryDate, null, null, null, null, null, null, null, suppCategoryEn, suppRegistrationTypeEn, reviewerComments, null,
+					PropertiesUtil.getProperty("SOA_URL_EGD_GETDETAIL"), PropertiesUtil.getProperty("SOA_USERNAME"), PropertiesUtil.getProperty("SOA_PASSWORD"));
+
+			eGDResubmissionVO.setStatus("Success");
+			eGDResubmissionVO.setEstablishmentName(establishmentName.value);
+			eGDResubmissionVO.setAttachmentRecPayload(attachmentList.value);
+			eGDResubmissionVO.setTradeLicenseNum(tradeLicenceNo.value);
+			eGDResubmissionVO.setTradeLicenseExpiryDate(expiryDate.value);
+			eGDResubmissionVO.setSupplierCategory(suppCategoryEn.value);
+			eGDResubmissionVO.setRegistrationTypeArray(suppRegistrationTypeEn.value.split(","));
+			eGDResubmissionVO.setRegistrationType(suppRegistrationTypeEn.value);
+			eGDResubmissionVO.setReviewerComments(reviewerComments.value);
+			eGDResubmissionVO.setReqId(requestId.value);
+			eGDResubmissionVO.setRequestNo(requestNo.value);
+			eGDResubmissionVO.setEmirates(userDetailsH.value.getEiratesCode());
+			// Post Box
+			eGDResubmissionVO.setPostBox(userDetailsH.value.getPOBOX() != null ? userDetailsH.value.getPOBOX().toString() : "");
+			// Address Field.
+			eGDResubmissionVO.setAddress(userDetailsH.value.getAddress1());
+			// Office Telephone Number.
+			eGDResubmissionVO.setTelephoneNumber(userDetailsH.value.getHomePhone());
+
+		} catch (Exception e) {
+			eGDResubmissionVO.setStatus(SERVICE_FAILED);
+			logger.error("Failure  | " + e.getMessage());
+		}
+		return eGDResubmissionVO;
+	}
+}

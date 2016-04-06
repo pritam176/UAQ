@@ -1,0 +1,603 @@
+package com.uaq.service;
+
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
+import javax.xml.rpc.ServiceException;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import uaq.middleware.service.RegistrationServicePortBindingStub;
+import uaq.middleware.service.RegistrationService_PortType;
+import uaq.middleware.service.RegistrationService_Service;
+import uaq.middleware.service.RegistrationService_ServiceLocator;
+import uaq.middleware.service.UserContext;
+import CreateOnlineAccount.AttachmentRecPayload;
+import ForgetUserName.EstablishmentDetailsPayload;
+import GenerateOTP.EstablishmentPayload;
+import GetAccountDetails.AccountDetails;
+import GetAccountDetails.IndividualPayload;
+import GetAccountDetails.UserDetails;
+
+import static com.uaq.common.ApplicationConstants.*;
+
+import com.uaq.common.PropertiesUtil;
+import com.uaq.logger.UAQLogger;
+import com.uaq.proxies.validateotpbpel_client_ep.types.InputPayload;
+import com.uaq.proxies.validateotpbpel_client_ep.types.OutputPayload;
+import com.uaq.soap.warpper.WebServiceWarpper;
+import com.uaq.util.StringUtil;
+import com.uaq.vo.AccountDetailInputVO;
+import com.uaq.vo.AccountDetailOutputVO;
+import com.uaq.vo.ActiveAccountInputVO;
+import com.uaq.vo.ActiveAccountOutputVO;
+import com.uaq.vo.ForgetPasswordInputVO;
+import com.uaq.vo.ForgetPasswordOutputVO;
+import com.uaq.vo.ForgetUserNameInputVO;
+import com.uaq.vo.ForgetUserNameOutputVO;
+import com.uaq.vo.GenerateOTPInputVO;
+import com.uaq.vo.ValidateOTPInputVO;
+import com.uaq.vo.ValidateOTPOutput;
+
+/**
+ * Service class for Create Account on WSDL Calling.
+ * 
+ * 
+ * Jar Name-RegistrationService.jar WSDL-http://94.57.252.234:7001
+ * /UAQServiceMiddleLayer/RegistrationServicePort?WSDL
+ * 
+ * @author Pritam
+ * 
+ */
+
+@Service(value = "registrationService")
+public class RegistrationService {
+
+	protected static UAQLogger logger = new UAQLogger(RegistrationService.class);
+
+	private RegistrationService_PortType type = null;
+	private RegistrationService_Service service = null;
+	private RegistrationServicePortBindingStub stub = null;
+	private UserContext uc = null;
+	DateFormat df = new SimpleDateFormat(DD_MM_YYYY);
+	Calendar calender = null;
+
+	@Autowired
+	private UCMCenterURLService uCMCenterURLService;
+
+	private void createStub() {
+
+		uc = new UserContext();
+		uc.setUsername(WS_USERNAME);
+		uc.setPassword(WS_PASSWORD);
+
+		try {
+			service = (RegistrationService_Service) new RegistrationService_ServiceLocator();
+			type = service.getRegistrationServicePort();
+			stub = (RegistrationServicePortBindingStub) type;
+
+		} catch (ServiceException e) {
+			logger.error("WebService Error  |" + e.getMessage());
+
+		}
+
+	}
+
+	// Replace In CreateAccountService
+	/*
+	 * public CreateAccountOutputVO createAccount(CreateAccountInputVO input) {
+	 * createStub();
+	 * 
+	 * CreateAccountOutputVO outputVO = new CreateAccountOutputVO();
+	 * 
+	 * InputPayload payload = new InputPayload();
+	 * 
+	 * EmiratesIDPayload em = new EmiratesIDPayload();
+	 * em.setFullName(StringUtil.isEmpty(input.getFullname()) ? "" : input
+	 * .getFullname());
+	 * em.setEmiratesID(StringUtil.isEmpty(input.getEmirateId()) ? "" : input
+	 * .getEmirateId().replaceAll("-", ""));
+	 * em.setEmiratesCode(StringUtil.isEmpty(input.getEmirate()) ? "" : input
+	 * .getEmirate());
+	 * 
+	 * em.setExpiryDate(stringToCalendar(StringUtil.isEmpty(input
+	 * .getEmirateIdExpiryDate()) ? "01/01/1800" : input
+	 * .getEmirateIdExpiryDate()));
+	 * 
+	 * em.setDOB(stringToCalendar(StringUtil.isEmpty(input.getDob()) ?
+	 * "01/01/1800" : input.getDob()));
+	 * 
+	 * // Should Be Changed em.setResidenceNo(input.getFamilyNumber() == null ?
+	 * "0" : input .getFamilyNumber());
+	 * 
+	 * // need to confirm which date to provide.No Residence date is there.
+	 * em.setResidenceExpiryDate(stringToCalendar("01/01/1800"));
+	 * 
+	 * PassportPayload pass = new PassportPayload();
+	 * pass.setFullName(StringUtil.isEmpty(input.getFullname()) ? "" : input
+	 * .getFullname());
+	 * pass.setPassportNumber(StringUtil.isEmpty(input.getPassportNumber()) ? ""
+	 * : input.getPassportNumber());
+	 * 
+	 * // need to confirm which date to provide.No Passportt expiry date date //
+	 * is there. pass.setPassportExpiryDate(stringToCalendar("01/01/1800"));
+	 * 
+	 * FamilyBookPayload family = new FamilyBookPayload();
+	 * family.setFullname(StringUtil.isEmpty(input.getFamilybook_fullName()) ?
+	 * "0" : input.getFamilybook_fullName());
+	 * family.setEmirateCode(StringUtil.isEmpty(input.getFamilybook_emirates())
+	 * ? "0" : input.getFamilybook_emirates());
+	 * family.setTownName(StringUtil.isEmpty(input.getTownName()) ? "0" :
+	 * input.getTownName());
+	 * family.setTownNumber(StringUtil.isEmpty(input.getTownNumber()) ? "0" :
+	 * input.getTownNumber());
+	 * family.setFamilyNumber(StringUtil.isEmpty(input.getFamilyNumber()) ? "0"
+	 * : input.getFamilyNumber());
+	 * family.setTribeName(StringUtil.isEmpty(input.getTownNumber()) ? "0" :
+	 * input.getTownNumber());
+	 * family.setClanNumber(StringUtil.isEmpty(input.getClanNumber()) ? "0" :
+	 * input.getClanNumber());
+	 * 
+	 * family.setIssuanceDate(stringToCalendar(StringUtil.isEmpty(input
+	 * .getIssuanceDate()) ? "01/01/1800" : input.getIssuanceDate()));
+	 * 
+	 * family.setMotherName(StringUtil.isEmpty(input.getMotherName()) ? "0" :
+	 * input.getMotherName());
+	 * family.setMothersFatherName(StringUtil.isEmpty(input
+	 * .getMothersFatherName()) ? "0" : input.getMothersFatherName());
+	 * 
+	 * ApplicantDetailsPayload app = new ApplicantDetailsPayload();
+	 * 
+	 * if(input.getTypeofUser()!="2"){
+	 * app.setApplicantTypeId(input.getApplicantTypeId());
+	 * app.setFirstName(StringUtil.isEmpty(input.getFirstName()) ? "" : input
+	 * .getFirstName());
+	 * app.setMiddleName(StringUtil.isEmpty(input.getMidleName()) ? "" : input
+	 * .getMidleName()); app.setLastName(StringUtil.isEmpty(input.getLastName())
+	 * ? "" : input .getLastName());
+	 * app.setAddress1(StringUtil.isEmpty(input.getAddress()) ? "" : input
+	 * .getAddress()); app.setAddress2(""); app.setAddress3("");
+	 * 
+	 * app.setMobileNo1(input.getMobile1());
+	 * app.setMobileNo2(input.getMobile2());
+	 * app.setLandLine(input.getLandLine());
+	 * app.setCountryIdOfCitizenship(input.getCountryCitizen().equals("") ? "" :
+	 * input.getCountryCitizen());
+	 * app.setCountryIdOfResidency(input.getCountryResidency().equals("") ? "" :
+	 * input.getCountryResidency()); app.setEmailID(input.getEmailAddress());
+	 * 
+	 * // Sholud be replace
+	 * app.setPostbox(StringUtil.isEmpty(input.getPostboxNo()) ? "" : input
+	 * .getPostboxNo()); app.setHasFamilyBookNo(input.isHasFamilyBook() ? "1" :
+	 * "0"); app.setEmiratesIDRec(em); app.setPassportRec(pass);
+	 * app.setFamilyBookRec(family);
+	 * 
+	 * UserDetailsPayload user = new UserDetailsPayload();
+	 * user.setApplicantUserDetails(app);
+	 *//** for Establishment registration **/
+	/*
+	 * CreateOnlineAccount.EstablishmentDetailsPayload
+	 * establishmentDetailsPayload = new
+	 * CreateOnlineAccount.EstablishmentDetailsPayload();
+	 * establishmentDetailsPayload.setFullName(StringUtil.isEmpty(input
+	 * .getEstablishmentName()) ? "" : input.getEstablishmentName());
+	 * establishmentDetailsPayload.setMobileNumber(input.getMobile1());
+	 * establishmentDetailsPayload.setOfficePhone(input.getLandLine());
+	 * establishmentDetailsPayload.setEmailAddress(input.getEmailAddress());
+	 * establishmentDetailsPayload.setAddress1(StringUtil.isEmpty(input
+	 * .getAddress()) ? "" : input.getAddress());
+	 * establishmentDetailsPayload.setAddress2("");
+	 * establishmentDetailsPayload.setAddress3("");
+	 * establishmentDetailsPayload.setWebSite(StringUtil.isEmpty(input
+	 * .getWebsite()) ? "" : input.getWebsite());
+	 * establishmentDetailsPayload.setPostBox(StringUtil.isEmpty(input
+	 * .getPostboxNo()) ? "" : input.getPostboxNo());
+	 * establishmentDetailsPayload.setTradeLicenseNo(StringUtil.isEmpty(input
+	 * .getTradeLicenseNumber()) ? "" : input.getTradeLicenseNumber());
+	 * establishmentDetailsPayload.setEmiratesCode(StringUtil.isEmpty(input
+	 * .getEmirate()) ? "" : input.getEmirate());
+	 * 
+	 * establishmentDetailsPayload
+	 * .setTradeLicenseExpiryDate(stringToCalendar(StringUtil
+	 * .isEmpty(input.getTradeLicenseExpDate()) ? "01/01/1800" :
+	 * input.getTradeLicenseExpDate()));
+	 * 
+	 * establishmentDetailsPayload.setTradeLicenseTypeid(StringUtil
+	 * .isEmpty(input.getTradeLicenseType()) ? "" : input
+	 * .getTradeLicenseType());
+	 * user.setEstablishmentUserDetails(establishmentDetailsPayload);
+	 * 
+	 * payload.setUserDetails(user);
+	 * payload.setTypeOfUser(input.getTypeofUser());
+	 * payload.setLoginUserName(input.getUsername());
+	 * payload.setPassword(input.getPassword());
+	 * 
+	 * GenericDetailsPayload ge = new GenericDetailsPayload();
+	 * ge.setWorkFlowId("1"); ge.setLanguageID(input.getLanguageId());
+	 * ge.setProfileImageId("1");
+	 * ge.setSubcribeForNewsLetterFlag(input.isNewsLetter() ? "1" : "0");
+	 * ge.setUsername(input.getUsername()); ge.setAccountid("1");
+	 * ge.setRequestId("1"); ge.setRequestNo("1");
+	 * 
+	 * payload.setGenericDetails(ge);
+	 *//**
+	 * Adding the file did to the FileArray
+	 * 
+	 * 
+	 * @author Pritam
+	 * 
+	 */
+	/*
+	 * 
+	 * Map<String, String> fileMapName = new HashMap<String, String>();
+	 * 
+	 * if (!StringUtil.isEmpty(input.getEmerateIdFront())) {
+	 * fileMapName.put("22", input.getEmerateIdFront()); }
+	 * 
+	 * if (!StringUtil.isEmpty(input.getEmerateIdBack())) {
+	 * fileMapName.put("23", input.getEmerateIdBack()); }
+	 * 
+	 * if (!StringUtil.isEmpty(input.getFamilyBook())) { fileMapName.put("20",
+	 * input.getFamilyBook()); }
+	 * 
+	 * if (!StringUtil.isEmpty(input.getPassportFront())) {
+	 * fileMapName.put("24", input.getPassportFront()); } if
+	 * (!StringUtil.isEmpty(input.getTradeLicenseAttach())) {
+	 * fileMapName.put("1", input.getTradeLicenseAttach()); }
+	 * 
+	 * if (!StringUtil.isEmpty(input.getSignatoriesAttestation())) {
+	 * fileMapName.put("2", input.getSignatoriesAttestation()); } if
+	 * (!StringUtil.isEmpty(input.getPassportResidencyPage())) {
+	 * fileMapName.put("25", input.getPassportResidencyPage()); }
+	 * 
+	 * if (!StringUtil.isEmpty(input.getVisaPage())) { fileMapName.put("26",
+	 * input.getVisaPage()); }
+	 * 
+	 * AttachmentRecPayload fileArry[] = new AttachmentRecPayload[fileMapName
+	 * .size()];
+	 * 
+	 * 
+	 * for (int i = 0; i < fileMapName.size(); i++) { //fileArry[i] =
+	 * getURLofFIle(fileListName.get(i), i + ""); }
+	 * 
+	 * 
+	 * int imageCounter = 0; Iterator<Entry<String, String>> entries =
+	 * fileMapName.entrySet() .iterator(); while (entries.hasNext()) { Entry
+	 * thisEntry = (Entry) entries.next(); fileArry[imageCounter] =
+	 * getURLofFIle(thisEntry.getKey() + "", thisEntry.getValue() + "");
+	 * imageCounter++; }
+	 * 
+	 * payload.setAttachmentList(fileArry);
+	 * 
+	 * OutputPayload output = null; try { output = stub.registerAccount(payload,
+	 * uc); } catch (RemoteException e) {
+	 * logger.error("WebService Input Error  |" + e.getMessage());
+	 * outputVO.setStatus("Failed"); } if (output != null) {
+	 * logger.info(output.getMessage_EN() + " |" + output.getStatus()); if
+	 * (!(output.getStatus().equals("Failure"))) { GenericDetailsPayload
+	 * genericDetailsPayload = output .getGenericDetails();
+	 * outputVO.setAccountId(genericDetailsPayload.getAccountid());
+	 * outputVO.setRequestId(genericDetailsPayload.getRequestId());
+	 * outputVO.setRequestNo(genericDetailsPayload.getRequestNo());
+	 * outputVO.setUserName(genericDetailsPayload.getUsername());
+	 * outputVO.setWorkFlowId(genericDetailsPayload.getWorkFlowId()); }
+	 * outputVO.setMessage_EN(output.getMessage_EN());
+	 * outputVO.setMessage_AR(output.getMessage_AR());
+	 * outputVO.setStatus(output.getStatus()); } else {
+	 * outputVO.setStatus("Failed");
+	 * logger.info("stub.registerAccount(payload, uc) return NULL  | FAiled"); }
+	 * return outputVO; }
+	 */
+
+	public ActiveAccountOutputVO activateAccount(ActiveAccountInputVO input) {
+
+		
+		ActiveAccountOutputVO output = new ActiveAccountOutputVO();
+
+		com.uaq.proxies.activateuseraccountbpel_client_ep.types.InputPayload payload = new com.uaq.proxies.activateuseraccountbpel_client_ep.types.InputPayload();
+		payload.setAccountId(input.getAccountId());
+		payload.setTypeOfUser(input.getTypeOfUser());
+		payload.setLoginusername(input.getLoginusername().toLowerCase());
+		payload.setPassword(input.getPassword());
+		payload.setMobileno(input.getMobileno());
+
+		com.uaq.proxies.activateuseraccountbpel_client_ep.types.EstablishmentPayload establishmentPayload = new com.uaq.proxies.activateuseraccountbpel_client_ep.types.EstablishmentPayload();
+		establishmentPayload.setAddress1(StringUtil.isEmpty(input.getAddress()) ? EMPTY_STRING : input.getAddress());
+		establishmentPayload.setAddress2(EMPTY_STRING);
+		establishmentPayload.setAddress3(EMPTY_STRING);
+		establishmentPayload.setEmailAddress(StringUtil.isEmpty(input.getEmail()) ? EMPTY_STRING : input.getEmail());
+		establishmentPayload.setOfficephone(StringUtil.isEmpty(input.getLandLine()) ? EMPTY_STRING : input.getLandLine());
+		establishmentPayload.setPostbox(StringUtil.isEmpty(input.getPostbox()) ? EMPTY_STRING : input.getPostbox());
+
+		com.uaq.proxies.activateuseraccountbpel_client_ep.types.IndividualPayload individualPayload = new com.uaq.proxies.activateuseraccountbpel_client_ep.types.IndividualPayload();
+		individualPayload.setMobileNo1(StringUtil.isEmpty(input.getMobileno()) ? EMPTY_STRING : input.getMobileno());
+		individualPayload.setLandline(StringUtil.isEmpty(input.getLandLine()) ? EMPTY_STRING : input.getLandLine());
+		individualPayload.setEmailAddress(StringUtil.isEmpty(input.getEmail()) ? EMPTY_STRING : input.getEmail());
+
+		payload.setIndividualRec(individualPayload);
+		payload.setEstablishmentRec(establishmentPayload);
+
+		com.uaq.proxies.activateuseraccountbpel_client_ep.types.OutputPayload outputPayload = null;
+		try {
+			outputPayload = new WebServiceWarpper().activateUserAccount(payload, PropertiesUtil.getProperty("SOA_URL_ACTIVATE_ACCOUNT"), PropertiesUtil.getProperty("SOA_USERNAME"), PropertiesUtil.getProperty("SOA_PASSWORD"));
+			if (outputPayload != null) {
+				logger.info(outputPayload.getStatus() + " | " + outputPayload.getMessageEN());
+				output.setStatus(outputPayload.getStatus());
+				output.setMessage_EN(outputPayload.getMessageEN());
+				output.setMessage_AR(outputPayload.getMessageAR());
+			} else {
+				logger.info("Failure  | stub.activateAccount(payload, uc); return NUll");
+				output.setStatus("Failure");
+			}
+
+		} catch (Exception e) {
+			output.setStatus("Failure");
+			logger.error("Failure  |" + e.getMessage());
+
+		}
+		return output;
+	}
+
+	private Calendar stringToCalendar(String dateString) {
+
+		// Date date = null;
+		Calendar cal = Calendar.getInstance();
+		try {
+
+			cal.setTime(df.parse(dateString));
+		} catch (ParseException e) {
+			logger.error("Error in parsing Date  |" + e.getMessage());
+
+		}
+
+		return cal;
+	}
+
+	private AttachmentRecPayload getURLofFIle(String docType, String files) {
+
+		String did = files.split("-")[0];
+		String name = files.split("-")[1];
+		String ucmUrl = uCMCenterURLService.getWebCenterURLofFile(did);
+		AttachmentRecPayload fileArray = new AttachmentRecPayload();
+		fileArray.setContentID(did);
+		fileArray.setURL(ucmUrl);
+		fileArray.setAttachemntType(docType);
+		fileArray.setAttachemntName(name);
+		return fileArray;
+	}
+
+	public AccountDetailOutputVO getAccountDetail(AccountDetailInputVO input) {
+		
+		AccountDetailOutputVO outputVo = new AccountDetailOutputVO();
+		com.uaq.proxies.getaccountdetailsbpel_client_ep.types.InputPayload payload = new com.uaq.proxies.getaccountdetailsbpel_client_ep.types.InputPayload();
+		payload.setTypeOfUser(input.getTypeofUser());
+
+		com.uaq.proxies.getaccountdetailsbpel_client_ep.types.IndividualPayload ip = new com.uaq.proxies.getaccountdetailsbpel_client_ep.types.IndividualPayload();
+		ip.setMobileNo(StringUtil.isEmpty(input.getMobileNo()) ? EMPTY_STRING : input.getMobileNo());
+		// ip.setEmiratesID((input.getEmiratesID())==null?"":input.getEmiratesID());
+
+		ip.setEmiratesID(StringUtils.isBlank(input.getEmiratesID()) ? EMPTY_STRING : input.getEmiratesID());
+		ip.setPassportID(StringUtils.isBlank(input.getPassportID()) ? EMPTY_STRING : input.getPassportID());
+
+		com.uaq.proxies.getaccountdetailsbpel_client_ep.types.EstablishmentPayload establishmentREC = new com.uaq.proxies.getaccountdetailsbpel_client_ep.types.EstablishmentPayload();
+		establishmentREC.setMobileNo(StringUtil.isEmpty(input.getMobileNo()) ? EMPTY_STRING : input.getMobileNo());
+		establishmentREC.setEmiratesCode(StringUtil.isEmpty(input.getEmirate()) ? EMPTY_STRING : input.getEmirate());
+		establishmentREC.setTradeLicenseNo(StringUtil.isEmpty(input.getTraedLicence()) ? EMPTY_STRING : input.getTraedLicence());
+		payload.setIndividualREC(ip);
+		payload.setEstablishmentREC(establishmentREC);
+
+		try {
+			com.uaq.proxies.getaccountdetailsbpel_client_ep.types.OutputPayload outputPayload = new WebServiceWarpper().getAccountDetails(payload, PropertiesUtil.getProperty("SOA_URL_GET_ACCOUNT_DETAILS"), PropertiesUtil.getProperty("SOA_USERNAME"), PropertiesUtil.getProperty("SOA_PASSWORD"));
+			if (outputPayload != null) {
+				logger.info(outputPayload.getStatus() + " | " + outputPayload.getMessageEN());
+				if (outputPayload.getStatus().equals(SERVICE_SUCCESS)) {
+					com.uaq.proxies.getaccountdetailsbpel_client_ep.types.UserDetails user = outputPayload.getUserDetailsREC();
+					com.uaq.proxies.getaccountdetailsbpel_client_ep.types.AccountDetails accountDetail = outputPayload.getAccountDetailsREC();
+
+					outputVo.setFullName(accountDetail.getFirstName());
+					outputVo.setCitizenship(String.valueOf(accountDetail.getCountryidofcitizenshipid()));
+					outputVo.setResidence(String.valueOf(accountDetail.getCountryidofresidencyid()));
+					outputVo.setUserType(accountDetail.getTypeOfUser());
+					outputVo.setTradelicensetypeid(accountDetail.getTradelicensetypeid().getValue() == null ? new BigDecimal(0) : accountDetail.getTradelicensetypeid().getValue());
+					outputVo.setEmirateID((accountDetail.getEmiratesId()) == null ? EMPTY_STRING : accountDetail.getEmiratesId());
+					outputVo.setNationalityId((accountDetail.getNationalityId()) == null ? new BigDecimal(0) : accountDetail.getNationalityId());
+					outputVo.setMobileNo(accountDetail.getMobileNo());
+					outputVo.setMessage_EN(StringUtil.isEmpty(user.getAccountStatusEN()) ? EMPTY_STRING : user.getAccountStatusEN());
+					outputVo.setMessage_AR(StringUtil.isEmpty(user.getAccountStatusAR()) ? EMPTY_STRING : user.getAccountStatusAR());
+					outputVo.setSourceId((user.getSourceId()) == null ? EMPTY_STRING : user.getSourceId().toString());
+					outputVo.setAccountStatusId((user.getAccountStatusId()) == null ? EMPTY_STRING : user.getAccountStatusId().toString());
+					outputVo.setAccountId(user.getAccountId());
+					outputVo.setEmirate(accountDetail.getEmirate());
+					outputVo.setEmailAddress(user.getEmailAddress());
+					outputVo.setMobileno2(accountDetail.getMobileno2().getValue());
+					outputVo.setTreadLicenceNo(accountDetail.getTradeLienceNo());
+					outputVo.setWebsite(accountDetail.getWebsite().getValue());
+					outputVo.setAddress(accountDetail.getAddressline1());
+//					outputVo.setTreadLicenceExprDate(accountDetail.getTradeLienceExpiryDate());
+					outputVo.setLandLine(accountDetail.getHomePhone().getValue());
+					outputVo.setPostbox(accountDetail.getPostbox() == null ? EMPTY_STRING : accountDetail.getPostbox().toString());
+
+				} else if (outputPayload.getStatus().equals("Failure")) {
+					outputVo.setMessage_EN(outputPayload.getMessageEN());
+					outputVo.setMessage_AR(outputPayload.getMessageAR());
+				}
+				outputVo.setStatus(outputPayload.getStatus());
+
+			} else {
+				logger.info("Failed  | stub.getAccountDetails(payload, uc) return null ");
+				outputVo.setStatus(SERVICE_FAILED);
+
+			}
+
+		} catch (Exception e) {
+			logger.error("Failed  |" + e.getMessage());
+			outputVo.setStatus(SERVICE_FAILED);
+		}
+		return outputVo;
+	}
+	//moved to generateOTP service
+	/*public String generateOTP(GenerateOTPInputVO input) {
+		createStub();
+		String otp = EMPTY_STRING;
+		GenerateOTP.InputPayload payload = new GenerateOTP.InputPayload();
+		payload.setTypeOfUser(input.getTypeOfUser());
+		payload.setAccountId(input.getAccountId());
+
+		GenerateOTP.IndividualPayload individualPayload = new GenerateOTP.IndividualPayload();
+		individualPayload.setEmiratesID(input.getEmirateId());
+		individualPayload.setMobileNo(input.getMobile());
+		individualPayload.setPassportID(input.getPassportId());
+		payload.setIndividualREC(individualPayload);
+		EstablishmentPayload establishmentPayLoad = new EstablishmentPayload();
+		establishmentPayLoad.setMobileNo(input.getMobile());
+		establishmentPayLoad.setTradeLicenseNo(input.getTraedLicenceNumber());
+		establishmentPayLoad.setEmiratesCode(input.getEmirate());
+		payload.setEstablishmentREC(establishmentPayLoad);
+		GenerateOTP.OutputPayload output = null;
+		//In dev is not Deployed Yet
+		try {
+			output = stub.generateOTP(payload,uc);	
+			} catch (RemoteException e) {
+			logger.error("Failure  |" + e.getMessage());
+
+		}
+		if (output != null) {
+			otp = output.getStatus();
+			logger.info("Sucess  |" + output.getMessage_EN());
+		} else {
+			logger.error("Failure | output.getOTPValue() return Null ");
+		}
+		
+		return otp;
+	}*/
+
+	public ValidateOTPOutput validateOTP(ValidateOTPInputVO input) {
+
+		
+		ValidateOTPOutput validateOTPOutput = new ValidateOTPOutput();
+
+		InputPayload inputPayload = new InputPayload();
+		inputPayload.setAccountId(input.getAccountId());
+		inputPayload.setOTPvalue(input.getOtp());
+
+		OutputPayload output = null;
+		try {
+			output = new WebServiceWarpper().validateOTP(inputPayload, PropertiesUtil.getProperty("SOA_URL_VALIDATE_OTP"), PropertiesUtil.getProperty("SOA_USERNAME"), PropertiesUtil.getProperty("SOA_PASSWORD"));
+			if (output != null) {
+				validateOTPOutput.setStataus(output.getStatus());
+				validateOTPOutput.setMessage_EN(output.getMessageEN());
+				validateOTPOutput.setMessage_AR(output.getMessageAR());
+				validateOTPOutput.setExceucutionStatus(SERVICE_SUCCESS);
+				logger.info("Success  |" + output.getMessageEN());
+			} else {
+				validateOTPOutput.setStataus(SERVICE_FAILED);
+				logger.error("Failure | stub.validateOTP(inputPayload, uc); return Null ");
+			}
+
+		} catch (Exception e) {
+			validateOTPOutput.setStataus(SERVICE_FAILED);
+			logger.error("Error Invoking validateOTP |" + e.getMessage());
+
+		}
+
+		return validateOTPOutput;
+	}
+
+	public ForgetUserNameOutputVO forgetUserName(ForgetUserNameInputVO inputVO) {
+		
+		ForgetUserNameOutputVO outputVO = new ForgetUserNameOutputVO();
+		com.uaq.proxies.forgetusernamebpel_client_ep.types.InputPayload input = new com.uaq.proxies.forgetusernamebpel_client_ep.types.InputPayload();
+		com.uaq.proxies.forgetusernamebpel_client_ep.types.ApplicantDetailsPayload applicantDetailsPayload = new com.uaq.proxies.forgetusernamebpel_client_ep.types.ApplicantDetailsPayload();
+		applicantDetailsPayload.setEmailAddress(StringUtil.isEmpty(inputVO.getEmailAddress()) ? EMPTY_STRING : inputVO.getEmailAddress());
+		applicantDetailsPayload.setEmiritesID(StringUtil.isEmpty(inputVO.getEmiritesID()) ? EMPTY_STRING : inputVO.getEmiritesID());
+		applicantDetailsPayload.setMobileNo(StringUtil.isEmpty(inputVO.getMobileNo()) ? EMPTY_STRING : inputVO.getMobileNo());
+		applicantDetailsPayload.setPassportNo(StringUtil.isEmpty(inputVO.getPassportNo()) ? EMPTY_STRING : inputVO.getPassportNo());
+
+		com.uaq.proxies.forgetusernamebpel_client_ep.types.EstablishmentDetailsPayload establishmentDetailsPayload = new com.uaq.proxies.forgetusernamebpel_client_ep.types.EstablishmentDetailsPayload();
+
+		establishmentDetailsPayload.setTradeLicenseNo(StringUtil.isEmpty(inputVO.getTradeLicenseNo()) ? EMPTY_STRING : inputVO.getTradeLicenseNo());
+		establishmentDetailsPayload.setMobileNo(StringUtil.isEmpty(inputVO.getMobileNoEstablishment()) ? EMPTY_STRING : inputVO.getMobileNoEstablishment());
+		establishmentDetailsPayload.setEmailAddress(StringUtil.isEmpty(inputVO.getEmailAddressEstablishment()) ? EMPTY_STRING : inputVO.getEmailAddressEstablishment());
+
+		com.uaq.proxies.forgetusernamebpel_client_ep.types.UserDetailsPayload userDetailsPayload = new com.uaq.proxies.forgetusernamebpel_client_ep.types.UserDetailsPayload();
+		userDetailsPayload.setApplicantUserDetails(applicantDetailsPayload);
+		userDetailsPayload.setEstablishmentUserDetails(establishmentDetailsPayload);
+
+		input.setUserDetails(userDetailsPayload);
+		input.setTypeOfUser(inputVO.getUserType());
+
+		try {
+			com.uaq.proxies.forgetusernamebpel_client_ep.types.OutputPayload outputPayload = new WebServiceWarpper().forgotUsername(input, PropertiesUtil.getProperty("SOA_URL_FORGOT_USERNAME"), PropertiesUtil.getProperty("SOA_USERNAME"), PropertiesUtil.getProperty("SOA_PASSWORD"));
+			if (outputPayload != null) {
+				outputVO.setMesage_EN(outputPayload.getMessageEN());
+				outputVO.setMessage_AR(outputPayload.getMessageAR());
+				outputVO.setStatus(outputPayload.getStatus());
+				logger.info("Succcess  | " + outputPayload.getMessageEN());
+			} else {
+				outputVO.setStatus(SERVICE_FAILED);
+				logger.error("Failed | stub.forgotUsername(input, uc); return NUll ");
+			}
+		} catch (Exception e) {
+			outputVO.setStatus(SERVICE_FAILED);
+			logger.error("Failed | " + e.getMessage());
+
+		}
+		return outputVO;
+	}
+
+	public ForgetPasswordOutputVO forgetPassword(ForgetPasswordInputVO inputVO) {
+		createStub();
+
+		ForgetPasswordOutputVO outputVO = new ForgetPasswordOutputVO();
+		com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.types.InputPayload input = new com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.types.InputPayload();
+		com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.types.ApplicantDetailsPayload applicantDetailsPayload = new com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.types.ApplicantDetailsPayload();
+
+		applicantDetailsPayload.setMobileNo(inputVO.getMobile());
+		applicantDetailsPayload.setPassportNo(inputVO.getPassportNo());
+		applicantDetailsPayload.setUsername(inputVO.getUserName().toLowerCase());
+		applicantDetailsPayload.setEmiritesID(inputVO.getEmiritesID());
+
+		com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.types.EstablishmentDetailsPayload establishmentDetailsPayload = new com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.types.EstablishmentDetailsPayload();
+
+		establishmentDetailsPayload.setTradeLicenseNo(inputVO.getTradeLicence());
+		establishmentDetailsPayload.setMobileNo(inputVO.getMobileNumberEstablish());
+		establishmentDetailsPayload.setUsername(inputVO.getEstablishUsername().toLowerCase());
+
+		com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.types.UserDetailsPayload userDetailsPayload = new com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.types.UserDetailsPayload();
+		userDetailsPayload.setApplicantUserDetails(applicantDetailsPayload);
+		userDetailsPayload.setEstablishmentUserDetails(establishmentDetailsPayload);
+
+		input.setUserDetails(userDetailsPayload);
+		input.setTypeOfUser(inputVO.getUserType());
+
+		com.uaq.proxies.checkforgetpasswordaccountvaliditybpel_client_ep.types.OutputPayload outputPayload = null;
+
+		try {
+			outputPayload = new WebServiceWarpper().checkForgetPasswordAccountValidity(input, PropertiesUtil.getProperty("SOA_URL_FORGOT_PASSWORD_VALIDITY"), PropertiesUtil.getProperty("SOA_USERNAME"), PropertiesUtil.getProperty("SOA_PASSWORD"));
+			if (outputPayload != null) {
+				logger.info("Success  | " + outputPayload.getMessageEN());
+				outputVO.setStatus(outputPayload.getStatus());
+				outputVO.setMessage_EN(outputPayload.getMessageEN());
+				outputVO.setMessage_AR(outputPayload.getMessageAR());
+
+			} else {
+				outputVO.setStatus("Failure");
+				logger.error("Failure | stub.forgotPassword(input, uc);  return NULL");
+			}
+
+		} catch (Exception e) {
+			logger.error("Failure | " + e.getMessage());
+			outputVO.setStatus("Failed");
+
+		}
+
+		return outputVO;
+
+	}
+}

@@ -1,0 +1,316 @@
+package com.uaq.service;
+
+import static com.uaq.common.ApplicationConstants.SERVICE_FAILED;
+import static com.uaq.common.ApplicationConstants.SERVICE_SUCCESS;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.stereotype.Service;
+
+import com.uaq.common.PropertiesUtil;
+import com.uaq.logger.UAQLogger;
+import com.uaq.soap.warpper.WebServiceWarpper;
+import com.uaq.util.DateUtil;
+import com.uaq.vo.AccountDetailTokenInput;
+import com.uaq.vo.AccountDetailTokenOutputVO;
+import com.uaq.vo.LoginInputVO;
+import com.uaq.vo.LoginOutputVO;
+import com.uaq.vo.LogoutInputVO;
+import com.uaq.vo.LogoutOutputVO;
+import com.uaq.vo.UserAttachmentsVO;
+
+
+/**
+ * Service Class For Login & Logout Service
+ * 
+ * @author Pritam
+ * 
+ */
+@Service(value = "loginService")
+@Lazy
+public class LoginService {
+	
+
+	protected static UAQLogger logger = new UAQLogger(LoginService.class);
+
+	
+	
+	@Autowired
+	private LookupServiceEN_AR lookupServiceEN_AR;
+
+
+
+	
+
+	
+	/**
+	 * Service Methods For Login 
+	 * @param LoginInputVO
+	 * @return LoginOutputVO
+	 * 
+	 * @author Pritam
+	 * 
+	 */
+	public LoginOutputVO loginServiceRequest(LoginInputVO input) {
+		logger.info("In Login Service");
+		
+		
+		LoginOutputVO outpuVO = new LoginOutputVO();
+		com.uaq.proxies.userloginbpel_client_ep.types.InputPayload inputPayload = new com.uaq.proxies.userloginbpel_client_ep.types.InputPayload();
+		inputPayload.setLoginUsername(input.getLoginUserName().toLowerCase());
+		inputPayload.setPassword(input.getLoginPassword());
+		com.uaq.proxies.userloginbpel_client_ep.types.OutputPayload output = null;
+		try {
+			output = new WebServiceWarpper().userLogin(inputPayload, PropertiesUtil.getProperty("SOA_URL_USER_LOGIN"), PropertiesUtil.getProperty("SOA_USERNAME"), PropertiesUtil.getProperty("SOA_PASSWORD"));
+			if (output != null) {
+				logger.info("Succes  | " + output.getMessageEN());
+				if (output.getAuthenticationTokenData() != null) {
+					com.uaq.proxies.userloginbpel_client_ep.types.AuthenticationTokenPayload authenticationTokenPayload = output.getAuthenticationTokenData();
+					outpuVO.setAcountId(authenticationTokenPayload.getAcountId());
+					outpuVO.setStatus(authenticationTokenPayload.getStatus());
+					outpuVO.setUsername(authenticationTokenPayload.getUsername());
+					outpuVO.setTypeOfUser(authenticationTokenPayload.getTypeOfUser());
+					outpuVO.setTokenCode(authenticationTokenPayload.getTokenCode());
+					outpuVO.setLastUpdatedDate(authenticationTokenPayload.getLastUpdatedDate());
+					outpuVO.setCreatedDate(authenticationTokenPayload.getCreatedDate());
+				}
+				outpuVO.setExecutionStatus(output.getStatus());
+				outpuVO.setMessage_AR(output.getMessageAR());
+				outpuVO.setMessage_EN(output.getMessageEN());
+
+			} else {
+				outpuVO.setExecutionStatus(SERVICE_FAILED);
+				logger.info("Failure  | stub.login(inputPayload, uc); return null");
+			}
+
+		} catch (Exception e) {
+			logger.error("Failure | " + e.getMessage());
+			outpuVO.setExecutionStatus(SERVICE_FAILED);
+
+		}
+		return outpuVO;
+
+	}
+	/**
+	 * Service Methods For Logout 
+	 * @param LogoutInputVO
+	 * @return LogoutOutputVO
+	 * 
+	 * @author Pritam
+	 * 
+	 */
+
+	public LogoutOutputVO logoutServiceRequest(LogoutInputVO inputVO) {
+		LogoutOutputVO outputVO = new LogoutOutputVO();
+		try {
+		com.uaq.proxies.userlogoutbpel_client_ep.types.Inputpayload input = new com.uaq.proxies.userlogoutbpel_client_ep.types.Inputpayload();
+
+		com.uaq.proxies.userlogoutbpel_client_ep.types.AuthenticationTokenPayload authenticationTokenPayload = new com.uaq.proxies.userlogoutbpel_client_ep.types.AuthenticationTokenPayload();
+		authenticationTokenPayload.setAcountId(inputVO.getAcountId());
+		authenticationTokenPayload.setCreatedDate(DateUtil.convertDateToXMLGregorianCalendar(inputVO.getCreatedDate().getTime()));
+		authenticationTokenPayload.setLastUpdatedDate(DateUtil.convertDateToXMLGregorianCalendar(inputVO.getLastUpdatedDate().getTime()));
+		authenticationTokenPayload.setStatus(inputVO.getStatus());
+		authenticationTokenPayload.setTokenCode(inputVO.getTokenCode());
+		authenticationTokenPayload.setTypeOfUser(inputVO.getTypeOfUser());
+		authenticationTokenPayload.setUsername(inputVO.getUsername().toLowerCase());
+		input.setAuthenticationTokenData(authenticationTokenPayload);
+
+		
+		com.uaq.proxies.userlogoutbpel_client_ep.types.OutputPayload output = null;
+		
+			output = new WebServiceWarpper().userLogout(input, PropertiesUtil.getProperty("SOA_URL_USER_LOGOUT"), PropertiesUtil.getProperty("SOA_USERNAME"), PropertiesUtil.getProperty("SOA_PASSWORD"));
+			if (output != null) {
+				logger.info("Success | " + output.getMessageEN());
+				outputVO.setStatus(output.getStatus());
+				outputVO.setMessage_AR(output.getMessageAR());
+				outputVO.setMessage_EN(output.getMessageEN());
+			} else {
+				logger.info("Failure  | stub.logout(input, uc); return null");
+				outputVO.setStatus(SERVICE_FAILED);
+			}
+
+		} catch (Exception e) {
+			logger.info("Failure  |" + e.getMessage());
+			outputVO.setStatus(SERVICE_FAILED);
+		}
+		return outputVO;
+	}
+	
+	public AccountDetailTokenOutputVO getDetailFromToken(AccountDetailTokenInput input){
+		
+		
+		
+		AccountDetailTokenOutputVO outputVO =new AccountDetailTokenOutputVO();
+		com.uaq.proxies.getaccountdetailsfrmauthtokenbpel_client_ep.types.InputPayload authenticationTokenData=new com.uaq.proxies.getaccountdetailsfrmauthtokenbpel_client_ep.types.InputPayload();
+		com.uaq.proxies.getaccountdetailsfrmauthtokenbpel_client_ep.types.AuthenticationTokenPayload tokenInput=new com.uaq.proxies.getaccountdetailsfrmauthtokenbpel_client_ep.types.AuthenticationTokenPayload();
+		tokenInput.setAcountId(input.getAcountId());
+		tokenInput.setCreatedDate(input.getCreatedDate());
+		tokenInput.setLastUpdatedDate(input.getLastUpdatedDate());
+		tokenInput.setStatus(input.getStatus());
+		tokenInput.setTokenCode(input.getTokenCode());
+		tokenInput.setTypeOfUser(input.getTypeOfUser());
+		tokenInput.setUsername(input.getUsername().toLowerCase());
+		authenticationTokenData.setAuthenticationTokenData(tokenInput);
+		
+		List<uaq.db.si.model.common.AccountattachmentsViewSDO> userAttachmentsList	= lookupServiceEN_AR.getUserAttachments(input.getAcountId());
+		
+		try {
+			com.uaq.proxies.getaccountdetailsfrmauthtokenbpel_client_ep.types.OutputPayload output=new WebServiceWarpper().getUserDetailFromToken(authenticationTokenData, PropertiesUtil.getProperty("SOA_URL_GET_ACCOUNT_DETAIL_FROM_TOKEN"), PropertiesUtil.getProperty("SOA_USERNAME"), PropertiesUtil.getProperty("SOA_PASSWORD"));
+			//accountattachments--find
+			if(output !=null){
+				if(output.getAccountDetailsREC()!=null){
+					com.uaq.proxies.getaccountdetailsfrmauthtokenbpel_client_ep.types.AccountDetails accountRec=output.getAccountDetailsREC();
+					com.uaq.proxies.getaccountdetailsfrmauthtokenbpel_client_ep.types.UserDetails userrec=output.getUserDetailsREC();
+					outputVO.setAccountId(userrec.getAccountId());
+					outputVO.setAccountStatus_AR(userrec.getAccountStatusAR());
+					outputVO.setAccountStatus_EN(userrec.getAccountStatusEN());
+					outputVO.setAccountStatusId(userrec.getAccountStatusId()==null?"":userrec.getAccountStatusId().toPlainString());
+					outputVO.setAddressline1(accountRec.getAddressline1());
+					outputVO.setAddressline2(accountRec.getAddressline2().getValue());
+					outputVO.setApplicanttype_AR(accountRec.getApplicanttypeAR());
+					outputVO.setApplicanttype_EN(accountRec.getApplicanttypeEN());
+					outputVO.setApplicanttypeid(accountRec.getApplicanttypeid().getValue()==null?"1":accountRec.getApplicanttypeid().getValue().toPlainString());
+					outputVO.setClannumber(accountRec.getClannumber().getValue());
+					outputVO.setCountryidofcitizenship_AR(accountRec.getCountryidofcitizenshipAR());
+					outputVO.setCountryidofcitizenship_EN(accountRec.getCountryidofcitizenshipEN());
+					outputVO.setCountryidofcitizenshipid(accountRec.getCountryidofcitizenshipid().getValue()==null?"":accountRec.getCountryidofcitizenshipid().getValue().toString());
+					outputVO.setCountryidofresidency_AR(accountRec.getCountryidofresidencyAR());
+					outputVO.setCountryidofresidency_EN(accountRec.getCountryidofresidencyEN());
+					outputVO.setCountryidofresidencyid(accountRec.getCountryidofresidencyid().getValue()==null?"":accountRec.getCountryidofresidencyid().getValue().toString());
+					outputVO.setCreatedby(accountRec.getCreatedby());
+					outputVO.setCreatedDate(accountRec.getCreatedDate().toGregorianCalendar());
+					outputVO.setDob(accountRec.getDob() !=null?accountRec.getDob().toGregorianCalendar():null);
+					outputVO.setEidaexpirydate(DateUtil.converXMLCalenderTOString(accountRec.getEidaexpirydate().getValue()));
+					outputVO.setEidaExpiryDate(DateUtil.converXMLCalenderTOString(accountRec.getEidaExpiryDate().getValue()));
+					outputVO.setEmailAddress(accountRec.getEmailAddress());
+					outputVO.setEmailNotificationEnabled(userrec.getEmailNotificationEnabled()==null?"0":userrec.getEmailNotificationEnabled().toString());
+					outputVO.setEmirate(accountRec.getEmiratesCode()==null?"":accountRec.getEmiratesCode().toString());
+					outputVO.setEmirates_AR(accountRec.getEmiratesAR());
+					outputVO.setEmirates_EN(accountRec.getEmiratesEN());
+					outputVO.setEmiratesCode(accountRec.getEmiratesCode()==null?"":accountRec.getEmiratesCode().toString());
+					outputVO.setEmiratesId(accountRec.getEmiratesId());
+					outputVO.setFamilyBookNum(accountRec.getFamilyBookNum().getValue());
+					outputVO.setFamilynumber(accountRec.getFamilynumber().getValue());
+					outputVO.setFirstName(accountRec.getFirstName());
+					outputVO.setHasfamilybookno(accountRec.getHasfamilybookno().getValue()==null?"0":accountRec.getHasfamilybookno().getValue().toString());
+					outputVO.setHomePhone(accountRec.getHomePhone().getValue());
+					outputVO.setId(accountRec.getId());
+					outputVO.setIssuancedate(DateUtil.converXMLCalenderTOString(accountRec.getIssuancedate().getValue()));
+					outputVO.setLanguageId(accountRec.getLanguageId()==null?"1":accountRec.getLanguageId().toString());
+					outputVO.setLastName(accountRec.getLastName());
+					outputVO.setLoginusername(userrec.getLoginusername().getValue());
+					outputVO.setMiddleName(accountRec.getMiddleName().getValue());
+					outputVO.setMobileNo(accountRec.getMobileNo());
+					outputVO.setMobileno2(accountRec.getMobileno2().getValue());
+					outputVO.setModifiedby(accountRec.getModifiedby());
+					outputVO.setModifiedDate(accountRec.getModifiedDate().toGregorianCalendar());
+					outputVO.setMothername(accountRec.getMothername().getValue());
+					outputVO.setMothersfathername(accountRec.getMothersfathername().getValue());
+					outputVO.setNationality_AR(accountRec.getNationalityAR());
+					outputVO.setNationality_EN(accountRec.getNationalityEN());
+					outputVO.setNationalityId(accountRec.getNationalityId()==null?"":accountRec.getNationalityId().toString());
+					outputVO.setPassportExpiryDate(DateUtil.converXMLCalenderTOString(accountRec.getPassportExpiryDate().getValue()));
+					outputVO.setPassportNo(accountRec.getPassportNo().getValue());
+					outputVO.setPassword(userrec.getPassword());
+					outputVO.setPostbox(accountRec.getPostbox()==null?"":accountRec.getPostbox().toString());
+					outputVO.setProfileImageId(userrec.getProfileImageId()==null?"0":userrec.getProfileImageId().toString());
+					outputVO.setPushNotificationEnabled(userrec.getPushNotificationEnabled()==null?"0":userrec.getPushNotificationEnabled().toString());
+					outputVO.setResidenceNo(accountRec.getResidenceNo().getValue());
+					outputVO.setResidenseExpiryDate(DateUtil.converXMLCalenderTOString(accountRec.getResidenseExpiryDate().getValue()));
+					outputVO.setRetryCount(userrec.getRetryCount()==null?"0":userrec.getRetryCount().toString());
+					outputVO.setSmsNotificationEnabled(userrec.getSmsNotificationEnabled()==null?"0":userrec.getSmsNotificationEnabled().toString());
+					outputVO.setSourceId(userrec.getSmsNotificationEnabled()==null?"0":userrec.getSmsNotificationEnabled().toString());
+					outputVO.setSubcribetonewsletterflag(accountRec.getSubcribetonewsletterflag().getValue()==null?"0":accountRec.getSubcribetonewsletterflag().getValue().toString());
+					outputVO.setTermsConditionsFlag(userrec.getTermsConditionsFlag()==null?"0":userrec.getTermsConditionsFlag().toString());
+					outputVO.setTownname(accountRec.getTownname().getValue());
+					outputVO.setTownnumber(accountRec.getTownnumber().getValue());
+					outputVO.setTradelicensetype_AR(accountRec.getTradelicensetypeAR());
+					outputVO.setTradelicensetype_EN(accountRec.getTradelicensetypeEN());
+					outputVO.setTradelicensetypeid(accountRec.getTradelicensetypeid().getValue()==null?"":accountRec.getTradelicensetypeid().getValue().toString());
+					outputVO.setTradeLienceExpiryDate(DateUtil.converXMLCalenderTOString(accountRec.getTradeLienceExpiryDate().getValue()));
+					outputVO.setTradeLienceNo(accountRec.getTradeLienceNo());
+					outputVO.setTribename(accountRec.getTribename().getValue());
+					outputVO.setTypeOfUser(accountRec.getTypeOfUser());
+					outputVO.setUserName(userrec.getUserName());
+					outputVO.setWebsite(accountRec.getWebsite().getValue());
+					
+					//UserAttachments
+					outputVO.setUserAttachmentsList(getUserAttachmentsList(userAttachmentsList));
+				}
+				outputVO.setExecutionStatus(output.getStatus());
+				outputVO.setMessage_EN(output.getMessageEN());
+				outputVO.setMessage_AR(output.getMessageAR());
+				logger.info(output.getStatus()+"  |  "+output.getMessageEN());
+			}
+			else{
+				outputVO.setExecutionStatus(SERVICE_FAILED);
+				logger.error("Failure  |  stub.getAccountDetailsFromToken(authenticationTokenData, uc); return null");
+			}
+		} catch (Exception e) {
+			outputVO.setExecutionStatus(SERVICE_FAILED);
+			logger.error("Failure  |"+ e.getMessage());
+		}
+
+		return outputVO;
+	}
+	
+	
+	private List<UserAttachmentsVO> getUserAttachmentsList(List<uaq.db.si.model.common.AccountattachmentsViewSDO> userAttachmentsList){
+		
+		List<UserAttachmentsVO>userAttachmentVoList = new ArrayList<UserAttachmentsVO>();
+		UserAttachmentsVO  userAttachmentsVO ;
+		
+		for(uaq.db.si.model.common.AccountattachmentsViewSDO attachment : userAttachmentsList){
+			userAttachmentsVO = new UserAttachmentsVO();
+			//userAttachmentsVO.setAttachmentName(attachment.getAttachemntname().getValue());
+			userAttachmentsVO.setAttachmentName(PropertiesUtil.getProperty(attachment.getAttachementtype().getValue()));
+			userAttachmentsVO.setAttachmentType(attachment.getAttachementtype().getValue());
+			userAttachmentsVO.setAttachmentUrl(attachment.getUrl().getValue());
+			userAttachmentsVO.setAccountattachmentId(String.valueOf(attachment.getAccountattachmentid()));
+			userAttachmentsVO.setAccountId(attachment.getAccountid().getValue());
+			userAttachmentsVO.setContentId(attachment.getContentid().getValue());
+			userAttachmentVoList.add(userAttachmentsVO);
+		}
+		
+		return userAttachmentVoList;
+	}
+	public boolean validateToken(AccountDetailTokenInput accountDetailTokenInput){
+		  
+		  boolean valid=false;
+		  
+		  
+		  try {
+		  com.uaq.proxies.validateauthenticationtokenbpel_client_ep.types.InputPayload arg0 =new com.uaq.proxies.validateauthenticationtokenbpel_client_ep.types.InputPayload();
+		   
+		   arg0.setServiceID("");
+		   com.uaq.proxies.validateauthenticationtokenbpel_client_ep.types.AuthenticationTokenPayload authenticationTokenPayload =new com.uaq.proxies.validateauthenticationtokenbpel_client_ep.types.AuthenticationTokenPayload();
+		   authenticationTokenPayload.setAcountId(accountDetailTokenInput.getAcountId());
+		   authenticationTokenPayload.setTokenCode(accountDetailTokenInput.getTokenCode());
+		   authenticationTokenPayload.setTypeOfUser(accountDetailTokenInput.getTypeOfUser());
+		   authenticationTokenPayload.setUsername(accountDetailTokenInput.getUsername().toLowerCase());
+		   authenticationTokenPayload.setStatus(accountDetailTokenInput.getStatus()); 
+		   authenticationTokenPayload.setCreatedDate(accountDetailTokenInput.getCreatedDate());
+		   authenticationTokenPayload.setLastUpdatedDate(accountDetailTokenInput.getLastUpdatedDate());
+		   arg0.setAuthenticationTokenData(authenticationTokenPayload);
+		  
+		     
+		   
+		   com.uaq.proxies.validateauthenticationtokenbpel_client_ep.types.OutputPayload ouput=new WebServiceWarpper().validateToken(arg0, PropertiesUtil.getProperty("SOA_URL_VALIDATE_TOKEN"), PropertiesUtil.getProperty("SOA_USERNAME"), PropertiesUtil.getProperty("SOA_PASSWORD"));
+		   if(ouput !=null){
+		    if(ouput.getStatus().equals(SERVICE_SUCCESS)){
+		     valid = true;
+		     logger.debug("Responce From  validate Token Service="+ouput.getStatus());
+		    }
+		   }
+		  } catch (Exception e) {
+		   logger.error("Failure   | "+e.getMessage());
+		   
+		  } 
+		     
+		  return valid;
+		  
+		 }
+}

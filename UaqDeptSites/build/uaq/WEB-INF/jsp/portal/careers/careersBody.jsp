@@ -79,11 +79,11 @@
 	</div>
 	<!-- /social media share callout -->	
 	<!-- upload resume -->
-	<div class="callout-wrap">
+	<!--<div class="callout-wrap">
 		<div class="callout-content">
-			 <a href="mailto:${careerEmailTo}?Subject=New Resume" class="link-btn"><img src="/img/icons/icon-upload.png" alt="uaq"> <spring:message code="career.upload.button"/></a>
+			 
 		</div>	
-	</div>
+	</div>-->
 	<!-- / upload resume -->
 </div>
 <!-- right col -->
@@ -107,6 +107,9 @@
 	<!-- /page title -->
 	<!-- page content -->
 	<div class="main-content-wrap">
+		<div class="upload-cv-wrap">
+			<a href="mailto:${careerEmailTo}?Subject=New Resume" class="link-btn"><img src="/img/icons/icon-upload.png" alt="uaq"> <spring:message code="career.upload.button"/></a>
+		</div>
 		<div class="content-listing cf">
 			<!-- career listing -->
 			<ul class="career-wrap">

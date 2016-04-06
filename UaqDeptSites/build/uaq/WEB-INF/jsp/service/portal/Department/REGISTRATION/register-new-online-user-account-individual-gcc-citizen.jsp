@@ -389,11 +389,14 @@
 			                                                    <label for="emiratesid" class="form-lbl "><spring:message code="emiratedId" />
 			                                                    </label>
 				                                            </div>
-				                                            <div class="col-md-7">
+				                                            <div class="col-md-7 form-grp-help">
+																<div class="custom-input">
 			                                                    <form:input path="emiratesId" id="emaritesid" name="emiratesid" type="text" class="form-control "  data-rule-maxlength="18" data-rule-minlength="18"
 															 data-msg-required="${enterEmirate}"
 																	data-msg-maxlength="${valLength}" 
 																	data-msg-minlength="${valLength}" data-mask="000-0000-0000000-0" />
+																</div>
+																<span class="form-help" id="popoverEmiratesId">?</span>
 			                                                </div>
 		                                            	</div>
 		                                        		<!-- /text box -->
@@ -405,8 +408,11 @@
 			                                                    <label  for="emiratesidexp" class="form-lbl "><spring:message code="emiratesIdExp" /> 
 			                                                    </label>
 				                                            </div>
-				                                            <div class="col-md-7">
+				                                            <div class="col-md-7 form-grp-help">
+																<div class="custom-input">
 																<form:input path="emiratesIdExpDate"  type="text" id="emiratesidexp-password" name="emiratesidexp-password" class="form-control "  data-msg-required="${emirateExpDateMsg}"/>
+																</div>
+																<span class="form-help" id="popoverEmiratesIdExp">?</span>
 			                                                </div>
 		                                            	</div>
 													
@@ -599,7 +605,7 @@
 	                                        </div>
 											<!-- /captcha part Starts here -->
 												<!-- check newsletter -->
-											<div class="row">
+											<%-- <div class="row">
 												<div class="col-md-12 remove-pad">
 															<div class="col-md-5 remove-pad">
 																<!-- text box -->
@@ -618,7 +624,7 @@
 																<!-- /text box -->
 															</div>
 												</div>
-											</div>
+											</div> --%>
 											<!-- /check newsletter -->
 												<!-- Terms and conditions -->
 											<div class="row">
@@ -765,7 +771,7 @@
 						   'direction':position1
 						  });
 						  
-						 /* $('#popoverEmiratesId').myTooltip({
+						  $('#popoverEmiratesId').myTooltip({
 						   'content': imageEmiratesId,
 						   'direction':position1
 						  });
@@ -775,7 +781,7 @@
 						   'direction':position1
 						  });	
 						  
-						$('#popoverdob').myTooltip({
+						/*$('#popoverdob').myTooltip({
 						   'content': imageDob,
 						   'direction':position1
 						  }); */
