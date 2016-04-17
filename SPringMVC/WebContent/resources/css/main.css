@@ -1,0 +1,9 @@
+@CHARSET "ISO-8859-1";
+
+h1 {
+    background-color: blue;
+}
+.p{
+	border: thin;
+	color: orange;
+}
