@@ -1,6 +1,7 @@
 /*package com.pkm.test;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import javax.naming.spi.ObjectFactory;
+import javax.xml.bind.JAXBElement;
 
 public class Main {
 
@@ -9,15 +10,12 @@ public class Main {
 	 *//*
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(
-                "spring-servlet.xml");
+		ObjectFactory objFactory = new ObjectFactory();
+		JAXBElement<String> a = objFactory.createNeesConstantCdViewSDOCntryCd(value);
 		
-
-		HomeController employeeService = ctx.getBean("homeController",
-				HomeController.class);
-		System.out.println(employeeService.helloWorld());
+		
+		System.out.println(jb.getValue());
 
 	}
 
-}
-*/
+}*/

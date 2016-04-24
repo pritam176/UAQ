@@ -5,7 +5,7 @@
 
    <appender
         name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File"  value="E:\\JAVA\\tomcat\\apache-tomcat-6.0.35\\logs\\pkm_logs.log"/>
+        <param name="File"  value="/logs/bluerays.log"/>
         <param name="DatePattern" value="'.'yyyy-MM-dd"/>
         <param name="append" value="true"/>
         <layout class="org.apache.log4j.PatternLayout">
