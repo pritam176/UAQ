@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:jaxrs="http://cxf.apache.org/jaxrs" 
+    xmlns:cxf="http://cxf.apache.org/core" 
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+              http://www.springframework.org/schema/beans/spring-beans.xsd 
+              http://www.springframework.org/schema/context 
+		      http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		      http://www.springframework.org/schema/mvc
+		      http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+              http://cxf.apache.org/jaxrs 
+              http://cxf.apache.org/schemas/jaxrs.xsd 
+              http://cxf.apache.org/core 
+              http://cxf.apache.org/schemas/core.xsd"> 
+   
+  <import resource="classpath:META-INF/cxf/cxf.xml"/> 
+  <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>  
+  
+  	<context:component-scan base-package="com.uaq.ws" />
+
+	<context:annotation-config />
+	<mvc:annotation-driven />
+	
+	
+  
+  <jaxrs:server id="uaqService" address="/"> 
+    <jaxrs:serviceBeans> 
+		<ref bean="eidaServiceBean"/>
+			
+			  
+    </jaxrs:serviceBeans> 
+    
+    <jaxrs:providers>
+    <bean class="org.apache.cxf.jaxrs.provider.json.JSONProvider">
+        <property name="dropRootElement" value="true" />
+        <property name="supportUnwrapped" value="true" />
+    </bean>
+	</jaxrs:providers>
+    <jaxrs:extensionMappings> 
+      <entry key="xml" value="application/xml" /> 
+      <entry key="json" value="application/json" /> 
+    </jaxrs:extensionMappings> 
+    <jaxrs:features> 
+      <cxf:logging/> 
+    </jaxrs:features> 
+  </jaxrs:server> 
+  
+	<bean id="eidaServiceBean" class="com.uaq.ws.webservice.EIDARequestImpl"/> 
+	
+	
+   
+  
+  
+</beans>
